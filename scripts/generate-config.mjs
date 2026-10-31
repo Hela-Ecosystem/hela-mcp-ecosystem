@@ -128,7 +128,7 @@ function buildServerEnv(s, root, options = {}) {
     } else if (key === 'WIKIPEDIA_DEFAULT_LANGUAGE') {
       env[key] = 'en';
     } else if (key === 'HELA_PROFILE') {
-      env[key] = 'all';
+      env[key] = options.profile && options.profile !== 'runtime' ? options.profile : 'dev-workspace';
     } else if (key === 'HELA_ECOSYSTEM_ROOT') {
       env[key] = root;
     } else if (key === 'HELA_HTTP_PORT') {

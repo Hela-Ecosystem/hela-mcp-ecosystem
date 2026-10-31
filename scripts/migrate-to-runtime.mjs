@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function parseArgs(argv) {
-  const a = { input: null, output: null, backend: 'auto', root: null, profile: 'all' };
+  const a = { input: null, output: null, backend: 'auto', root: null, profile: null };
   for (let i = 0; i < argv.length; i++) {
     const x = argv[i];
     if (x === '--input') a.input = argv[++i];
@@ -33,6 +33,21 @@ const runtimeEntry = path.join(root, 'hela-runtime', 'dist', 'index.js');
 const ecosystemRoot = path.join(root, 'hela-mcp-ecosystem');
 
 const raw = JSON.parse(fs.readFileSync(args.input, 'utf8'));
+
+// Detect profile: if heavy/specialized cells were in use, keep 'all'; else dev-workspace
+if (!args.profile) {
+  const heavy = ['hela-receptor', 'hela-plastid', 'hela-cytosol'];
+  const present = [];
+  function collectKeys(obj) {
+    if (!obj || typeof obj !== 'object') return;
+    for (const k of Object.keys(obj)) if (k.startsWith('hela-')) present.push(k);
+  }
+  if (raw.mcp) collectKeys(raw.mcp);
+  if (raw.mcpServers) collectKeys(raw.mcpServers);
+  if (raw.context_servers) collectKeys(raw.context_servers);
+  const hasHeavy = present.some((k) => heavy.includes(k));
+  args.profile = hasHeavy ? 'all' : 'dev-workspace';
+}
 
 // collect env vars from existing hela-* entries to carry over
 const carryKeys = ['OPENROUTER_API_KEY','GITHUB_TOKEN','GOOGLE_API_KEY','GOOGLE_CSE_ID','MEMORY_FILE_PATH','SCRCPY_SERVER_PATH','HELA_BROWSER_ALLOW_EVAL','HELA_ALLOWED_ROOTS'];
