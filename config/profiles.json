@@ -121,16 +121,6 @@
         "hela-receptor",
         "hela-plastid"
       ]
-    },
-    {
-      "id": "runtime",
-      "name": "HeLa Runtime (single endpoint)",
-      "system": "any",
-      "persona": "Runtime-backed agent",
-      "description": "Boots all 10 cells behind the HeLa Runtime daemon. Client connects to ONE MCP server instead of 10. Requires all cell repos present (runtime spawns them).",
-      "servers": [
-        "hela-runtime"
-      ]
     }
   ]
 }

@@ -38,6 +38,7 @@ function parseArgs(argv) {
     backend: null,
     root: ECOSYSTEM_ROOT,
     out: null,
+    runtime: false,
     openrouterKey: process.env.OPENROUTER_API_KEY || null,
     githubToken: process.env.GITHUB_TOKEN || null,
     googleKey: process.env.GOOGLE_API_KEY || null,
@@ -50,6 +51,7 @@ function parseArgs(argv) {
     else if (arg === '--root') args.root = argv[++i];
     else if (arg === '--out') args.out = argv[++i];
     else if (arg === '--stdout') args.out = null;
+    else if (arg === '--runtime') args.runtime = true;
     else if (arg === '--openrouter-key' || arg === '--openrouter') args.openrouterKey = argv[++i];
     else if (arg === '--github-token' || arg === '--github') args.githubToken = argv[++i];
     else if (arg === '--google-key' || arg === '--google') args.googleKey = argv[++i];
@@ -256,7 +258,14 @@ function main() {
   }
 
   const { inventory, aliases } = readInventoryData();
-  const servers = resolveServers(profile, inventory, aliases);
+  let servers = resolveServers(profile, inventory, aliases);
+  if (args.runtime) {
+    const rt = inventory['hela-runtime'];
+    if (!rt) { console.error('hela-runtime not in inventory'); process.exit(1); }
+    servers = [{ id: rt.id || 'hela-runtime', ...rt }];
+    // pass the chosen profile through as HELA_PROFILE (not 'runtime')
+    if (!args.profile || args.profile === 'runtime') args.profile = 'dev-workspace';
+  }
   const root = path.resolve(args.root);
 
   let out;

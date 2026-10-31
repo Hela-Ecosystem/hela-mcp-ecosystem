@@ -20,6 +20,7 @@ NON_INTERACTIVE=false
 RECONFIGURE_ONLY=false
 DEV_MODE=false
 WITH_RUNTIME=false
+RUNTIME_MODE=false
 SNAPSHOT_TARGET=""
 
 OPENROUTER_KEY="${OPENROUTER_API_KEY:-}"
@@ -64,6 +65,7 @@ parse_args() {
             --dev) DEV_MODE=true; shift ;;
             --reconfigure) RECONFIGURE_ONLY=true; shift ;;
             --with-runtime) WITH_RUNTIME=true; shift ;;
+            --runtime) RUNTIME_MODE=true; WITH_RUNTIME=true; shift ;;
             --help|-h) usage; exit 0 ;;
             --openrouter-key|--openrouter) OPENROUTER_KEY="$2"; shift 2 ;;
             --github-token|--github) GITHUB_TOKEN="$2"; shift 2 ;;
@@ -214,6 +216,7 @@ generate_client_config() {
     [ -n "$GITHUB_TOKEN" ] && gen_args+=(--github-token "$GITHUB_TOKEN")
     [ -n "$GOOGLE_KEY" ] && gen_args+=(--google-key "$GOOGLE_KEY")
     [ -n "$GOOGLE_CSE_ID" ] && gen_args+=(--google-cse-id "$GOOGLE_CSE_ID")
+    [ "$RUNTIME_MODE" = true ] && gen_args+=(--runtime)
 
     node "$SCRIPT_DIR/scripts/generate-config.mjs" "${gen_args[@]}"
     print_success "Wrote $client config to $out"
