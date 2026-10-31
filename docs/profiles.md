@@ -142,16 +142,20 @@ Every profile in the ecosystem includes the core dual backbone:
 * **Included Servers (10 Servers):**
   * `hela-mitosis`, `hela-genome`, `hela-membrane`, `hela-nucleus`, `hela-ribosome`, `hela-enzyme`, `hela-cytosol`, `hela-phenotype`, `hela-receptor`, `hela-plastid`
 
-### 8. `runtime` — HeLa Runtime (Single Endpoint)
+### Runtime serve mode (orthogonal to profiles)
 
-* **Target System:** Any
-* **Agent Persona:** Runtime-backed single-endpoint agent
-* **Purpose:** One client connection instead of 10. Builds all 10 cells + the daemon (`--profile runtime`). Supports lazy ignition, crash recovery, opt-in namespacing, in-process `hela.pipe`.
-* **Included Servers (1 Server):** `hela-runtime`
+The HeLa Runtime is **not a profile** — it is a serve method. Any profile can be served through the runtime:
+
+```bash
+./setup.sh --profile dev-workspace --client opencode --runtime   # builds dev-workspace cells + daemon
+HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with minimal profile
+```
+
+The runtime boots only the cells in the chosen profile, then exposes them through one MCP endpoint. Use `--runtime` with any profile; the `HELA_PROFILE` env var selects the cell set.
 
 ---
 
-## Profile Compatibility Matrix
+## Profile Compatibility Matrix:
 
 | Profile ID | Target System | Total Servers | Backbone Servers | Headless Compatible | Requires External Runtime / Device |
 |---|---|:---:|:---:|:---:|---|

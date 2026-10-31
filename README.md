@@ -132,7 +132,8 @@ The HeLa MCP Ecosystem generates tailored, valid configuration formats across 10
 | Profile ID | Target System | Backbone Included | Servers Included | Focus Area |
 |---|---|---|---|---|
 | `dev-workspace` | Any (GUI recommended) | Mitosis + Genome | Membrane, Nucleus, Ribosome, Enzyme, Phenotype, Cytosol | Full-stack software engineering, testing, web UI |
-| `runtime` | Any | HeLa Runtime daemon | (boots all 10 cells internally) | Single-endpoint: one MCP connection instead of 10 |
+
+> **Single-endpoint serve mode:** add `--runtime` to any profile command to build the HeLa Runtime daemon and connect via one MCP server instead of N. Example: `./setup.sh --profile dev-workspace --client opencode --runtime`.
 | `headless-server` | Headless Linux | Mitosis + Genome | Membrane, Nucleus, Ribosome, Enzyme, Phenotype | Cloud server administration, CI/CD, headless dev |
 | `research` | Headless or GUI | Mitosis + Genome | Enzyme, Membrane, Cytosol | Deep literature research, document synthesis, web crawling |
 | `web-devops` | Headless or GUI | Mitosis + Genome | Membrane, Nucleus, Phenotype, Cytosol | Frontend development, Tailwind styling, DOM verification |
