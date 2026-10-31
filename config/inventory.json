@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "project_name": "HeLa MCP Ecosystem",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "total_servers": 10,
   "core_headless_count": 7,
   "specialized_gui_count": 3,
@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "74bea95c62d93f5aead5048ae057c55f96d2ac0c",
+      "revision": "1e8e4d1c5393d29dd782490a5ee978c166914f39",
       "env": [
         "MEMORY_FILE_PATH",
         "AWESOME_COPILOT_ENABLED",
@@ -34,7 +34,8 @@
         "GITHUB_TOKEN",
         "HELA_PROFILE"
       ],
-      "description": "Orchestrates MCP capabilities via the bundled Needle 3 agent runtime (plan \u2192 execute \u2192 observe, fully offline), tool discovery, route optimization, 40 prebuilt prompts, skills catalog, and multi-step workflows. No external sequential-thinking server."
+      "description": "Orchestrates MCP capabilities via the bundled Needle 3 agent runtime (plan \u2192 execute \u2192 observe, fully offline), tool discovery, route optimization, 40 prebuilt prompts, skills catalog, and multi-step workflows. No external sequential-thinking server.",
+      "version": "3.0.0"
     },
     "hela-genome": {
       "id": "hela-genome",
@@ -51,9 +52,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "e7181e8945eb73ced86e38373d2bebba1128da7d",
+      "revision": "476155d78aaff78f0be6919135a36cfb5beb14d1",
       "env": [],
-      "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity."
+      "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
+      "version": "3.0.0"
     },
     "hela-membrane": {
       "id": "hela-membrane",
@@ -70,9 +72,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c4046ff9aa0198a7721b0e061378f41b70283bb3",
+      "revision": "28849cf155d365db3f1ec796c40f5edc67b0e94c",
       "env": [],
-      "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations."
+      "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
+      "version": "3.0.0"
     },
     "hela-nucleus": {
       "id": "hela-nucleus",
@@ -89,9 +92,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "2d1c92f51ad792b8ffbc02593ff2a1b1cb33e0b1",
+      "revision": "e075b0b74d2fa79518ae1f7db33448cbd62fdd73",
       "env": [],
-      "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration."
+      "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
+      "version": "3.0.0"
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
@@ -108,9 +112,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "fdc24a56ddca734842d0a109a9e3a31f71b0e08f",
+      "revision": "fd80c89ad94d1a9652fe6dc59ac3ca45b143103b",
       "env": [],
-      "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks."
+      "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
+      "version": "3.0.0"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -127,7 +132,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "df5b06fcbe5e78d8895b5fb2f7a872e74f18f5ba",
+      "revision": "3746139fdede16d4950699a19f2922a5cf179a71",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -135,7 +140,8 @@
         "WIKIPEDIA_CACHE_TTL",
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
-      "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions."
+      "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
+      "version": "3.0.0"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -152,9 +158,10 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "cf4a6cb0c1540ce43ee79b39c6ef314b8741ab01",
+      "revision": "783eadb65eb74ebbef0655162bf6ed45fd23484b",
       "env": [],
-      "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification."
+      "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification.",
+      "version": "3.0.0"
     },
     "hela-phenotype": {
       "id": "hela-phenotype",
@@ -171,9 +178,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "e9dfb9fac1544b39f1d18a798a4acc2bfaf30f28",
+      "revision": "b260d6282e6bd37d261aaba9c9877f2604ff4bab",
       "env": [],
-      "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge."
+      "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
+      "version": "3.0.0"
     },
     "hela-receptor": {
       "id": "hela-receptor",
@@ -190,9 +198,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "7c9988160a6efaf9f871fa9eecec9c2e5f2225cd",
+      "revision": "f1528342c40dc3b33386f86daf81091935b61f29",
       "env": [],
-      "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control."
+      "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
+      "version": "3.0.0"
     },
     "hela-plastid": {
       "id": "hela-plastid",
@@ -209,9 +218,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": false,
-      "revision": "ccc02975af805ace0f12ec7bcee129971a2fe6b1",
+      "revision": "777bf990c2c678a83deca591f4e03b881eecd08a",
       "env": [],
-      "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement."
+      "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
+      "version": "3.0.0"
     }
   },
   "aliases": {

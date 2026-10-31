@@ -210,6 +210,18 @@ async function runDoctor(options = {}) {
       smokeStatus = await checkServerProcess(entryFile, dirPath);
     }
 
+    // Version check (Phase 7): package.json vs inventory serverVersion
+    let pkgVersion = null;
+    if (exists) {
+      const pkgCandidates = [path.join(dirPath, 'package.json'), path.join(dirPath, 'brain', 'package.json')];
+      for (const pc of pkgCandidates) {
+        if (fs.existsSync(pc)) { try { pkgVersion = readJson(pc).version; } catch {} break; }
+      }
+    }
+    const expectedVersion = s.version || '3.0.0';
+    const versionMatch = pkgVersion !== null ? pkgVersion === expectedVersion : true;
+    if (!versionMatch && s.scope === 'core') allHealthy = false;
+
     const serverHealthy = exists && (s.entry ? entryExists : true) && smokeStatus.ok;
     if (!serverHealthy && s.scope === 'core') {
       allHealthy = false;
@@ -229,6 +241,9 @@ async function runDoctor(options = {}) {
       pinnedCommit: s.revision ? s.revision.slice(0, 7) : 'none',
       commitMatch: isPinnedCommit,
       smoke: smokeStatus,
+      version: pkgVersion,
+      expectedVersion,
+      versionMatch,
       status: serverHealthy ? 'READY' : exists && entryExists ? 'WARNING' : 'ERROR',
     });
   }
@@ -268,8 +283,10 @@ async function runDoctor(options = {}) {
     const revTag = s.commitMatch ? s.currentCommit : `${s.currentCommit}*`;
     const entryTag = s.entryExists ? 'present' : 'missing';
     const diagNote = s.smoke.ok ? 'Stdio JSON-RPC OK' : s.smoke.reason;
+    const verTag = s.versionMatch ? `${s.version}` : `${s.version || '?'}!=${s.expectedVersion}`;
+    const verColor = s.versionMatch ? colors.green : colors.red;
     console.log(
-      `${s.alias.padEnd(18)} ${s.scope.padEnd(8)} ${revTag.padEnd(10)} ${entryTag.padEnd(12)} ${statusColor}[${s.status}] ${diagNote}${colors.reset}`
+      `${s.alias.padEnd(18)} ${s.scope.padEnd(8)} ${revTag.padEnd(10)} ${verColor}${verTag.padEnd(8)}${colors.reset} ${entryTag.padEnd(12)} ${statusColor}[${s.status}] ${diagNote}${colors.reset}`
     );
   }
 
