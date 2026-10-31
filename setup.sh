@@ -19,6 +19,7 @@ PROFILE_ID="${PROFILE_ID:-}"
 NON_INTERACTIVE=false
 RECONFIGURE_ONLY=false
 DEV_MODE=false
+WITH_RUNTIME=false
 SNAPSHOT_TARGET=""
 
 OPENROUTER_KEY="${OPENROUTER_API_KEY:-}"
@@ -42,6 +43,7 @@ Options:
   --snapshot FILE/TAG  Use exact pinned snapshot from config/snapshots/ (e.g. v1.0.0)
   --dev                Development mode: track latest moving main/master branch instead of pins
   --reconfigure        Skip cloning and building; immediately reconfigure client & API keys
+  --with-runtime       Also build the HeLa Runtime daemon (hela-runtime) for in-process execution
   --openrouter-key K   OpenRouter API key for chaining LLM features
   --github-token T     GitHub Personal Access Token for remote prompt syncing
   --google-key K       Google Custom Search API Key
@@ -61,6 +63,8 @@ parse_args() {
             --snapshot) SNAPSHOT_TARGET="$2"; shift 2 ;;
             --dev) DEV_MODE=true; shift ;;
             --reconfigure) RECONFIGURE_ONLY=true; shift ;;
+            --with-runtime) WITH_RUNTIME=true; shift ;;
+            --help|-h) usage; exit 0 ;;
             --openrouter-key|--openrouter) OPENROUTER_KEY="$2"; shift 2 ;;
             --github-token|--github) GITHUB_TOKEN="$2"; shift 2 ;;
             --google-key|--google) GOOGLE_KEY="$2"; shift 2 ;;
@@ -249,6 +253,15 @@ main() {
         [ "$ok" -ne "$total" ] && print_warning "Some servers failed. Check output above." && exit 1
     else
         print_status "Reconfigure mode active: skipping server builds."
+    fi
+
+    if [ "$WITH_RUNTIME" = true ]; then
+        print_status "Setting up HeLa Runtime (hela-runtime) ..."
+        if setup_server "hela-runtime"; then
+            print_success "HeLa Runtime ready. Start with: node hela-runtime/dist/index.js (or set HELA_PROFILE)."
+        else
+            print_warning "HeLa Runtime setup failed (optional)."
+        fi
     fi
 
     if [ -z "$MCP_CLIENT" ]; then

@@ -79,6 +79,13 @@
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
+    },
+    "hela-runtime": {
+      "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
+      "commit": "4c9c7472eb30c66e65df3f24abbc9d0a69c47ff2",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "0.2.0"
     }
   },
   "verified_profiles": [

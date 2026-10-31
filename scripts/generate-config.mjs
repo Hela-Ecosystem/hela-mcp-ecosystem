@@ -71,6 +71,10 @@ function resolveServers(profile, inventory, aliases = {}) {
       console.error(`[warn] Profile "${profile.id}" references unknown server "${rawId}". Skipping.`);
       continue;
     }
+    if (info.clientFacing === false) {
+      console.error(`[info] Skipping non-client-facing entry "${rawId}" in profile "${profile.id}".`);
+      continue;
+    }
     resolved.push({ id: info.id || id, ...info });
   }
   return resolved;

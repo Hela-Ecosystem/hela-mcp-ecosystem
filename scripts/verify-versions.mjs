@@ -22,7 +22,7 @@ function pkgVersion(dir) {
   return null;
 }
 
-function initVersion(entryPath, dirPath) {
+function initVersion(entryPath, dirPath, timeout = 1500) {
   return new Promise((resolve) => {
     const proc = spawn('node', [entryPath], { cwd: dirPath, stdio: ['pipe', 'pipe', 'pipe'] });
     let out = '';
@@ -35,7 +35,7 @@ function initVersion(entryPath, dirPath) {
         const line = out.split('\n').find((l) => l.trim().startsWith('{'));
         resolve(JSON.parse(line)?.result?.serverInfo?.version ?? null);
       } catch { resolve(null); }
-    }, 1500);
+    }, timeout);
   });
 }
 
@@ -48,7 +48,8 @@ for (const key of Object.keys(INV.inventory)) {
   const pv = pkgVersion(realDir);
   const iv = s.version ?? null;
   const sv = SNAP.servers?.[s.id]?.serverVersion ?? null;
-  const initV = (fs.existsSync(path.join(realDir, s.entry)) ? await initVersion(path.join(realDir, s.entry), realDir) : null);
+  const bootTimeout = s.id === 'hela-runtime' ? 30000 : 1500;
+  const initV = (fs.existsSync(path.join(realDir, s.entry)) ? await initVersion(path.join(realDir, s.entry), realDir, bootTimeout) : null);
   const all = [pv, initV, iv, sv].filter(Boolean);
   const ok = all.length > 0 && all.every((v) => v === pv) && (sv === null || sv === pv);
   if (!ok) failed = true;
