@@ -82,7 +82,7 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "569e3fe45481895acd25be303a5f567cf89cff28",
+      "commit": "d4e3091148aea3400f9e04f68972808107400bf9",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "0.2.0"
