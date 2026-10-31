@@ -240,8 +240,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c7c2ec05bfef51910c15d5573cf562b1bdc2a7ff",
-      "version": "0.4.0",
+      "revision": "f5b7357c4e889e2ac77a415fd21f7f70e47ee782",
+      "version": "0.5.0",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",
