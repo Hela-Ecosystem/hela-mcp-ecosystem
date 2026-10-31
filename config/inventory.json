@@ -201,7 +201,8 @@
       "revision": "0f6cc0d532b9dad69860b0450badb13a689c2c9e",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "lazy": true
     },
     "hela-plastid": {
       "id": "hela-plastid",
@@ -221,7 +222,8 @@
       "revision": "72dca1eb143f4c3604dd4aa2f469f34d963c6c1f",
       "env": [],
       "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "lazy": true
     },
     "hela-runtime": {
       "id": "hela-runtime",
@@ -238,8 +240,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "52927b08690c489902d867f082c4b38120969c05",
-      "version": "0.3.0",
+      "revision": "c7c2ec05bfef51910c15d5573cf562b1bdc2a7ff",
+      "version": "0.4.0",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",
