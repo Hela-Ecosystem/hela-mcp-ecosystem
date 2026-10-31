@@ -6,7 +6,7 @@
       "name": "HeLa Minimal",
       "system": "any",
       "persona": "Lightweight Research & Memory Agent",
-      "description": "Smallest viable HeLa stack: orchestration (Mitosis), persistent memory (Genome), and multi-source research (Enzyme). No Chromium, ADB, or Blender dependencies — runs on any machine with Node.js.",
+      "description": "Smallest viable HeLa stack: orchestration (Mitosis), persistent memory (Genome), and multi-source research (Enzyme). No Chromium, ADB, or Blender dependencies \u2014 runs on any machine with Node.js.",
       "servers": [
         "hela-mitosis",
         "hela-genome",
@@ -120,6 +120,16 @@
         "hela-phenotype",
         "hela-receptor",
         "hela-plastid"
+      ]
+    },
+    {
+      "id": "runtime",
+      "name": "HeLa Runtime (single endpoint)",
+      "system": "any",
+      "persona": "Runtime-backed agent",
+      "description": "Boots all 10 cells behind the HeLa Runtime daemon. Client connects to ONE MCP server instead of 10. Requires all cell repos present (runtime spawns them).",
+      "servers": [
+        "hela-runtime"
       ]
     }
   ]

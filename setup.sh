@@ -241,6 +241,15 @@ main() {
     # Setup each server in the profile unless --reconfigure is passed
     if [ "$RECONFIGURE_ONLY" = false ]; then
         local ok=0 total=0 key
+        # Runtime profile: build all cells first so the daemon can spawn them
+        if [ "$PROFILE_ID" = "runtime" ]; then
+            print_status "Runtime profile: building all 10 cells (daemon spawns them at runtime) ..."
+            local cell_keys=(hela-mitosis hela-genome hela-membrane hela-nucleus hela-ribosome hela-enzyme hela-cytosol hela-phenotype hela-receptor hela-plastid)
+            for key in "${cell_keys[@]}"; do
+                if setup_server "$key"; then ok=$((ok + 1)); else print_warning "Failed: $key (runtime may be degraded)"; fi
+            done
+            ok=0
+        fi
         mapfile -t servers < <(profile_servers "$PROFILE_ID")
         total="${#servers[@]}"
         if [ "$total" -eq 0 ]; then print_error "No servers in profile $PROFILE_ID."; exit 1; fi

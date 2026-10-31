@@ -128,7 +128,11 @@ function buildServerEnv(s, root, options = {}) {
     } else if (key === 'WIKIPEDIA_DEFAULT_LANGUAGE') {
       env[key] = 'en';
     } else if (key === 'HELA_PROFILE') {
-      env[key] = options.profile || 'dev-workspace';
+      env[key] = 'all';
+    } else if (key === 'HELA_ECOSYSTEM_ROOT') {
+      env[key] = root;
+    } else if (key === 'HELA_HTTP_PORT') {
+      env[key] = '8787';
     } else if (/_AVAILABLE$|_ENABLED$/.test(key)) {
       env[key] = 'true';
     } else {
@@ -142,7 +146,7 @@ function renderOpencode(servers, root, options) {
   const mcp = {};
   for (const s of servers) {
     const name = s.id.replace('-mcp-server', '').replace('-mcp', '');
-    const entry = s.entry ? path.join(root, s.dir, s.entry) : null;
+    const entry = s.entry ? path.join(resolveServerDir(s, root), s.entry) : null;
     const block = {
       type: 'local',
       enabled: !!entry,

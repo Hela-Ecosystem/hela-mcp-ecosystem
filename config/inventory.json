@@ -248,7 +248,7 @@
         "HELA_HTTP_PORT"
       ],
       "description": "Runtime daemon that boots the 10 HeLa cells as supervised MCP processes and multiplexes their tools behind one MCP endpoint, with an agent host entry point.",
-      "clientFacing": false,
+      "clientFacing": true,
       "kind": "runtime"
     }
   },
