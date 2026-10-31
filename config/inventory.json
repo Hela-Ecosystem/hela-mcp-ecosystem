@@ -238,7 +238,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "4c9c7472eb30c66e65df3f24abbc9d0a69c47ff2",
+      "revision": "900aa942bf21fb14681a5d4a25ebe9f957f7eb3b",
       "version": "0.2.0",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
@@ -246,7 +246,8 @@
         "HELA_HTTP_PORT"
       ],
       "description": "Runtime daemon that boots the 10 HeLa cells as supervised MCP processes and multiplexes their tools behind one MCP endpoint, with an agent host entry point.",
-      "clientFacing": false
+      "clientFacing": false,
+      "kind": "runtime"
     }
   },
   "aliases": {
