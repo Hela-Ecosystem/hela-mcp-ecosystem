@@ -142,6 +142,13 @@ Every profile in the ecosystem includes the core dual backbone:
 * **Included Servers (10 Servers):**
   * `hela-mitosis`, `hela-genome`, `hela-membrane`, `hela-nucleus`, `hela-ribosome`, `hela-enzyme`, `hela-cytosol`, `hela-phenotype`, `hela-receptor`, `hela-plastid`
 
+### 8. `runtime` — HeLa Runtime (Single Endpoint)
+
+* **Target System:** Any
+* **Agent Persona:** Runtime-backed single-endpoint agent
+* **Purpose:** One client connection instead of 10. Builds all 10 cells + the daemon (`--profile runtime`). Supports lazy ignition, crash recovery, opt-in namespacing, in-process `hela.pipe`.
+* **Included Servers (1 Server):** `hela-runtime`
+
 ---
 
 ## Profile Compatibility Matrix

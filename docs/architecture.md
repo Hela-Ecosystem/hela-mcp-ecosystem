@@ -146,6 +146,17 @@ Tool names are unique ecosystem-wide after the Phase 1 rename, so the router mat
 
 ---
 
+### 4.5 HeLa Runtime (optional daemon, `hela-runtime`)
+
+An optional single-process daemon that boots all 10 cells as supervised child processes and multiplexes their tools behind one MCP stdio endpoint. Use it when you want a single client connection instead of 10.
+
+- **Source:** https://github.com/Hela-Ecosystem/hela-runtime
+- **Entry:** `hela-runtime/dist/index.js`
+- **Profile:** `--profile runtime` in `setup.sh` (builds all 10 cells + daemon).
+- **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, `HELA_NAMESPACE_TOOLS`.
+- **Features:** lazy ignition (heavy cells on demand), crash recovery with auto-restart, opt-in tool namespacing, in-process `hela.pipe` chaining, HTTP `/healthz`.
+- **Without it:** users keep the 10 individual servers and `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
+
 ## 5. Security & Isolation Model
 
 ```mermaid
