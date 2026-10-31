@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "1e8e4d1c5393d29dd782490a5ee978c166914f39",
+      "revision": "0781fcce6a48b5a9fd67f1f79b9828727f0843fd",
       "env": [
         "MEMORY_FILE_PATH",
         "AWESOME_COPILOT_ENABLED",
@@ -52,7 +52,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "476155d78aaff78f0be6919135a36cfb5beb14d1",
+      "revision": "f96fe2be7f4b56c706f3584c0400fb4d27777d3a",
       "env": [],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
       "version": "3.0.0"
@@ -72,7 +72,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "28849cf155d365db3f1ec796c40f5edc67b0e94c",
+      "revision": "20c52e828d9a021553a83e2b6a4c08cfa62f55f6",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
       "version": "3.0.0"
@@ -92,7 +92,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "e075b0b74d2fa79518ae1f7db33448cbd62fdd73",
+      "revision": "808f3ac063eb98948b4d104169fb158d3ac593ba",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
       "version": "3.0.0"
@@ -112,7 +112,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "fd80c89ad94d1a9652fe6dc59ac3ca45b143103b",
+      "revision": "fee8dceb40a7f009d88bf43a9f1b82d314f266bf",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
       "version": "3.0.0"
@@ -132,7 +132,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "3746139fdede16d4950699a19f2922a5cf179a71",
+      "revision": "7230e6e5badc3cbdf9e5f34347248cabd37720f3",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -158,7 +158,7 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "783eadb65eb74ebbef0655162bf6ed45fd23484b",
+      "revision": "5333679cb718ef022447eb9febebb7a2bdbef26f",
       "env": [],
       "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification.",
       "version": "3.0.0"
@@ -178,7 +178,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "b260d6282e6bd37d261aaba9c9877f2604ff4bab",
+      "revision": "1df4764d3b6057af3aa40fc128ac084e244d764b",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
       "version": "3.0.0"
@@ -198,7 +198,7 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "f1528342c40dc3b33386f86daf81091935b61f29",
+      "revision": "0f6cc0d532b9dad69860b0450badb13a689c2c9e",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
       "version": "3.0.0"
@@ -218,7 +218,7 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": false,
-      "revision": "777bf990c2c678a83deca591f4e03b881eecd08a",
+      "revision": "72dca1eb143f4c3604dd4aa2f469f34d963c6c1f",
       "env": [],
       "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
       "version": "3.0.0"
