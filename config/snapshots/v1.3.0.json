@@ -11,70 +11,70 @@
   },
   "servers": {
     "hela-mitosis": {
-      "repo": "https://github.com/1999AZZAR/chaining-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
       "commit": "1e8e4d1c5393d29dd782490a5ee978c166914f39",
       "branch": "main",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-genome": {
-      "repo": "https://github.com/1999AZZAR/project-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
       "commit": "476155d78aaff78f0be6919135a36cfb5beb14d1",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-membrane": {
-      "repo": "https://github.com/1999AZZAR/filesystem-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
       "commit": "28849cf155d365db3f1ec796c40f5edc67b0e94c",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-nucleus": {
-      "repo": "https://github.com/1999AZZAR/terminal-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git",
       "commit": "e075b0b74d2fa79518ae1f7db33448cbd62fdd73",
       "branch": "main",
       "entry": "build/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-ribosome": {
-      "repo": "https://github.com/1999AZZAR/menager-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
       "commit": "fd80c89ad94d1a9652fe6dc59ac3ca45b143103b",
       "branch": "master",
       "entry": "build/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-enzyme": {
-      "repo": "https://github.com/1999AZZAR/researcher-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
       "commit": "3746139fdede16d4950699a19f2922a5cf179a71",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-cytosol": {
-      "repo": "https://github.com/1999AZZAR/browser-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
       "commit": "783eadb65eb74ebbef0655162bf6ed45fd23484b",
       "branch": "master",
       "entry": "src/server.js",
       "serverVersion": "3.0.0"
     },
     "hela-phenotype": {
-      "repo": "https://github.com/1999AZZAR/designer-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
       "commit": "b260d6282e6bd37d261aaba9c9877f2604ff4bab",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-receptor": {
-      "repo": "https://github.com/1999AZZAR/scrcpy-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
       "commit": "f1528342c40dc3b33386f86daf81091935b61f29",
       "branch": "master",
       "entry": "dist/server.js",
       "serverVersion": "3.0.0"
     },
     "hela-plastid": {
-      "repo": "https://github.com/1999AZZAR/ll3m-mcp.git",
+      "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git",
       "commit": "777bf990c2c678a83deca591f4e03b881eecd08a",
       "branch": "master",
       "entry": "dist/index.js",

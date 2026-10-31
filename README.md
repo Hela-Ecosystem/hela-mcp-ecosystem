@@ -51,16 +51,16 @@ flowchart TB
 
 | Canonical Identity | Machine ID (`id`) | Technical Source Repo | Scope | Cellular Metaphor & Role |
 |---|---|---|---|---|
-| **HeLa Mitosis** | `hela-mitosis` | [`chaining-mcp`](https://github.com/1999AZZAR/chaining-mcp) | Core | **Orchestrator**: Bundled Needle 3 agent runtime, dynamic routing, 40 bundled prompt templates |
-| **HeLa Genome** | `hela-genome` | [`Project-Guardian-mcp-server`](https://github.com/1999AZZAR/project-guardian-mcp-server) | Core | **State Backbone**: Entity-relation knowledge graph, milestone tracking, memory persistence |
-| **HeLa Membrane** | `hela-membrane` | [`filesystem-mcp-server`](https://github.com/1999AZZAR/filesystem-mcp-server) | Core | **Workspace**: Sandboxed filesystem operations, recursive search, archive extraction |
-| **HeLa Nucleus** | `hela-nucleus` | [`terminal-mcp-server`](https://github.com/1999AZZAR/terminal-mcp-server) | Core | **Execution**: Command execution, subshell isolation, RTK token-optimized execution |
-| **HeLa Ribosome** | `hela-ribosome` | [`menager-mcp-server`](https://github.com/1999AZZAR/menager-mcp-server) | Core | **Process Harness**: Interactive PTY multiplexing, Regex hooks, lifecycle management |
-| **HeLa Enzyme** | `hela-enzyme` | [`researcher-mcp`](https://github.com/1999AZZAR/researcher-mcp) | Core | **Knowledge**: Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia synthesis and fact-checking |
-| **HeLa Cytosol** | `hela-cytosol` | [`Browser-Agent`](https://github.com/1999AZZAR/Browser-Agent) | Core | **Interaction**: Playwright browser automation, accessibility trees, DOM perception |
-| **HeLa Phenotype** | `hela-phenotype` | [`the-designer`](https://github.com/1999AZZAR/the-designer) | Specialized | **Design**: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis |
-| **HeLa Receptor** | `hela-receptor` | [`scrcpy-mcp`](https://github.com/1999AZZAR/scrcpy-mcp) | Specialized | **Mobile**: Android device automation, ADB bridge, XML view hierarchy inspection |
-| **HeLa Plastid** | `hela-plastid` | [`ll3m-agent`](https://github.com/1999AZZAR/ll3m-agent) | Specialized | **3D Modeling**: Autonomous Blender procedural modeling, materials, and render pipeline |
+| **HeLa Mitosis** | `hela-mitosis` | [`chaining-mcp`](https://github.com/Hela-Ecosystem/chaining-mcp) | Core | **Orchestrator**: Bundled Needle 3 agent runtime, dynamic routing, 40 bundled prompt templates |
+| **HeLa Genome** | `hela-genome` | [`Project-Guardian-mcp-server`](https://github.com/Hela-Ecosystem/project-guardian-mcp-server) | Core | **State Backbone**: Entity-relation knowledge graph, milestone tracking, memory persistence |
+| **HeLa Membrane** | `hela-membrane` | [`filesystem-mcp-server`](https://github.com/Hela-Ecosystem/filesystem-mcp-server) | Core | **Workspace**: Sandboxed filesystem operations, recursive search, archive extraction |
+| **HeLa Nucleus** | `hela-nucleus` | [`terminal-mcp-server`](https://github.com/Hela-Ecosystem/terminal-mcp-server) | Core | **Execution**: Command execution, subshell isolation, RTK token-optimized execution |
+| **HeLa Ribosome** | `hela-ribosome` | [`menager-mcp-server`](https://github.com/Hela-Ecosystem/menager-mcp-server) | Core | **Process Harness**: Interactive PTY multiplexing, Regex hooks, lifecycle management |
+| **HeLa Enzyme** | `hela-enzyme` | [`researcher-mcp`](https://github.com/Hela-Ecosystem/researcher-mcp) | Core | **Knowledge**: Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia synthesis and fact-checking |
+| **HeLa Cytosol** | `hela-cytosol` | [`Browser-Agent`](https://github.com/Hela-Ecosystem/Browser-Agent) | Core | **Interaction**: Playwright browser automation, accessibility trees, DOM perception |
+| **HeLa Phenotype** | `hela-phenotype` | [`the-designer`](https://github.com/Hela-Ecosystem/the-designer) | Specialized | **Design**: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis |
+| **HeLa Receptor** | `hela-receptor` | [`scrcpy-mcp`](https://github.com/Hela-Ecosystem/scrcpy-mcp) | Specialized | **Mobile**: Android device automation, ADB bridge, XML view hierarchy inspection |
+| **HeLa Plastid** | `hela-plastid` | [`ll3m-agent`](https://github.com/Hela-Ecosystem/ll3m-agent) | Specialized | **3D Modeling**: Autonomous Blender procedural modeling, materials, and render pipeline |
 
 ---
 
@@ -75,7 +75,7 @@ flowchart TB
 Check your host environment, compiler readiness, external runtimes, and API key fallbacks:
 
 ```bash
-git clone https://github.com/1999AZZAR/hela-mcp-ecosystem.git
+git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
 ./setup.sh doctor
 ```

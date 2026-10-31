@@ -7,7 +7,7 @@ Milestone 1 establishes the canonical foundation for the **HeLa MCP Ecosystem**.
 ## 2. Functional Requirements
 
 1. **Remote Repository & Baseline Audit**:
-   - Audit all 10 MCP repositories against GitHub remotes (`1999AZZAR/*`).
+   - Audit all 10 MCP repositories against GitHub remotes (`Hela-Ecosystem/*`).
    - Verify build commands, package entrypoints, runtime requirements, and environment variables.
    - Record exact Git commit hashes as current baseline revisions.
    - Run baseline test suite across all servers.

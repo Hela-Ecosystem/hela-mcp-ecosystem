@@ -52,7 +52,7 @@ Modern, responsive documentation landing site featuring:
 ## Quick Start
 
 ```bash
-git clone https://github.com/1999AZZAR/hela-mcp-ecosystem.git
+git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
 ./setup.sh doctor
 ./setup.sh

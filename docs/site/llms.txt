@@ -5,8 +5,8 @@
 > 292 tools, eight deployment profiles, six cross-server pipelines.
 
 - Site: https://hela.my.id/
-- Source: https://github.com/1999AZZAR/hela-mcp-ecosystem
-- Install: `curl -fsSL https://raw.githubusercontent.com/1999AZZAR/hela-mcp-ecosystem/master/setup.sh | bash`
+- Source: https://github.com/Hela-Ecosystem/hela-mcp-ecosystem
+- Install: `curl -fsSL https://raw.githubusercontent.com/Hela-Ecosystem/hela-mcp-ecosystem/master/setup.sh | bash`
 - License: see repository LICENSE.
 
 ## Pages
