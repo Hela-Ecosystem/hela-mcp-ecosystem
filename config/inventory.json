@@ -52,7 +52,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f96fe2be7f4b56c706f3584c0400fb4d27777d3a",
+      "revision": "942097bbc19342e230a1ffa19ffc05e8b18a8593",
       "env": [],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
       "version": "3.0.0"
