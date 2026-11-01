@@ -48,7 +48,7 @@ for (const key of Object.keys(INV.inventory)) {
   const pv = pkgVersion(realDir);
   const iv = s.version ?? null;
   const sv = SNAP.servers?.[s.id]?.serverVersion ?? null;
-  const bootTimeout = s.id === 'hela-runtime' ? 30000 : 1500;
+  const bootTimeout = s.id === 'hela-runtime' ? 30000 : s.id === 'hela-genome' ? 15000 : 1500;
   const initV = (fs.existsSync(path.join(realDir, s.entry)) ? await initVersion(path.join(realDir, s.entry), realDir, bootTimeout) : null);
   const all = [pv, initV, iv, sv].filter(Boolean);
   const ok = all.length > 0 && all.every((v) => v === pv) && (sv === null || sv === pv);
