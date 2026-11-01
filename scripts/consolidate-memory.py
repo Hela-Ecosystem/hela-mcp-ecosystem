@@ -12,8 +12,16 @@ from pathlib import Path
 DEFAULT_CENTRAL = os.path.expanduser("~/memory/memory.db")
 DEFAULT_VAULT = "/home/azzar/Documents/obsidian/vaults/Vault"
 
+import re as _re
 def safe(s):
-    return (s or "").replace("/", "_").replace("\\", "_").replace(":", "_")[:120] or "entity"
+    s = (s or "")
+    # Obsidian-forbidden filename characters: \ / : * ? " < > |
+    s = _re.sub(r'[\\\\/:*?"<>|]', '_', s)
+    # trim leading/trailing spaces and dots (also problematic on some OS)
+    s = s.strip(' .')
+    if not s:
+        s = 'entity'
+    return s[:120]
 
 def read_db(dbpath):
     ents, rels = [], []
