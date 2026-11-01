@@ -132,10 +132,19 @@ def main():
         for cand in ['/home/azzar/project', '/home/ubuntu/projects', '/home/ubuntu']:
             if os.path.isdir(cand):
                 roots.append(cand)
+    # Use find with maxdepth for speed (os.walk is too slow on large trees)
     for root in roots:
-        for dp, _, files in os.walk(root):
-            if 'memory.db' in files:
-                dbpaths.append(os.path.join(dp, 'memory.db'))
+        try:
+            out = subprocess.check_output(['find', root, '-maxdepth', '8', '-name', 'memory.db', '-type', 'f'],
+                                         stderr=subprocess.DEVNULL, text=True)
+            for line in out.splitlines():
+                line = line.strip()
+                if line:
+                    dbpaths.append(line)
+        except Exception:
+            for dp, _, files in os.walk(root):
+                if 'memory.db' in files:
+                    dbpaths.append(os.path.join(dp, 'memory.db'))
     # servy
     if args.include_servy:
         print('Fetching servy db list...')
@@ -165,11 +174,14 @@ def main():
         'UniqueVaultTest99','debug:a','debug:b','debug:c','debug:d','debug:e',
         'file:tests/test_vault.py','E2E MCP Test - Azzar Brews',
     }
+    import re as _re2
     def is_trash(name):
         n = (name or '').strip().lower()
         if n in {t.lower() for t in TRASH_NAMES}: return True
         if n.startswith('debug:') or n.startswith('test_') or n.startswith('test-'): return True
         if 'test' in n and ('entity' in n or 'write' in n or 'vault' in n): return True
+        # auto-generated junk: e.g. c_0_wfgwd, bo_23_4_8yoe2, bn_-1_2_gtzzx
+        if _re2.match(r'^[a-z]{1,3}_-?\d+_[a-z0-9]+$', n): return True
         return False
 
     # Read all
@@ -207,6 +219,18 @@ def main():
         deduped.append(survivor)
     print(f'After dedup: {len(deduped)} entities')
 
+    # Dedup relations by (from, to, type)
+    seen_rels = set()
+    deduped_rels = []
+    for r in all_rels:
+        key = (r["from"], r["to"], r["type"])
+        if key in seen_rels:
+            continue
+        seen_rels.add(key)
+        deduped_rels.append(r)
+    all_rels = deduped_rels
+    print(f'After rel dedup: {len(all_rels)} relations')
+
     # Upsert into central
     con = sqlite3.connect(args.central)
     ensure_central_schema(con)
@@ -222,6 +246,17 @@ def main():
             ('test' in low and ('entity' in low or 'write' in low or 'vault' in low))):
             con.execute("DELETE FROM entities WHERE name=?", (nm,))
             con.execute("DELETE FROM relations WHERE from_entity=? OR to_entity=?", (nm,nm))
+    # Dedup relations in central (keep one per from/to/type)
+    try:
+        dups = con.execute("""SELECT from_entity, to_entity, relation_type, MIN(id) as keep_id
+                              FROM relations GROUP BY from_entity, to_entity, relation_type
+                              HAVING COUNT(*) > 1""").fetchall()
+        for from_e, to_e, rtype, keep_id in dups:
+            con.execute("""DELETE FROM relations
+                           WHERE from_entity=? AND to_entity=? AND relation_type=? AND id != ?""",
+                        (from_e, to_e, rtype, keep_id))
+    except Exception:
+        pass
     con.commit()
     upsert_central(con, deduped, all_rels)
     con.close()
