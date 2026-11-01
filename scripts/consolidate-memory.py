@@ -155,13 +155,35 @@ def main():
 
     print(f'Found {len(dbpaths)} memory.db files')
 
+    # Skip manual persona reference notes (live in personas/ subfolder)
+    SKIP_PREFIXES = ('Persona:',)
+
+    # Trash filter (test/junk entities to exclude)
+    TRASH_NAMES = {
+        'A','B','BackfillTest','HumanNote','ManualNote','ManualRebuild',
+        'RemoteSyncTest','RemoteObsidianTest','TestEntity','Test_Write_Check',
+        'UniqueVaultTest99','debug:a','debug:b','debug:c','debug:d','debug:e',
+        'file:tests/test_vault.py','E2E MCP Test - Azzar Brews',
+    }
+    def is_trash(name):
+        n = (name or '').strip().lower()
+        if n in {t.lower() for t in TRASH_NAMES}: return True
+        if n.startswith('debug:') or n.startswith('test_') or n.startswith('test-'): return True
+        if 'test' in n and ('entity' in n or 'write' in n or 'vault' in n): return True
+        return False
+
     # Read all
     all_ents = []
     all_rels = []
     for db in dbpaths:
         e, r = read_db(db)
-        all_ents.extend(e)
-        all_rels.extend(r)
+        for ent in e:
+            if is_trash(ent['name']): continue
+            if any(ent['name'].startswith(p) for p in SKIP_PREFIXES): continue
+            all_ents.append(ent)
+        for rel in r:
+            if is_trash(rel['from']) or is_trash(rel['to']): continue
+            all_rels.append(rel)
     print(f'Total raw: {len(all_ents)} entities, {len(all_rels)} relations')
 
     # Dedup entities by normalized name (merge observations)
@@ -188,6 +210,19 @@ def main():
     # Upsert into central
     con = sqlite3.connect(args.central)
     ensure_central_schema(con)
+    # Remove trash entities from central
+    for t in TRASH_NAMES:
+        con.execute("DELETE FROM entities WHERE name=?", (t,))
+        con.execute("DELETE FROM relations WHERE from_entity=? OR to_entity=?", (t,t))
+    # Pattern-based trash cleanup
+    for row in con.execute("SELECT name FROM entities").fetchall():
+        nm = row[0]
+        low = (nm or '').lower()
+        if (low.startswith('debug:') or low.startswith('test_') or low.startswith('test-') or
+            ('test' in low and ('entity' in low or 'write' in low or 'vault' in low))):
+            con.execute("DELETE FROM entities WHERE name=?", (nm,))
+            con.execute("DELETE FROM relations WHERE from_entity=? OR to_entity=?", (nm,nm))
+    con.commit()
     upsert_central(con, deduped, all_rels)
     con.close()
     print(f'Central DB updated: {args.central}')
