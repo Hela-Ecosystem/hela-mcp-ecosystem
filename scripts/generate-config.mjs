@@ -131,6 +131,10 @@ function buildServerEnv(s, root, options = {}) {
       env[key] = 'en';
     } else if (key === 'HELA_PROFILE') {
       env[key] = options.profile && options.profile !== 'runtime' ? options.profile : 'dev-workspace';
+    } else if (key.startsWith('HELA_GENOME_OBSIDIAN_')) {
+      // Optional Obsidian vault mirror; set manually by the user (see project-mcp README).
+      // Skip auto-fill so generated configs don't contain placeholder secrets.
+      continue;
     } else if (key === 'HELA_ECOSYSTEM_ROOT') {
       env[key] = root;
     } else if (key === 'HELA_HTTP_PORT') {
