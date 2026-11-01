@@ -28,7 +28,7 @@ function parseArgs(argv) {
 const args = parseArgs(process.argv.slice(2));
 if (!args.input) { console.error('Usage: --input <config> [--output <file>] [--backend auto|opencode|cursor|claude]'); process.exit(1); }
 
-const root = args.root || path.resolve(__dirname, '../..');
+const root = args.root || process.env.HELA_ECOSYSTEM_ROOT || (fs.existsSync(path.resolve(process.cwd(), 'hela-mcp-ecosystem')) ? process.cwd() : path.resolve(__dirname, '../..'));
 const runtimeEntry = path.join(root, 'hela-runtime', 'dist', 'index.js');
 const ecosystemRoot = path.join(root, 'hela-mcp-ecosystem');
 
