@@ -106,6 +106,8 @@ def main():
     ap.add_argument('--central', default=DEFAULT_CENTRAL)
     ap.add_argument('--include-servy', action='store_true')
     ap.add_argument('--servy-host', default='servy')
+    ap.add_argument('--clean-vault', action='store_true', default=True,
+                    help='Wipe existing .md notes before regenerating (default: true)')
     args = ap.parse_args()
 
     os.makedirs(args.vault, exist_ok=True)
@@ -173,6 +175,18 @@ def main():
     upsert_central(con, deduped, all_rels)
     con.close()
     print(f'Central DB updated: {args.central}')
+
+    # Clean vault (remove stale/duplicate notes) so vault == central exactly
+    if args.clean_vault:
+        removed = 0
+        for fn in os.listdir(args.vault):
+            if fn.endswith('.md'):
+                try:
+                    os.remove(os.path.join(args.vault, fn))
+                    removed += 1
+                except Exception:
+                    pass
+        print(f'Cleaned {removed} stale notes from vault')
 
     # Write vault notes
     # build relation lookup
