@@ -180,8 +180,10 @@ def main():
         if n in {t.lower() for t in TRASH_NAMES}: return True
         if n.startswith('debug:') or n.startswith('test_') or n.startswith('test-'): return True
         if 'test' in n and ('entity' in n or 'write' in n or 'vault' in n): return True
+        if n.startswith('perf_run_') or n.startswith('perf-run-') or n.startswith('perf run'): return True
+        if n.startswith('perf_warm_') or n.startswith('perf-warm-'): return True
         # auto-generated junk: e.g. c_0_wfgwd, bo_23_4_8yoe2, bn_-1_2_gtzzx
-        if _re2.match(r'^[a-z]{1,3}_-?\d+_[a-z0-9]+$', n): return True
+        if _re2.match(r'^[a-z]{1,3}_-?\d+.*$', n): return True
         return False
 
     # Read all
@@ -192,6 +194,10 @@ def main():
         for ent in e:
             if is_trash(ent['name']): continue
             if any(ent['name'].startswith(p) for p in SKIP_PREFIXES): continue
+            # filter perf-only auto-generated junk (observation == 'perf')
+            if ent['obs'] == ['perf'] or ent['obs'] == ['perf ']: continue
+            # filter any entity whose name matches auto-gen pattern (prefix_num_...)
+            if _re2.match(r'^[a-z]{1,3}_-?\d+.*$', (ent['name'] or '').lower()): continue
             all_ents.append(ent)
         for rel in r:
             if is_trash(rel['from']) or is_trash(rel['to']): continue
@@ -243,7 +249,8 @@ def main():
         nm = row[0]
         low = (nm or '').lower()
         if (low.startswith('debug:') or low.startswith('test_') or low.startswith('test-') or
-            ('test' in low and ('entity' in low or 'write' in low or 'vault' in low))):
+            ('test' in low and ('entity' in low or 'write' in low or 'vault' in low)) or
+            _re2.match(r'^[a-z]{1,3}_-?\d+', low)):
             con.execute("DELETE FROM entities WHERE name=?", (nm,))
             con.execute("DELETE FROM relations WHERE from_entity=? OR to_entity=?", (nm,nm))
     # Dedup relations in central (keep one per from/to/type)
@@ -275,15 +282,27 @@ def main():
         print(f'Cleaned {removed} stale notes from vault')
 
     # Write vault notes
-    # build relation lookup
+    # Build vault from CENTRAL db (source of truth) so vault == central exactly
+    con2 = sqlite3.connect(args.central)
+    cent_ents = []
+    for r in con2.execute("SELECT name, entity_type, observations, created_at, updated_at FROM entities"):
+        try:
+            obs = json.loads(r[2]) if r[2] else []
+        except Exception:
+            obs = [r[2]] if r[2] else []
+        cent_ents.append({"name": r[0], "type": r[1], "obs": obs, "created": r[3], "updated": r[4]})
+    cent_rels = []
+    for r in con2.execute("SELECT from_entity, to_entity, relation_type, created_at FROM relations"):
+        cent_rels.append({"from": r[0], "to": r[1], "type": r[2], "created": r[3]})
+    con2.close()
     rels_by_entity = {}
-    for r in all_rels:
+    for r in cent_rels:
         rels_by_entity.setdefault(r["from"], []).append(r)
         rels_by_entity.setdefault(r["to"], []).append(r)
-    for e in deduped:
+    for e in cent_ents:
         rels = rels_by_entity.get(e["name"], [])
         write_note(args.vault, e, rels)
-    print(f'Vault notes written: {len(deduped)} to {args.vault}')
+    print(f'Vault notes written: {len(cent_ents)} to {args.vault} (from central)')
 
 if __name__ == '__main__':
     main()
