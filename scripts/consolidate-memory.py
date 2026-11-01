@@ -106,6 +106,8 @@ def main():
     ap.add_argument('--central', default=DEFAULT_CENTRAL)
     ap.add_argument('--include-servy', action='store_true')
     ap.add_argument('--servy-host', default='servy')
+    ap.add_argument('--roots', default=None,
+                    help='Comma-separated roots to scan for memory.db (default: auto)')
     ap.add_argument('--clean-vault', action='store_true', default=True,
                     help='Wipe existing .md notes before regenerating (default: true)')
     args = ap.parse_args()
@@ -115,8 +117,14 @@ def main():
 
     # Collect db paths
     dbpaths = []
-    # local
-    for root in ['/home/azzar/project']:
+    if args.roots:
+        roots = [r.strip() for r in args.roots.split(',') if r.strip()]
+    else:
+        roots = []
+        for cand in ['/home/azzar/project', '/home/ubuntu/projects', '/home/ubuntu']:
+            if os.path.isdir(cand):
+                roots.append(cand)
+    for root in roots:
         for dp, _, files in os.walk(root):
             if 'memory.db' in files:
                 dbpaths.append(os.path.join(dp, 'memory.db'))
