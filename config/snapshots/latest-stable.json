@@ -19,7 +19,7 @@
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "6da3c77d6634d1b73a0f92c8be5a3b2fc48fce40",
+      "commit": "010f1eb712e09d3487e0ab3e949d44ac668125b5",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
