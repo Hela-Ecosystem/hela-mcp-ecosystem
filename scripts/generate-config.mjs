@@ -138,7 +138,9 @@ function buildServerEnv(s, root, options = {}) {
     } else if (key === 'HELA_ECOSYSTEM_ROOT') {
       env[key] = root;
     } else if (key === 'HELA_HTTP_PORT') {
-      env[key] = '8787';
+      // Optional HTTP health endpoint; disabled by default to avoid port conflicts.
+      // Set manually (e.g. HELA_HTTP_PORT=8790) if desired.
+      continue;
     } else if (/_AVAILABLE$|_ENABLED$/.test(key)) {
       env[key] = 'true';
     } else {
