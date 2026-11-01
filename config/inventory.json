@@ -52,7 +52,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "b74182e785cb1895daed032494a9c97c77207b81",
+      "revision": "ee31d55f735b212f7e4633c18c55f6a706761f95",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
