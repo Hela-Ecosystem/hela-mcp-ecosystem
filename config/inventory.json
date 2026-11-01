@@ -52,9 +52,11 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "d58965934103839ded81b144be1990c4dd21b371",
+      "revision": "0e106ea2dd0bf3cf21d04ac023f87f553bc567e4",
       "env": [
-        "HELA_GENOME_OBSIDIAN_VAULT"
+        "HELA_GENOME_OBSIDIAN_VAULT",
+        "HELA_GENOME_OBSIDIAN_SYNC_CMD",
+        "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
       "version": "3.0.0"
