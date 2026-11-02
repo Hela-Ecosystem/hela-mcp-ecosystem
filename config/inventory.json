@@ -244,8 +244,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "0882632ec87549ace686722245ef159a586836ca",
-      "version": "1.0.0",
+      "revision": "dbbe15668efaf663b51c9f31ddad6c4591647648",
+      "version": "1.1.0",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",
