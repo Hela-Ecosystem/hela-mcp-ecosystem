@@ -23,7 +23,7 @@
 ## Server roster (292 tools)
 
 - HeLa Mitosis (orchestrator / agent runtime, 29 tools)
-- HeLa Genome (state & memory knowledge graph, 26 tools)
+- HeLa Genome (state & memory knowledge graph, 29 tools)
 - HeLa Membrane (workspace filesystem, 16 tools)
 - HeLa Nucleus (command execution, 7 tools)
 - HeLa Ribosome (PTY harness sessions, 28 tools)
