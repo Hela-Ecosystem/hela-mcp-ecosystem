@@ -13,6 +13,8 @@ The v1.4.0 source snapshot pins the published cell revisions and runtime 1.1.0. 
 
 Known limits: Zed/Codex ACP authenticated-session verification remains pending; duplicate ownership warnings do not establish a connection failure. Existing live vault conflicts remain archived for deliberate review. Android/Blender discovery is not hardware integration. Endpoint authentication and credential rotation remain operator work, not changes included in this release.
 
+**Servy deployment verified (2026-11-06):** the rooted ARM Nix package serves the eight-cell `dev-workspace` profile under systemd. Local/public discovery returns 236 live tools, versus 230 in feature-disabled probes; all three Genome mission tools are present. Deployed doctor and strict version/pin checks pass. Existing conflict archives and unrelated client processes were preserved. See [deployment evidence and remaining client/gateway work](docs/deployment-2026-11-06.md).
+
 ## Historical v1.0.0 notes
 
 We are proud to announce the official **v1.0.0** release of the **HeLa MCP Ecosystem** — a modular, immortal cellular AI tooling stack built on the Model Context Protocol (MCP), engineered by Azzar.
