@@ -78,7 +78,7 @@ function runMatrix() {
         }
 
         if (client === 'codex') {
-          const matchCount = (stdout.match(/^\[mcpServers\.[^.\]\r\n]+\]/gm) || []).length;
+          const matchCount = (stdout.match(/^\[mcp_servers\.[^.\]\r\n]+\]/gm) || []).length;
           if (matchCount !== expectedServerCount) {
             throw new Error(`Expected ${expectedServerCount} servers in TOML, found ${matchCount}`);
           }

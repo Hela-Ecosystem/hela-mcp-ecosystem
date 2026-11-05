@@ -203,17 +203,17 @@ function renderCodexToml(servers, root, options) {
   for (const s of servers) {
     const name = s.id.replace('-mcp-server', '').replace('-mcp', '');
     const args = entryArgs(s, root);
-    const argStr = args.map((a) => `"${a}"`).join(', ');
+    const argStr = args.map((a) => JSON.stringify(a)).join(', ');
     const sectionLines = [
-      `[mcpServers.${name}]`,
-      `command = "${s.runtime || 'node'}"`,
+      `[mcp_servers.${name}]`,
+      `command = ${JSON.stringify(s.runtime || 'node')}`,
       `args = [${argStr}]`,
     ];
     const env = buildServerEnv(s, root, options);
     if (Object.keys(env).length > 0) {
-      sectionLines.push(`[mcpServers.${name}.env]`);
+      sectionLines.push(`[mcp_servers.${name}.env]`);
       for (const [k, v] of Object.entries(env)) {
-        sectionLines.push(`${k} = "${v}"`);
+        sectionLines.push(`${k} = ${JSON.stringify(v)}`);
       }
     }
     sections.push(sectionLines.join('\n'));

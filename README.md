@@ -4,6 +4,8 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 > **New to MCP or non-technical?** Read the **[Beginner's Step-by-Step Guide](docs/beginner-guide.md)** for a 3-minute, zero-code onboarding walkthrough.
 
+Current source snapshot: **v1.4.0**. Memory safety, runtime timeout recovery, clean dependency builds, and Linux Nix packages are covered by isolated verification. Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution are not implied; see [release notes](RELEASE_NOTES.md).
+
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
 ---
@@ -52,23 +54,23 @@ flowchart TB
 | Canonical Identity | Machine ID (`id`) | Technical Source Repo | Scope | Cellular Metaphor & Role |
 |---|---|---|---|---|
 | **HeLa Mitosis** | `hela-mitosis` | [`chaining-mcp`](https://github.com/Hela-Ecosystem/chaining-mcp) | Core | **Orchestrator**: Bundled Needle 3 agent runtime, dynamic routing, 40 bundled prompt templates |
-| **HeLa Genome** | `hela-genome` | [`Project-Guardian-mcp-server`](https://github.com/Hela-Ecosystem/project-guardian-mcp-server) | Core | **State Backbone**: Entity-relation knowledge graph, milestone tracking, memory persistence |
-| **HeLa Membrane** | `hela-membrane` | [`filesystem-mcp-server`](https://github.com/Hela-Ecosystem/filesystem-mcp-server) | Core | **Workspace**: Sandboxed filesystem operations, recursive search, archive extraction |
-| **HeLa Nucleus** | `hela-nucleus` | [`terminal-mcp-server`](https://github.com/Hela-Ecosystem/terminal-mcp-server) | Core | **Execution**: Command execution, subshell isolation, RTK token-optimized execution |
-| **HeLa Ribosome** | `hela-ribosome` | [`menager-mcp-server`](https://github.com/Hela-Ecosystem/menager-mcp-server) | Core | **Process Harness**: Interactive PTY multiplexing, Regex hooks, lifecycle management |
+| **HeLa Genome** | `hela-genome` | [`project-mcp`](https://github.com/Hela-Ecosystem/project-mcp) | Core | **State Backbone**: Entity-relation knowledge graph, milestone tracking, memory persistence |
+| **HeLa Membrane** | `hela-membrane` | [`filesystem-mcp`](https://github.com/Hela-Ecosystem/filesystem-mcp) | Core | **Workspace**: Sandboxed filesystem operations, recursive search, archive extraction |
+| **HeLa Nucleus** | `hela-nucleus` | [`terminal-mcp`](https://github.com/Hela-Ecosystem/terminal-mcp) | Core | **Execution**: Command execution, subshell isolation, RTK token-optimized execution |
+| **HeLa Ribosome** | `hela-ribosome` | [`menager-mcp`](https://github.com/Hela-Ecosystem/menager-mcp) | Core | **Process Harness**: Interactive PTY multiplexing, Regex hooks, lifecycle management |
 | **HeLa Enzyme** | `hela-enzyme` | [`researcher-mcp`](https://github.com/Hela-Ecosystem/researcher-mcp) | Core | **Knowledge**: Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia synthesis and fact-checking |
-| **HeLa Cytosol** | `hela-cytosol` | [`Browser-Agent`](https://github.com/Hela-Ecosystem/Browser-Agent) | Core | **Interaction**: Playwright browser automation, accessibility trees, DOM perception |
-| **HeLa Phenotype** | `hela-phenotype` | [`the-designer`](https://github.com/Hela-Ecosystem/the-designer) | Specialized | **Design**: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis |
+| **HeLa Cytosol** | `hela-cytosol` | [`browser-mcp`](https://github.com/Hela-Ecosystem/browser-mcp) | Core | **Interaction**: Playwright browser automation, accessibility trees, DOM perception |
+| **HeLa Phenotype** | `hela-phenotype` | [`designer-mcp`](https://github.com/Hela-Ecosystem/designer-mcp) | Specialized | **Design**: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis |
 | **HeLa Receptor** | `hela-receptor` | [`scrcpy-mcp`](https://github.com/Hela-Ecosystem/scrcpy-mcp) | Specialized | **Mobile**: Android device automation, ADB bridge, XML view hierarchy inspection |
-| **HeLa Plastid** | `hela-plastid` | [`ll3m-agent`](https://github.com/Hela-Ecosystem/ll3m-agent) | Specialized | **3D Modeling**: Autonomous Blender procedural modeling, materials, and render pipeline |
+| **HeLa Plastid** | `hela-plastid` | [`ll3m-mcp`](https://github.com/Hela-Ecosystem/ll3m-mcp) | Specialized | **3D Modeling**: Autonomous Blender procedural modeling, materials, and render pipeline |
 
 ---
 
 ## Quick Start
 
 ### 1. Prerequisites
-* **Node.js**: `>= 18.0.0` (v20+ LTS recommended)
-* **Git**: `>= 2.25.0`
+* **Node.js**: `>=20.18.1`; Node 22 LTS is the validated development/runtime environment.
+* **Git**: `>= 2.30.0`
 * **SQLite3**: System CLI or built-in Node SQLite bindings
 
 ### 2. Run Diagnostics (`setup.sh doctor`)
@@ -99,12 +101,12 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.0.0 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.4.0 --non-interactive
 ```
 
-**Single-Endpoint Runtime (one MCP connection for all 10 cells):**
+**Single-Endpoint Runtime (one MCP connection for the selected profile):**
 ```bash
-./setup.sh --profile runtime --client opencode --non-interactive
+./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
 ---
@@ -122,7 +124,7 @@ The HeLa MCP Ecosystem generates tailored, valid configuration formats across 10
 | **OpenCode** | `~/.config/opencode/opencode.json` | JSON (`mcp`) |
 | **Kilo CLI** | `~/.config/kilo/config.json` | JSON (`mcp`) |
 | **Zed Editor** | `~/.config/zed/settings.json` | JSON (`context_servers`) |
-| **Codex / ChatGPT** | `~/.codex/config.toml` | TOML (`[mcpServers.*]`) |
+| **Codex / ChatGPT** | `~/.codex/config.toml` | TOML (`[mcp_servers.*]`) |
 | **Docker Compose** | `config/docker-compose.generated.yml` | Docker Compose v3 |
 
 ---
@@ -131,15 +133,16 @@ The HeLa MCP Ecosystem generates tailored, valid configuration formats across 10
 
 | Profile ID | Target System | Backbone Included | Servers Included | Focus Area |
 |---|---|---|---|---|
+| `minimal` | Any | Mitosis + Genome | Enzyme | Research and memory without GUI dependencies |
 | `dev-workspace` | Any (GUI recommended) | Mitosis + Genome | Membrane, Nucleus, Ribosome, Enzyme, Phenotype, Cytosol | Full-stack software engineering, testing, web UI |
-
-> **Single-endpoint serve mode:** add `--runtime` to any profile command to build the HeLa Runtime daemon and connect via one MCP server instead of N. Example: `./setup.sh --profile dev-workspace --client opencode --runtime`.
 | `headless-server` | Headless Linux | Mitosis + Genome | Membrane, Nucleus, Ribosome, Enzyme, Phenotype | Cloud server administration, CI/CD, headless dev |
 | `research` | Headless or GUI | Mitosis + Genome | Enzyme, Membrane, Cytosol | Deep literature research, document synthesis, web crawling |
 | `web-devops` | Headless or GUI | Mitosis + Genome | Membrane, Nucleus, Phenotype, Cytosol | Frontend development, Tailwind styling, DOM verification |
 | `android-testing` | Device connected | Mitosis + Genome | Nucleus, Receptor, Enzyme | Mobile QA testing, ADB automation, APK validation |
 | `3d-modeling` | GUI (Blender installed) | Mitosis + Genome | Plastid, Membrane, Nucleus | 3D procedural modeling, materials, rendering |
 | `all` | Full workstation | Mitosis + Genome | All 10 HeLa MCP servers | Complete full-spectrum AI agent capabilities |
+
+> **Single-endpoint serve mode:** add `--runtime` to a profile command. The default profile remains `dev-workspace`, not `all`.
 
 For complete persona guides and pipeline specifications, see **[Profiles Catalog](docs/profiles.md)**.
 
@@ -167,7 +170,7 @@ npm run doctor
 # or
 ./setup.sh doctor
 
-# Run 70-combination multi-client matrix test suite
+# Run 80-combination client configuration checks (not GUI integration)
 npm run test:matrix
 
 # Run master integration test suite (295 tools across all 10 servers)

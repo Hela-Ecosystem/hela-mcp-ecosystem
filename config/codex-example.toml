@@ -1,9 +1,9 @@
 # Generated Codex / ChatGPT MCP Server Configuration
 
-[mcpServers.hela-mitosis]
+[mcp_servers.hela-mitosis]
 command = "node"
 args = ["/path/to/mcp-ecosystem/chaining-mcp/dist/index.js"]
-[mcpServers.hela-mitosis.env]
+[mcp_servers.hela-mitosis.env]
 MEMORY_FILE_PATH = "/path/to/mcp-ecosystem/chaining-mcp/data/memory.json"
 AWESOME_COPILOT_ENABLED = "true"
 RELIABILITY_MONITORING_ENABLED = "true"
@@ -11,34 +11,34 @@ CHAINING_TOOL_TIMEOUT_MS = "10000"
 CHAINING_LLM_MODEL = "openrouter/free"
 CHAINING_LLM_BASE_URL = "https://openrouter.ai/api/v1"
 
-[mcpServers.hela-genome]
+[mcp_servers.hela-genome]
 command = "node"
-args = ["/path/to/mcp-ecosystem/Project-Guardian-mcp-server/dist/index.js"]
+args = ["/path/to/mcp-ecosystem/project-mcp/dist/index.js"]
 
-[mcpServers.hela-membrane]
+[mcp_servers.hela-membrane]
 command = "node"
-args = ["/path/to/mcp-ecosystem/filesystem-mcp-server/dist/index.js"]
+args = ["/path/to/mcp-ecosystem/filesystem-mcp/dist/index.js"]
 
-[mcpServers.hela-nucleus]
+[mcp_servers.hela-nucleus]
 command = "node"
-args = ["/path/to/mcp-ecosystem/terminal-mcp-server/build/index.js"]
+args = ["/path/to/mcp-ecosystem/terminal-mcp/build/index.js"]
 
-[mcpServers.hela-ribosome]
+[mcp_servers.hela-ribosome]
 command = "node"
-args = ["/path/to/mcp-ecosystem/menager-mcp-server/build/index.js"]
+args = ["/path/to/mcp-ecosystem/menager-mcp/build/index.js"]
 
-[mcpServers.hela-enzyme]
+[mcp_servers.hela-enzyme]
 command = "node"
-args = ["/path/to/mcp-ecosystem/research-mcp-server/dist/index.js"]
-[mcpServers.hela-enzyme.env]
+args = ["/path/to/mcp-ecosystem/researcher-mcp/dist/index.js"]
+[mcp_servers.hela-enzyme.env]
 WIKIPEDIA_CACHE_MAX = "100"
 WIKIPEDIA_CACHE_TTL = "300000"
 WIKIPEDIA_DEFAULT_LANGUAGE = "en"
 
-[mcpServers.hela-phenotype]
+[mcp_servers.hela-phenotype]
 command = "node"
-args = ["/path/to/mcp-ecosystem/the-designer/dist/index.js"]
+args = ["/path/to/mcp-ecosystem/designer-mcp/dist/index.js"]
 
-[mcpServers.hela-cytosol]
+[mcp_servers.hela-cytosol]
 command = "node"
-args = ["/path/to/mcp-ecosystem/browser-agent/src/server.js"]
+args = ["/path/to/mcp-ecosystem/browser-mcp/src/server.js"]

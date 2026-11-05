@@ -1,58 +1,47 @@
 #!/usr/bin/env node
-/**
- * HeLa version-consistency verifier (Phase 7).
- * Compares, per server: package.json version, MCP initialize serverInfo.version,
- * inventory.json version, and latest-stable snapshot serverVersion.
- * Exits non-zero on any mismatch.
- */
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { probeMcp } from './mcp-probe.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
-const INV = JSON.parse(fs.readFileSync(path.join(ROOT, 'config/inventory.json'), 'utf8'));
-const SNAP = JSON.parse(fs.readFileSync(path.join(ROOT, 'config/snapshots/latest-stable.json'), 'utf8'));
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const inventory = JSON.parse(fs.readFileSync(path.join(root, 'config/inventory.json'), 'utf8')).inventory;
+const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'config/snapshots/latest-stable.json'), 'utf8'));
+const profileIndex = process.argv.indexOf('--profile');
+const profile = profileIndex === -1 ? null : process.argv[profileIndex + 1];
+const profiles = JSON.parse(fs.readFileSync(path.join(root, 'config/profiles.json'), 'utf8')).profiles;
+const selected = profile ? profiles.find(candidate => candidate.id === profile) : null;
+if (profileIndex !== -1 && !selected) throw new Error('Unknown or missing verification profile');
+const report = [];
 
-function pkgVersion(dir) {
-  for (const c of [path.join(dir, 'package.json'), path.join(dir, 'brain', 'package.json')]) {
-    if (fs.existsSync(c)) { try { return JSON.parse(fs.readFileSync(c, 'utf8')).version; } catch {} }
-  }
-  return null;
+for (const spec of Object.values(inventory)) {
+  const runtime = spec.kind === 'runtime' || spec.id === 'hela-runtime';
+  if (selected && !runtime && !selected.servers.includes(spec.id)) continue;
+  const sibling = path.join(root, '..', spec.dir);
+  const directory = fs.existsSync(sibling) ? sibling : path.join(root, spec.dir);
+  const result = { id: spec.id, ok: false, package: null, initialize: null, inventory: spec.version ?? null,
+    snapshot: snapshot.servers?.[spec.id]?.serverVersion ?? null, tools: 0, commitMatch: false };
+  try {
+    const packagePath = [path.join(directory, 'package.json'), path.join(directory, 'brain/package.json')]
+      .find(candidate => fs.existsSync(candidate));
+    if (!packagePath) throw new Error('Package metadata missing');
+    result.package = JSON.parse(fs.readFileSync(packagePath, 'utf8')).version;
+    const commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: directory, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    result.commitMatch = commit === spec.revision && commit === snapshot.servers?.[spec.id]?.commit;
+    const probe = await probeMcp(path.join(directory, spec.entry), { ecosystemRoot: root, runtime, profile: profile || 'minimal' });
+    result.initialize = probe.serverInfo.version;
+    result.tools = probe.tools.length;
+    result.ok = result.commitMatch && [result.package, result.initialize, result.inventory, result.snapshot]
+      .every(version => typeof version === 'string' && version === result.package);
+    if (spec.id === 'hela-genome' && !['create_mission', 'list_missions', 'update_mission'].every(name => probe.tools.some(tool => tool.name === name))) {
+      result.ok = false;
+      result.error = 'Genome mission tools missing';
+    }
+  } catch (error) { result.error = error.message; }
+  report.push(result);
 }
 
-function initVersion(entryPath, dirPath, timeout = 1500) {
-  return new Promise((resolve) => {
-    const proc = spawn('node', [entryPath], { cwd: dirPath, stdio: ['pipe', 'pipe', 'pipe'] });
-    let out = '';
-    proc.stdout.on('data', (d) => (out += d.toString()));
-    const msg = JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'verify', version: '1.0.0' } } }) + '\n';
-    proc.stdin.write(msg);
-    setTimeout(() => {
-      proc.kill();
-      try {
-        const line = out.split('\n').find((l) => l.trim().startsWith('{'));
-        resolve(JSON.parse(line)?.result?.serverInfo?.version ?? null);
-      } catch { resolve(null); }
-    }, timeout);
-  });
-}
-
-let failed = false;
-console.log('server'.padEnd(18), 'pkg'.padEnd(10), 'init'.padEnd(10), 'inventory'.padEnd(10), 'snapshot'.padEnd(10), 'status');
-for (const key of Object.keys(INV.inventory)) {
-  const s = INV.inventory[key];
-  const dir = path.join(ROOT, '..', s.dir); // sibling
-  const realDir = fs.existsSync(dir) ? dir : path.join(ROOT, s.dir);
-  const pv = pkgVersion(realDir);
-  const iv = s.version ?? null;
-  const sv = SNAP.servers?.[s.id]?.serverVersion ?? null;
-  const bootTimeout = s.id === 'hela-runtime' ? 30000 : s.id === 'hela-genome' ? 15000 : 1500;
-  const initV = (fs.existsSync(path.join(realDir, s.entry)) ? await initVersion(path.join(realDir, s.entry), realDir, bootTimeout) : null);
-  const all = [pv, initV, iv, sv].filter(Boolean);
-  const ok = all.length > 0 && all.every((v) => v === pv) && (sv === null || sv === pv);
-  if (!ok) failed = true;
-  console.log(s.id.padEnd(18), String(pv).padEnd(10), String(initV).padEnd(10), String(iv).padEnd(10), String(sv).padEnd(10), ok ? 'OK' : 'MISMATCH');
-}
-process.exit(failed ? 1 : 0);
+if (process.argv.includes('--json')) console.log(JSON.stringify({ profile: profile || 'all', isolated: true, servers: report }, null, 2));
+else for (const result of report) console.log(`${result.id}: ${result.ok ? 'OK' : 'MISMATCH'} pkg=${result.package} init=${result.initialize} inventory=${result.inventory} snapshot=${result.snapshot} tools=${result.tools} pin=${result.commitMatch}${result.error ? ` (${result.error})` : ''}`);
+process.exitCode = report.every(result => result.ok) ? 0 : 1;

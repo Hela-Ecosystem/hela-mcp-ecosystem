@@ -14,8 +14,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { probeMcp } from './mcp-probe.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -52,10 +52,7 @@ class McpClient {
     this.serverKey = serverKey;
     this.serverConfig = serverConfig;
     this.root = root;
-    this.proc = null;
-    this.buffer = '';
-    this.nextId = 1;
-    this.pending = new Map();
+    this.result = null;
   }
 
   async start() {
@@ -65,107 +62,19 @@ class McpClient {
       throw new Error(`Entrypoint not found: ${entry}`);
     }
 
-    const env = {
-      ...process.env,
-      MEMORY_FILE_PATH: path.join(dir, 'data/memory.json'),
-      AWESOME_COPILOT_ENABLED: 'true',
-      CHAINING_TOOL_TIMEOUT_MS: '5000',
-    };
-
-    this.proc = spawn('node', [entry], {
-      cwd: dir,
-      env,
-      stdio: ['pipe', 'pipe', 'pipe'],
+    this.result = await probeMcp(entry, {
+      ecosystemRoot: this.root,
+      runtime: this.serverConfig.kind === 'runtime' || this.serverKey === 'hela-runtime',
     });
-
-    this.proc.stdout.on('data', (chunk) => this.handleData(chunk));
-    this.proc.stderr.on('data', () => {});
-
-    this.proc.on('error', (err) => {
-      for (const [, reject] of this.pending.values()) {
-        reject(err);
-      }
-    });
-
-    this.proc.on('exit', (code) => {
-      for (const [, reject] of this.pending.values()) {
-        reject(new Error(`Server exited unexpectedly with code ${code}`));
-      }
-    });
-
-    // Send initialize request
-    const initRes = await this.sendRequest('initialize', {
-      protocolVersion: '2024-11-05',
-      capabilities: {},
-      clientInfo: { name: 'hela-integration-tester', version: '1.0.0' },
-    });
-
-    // Send initialized notification
-    this.sendNotification('notifications/initialized', {});
-
-    return initRes;
-  }
-
-  handleData(chunk) {
-    this.buffer += chunk.toString();
-    const lines = this.buffer.split('\n');
-    this.buffer = lines.pop() || '';
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed) continue;
-      try {
-        const msg = JSON.parse(trimmed);
-        if (msg.id !== undefined && this.pending.has(msg.id)) {
-          const { resolve, reject } = this.pending.get(msg.id);
-          this.pending.delete(msg.id);
-          if (msg.error) {
-            reject(new Error(msg.error.message || JSON.stringify(msg.error)));
-          } else {
-            resolve(msg.result);
-          }
-        }
-      } catch {
-        // Non-JSON line ignored
-      }
-    }
-  }
-
-  sendRequest(method, params) {
-    return new Promise((resolve, reject) => {
-      const id = this.nextId++;
-      const req = { jsonrpc: '2.0', id, method, params };
-      const timeout = setTimeout(() => {
-        if (this.pending.has(id)) {
-          this.pending.delete(id);
-          reject(new Error(`Timeout (4000ms) waiting for response to ${method}`));
-        }
-      }, 4000);
-
-      this.pending.set(id, {
-        resolve: (val) => { clearTimeout(timeout); resolve(val); },
-        reject: (err) => { clearTimeout(timeout); reject(err); },
-      });
-
-      this.proc.stdin.write(JSON.stringify(req) + '\n');
-    });
-  }
-
-  sendNotification(method, params) {
-    const notif = { jsonrpc: '2.0', method, params };
-    this.proc.stdin.write(JSON.stringify(notif) + '\n');
+    return { serverInfo: this.result.serverInfo };
   }
 
   async listTools() {
-    return this.sendRequest('tools/list', {});
+    return { tools: this.result.tools };
   }
 
   stop() {
-    if (this.proc && !this.proc.killed) {
-      try {
-        this.proc.kill('SIGTERM');
-      } catch {}
-    }
+    this.result = null;
   }
 }
 

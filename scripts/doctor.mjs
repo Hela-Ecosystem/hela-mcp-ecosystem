@@ -17,9 +17,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn, spawnSync, execSync } from 'node:child_process';
+import { spawnSync, execSync } from 'node:child_process';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { probeMcp } from './mcp-probe.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -59,35 +60,11 @@ async function checkServerProcess(entryPath, dirPath) {
   if (!fs.existsSync(entryPath)) {
     return { ok: false, reason: 'Entrypoint file missing' };
   }
-  return new Promise((resolve) => {
-    const proc = spawn('node', [entryPath], {
-      cwd: dirPath,
-      env: { ...process.env, MEMORY_FILE_PATH: '/tmp/hela-doctor-mem.db' },
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-
-    let stderrOutput = '';
-    proc.stderr.on('data', (d) => (stderrOutput += d.toString()));
-
-    const timer = setTimeout(() => {
-      proc.kill('SIGTERM');
-      resolve({ ok: true, note: 'Started cleanly, stdio responsive' });
-    }, 350);
-
-    proc.on('error', (err) => {
-      clearTimeout(timer);
-      resolve({ ok: false, reason: err.message });
-    });
-
-    proc.on('exit', (code) => {
-      clearTimeout(timer);
-      if (code !== 0 && code !== null) {
-        resolve({ ok: false, reason: `Exited early with code ${code}: ${stderrOutput.slice(0, 100)}` });
-      } else {
-        resolve({ ok: true, note: 'Process exited normally' });
-      }
-    });
-  });
+  try {
+    const runtime = path.basename(dirPath) === 'hela-runtime';
+    const result = await probeMcp(entryPath, { ecosystemRoot: ECOSYSTEM_ROOT, runtime });
+    return { ok: true, note: 'Isolated MCP initialize and tools/list passed', version: result.serverInfo.version, tools: result.tools.length };
+  } catch (error) { return { ok: false, reason: error.message }; }
 }
 
 function getGitCommit(dir) {
@@ -219,11 +196,11 @@ async function runDoctor(options = {}) {
       }
     }
     const expectedVersion = s.version || '3.0.0';
-    const versionMatch = pkgVersion !== null ? pkgVersion === expectedVersion : true;
+    const versionMatch = pkgVersion !== null && pkgVersion === expectedVersion && smokeStatus.version === pkgVersion;
     if (!versionMatch && s.scope === 'core') allHealthy = false;
 
-    const serverHealthy = exists && (s.entry ? entryExists : true) && smokeStatus.ok;
-    if (!serverHealthy && s.scope === 'core') {
+    const serverHealthy = exists && (s.entry ? entryExists : true) && smokeStatus.ok && versionMatch && isPinnedCommit;
+    if (!serverHealthy && (targetProfileId || s.scope === 'core' || s.kind === 'runtime')) {
       allHealthy = false;
     }
 

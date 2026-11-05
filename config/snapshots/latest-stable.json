@@ -1,32 +1,32 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.3.0",
-  "created_at": "2026-10-31T08:16:31Z",
-  "description": "Known-good release snapshot after per-server version reset to 3.0.0 (Phase 7). All serverVersion fields set to 3.0.0.",
+  "snapshot_version": "1.4.0",
+  "created_at": "2026-11-05T18:46:25Z",
+  "description": "Memory-safety and runtime-recovery source snapshot. Versions, lockfile installs, isolated MCP handshakes, and native Linux Nix builds verified; GUI ACP authentication and live vault conflict reconciliation remain separate.",
   "environment": {
-    "node_minimum": ">=20.0.0",
-    "recommended_node": "v25.9.0",
+    "node_minimum": ">=20.18.1",
+    "recommended_node": "22 LTS (validated 22.23.4)",
     "git_minimum": ">=2.30.0",
     "sqlite_minimum": ">=3.35.0"
   },
   "servers": {
     "hela-mitosis": {
       "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
-      "commit": "0781fcce6a48b5a9fd67f1f79b9828727f0843fd",
+      "commit": "b8c8f11c8848bca9134d826216fc7ab9346c6327",
       "branch": "main",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "d18873327f9799f24927cdb81d975de51d6c81d2",
+      "commit": "16fc4f31735e139d690ae0ace8d4feaf1a603563",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-membrane": {
       "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
-      "commit": "20c52e828d9a021553a83e2b6a4c08cfa62f55f6",
+      "commit": "69863287a659cc1697e520fbc9f4fb0d706b2797",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
@@ -40,28 +40,28 @@
     },
     "hela-ribosome": {
       "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
-      "commit": "fee8dceb40a7f009d88bf43a9f1b82d314f266bf",
+      "commit": "76f536245e2cabbee72dbc573eedb3a7584e92d9",
       "branch": "master",
       "entry": "build/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "7230e6e5badc3cbdf9e5f34347248cabd37720f3",
+      "commit": "5399e33c7c8a5b75ad620dc33f66a1cbf49972f7",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "5333679cb718ef022447eb9febebb7a2bdbef26f",
+      "commit": "99bd0a924190d3d2238415284cbad421d97760a1",
       "branch": "master",
       "entry": "src/server.js",
       "serverVersion": "3.0.0"
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "1df4764d3b6057af3aa40fc128ac084e244d764b",
+      "commit": "3e87ca6b006b3be54f78c89c29ecb6afcffe200d",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
@@ -82,33 +82,28 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "f755d816224b7187eb038e328554b5dc5e7b0b8c",
+      "commit": "797bad451b45d0d67631eeb8cdb1c93d259f614c",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.0.0",
-      "version": "1.1.0"
+      "serverVersion": "1.1.0"
     }
   },
-  "verified_profiles": [
-    "minimal",
-    "dev-workspace",
-    "headless-server",
-    "research",
-    "web-devops",
-    "android-testing",
-    "3d-modeling",
-    "all"
-  ],
-  "verified_clients": [
-    "cursor",
-    "claude",
-    "gemini",
-    "antigravity",
-    "opencode",
-    "kilo",
-    "zed",
-    "codex",
-    "docker",
-    "skip"
-  ]
+  "verified_profiles": ["dev-workspace"],
+  "verified_clients": [],
+  "verification": {
+    "genome_suites": 19,
+    "genome_tests": 242,
+    "runtime_fault_tests": 20,
+    "enzyme_tests": 79,
+    "phenotype_tests": 74,
+    "client_configuration_combinations": 80,
+    "probe_regression_tests": 3,
+    "isolated_readonly_parity_calls": 3,
+    "isolated_standalone_servers": 10,
+    "isolated_standalone_tools_llm_and_agent_disabled": 290,
+    "isolated_dev_workspace_runtime_tools_llm_and_agent_disabled": 230,
+    "nix_build_systems": ["x86_64-linux", "aarch64-linux"],
+    "client_scope": "Configuration generation/parser checks and isolated Codex MCP discovery, not authenticated GUI sessions.",
+    "hardware_scope": "MCP discovery only; Android and Blender integration are not implied."
+  }
 }

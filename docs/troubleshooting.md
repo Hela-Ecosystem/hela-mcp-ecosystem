@@ -97,7 +97,23 @@ node <entrypoint-file>
    * **Kilo CLI**: `cat ~/.config/kilo/config.json`
    * **Zed Editor**: `cat ~/.config/zed/settings.json`
    * **Codex / ChatGPT**: `cat ~/.codex/config.toml`
-3. **Restart the AI Client / IDE**: MCP clients load server definitions only at startup. Fully restart the application after updating configs.
+3. **Check reload behavior**: some clients require a restart; Zed can restart context servers immediately when settings are saved. Back up active memory/vault state before changing sync hooks. Never paste raw client configuration containing credentials into an issue or chat.
+
+### Zed forwards a server that Codex already defines
+
+The message `MCP server hela-… was not started, because the Codex config already defines an MCP server with this name` refers to the forwarded duplicate. It does not prove that Codex failed to start its native entry. `codex mcp list` inspects configuration, not connectivity; check MCP startup/discovery or an actual safe tool call separately.
+
+Zed 1.27.0 forwards project context servers to external agents; native `agent.profiles.*.context_servers` controls are not a per-ACP forwarding switch. Do not remove shared top-level `context_servers` just to silence Codex warnings: native Zed and other agents may need them.
+
+The installed codex-acp 2.5.0 supports an optional per-agent environment override:
+
+```json
+"env": { "DISABLE_MCP_CONFIG_FILTERING": "true" }
+```
+
+Place it under `agent_servers.codex-acp` only if deliberately choosing merged forwarded/native ownership. This disables adapter duplicate filtering, **not forwarding**; it can fail when future definitions disagree. Identical definitions passed isolated merge/discovery checks, but authenticated Zed ACP sessions still require verification. Keeping Codex-owned entries and leaving this toggle unset preserves native ownership, with the duplicate warning still possible.
+
+Source references: [Zed forwarding](https://github.com/zed-industries/zed/blob/c84af5b99cbc366d675064e52b23664a015b6e35/crates/agent_servers/src/acp.rs#L44-L65), [agent settings schema](https://github.com/zed-industries/zed/blob/c84af5b99cbc366d675064e52b23664a015b6e35/crates/settings_content/src/agent.rs#L842-L904), and [adapter toggle](https://github.com/agentclientprotocol/codex-acp/blob/v2.5.0/src/CodexAcpClient.ts#L1620-L1623).
 
 ---
 

@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVER · 292 ALAT</div>
+        <div class="doc-brand-meta">v1.4.0 · 10 SERVER · ALAT SESUAI PROFIL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -113,8 +113,9 @@
           <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · 29 alat</span></div>
           <div class="server-card-body">
             <p>Grafik pengetahuan SQLite hidup (<code>memory.db</code>) dengan pencarian teks penuh FTS5, pelacakan relasi entitas, pemulihan konteks lintas-sesi, dan pemindaian rahasia/kredensial.</p>
+            <p>SQLite tetap menjadi mesin utama; Obsidian hanya cermin opsional. Pembaruan keamanan data Genome menambahkan sinkronisasi vault dengan penanganan konflik, cadangan tervalidasi yang mencakup WAL, dan klaim misi eksklusif pada satu ledger SQLite bersama. Database lokal terpisah bukan kunci terdistribusi; bangun ulang dan verifikasi sel terbaru sebelum deployment.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/project-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/project-mcp</code></a></p>
-            <p class="tool-list">initialize_memory, memory_edit, read_graph, search_nodes, open_node, get_file_context, get_timeline, get_session_context, sync_central_memory, execute_sql, query_data, inspect_untrusted_text, security_scan</p>
+            <p class="tool-list">initialize_memory, memory_edit, read_graph, search_nodes, open_node, get_file_context, get_timeline, get_session_context, sync_central_memory, create_mission, list_missions, update_mission, execute_sql, query_data, inspect_untrusted_text, security_scan</p>
           </div>
         </section>
 
@@ -190,6 +191,15 @@
           </div>
         </section>
 
+        <section class="server-card" aria-labelledby="srv-runtime">
+          <div class="server-card-header"><h3 id="srv-runtime">HeLa Runtime</h3><span class="server-card-id">hela-runtime · <span class="badge badge-core">OPSIONAL</span> · alat sesuai profil</span></div>
+          <div class="server-card-body">
+            <p>Daemon opsional yang menjalankan sel sesuai profil sebagai proses MCP terawasi melalui satu endpoint stdio atau HTTP. Profil bawaan tetap <code>dev-workspace</code> (delapan sel). Saat timeout, proses lama dihentikan sebelum restart; namespacing tetap opt-in. Startup berjalan bertahap di latar belakang, belum benar-benar menunggu pemanggilan alat pertama. Paket Nix Node 22 sudah dibangun pada x86_64-linux dan aarch64-linux.</p>
+            <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/hela-runtime" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/hela-runtime</code></a></p>
+            <p class="tool-list">hela.pipe, hela.agent.run opsional jika Mitosis menyediakan agent_run, serta alat dari sel yang dipilih</p>
+          </div>
+        </section>
+
         <footer class="doc-footer"><span>LISENSI MIT · AZZAR</span><span>ARCHIVAL_RECORD_SEALED // HELA_MCP_ECOSYSTEM</span></footer>
       </main>
       <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"></ol></nav>
@@ -200,7 +210,7 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari 292 alat, halaman, profil…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari alat, halaman, profil…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>

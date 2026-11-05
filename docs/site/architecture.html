@@ -41,7 +41,7 @@
     <aside class="doc-sidebar" aria-label="Documentation sections">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVERS · 292 TOOLS</div>
+        <div class="doc-brand-meta">v1.4.0 · 10 SERVERS · PROFILE-SCOPED TOOLS</div>
       </div>
       <nav aria-label="Documentation">
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
@@ -124,8 +124,9 @@
           <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · 29 tools</span></div>
           <div class="server-card-body">
             <p>Living SQLite knowledge graph (<code>memory.db</code>) with FTS5 search, entity-relation tracking, cross-session restoration, secret scanning.</p>
+            <p>SQLite remains the base engine; Obsidian is an optional mirror. Genome's memory-safety update adds conflict-aware vault synchronization, WAL-safe validated backups, and exclusive mission claims within one shared SQLite ledger. Separate machine-local databases are not a distributed lock; rebuild and verify the updated cell before deployment.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/project-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/project-mcp</code></a></p>
-            <p class="tool-list">initialize_memory, memory_edit, read_graph, search_nodes, open_node, get_file_context, get_timeline, get_session_context, sync_central_memory, execute_sql, query_data, inspect_untrusted_text, security_scan</p>
+            <p class="tool-list">initialize_memory, memory_edit, read_graph, search_nodes, open_node, get_file_context, get_timeline, get_session_context, sync_central_memory, create_mission, list_missions, update_mission, execute_sql, query_data, inspect_untrusted_text, security_scan</p>
           </div>
         </section>
 
@@ -202,11 +203,11 @@
         </section>
 
         <section class="server-card" id="srv-runtime">
-          <div class="server-card-header"><h3 id="srv-runtime">HeLa Runtime</h3><span class="server-card-id">hela-runtime · hela-runtime · <span class="badge badge-core">OPTIONAL</span> · 293 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-runtime">HeLa Runtime</h3><span class="server-card-id">hela-runtime · hela-runtime · <span class="badge badge-core">OPTIONAL</span> · profile-scoped tools</span></div>
           <div class="server-card-body">
-            <p>Optional daemon: boots all 10 cells as supervised processes and multiplexes their tools behind one MCP endpoint. Lazy ignition, crash recovery, opt-in namespacing, in-process <code>hela.pipe</code> chaining.</p>
+            <p>Optional daemon: starts the selected profile's cells as supervised processes behind one stdio or HTTP MCP endpoint. The default is <code>dev-workspace</code> (eight cells). Timeout recovery reaps the old process before restarting; namespacing remains opt-in. Startup is staggered in the background, not true first-call-only ignition. Node 22 Nix packages have been built on x86_64-linux and aarch64-linux.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/hela-runtime" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/hela-runtime</code></a></p>
-            <p class="tool-list">hela.pipe, hela.agent.run, plus all 292 cell tools (proxied)</p>
+            <p class="tool-list">hela.pipe, optional hela.agent.run when Mitosis exposes agent_run, plus selected cell tools (proxied)</p>
           </div>
         </section>
 
@@ -220,7 +221,7 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search 292 tools, pages, profiles…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search tools, pages, profiles…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>

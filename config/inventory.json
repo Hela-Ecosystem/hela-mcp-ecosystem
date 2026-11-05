@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "0781fcce6a48b5a9fd67f1f79b9828727f0843fd",
+      "revision": "b8c8f11c8848bca9134d826216fc7ab9346c6327",
       "env": [
         "MEMORY_FILE_PATH",
         "AWESOME_COPILOT_ENABLED",
@@ -52,7 +52,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "d18873327f9799f24927cdb81d975de51d6c81d2",
+      "revision": "16fc4f31735e139d690ae0ace8d4feaf1a603563",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
@@ -76,7 +76,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "20c52e828d9a021553a83e2b6a4c08cfa62f55f6",
+      "revision": "69863287a659cc1697e520fbc9f4fb0d706b2797",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
       "version": "3.0.0"
@@ -116,7 +116,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "fee8dceb40a7f009d88bf43a9f1b82d314f266bf",
+      "revision": "76f536245e2cabbee72dbc573eedb3a7584e92d9",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
       "version": "3.0.0"
@@ -136,7 +136,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "7230e6e5badc3cbdf9e5f34347248cabd37720f3",
+      "revision": "5399e33c7c8a5b75ad620dc33f66a1cbf49972f7",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -162,7 +162,7 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "5333679cb718ef022447eb9febebb7a2bdbef26f",
+      "revision": "99bd0a924190d3d2238415284cbad421d97760a1",
       "env": [],
       "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification.",
       "version": "3.0.0"
@@ -182,7 +182,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "1df4764d3b6057af3aa40fc128ac084e244d764b",
+      "revision": "3e87ca6b006b3be54f78c89c29ecb6afcffe200d",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
       "version": "3.0.0"
@@ -244,7 +244,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f755d816224b7187eb038e328554b5dc5e7b0b8c",
+      "revision": "797bad451b45d0d67631eeb8cdb1c93d259f614c",
       "version": "1.1.0",
       "env": [
         "HELA_ECOSYSTEM_ROOT",

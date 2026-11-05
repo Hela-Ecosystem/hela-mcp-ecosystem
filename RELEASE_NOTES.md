@@ -1,4 +1,19 @@
-# HeLa MCP Ecosystem v1.0.0 Release Notes
+# HeLa MCP Ecosystem Release Notes
+
+## v1.4.0 — memory safety and runtime verification
+
+The v1.4.0 source snapshot pins the published cell revisions and runtime 1.1.0. Older versioned snapshots are unchanged. `latest-stable.json` tracks this source snapshot, not a guarantee that every optional integration or GUI session has been exercised.
+
+- Genome: 19 suites / 242 tests with clean lockfile dependencies, including WAL-safe backups, isolated restore, vault conflicts, repeated imports, and exclusive mission claims.
+- Runtime: 20 isolated fault tests covering hung children, SIGTERM/SIGKILL, actual process exit, one restart, profile/cache boundaries, and shutdown cleanup.
+- Nix: real Node 22 package builds on x86_64-linux and native aarch64-linux, using pinned inputs and fixed-output npm dependencies.
+- Dependencies: clean-install Zod 4 build fixes in Genome and Enzyme; Enzyme's 79 tests and Phenotype's 74 tests pass.
+- Ecosystem: ten isolated standalone MCP handshakes and 80 configuration-generation combinations pass. Codex TOML now uses `mcp_servers` and is accepted by the native parser. These are not authenticated GUI tests.
+- Discovery: 290 standalone tools with LLM and model-backed agent features disabled; the same isolated `dev-workspace` runtime exposes 230 tools including `hela.pipe`. Feature-enabled deployments can expose additional Mitosis tools and the optional agent alias; query `tools/list` rather than assuming a static total.
+
+Known limits: Zed/Codex ACP authenticated-session verification remains pending; duplicate ownership warnings do not establish a connection failure. Existing live vault conflicts remain archived for deliberate review. Android/Blender discovery is not hardware integration. Endpoint authentication and credential rotation remain operator work, not changes included in this release.
+
+## Historical v1.0.0 notes
 
 We are proud to announce the official **v1.0.0** release of the **HeLa MCP Ecosystem** — a modular, immortal cellular AI tooling stack built on the Model Context Protocol (MCP), engineered by Azzar.
 
