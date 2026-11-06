@@ -104,7 +104,7 @@
         </div>
 
         <h2 id="configurator">Meja Kerja Konfigurasi</h2>
-        <p>Pilih profil dan klien untuk pratinjau path/format tanpa kunci. Ganti <code>/absolute/path/to/MCPservers</code> dengan direktori induk repositori Anda. CLI menambahkan environment khusus instalasi; pratinjau ini tidak identik byte-per-byte dengan hasilnya. Output Docker hanya scaffold: pemetaan port tidak mengubah stdio menjadi HTTP.</p>
+        <p>Pilih profil dan klien untuk pratinjau path/format tanpa kunci. Ganti <code>/absolute/path/to/MCPservers</code> dengan direktori induk repositori yang dikelola manual. Pratinjau ini bukan fragmen instalasi terkelola. Gunakan <code>./setup.sh --mode individual|runtime|docker|docker-runtime|nix --profile &lt;profil&gt; --client &lt;klien&gt;</code>, lalu gabungkan hasil privatnya. Pratinjau Docker memakai tag contoh; installer membangun dan mengunci ID image nyata. Stdio tidak memerlukan pemetaan port.</p>
         <div class="field-row">
           <div class="field">
             <label for="profileSelect">Profil target</label>

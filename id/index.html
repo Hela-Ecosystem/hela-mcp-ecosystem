@@ -111,7 +111,9 @@
 cd hela-mcp-ecosystem
 ./setup.sh --profile dev-workspace --client opencode</code></pre>
         </div>
-        <p>Skrip <code>setup.sh</code> mengkloning, membangun, dan menuliskan konfigurasi klien untuk profil yang dipilih. Flag yang berguna: <code>--system gui|headless</code>, <code>--reconfigure</code> (hanya perbarui konfigurasi), <code>--dev</code> (ikuti branch alih-alih pin revisi), <code>doctor</code> (diagnostik).</p>
+        <p><code>setup.sh</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>, memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
+        <p>Delapan profil mendukung <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker membutuhkan daemon aktif dan Compose v2; build native membutuhkan Python, make, dan compiler C/C++, atau toolchain Nix terkunci. Lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a> untuk persyaratan, Compose, GC root Nix, dan pemulihan kegagalan.</p>
+        <p>Mode runtime mendukung <code>--transport http --port 8080</code>. Listener hanya di loopback dan harus dijalankan secara eksplisit; gunakan <code>doctor --url http://127.0.0.1:8080/mcp</code> untuk memeriksa endpoint aktif. Engine browser, kunci provider, bridge Android/Blender, dan autentikasi GUI tetap kebutuhan terpisah.</p>
         <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Profil bawaan tetap <code>dev-workspace</code>, sedangkan instalasi lain bebas memilih salah satu dari delapan profil.</p>
 
         <h2 id="verify">Verifikasi</h2>
@@ -119,7 +121,7 @@ cd hela-mcp-ecosystem
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // GERBANG_VERIFIKASI</span><button class="copy-btn" type="button">Salin</button></div>
           <pre><code>./setup.sh doctor --profile dev-workspace
-npm test -- --profile dev-workspace
+npm run test:install  # Regresi installer, bukan pengujian hardware
 npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
         </div>
         <div class="admonition success">

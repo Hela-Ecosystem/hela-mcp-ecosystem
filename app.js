@@ -35,10 +35,17 @@ function renderConfig(profileKey, clientKey) {
   }
   if (clientKey === "docker") {
     const services = {};
-    servers.forEach((s, i) => {
-      services[s.id] = { build: { context: "../" + s.dir, dockerfile: "Dockerfile" }, ports: [(3001 + i) + ":" + (3001 + i)], networks: ["mcp-network"] };
+    const volumes = { workspace: {} };
+    servers.forEach((s) => {
+      const data = s.id + "-data";
+      volumes[data] = {};
+      services[s.id] = { image: "hela-ecosystem:" + profileKey + "-" + globalThis.HELA_DOCS_DATA.release.ecosystem,
+        init: true, stdin_open: true, tty: false, working_dir: "/workspace",
+        command: ["node", "/opt/hela/" + s.dir + "/" + s.entry],
+        environment: { HELA_PROFILE: profileKey, HELA_ECOSYSTEM_ROOT: "/opt/hela/hela-mcp-ecosystem" },
+        volumes: [data + ":/data", "workspace:/workspace"] };
     });
-    return JSON.stringify({ version: "3.8", services, networks: { "mcp-network": { driver: "bridge" } } }, null, 2);
+    return JSON.stringify({ services, volumes }, null, 2);
   }
   return "// Select a profile and client.";
 }
