@@ -26,12 +26,20 @@ To output machine-readable JSON:
 ./setup.sh doctor --json
 ```
 
+For managed installations, select the installed `--mode` and profile, or use an explicit prefix:
+
+```bash
+./setup.sh doctor --prefix /path/to/prefix --json
+./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+```
+
+The URL form checks an already-running HTTP endpoint, not its remote filesystem. See [installation modes](installation.md) for Docker, Nix, listener startup, and private client fragments.
+
 ### Understanding Diagnostic Output
 
-* **`[READY]`**: The server directory exists, Git commit matches pinned revision, entrypoint is compiled, and stdio JSON-RPC initialization succeeded in <300ms.
-* **`[OPTIONAL MISSING]`**: An optional external driver (e.g. Playwright, ADB, Blender) is not installed on the host. Non-core profiles will continue to work normally.
-* **`[WARNING]`**: The server is runnable but may differ from the pinned snapshot commit or has uncommitted development changes.
-* **`[ERROR - REQUIRED MISSING]`**: A core component or prerequisite failed. Review the actionable recovery steps below.
+* **`READY`**: Managed source/build/image identity and isolated MCP initialize/discovery checks passed. Runtime modes also check cold catalog parity and private HTTP discovery.
+* **`DEGRADED` / server `ERROR`**: A required check failed; inspect the JSON report for its server/error. Pending installations, changed builds, missing interpreters/images, and bad MCP replies fail readiness and return nonzero.
+* **Integration scope**: Discovery does not verify Playwright executables, Android/Blender bridges, provider credentials, GUI authentication, or arbitrary workspace access. Legacy unmanaged checkout diagnostics have a different report layout.
 
 ---
 
@@ -44,6 +52,9 @@ To output machine-readable JSON:
 **Root Cause**: The TypeScript source code has not been compiled into JavaScript build artifacts.
 
 **Fix**:
+For a managed prefix, rerun the original setup command with the same mode/profile/prefix. Locked dependencies and selected builds are recreated and probed. Preserve dirty working-tree changes rather than resetting them. A pending marker is cleared only after successful verification.
+
+For manually maintained sibling checkouts:
 ```bash
 # Rebuild all 10 servers automatically
 npm run build:all
@@ -65,8 +76,7 @@ npm run build
 ```bash
 # Reinstall dependencies for the failing server
 cd <server-directory>
-rm -rf node_modules package-lock.json
-npm install
+npm ci
 npm run build
 ```
 
@@ -87,9 +97,9 @@ node <entrypoint-file>
 **Fix**:
 1. **Regenerate configuration with absolute paths**:
    ```bash
-   ./setup.sh --reconfigure --profile dev-workspace --client cursor --non-interactive
+   ./setup.sh --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
    ```
-2. **Verify target configuration file**:
+2. **Review and merge the printed private fragment into the correct client file**. Setup does not write these live files:
    * **Cursor IDE**: `cat ~/.cursor/mcp.json`
    * **Claude Desktop**: `cat ~/.claude.json`
    * **Gemini / Antigravity**: `cat ~/.gemini/antigravity-cli/mcp_config.json`

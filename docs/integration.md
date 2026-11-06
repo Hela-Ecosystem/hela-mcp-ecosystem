@@ -4,6 +4,8 @@
 
 The canonical inventory and selected profile drive configuration. Do not copy old repository paths or hand-maintain a second list of servers. Current versions and counts are in [current versions](current-versions.md).
 
+The installer now creates a managed prefix and private client fragment instead of replacing live client files. Use `--mode individual`, `runtime`, `docker`, `docker-runtime`, or `nix`; see [installation modes](installation.md). Review and merge the generated fragment. Its launcher supplies the installed executable, workspace, data location, and selected profile.
+
 ## Generate configuration
 
 Use Node 22 LTS and build the selected cells first:
@@ -19,7 +21,7 @@ node scripts/generate-config.mjs --profile dev-workspace --client opencode \
   --root /absolute/path/to/MCPservers/hela-mcp-ecosystem --stdout
 ```
 
-`--root` points to the ecosystem checkout. Cell directories normally sit beside it under `MCPservers/`; their exact `dir` and `entry` come from `config/inventory.json`, including `ll3m-mcp/brain` for Plastid.
+For manually maintained repositories, `--root` points to the ecosystem checkout and cell directories normally sit beside it. For a managed installation, add `--prefix /path/to/prefix --mode <mode>` to generate a fragment using its verified launchers and metadata. Plastid's package is `ll3m-mcp/brain`, not its Git repository root.
 
 Output may contain credentials supplied through environment variables or options. Do not publish generated private configuration. The committed examples use placeholders and no real keys.
 
@@ -63,16 +65,16 @@ Do not remove shared top-level Zed definitions as a workaround: native Zed and o
 
 GitHub tokens are optional for live remote prompt/catalog operations. Enzyme can use keyless network fallbacks when Google CSE credentials are absent; configured CSE uses `GOOGLE_API_KEY` and **`GOOGLE_CSE_ID`**. Model-backed tools require their configured engine/provider. SQLite remains Genome's base engine; Obsidian and Redis are optional. Read [keys and services](keys-and-secrets.md) and the selected server's generated canonical tool reference.
 
-## Docker scaffolds
+## Docker installations
 
-The generator's `docker` backend emits a Compose scaffold, not evidence that every cell image, transport, or device integration has been deployed:
+Use the installer to build and verify a selected-profile image before generating/using its client fragment:
 
 ```bash
-node scripts/generate-config.mjs --profile headless-server --client docker \
-  --out config/docker-compose.generated.yml
+./setup.sh --mode docker --profile headless-server --client docker --non-interactive
+./setup.sh doctor --mode docker --profile headless-server
 ```
 
-JSON output is valid YAML for Compose. Review image/build paths, stdio versus HTTP transport, device access, persistence, and credentials before use. Do not assume exposed ports turn arbitrary stdio servers into HTTP servers.
+`compose.json` uses the built image ID, actual entrypoints, attached stdio without a TTY, and persistent volumes. `--mode docker-runtime` selects one runtime container. Add `--transport http` only for runtime-based modes; the installer generates loopback-only HTTP settings and leaves listener startup explicit. The older seven-cell `config/docker-compose.yml` is historical scaffolding, not the supported installer path. Hardware and provider integrations are still separate.
 
 ## Acceptance and reloads
 

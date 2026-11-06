@@ -35,3 +35,7 @@ done
 
 echo
 print_success "Build complete: $ok/${#SERVERS[@]}"
+if [ "$ok" -ne "${#SERVERS[@]}" ]; then
+    print_error "Selected servers were missing or failed to build."
+    exit 1
+fi

@@ -2,8 +2,11 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import net from 'node:net';
+import { probeHttpEndpoint } from './http-probe.mjs';
 
-export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runtime = false, namespaced = false, featureFlags = {}, timeoutMs = 20000, calls = [], prepareWorkspace } = {}) {
+export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runtime = false, namespaced = false, featureFlags = {}, timeoutMs = 20000, calls = [], prepareWorkspace, launch, transport = 'stdio', launchForPort, httpHost = '127.0.0.1' } = {}) {
+  if (!['stdio', 'http'].includes(transport) || transport === 'http' && (!runtime || calls.length)) throw new Error('HTTP isolated probes require a runtime and discovery-only calls');
   for (const [key, value] of Object.entries(featureFlags)) {
     if (!/^[A-Z][A-Z0-9_]*_ENABLED$/.test(key) || typeof value !== 'boolean') throw new Error('Invalid probe feature flag');
   }
@@ -26,7 +29,18 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
   if (ecosystemRoot) env.HELA_ECOSYSTEM_ROOT = ecosystemRoot;
   for (const [key, value] of Object.entries(featureFlags)) env[key] = String(value);
   const started = performance.now();
-  const child = spawn(process.execPath, [path.resolve(entry)], {
+  if (launch && (typeof launch.command !== 'string' || !Array.isArray(launch.args) || !launch.args.every(arg => typeof arg === 'string'))) throw new Error('Invalid probe launcher');
+  let port;
+  if (transport === 'http') {
+    port = await new Promise((resolve, reject) => {
+      const socket = net.createServer();socket.on('error', reject);
+      socket.listen(0, '127.0.0.1', () => { const selected = socket.address().port;socket.close(error => error ? reject(error) : resolve(selected)); });
+    });
+    if (launchForPort) launch = launchForPort(port);
+  }
+  const args = launch?.args ?? [path.resolve(entry)];
+  const transportArgs = transport === 'http' ? ['--transport', 'http', '--host', httpHost, '--port', String(port)] : [];
+  const child = spawn(launch?.command ?? process.execPath, [...args, ...transportArgs], {
     cwd: workspace, env, detached: process.platform !== 'win32', stdio: ['pipe', 'pipe', 'pipe'],
   });
   const pending = new Map();
@@ -85,6 +99,21 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
     } catch (error) { if (error.code !== 'ESRCH') throw error; }
   }
   try {
+    if (transport === 'http') {
+      const deadline = Date.now() + timeoutMs;
+      let listening = false;
+      while (Date.now() < deadline && !failure) {
+        try {
+          const response = await fetch(`http://127.0.0.1:${port}/healthz`, { signal: AbortSignal.timeout(500) });
+          await response.body?.cancel();
+          if (response.ok) { listening = true; break; }
+        } catch {}
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+      if (!listening) throw new Error(failure?.message || 'Private HTTP runtime did not become ready');
+      const result = await probeHttpEndpoint(`http://127.0.0.1:${port}/mcp`, { timeoutMs });
+      return { ...result, discoveryMs: performance.now() - started, discoveryBootedCells: [...booted].sort(), bootedCells: [...booted].sort(), calls: [], isolated: true };
+    }
     const initialized = await request('initialize', {
       protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'hela-isolated-probe', version: '1.0.0' },
     });
@@ -116,6 +145,9 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
       responses.push({ name: call.name, result: JSON.parse(JSON.stringify(response).replaceAll(root, '<sandbox>')), durationMs });
     }
     return { serverInfo: initialized.serverInfo, tools: result.tools, calls: responses, discoveryMs, discoveryBootedCells, bootedCells: [...booted].sort(), isolated: true };
+  } catch (error) {
+    if (process.env.HELA_PROBE_DEBUG === '1') console.error(bootOutput.replaceAll(root, '<sandbox>').slice(-6000));
+    throw error;
   } finally {
     rejectPending(new Error('MCP verification complete'));
     if (child.pid) {

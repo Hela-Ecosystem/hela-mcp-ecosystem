@@ -89,13 +89,14 @@
 ./setup.sh doctor --profile dev-workspace --runtime
 # Environment full-stack yang diuji: Node 22 LTS</code></pre>
         </div>
+        <p>Untuk instalasi terkelola, gunakan mode dan profil yang sama, atau <code>./setup.sh doctor --prefix /path/to/prefix --json</code>. Doctor memeriksa identitas sumber/build dan respons MCP nyata; mode runtime juga memeriksa discovery HTTP privat. Gunakan <code>--url http://127.0.0.1:8080/mcp</code> untuk listener yang dijalankan secara eksplisit. Respons health saja bukan bukti kesiapan MCP.</p>
 
         <h2 id="scenarios">Skenario kegagalan &amp; perbaikan</h2>
 
         <section class="diag-card" aria-labelledby="d-entry">
           <div class="diag-card-header" id="d-entry">Entrypoint tidak ditemukan</div>
           <div class="diag-card-body">
-            <p><strong>Gejala:</strong> doctor menandai sel <code>present: no</code>. <strong>Penyebab:</strong> tahap kompilasi/build terlewat. <strong>Solusi:</strong> jalankan <code>cd &lt;dir&gt; &amp;&amp; npm install &amp;&amp; npm run build</code>, lalu jalankan ulang doctor. Cytosol tidak memerlukan build (<code>src/server.js</code> berjalan langsung).</p>
+            <p><strong>Gejala:</strong> build hilang/berubah atau ada penanda instalasi belum selesai. Jalankan ulang setup dengan prefix, mode, dan profil yang sama untuk memasang dependensi terkunci, membangun, dan menguji MCP. Sumber kotor, origin berbeda, dan direktori tidak terkelola ditolak; simpan perubahan Anda, jangan reset. Lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a>. Jangan hapus lock milik installer yang masih aktif.</p>
           </div>
         </section>
 

@@ -74,12 +74,13 @@ flowchart TB
 * **SQLite**: Genome uses Node bindings; the SQLite CLI is optional for inspection.
 
 ### 2. Run Diagnostics (`setup.sh doctor`)
-Check your host environment, compiler readiness, external runtimes, and API key fallbacks:
+Clone the source, then select an installation mode:
 
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh doctor
+./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode individual --profile dev-workspace
 ```
 
 ### 3. Interactive Installation & Profile Selection
@@ -109,23 +110,28 @@ cd hela-mcp-ecosystem
 ./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
+**Docker cells, Docker runtime, or Nix runtime:**
+```bash
+./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
+./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh --mode nix --profile dev-workspace --client codex --non-interactive
+```
+
+Installs use private managed prefixes under `${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/`. Existing repositories and live client files are not overwritten. Review and merge the generated client fragment. Use `--prefix` for an explicit location and pass it to doctor. See [installation modes and doctor](docs/installation.md) for HTTP transport, Compose, Nix GC roots, snapshots, optional model assets, prerequisites, and failure recovery.
+
 ---
 
 ## Supported AI Clients & Output Formats
 
-The HeLa MCP Ecosystem generates tailored, valid configuration formats across 10 client backends:
+The installer writes private fragments inside its prefix, never directly into live client files:
 
-| Client Platform | Output Config Location | Format |
-|---|---|---|
-| **Cursor IDE** | `~/.cursor/mcp.json` | JSON (`mcpServers`) |
-| **Claude Desktop / CLI** | `~/.claude.json` | JSON (`mcpServers`) |
-| **Gemini CLI** | `~/.gemini/antigravity-cli/mcp_config.json` | JSON (`mcpServers`) |
-| **Antigravity CLI** | `~/.gemini/antigravity-cli/mcp_config.json` | JSON (`mcpServers`) |
-| **OpenCode** | `~/.config/opencode/opencode.json` | JSON (`mcp`) |
-| **Kilo CLI** | `~/.config/kilo/config.json` | JSON (`mcp`) |
-| **Zed Editor** | `~/.config/zed/settings.json` | JSON (`context_servers`) |
-| **Codex / ChatGPT** | `~/.codex/config.toml` | TOML (`[mcp_servers.*]`) |
-| **Docker Compose** | `config/docker-compose.generated.yml` | Docker Compose v3 |
+- Cursor, Claude, Gemini, Antigravity: `mcpServers` JSON.
+- OpenCode and Kilo: `mcp` JSON with an installed local launcher, or a runtime HTTP URL.
+- Zed: `context_servers` JSON; preserve unrelated settings when merging.
+- Codex: `[mcp_servers.*]` TOML, with a launcher or HTTP URL.
+- Docker: functional `compose.json` for the built image, not speculative per-cell Dockerfiles or stdio port mappings.
+
+`--client skip` installs without generating a client fragment. Client authentication and GUI acceptance remain separate.
 
 ---
 

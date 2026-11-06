@@ -22,6 +22,9 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { probeMcp } from './mcp-probe.mjs';
 import { loadInventory, resolveServerDir, selectProfile } from './inventory.mjs';
+import { parseOptions, readInstallation } from './installation.mjs';
+import { checkInstallation } from './doctor-installation.mjs';
+import { probeHttpEndpoint } from './http-probe.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -72,6 +75,36 @@ function getGitCommit(dir) {
 }
 
 async function runDoctor(options = {}) {
+  const parsed = parseOptions(process.argv.slice(2), ECOSYSTEM_ROOT);
+  if (parsed.help) {
+    console.log('Usage: ./setup.sh doctor [--prefix PATH] [--mode individual|runtime|docker|docker-runtime|nix] [--profile ID] [--runtime] [--json], or --url URL');
+    return;
+  }
+  if (parsed.url) {
+    const result = await probeHttpEndpoint(parsed.url);
+    const expected = loadInventory(ECOSYSTEM_ROOT).inventory['hela-runtime'].version;
+    const report = { status: result.serverInfo.version === expected ? 'READY' : 'DEGRADED', transport: 'http', version: result.serverInfo.version,
+      expectedVersion: expected, tools: result.tools.length, scope: result.scope };
+    console.log(parsed.json ? JSON.stringify(report, null, 2) : `HTTP MCP: ${report.status}, version ${report.version}, ${report.tools} tools. ${report.scope}`);
+    process.exitCode = report.status === 'READY' ? 0 : 1;
+    return;
+  }
+  if (fs.existsSync(path.join(parsed.prefix, '.hela-install.json')) || process.argv.includes('--prefix')) {
+    const manifest = readInstallation(parsed.prefix);
+    if (process.argv.includes('--profile') && parsed.profile !== manifest.profile) throw new Error('Doctor profile does not match installation');
+    if ((process.argv.includes('--mode') || process.argv.includes('--runtime')) && parsed.mode !== manifest.mode) throw new Error('Doctor mode does not match installation');
+    const report = await checkInstallation(parsed.prefix);
+    if (parsed.json) console.log(JSON.stringify(report, null, 2));
+    else {
+      console.log(`HeLa ${report.mode}/${report.profile}: ${report.status}`);
+      for (const server of report.servers) console.log(`${server.id}: ${server.status}${server.error ? ` (${server.error})` : ` — ${server.tools} tools`}`);
+      if (report.error) console.log(report.error);
+      if (report.integrations) console.log(report.integrations);
+    }
+    process.exitCode = report.status === 'READY' ? 0 : 1;
+    return;
+  }
+  if (parsed.mode.startsWith('docker') || parsed.mode === 'nix') throw new Error('No managed installation found; specify --prefix or install this mode first');
   const isJson = options.json || process.argv.includes('--json');
   let targetProfileId = options.profile || process.env.HELA_PROFILE || 'dev-workspace';
   const pIndex = process.argv.indexOf('--profile');
@@ -280,4 +313,8 @@ async function runDoctor(options = {}) {
   }
 }
 
-runDoctor().catch(error => { console.error(error.message); process.exitCode = 1; });
+  runDoctor().catch(error => {
+    if (process.argv.includes('--json')) console.log(JSON.stringify({ status: 'DEGRADED', error: error.message, servers: [] }));
+    else console.error(error.message);
+    process.exitCode = 1;
+  });

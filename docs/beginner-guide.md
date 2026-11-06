@@ -20,7 +20,7 @@ cd hela-mcp-ecosystem
 ./setup.sh --profile dev-workspace --client opencode --non-interactive
 ```
 
-Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. Run `./setup.sh` without flags for the interactive menus; menu ordering depends on the available profiles and system selection.
+Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run `./setup.sh` without flags for interactive profile/mode/client selection.
 
 All eight profiles are supported:
 
@@ -45,6 +45,8 @@ The installer normally configures separate MCP servers. Add `--runtime` to keep 
 
 Runtime is a serve mode, not a profile named `runtime`. Its catalog advertises schemas without starting cells; a first call starts only its target. [Runtime details](on-demand-runtime.md) explain catalog generation, missing metadata, and recovery.
 
+Other mechanisms are `--mode docker` (separate containers), `--mode docker-runtime` (one runtime container), and `--mode nix` (pinned toolchain and packaged runtime). Runtime modes also support `--transport http`. See [installation modes](installation.md) for exact requirements and commands; Docker needs a working daemon, and HTTP listeners are started explicitly.
+
 ## Optional keys
 
 OpenRouter, GitHub, and Google keys are optional for discovery and keyless capabilities. Keyless does **not** mean every operation is offline: web research and external design services still need network access, and generative-model features require their configured provider or local engine. See [keys and services](keys-and-secrets.md).
@@ -61,6 +63,8 @@ npm run test:matrix
 ```
 
 Doctor checks selected paths, versions, revisions, and actual isolated MCP replies. Runtime checking also verifies catalog parity and zero discovery startups. The configuration matrix checks 80 profile/client combinations; it does not log in to GUI agents or exercise hardware.
+
+For an explicit prefix, use `./setup.sh doctor --prefix /path/to/prefix`. For Docker or Nix defaults, select the same `--mode` and profile as installation. `doctor --url http://127.0.0.1:8080/mcp` checks a running HTTP endpoint; it does not inspect remote source revisions.
 
 On a full ten-cell checkout you can also run `npm test` and `npm run test:profiles`. On a partial checkout use `npm run test:profiles -- --profile <id>`. Missing unselected hardware repositories are not a reason to change your machine's profile.
 

@@ -87,7 +87,7 @@ Run the setup script:
 ```bash
 ./setup.sh
 ```
-The wizard asks for optional keys. Pressing Enter skips them; keyless defaults can still use the network. Generated files/stdout can contain explicitly supplied credentials, so keep them private.
+The installer reads optional provider keys from environment and never prompts for or accepts secret values as CLI flags. Keyless defaults can still use the network. Generated private client fragments can contain supplied credentials; review them before sharing, and merge them into client settings deliberately.
 
 ### Reconfiguring Keys Anytime
 To update keys or change clients on an installed ecosystem:

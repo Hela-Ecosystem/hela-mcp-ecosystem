@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadInventory, resolveServerDir } from './inventory.mjs';
+import { readInstallation, composeConfiguration, containerArgs, modes } from './installation.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -21,16 +22,20 @@ function readJson(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
-function readInventoryData() {
-  const data = loadInventory(ECOSYSTEM_ROOT);
+function metadataRoot(root) {
+  return fs.existsSync(path.join(root, 'config/inventory.json')) ? root : ECOSYSTEM_ROOT;
+}
+
+function readInventoryData(root) {
+  const data = loadInventory(metadataRoot(root));
   return {
     inventory: data.inventory,
     aliases: data.aliases || {},
   };
 }
 
-function readProfiles() {
-  return loadInventory(ECOSYSTEM_ROOT).profiles;
+function readProfiles(root) {
+  return loadInventory(metadataRoot(root)).profiles;
 }
 
 function parseArgs(argv) {
@@ -40,6 +45,7 @@ function parseArgs(argv) {
     root: ECOSYSTEM_ROOT,
     out: null,
     runtime: false,
+    mode: 'individual',
     openrouterKey: process.env.OPENROUTER_API_KEY || null,
     githubToken: process.env.GITHUB_TOKEN || null,
     googleKey: process.env.GOOGLE_API_KEY || null,
@@ -53,11 +59,16 @@ function parseArgs(argv) {
     else if (arg === '--out') args.out = argv[++i];
     else if (arg === '--stdout') args.out = null;
     else if (arg === '--runtime') args.runtime = true;
+    else if (arg === '--mode') args.mode = argv[++i];
+    else if (arg === '--prefix') args.prefix = argv[++i];
+    else if (arg === '--image') args.image = argv[++i];
+    else if (arg === '--url') args.url = argv[++i];
     else if (arg === '--openrouter-key' || arg === '--openrouter') args.openrouterKey = argv[++i];
     else if (arg === '--github-token' || arg === '--github') args.githubToken = argv[++i];
     else if (arg === '--google-key' || arg === '--google') args.googleKey = argv[++i];
     else if (arg === '--google-cse-id' || arg === '--cse') args.googleCseId = argv[++i];
     else if (args.profile === null && !arg.startsWith('-')) args.profile = arg;
+    else throw new Error(`Unknown configuration option: ${arg}`);
   }
   return args;
 }
@@ -83,13 +94,29 @@ function resolveServers(profile, inventory, aliases = {}) {
   return resolved;
 }
 
-function entryArgs(server, root) {
+function entryArgs(server, root, options = {}) {
+  if (options.installation?.mode.startsWith('docker')) {
+    const installed = options.installation;
+    const args = containerArgs(installed.imageId, `/opt/hela/${server.dir}/${server.entry}`, {
+      profile: installed.profile, workspace: installed.workspace, data: path.join(installed.prefix, 'data', server.id) });
+    if (process.platform === 'linux') args.splice(1, 0, '--user', `${process.getuid()}:${process.getgid()}`);
+    const env = buildServerEnv(server, root, options);
+    for (const key of Object.keys(env)) args.splice(1, 0, '--env', key);
+    return args;
+  }
+  if (options.installation) return [path.join(options.installation.ecosystemRoot, 'scripts/launch.mjs'), server.id];
   if (!server.entry) return [];
   const dir = resolveServerDir(server, root);
   return [path.join(dir, server.entry)];
 }
 
+function launchCommand(server, options) { return options.installation?.mode.startsWith('docker') ? 'docker' : options.installation?.node || server.runtime || 'node'; }
+
 function buildServerEnv(s, root, options = {}) {
+  if (options.installation) {
+    return Object.fromEntries([['OPENROUTER_API_KEY', options.openrouterKey], ['GITHUB_TOKEN', options.githubToken],
+      ['GOOGLE_API_KEY', options.googleKey], ['GOOGLE_CSE_ID', options.googleCseId]].filter(([, value]) => value));
+  }
   const env = {};
   const serverDir = resolveServerDir(s, root);
   for (const key of (s.env || [])) {
@@ -134,8 +161,6 @@ function buildServerEnv(s, root, options = {}) {
       continue;
     } else if (/_AVAILABLE$|_ENABLED$/.test(key)) {
       env[key] = 'true';
-    } else {
-      env[key] = 'your-' + key.toLowerCase().replace(/_/g, '-');
     }
   }
   return env;
@@ -145,11 +170,12 @@ function renderOpencode(servers, root, options) {
   const mcp = {};
   for (const s of servers) {
     const name = s.id.replace('-mcp-server', '').replace('-mcp', '');
-    const entry = s.entry ? path.join(resolveServerDir(s, root), s.entry) : null;
+    const args = entryArgs(s, root, options);
+    const entry = args.length > 0;
     const block = {
       type: 'local',
       enabled: !!entry,
-      command: entry ? [s.runtime || 'node', entry] : [],
+      command: entry ? [launchCommand(s, options), ...args] : [],
     };
     const env = buildServerEnv(s, root, options);
     if (Object.keys(env).length) block.environment = env;
@@ -162,11 +188,11 @@ function renderKilo(servers, root, options) {
   const mcp = {};
   for (const s of servers) {
     const name = s.id.replace('-mcp-server', '').replace('-mcp', '');
-    const args = entryArgs(s, root);
+    const args = entryArgs(s, root, options);
     const block = {
       type: 'local',
       enabled: true,
-      command: args.length ? [s.runtime || 'node', ...args] : [],
+      command: args.length ? [launchCommand(s, options), ...args] : [],
     };
     const env = buildServerEnv(s, root, options);
     if (Object.keys(env).length) block.environment = env;
@@ -181,8 +207,8 @@ function renderNode(servers, root, keyName = 'mcpServers', options) {
     const name = s.id.replace('-mcp-server', '').replace('-mcp', '');
     const env = buildServerEnv(s, root, options);
     serversObj[name] = {
-      command: s.runtime || 'node',
-      args: entryArgs(s, root),
+      command: launchCommand(s, options),
+      args: entryArgs(s, root, options),
       ...(Object.keys(env).length ? { env } : {}),
     };
   }
@@ -193,11 +219,11 @@ function renderCodexToml(servers, root, options) {
   const sections = ['# Generated Codex / ChatGPT MCP Server Configuration'];
   for (const s of servers) {
     const name = s.id.replace('-mcp-server', '').replace('-mcp', '');
-    const args = entryArgs(s, root);
+    const args = entryArgs(s, root, options);
     const argStr = args.map((a) => JSON.stringify(a)).join(', ');
     const sectionLines = [
       `[mcp_servers.${name}]`,
-      `command = ${JSON.stringify(s.runtime || 'node')}`,
+      `command = ${JSON.stringify(launchCommand(s, options))}`,
       `args = [${argStr}]`,
     ];
     const env = buildServerEnv(s, root, options);
@@ -212,24 +238,19 @@ function renderCodexToml(servers, root, options) {
   return sections.join('\n\n');
 }
 
-function renderDocker(servers) {
-  const services = {};
-  servers.forEach((s, i) => {
-    services[s.id] = {
-      build: { context: `../${s.dir}`, dockerfile: 'Dockerfile' },
-      ports: [`${3000 + i + 1}:${3000 + i + 1}`],
-      networks: ['mcp-network'],
-    };
-  });
-  return JSON.stringify(
-    {
-      version: '3.8',
-      services,
-      networks: { 'mcp-network': { driver: 'bridge' } },
-    },
-    null,
-    2
-  );
+function renderDocker(servers, options) {
+  const version = loadInventory(metadataRoot(options.root)).version;
+  const image = options.installation?.imageId || options.image || `hela-ecosystem:${options.profile}-${version}`;
+  return JSON.stringify(composeConfiguration(servers, image, options.profile, options.installation ?? options), null, 2);
+}
+
+function renderHttp(options) {
+  const url = new URL(options.url);
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) throw new Error('Invalid MCP HTTP URL');
+  if (options.backend === 'codex') return `[mcp_servers.hela-runtime]\nurl = ${JSON.stringify(url.href)}\n`;
+  if (['opencode', 'kilo'].includes(options.backend)) return JSON.stringify({ mcp: { 'hela-runtime': { type: 'remote', url: url.href, enabled: true } } }, null, 2) + '\n';
+  if (options.backend === 'cursor') return JSON.stringify({ mcpServers: { 'hela-runtime': { url: url.href } } }, null, 2) + '\n';
+  throw new Error('Unverified HTTP client backend; configure its MCP URL manually');
 }
 
 function renderPrint(servers, root) {
@@ -247,16 +268,23 @@ function main() {
     process.exit(1);
   }
 
-  const profiles = readProfiles();
+  if (!modes.includes(args.mode)) throw new Error('Unknown configuration mode');
+  if (args.prefix) {
+    args.installation = readInstallation(path.resolve(args.prefix));
+    if (args.installation.profile !== args.profile || args.installation.mode !== args.mode) throw new Error('Installation/configuration selection mismatch');
+    args.root = args.installation.ecosystemRoot;
+    if (args.installation.transport === 'http') args.url ||= `http://127.0.0.1:${args.installation.port ?? 8080}/mcp`;
+  } else if (args.mode !== 'individual' && args.backend !== 'docker') throw new Error('Install this mode first and provide --prefix');
+  const profiles = readProfiles(args.root);
   const profile = profiles.find((p) => p.id === args.profile);
   if (!profile) {
     console.error(`Unknown profile "${args.profile}". Available: ${profiles.map((p) => p.id).join(', ')}`);
     process.exit(1);
   }
 
-  const { inventory, aliases } = readInventoryData();
+  const { inventory, aliases } = readInventoryData(args.root);
   let servers = resolveServers(profile, inventory, aliases);
-  if (args.runtime) {
+  if (args.runtime || ['runtime', 'nix', 'docker-runtime'].includes(args.mode)) {
     const rt = inventory['hela-runtime'];
     if (!rt) { console.error('hela-runtime not in inventory'); process.exit(1); }
     servers = [{ id: rt.id || 'hela-runtime', ...rt }];
@@ -264,9 +292,11 @@ function main() {
     if (!args.profile || args.profile === 'runtime') args.profile = 'dev-workspace';
   }
   const root = path.resolve(args.root);
+  if (args.installation && servers.some(server => !args.installation.servers.some(installed => installed.id === server.id))) throw new Error('Selected server is not installed in this prefix');
 
   let out;
-  switch (args.backend) {
+  if (args.url && args.backend !== 'docker') out = renderHttp(args);
+  else switch (args.backend) {
     case 'cursor':
     case 'claude':
     case 'gemini':
@@ -286,7 +316,7 @@ function main() {
       out = renderCodexToml(servers, root, args) + '\n';
       break;
     case 'docker':
-      out = renderDocker(servers) + '\n';
+      out = renderDocker(servers, args) + '\n';
       break;
     case 'print':
       out = renderPrint(servers, root) + '\n';
@@ -301,7 +331,7 @@ function main() {
 
   if (args.out) {
     fs.mkdirSync(path.dirname(path.resolve(args.out)), { recursive: true });
-    fs.writeFileSync(path.resolve(args.out), out);
+    fs.writeFileSync(path.resolve(args.out), out, { mode: 0o600 });
     console.log(`Wrote ${path.resolve(args.out)}`);
   } else {
     process.stdout.write(out);

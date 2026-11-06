@@ -100,13 +100,14 @@
 ./setup.sh doctor --profile dev-workspace --runtime
 # Tested full-stack environment: Node 22 LTS</code></pre>
         </div>
+        <p>For a managed installation, pass the same <code>--mode</code> and profile, or <code>./setup.sh doctor --prefix /path/to/prefix --json</code>. Doctor verifies source/build identity and actual MCP replies; runtime modes also verify private HTTP discovery. Use <code>--url http://127.0.0.1:8080/mcp</code> to check an explicitly started listener. A health response alone is not MCP readiness.</p>
 
         <h2 id="scenarios">Scenarios &amp; fixes</h2>
 
         <section class="diag-card" aria-labelledby="d-entry">
           <div class="diag-card-header" id="d-entry">Entrypoint missing</div>
           <div class="diag-card-body">
-            <p><strong>Symptom:</strong> doctor marks a cell <code>present: no</code>. <strong>Cause:</strong> skipped build. <strong>Fix:</strong> <code>cd &lt;dir&gt; &amp;&amp; npm install &amp;&amp; npm run build</code>, then re-run doctor. Cytosol needs no build (<code>src/server.js</code> runs directly).</p>
+            <p><strong>Symptom:</strong> missing or changed build, or an incomplete-install marker. Re-run setup with the same prefix, mode, and profile: it installs locked dependencies, rebuilds, and probes MCP. Dirty sources, origin mismatches, and unmanaged directories are refused; preserve your changes rather than resetting them. See the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">installation guide</a>. Do not remove a lock belonging to an active installer.</p>
           </div>
         </section>
 
