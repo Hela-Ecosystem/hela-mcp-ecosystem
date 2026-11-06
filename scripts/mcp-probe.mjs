@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 
-export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runtime = false, timeoutMs = 20000, calls = [], prepareWorkspace } = {}) {
+export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runtime = false, namespaced = false, timeoutMs = 20000, calls = [], prepareWorkspace } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'hela-mcp-probe-'));
   const workspace = path.join(root, 'workspace');
   fs.mkdirSync(workspace);
@@ -18,6 +18,7 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
     MITOSIS_AGENT_ENABLED: 'false', AGENT_ESCALATION_ENABLED: 'false',
     AWESOME_COPILOT_ENABLED: 'true', RELIABILITY_MONITORING_ENABLED: 'false',
     HELA_PROFILE: profile, HELA_BROWSER_ALLOW_EVAL: 'false', HELA_ALLOWED_ROOTS: workspace,
+    HELA_NAMESPACE_TOOLS: namespaced ? '1' : '0',
   });
   if (ecosystemRoot) env.HELA_ECOSYSTEM_ROOT = ecosystemRoot;
   const child = spawn(process.execPath, [path.resolve(entry)], {
@@ -117,7 +118,7 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
       }
       responses.push({ name: call.name, result: JSON.parse(JSON.stringify(response).replaceAll(root, '<sandbox>')) });
     }
-    return { serverInfo: initialized.serverInfo, tools: result.tools, calls: responses, isolated: true };
+    return { serverInfo: initialized.serverInfo, tools: result.tools, calls: responses, bootedCells: [...booted].sort(), isolated: true };
   } finally {
     rejectPending(new Error('MCP verification complete'));
     if (child.pid) {

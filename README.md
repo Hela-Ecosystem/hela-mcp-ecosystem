@@ -144,6 +144,8 @@ The HeLa MCP Ecosystem generates tailored, valid configuration formats across 10
 
 > **Single-endpoint serve mode:** add `--runtime` to a profile command. The default profile remains `dev-workspace`, not `all`.
 
+Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (**16 checks**), including exact tool/schema parity and safe read-only routing. Lappy's ten-server `all` roster and servy's eight-cell `dev-workspace` setup remain different by design. See [all-profile verification](docs/profile-verification-2026-11-06.md); run `npm run test:profiles`, or append `-- --profile <id>` on a partial installation.
+
 For complete persona guides and pipeline specifications, see **[Profiles Catalog](docs/profiles.md)**.
 
 ---

@@ -48,6 +48,32 @@ test('silent and early-exiting processes cannot pass readiness checks', async ()
   }
 });
 
+test('profile and namespacing options do not inherit the host selection', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'hela-probe-fixture-'));
+  const inherited = { ...process.env };
+  try {
+    process.env.HELA_PROFILE = 'host-only-profile';
+    process.env.HELA_NAMESPACE_TOOLS = '1';
+    const fixture = join(root, 'options.mjs');
+    writeFileSync(fixture, `import readline from 'node:readline';
+      readline.createInterface({input:process.stdin}).on('line',line=>{
+        const m=JSON.parse(line);if(m.id===undefined)return;
+        const result=m.method==='initialize'?{serverInfo:{name:'fixture',version:'1.0.0'},capabilities:{tools:{}}}:
+          {tools:[{name:'options',inputSchema:{type:'object'},description:JSON.stringify({
+            profile:process.env.HELA_PROFILE,namespaced:process.env.HELA_NAMESPACE_TOOLS})}]};
+        console.log(JSON.stringify({jsonrpc:'2.0',id:m.id,result}));
+      });`);
+    const defaults = await probeMcp(fixture);
+    assert.deepEqual(JSON.parse(defaults.tools[0].description), { profile: 'minimal', namespaced: '0' });
+    const selected = await probeMcp(fixture, { profile: 'all', namespaced: true });
+    assert.deepEqual(JSON.parse(selected.tools[0].description), { profile: 'all', namespaced: '1' });
+    assert.deepEqual(selected.bootedCells, []);
+  } finally {
+    process.env = inherited;
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('MCP and payload-level tool failures cannot pass a read-only probe', async () => {
   const root = mkdtempSync(join(tmpdir(), 'hela-probe-fixture-'));
   try {

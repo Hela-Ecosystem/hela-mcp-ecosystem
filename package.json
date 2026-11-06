@@ -9,6 +9,7 @@
     "test:integration": "node scripts/test-integration.mjs",
     "test:matrix": "node scripts/test-client-matrix.mjs",
     "test:probe": "node --test scripts/test-mcp-probe.mjs",
+    "test:profiles": "node scripts/test-profile-matrix.mjs",
     "build:all": "./scripts/build-all.sh --all",
     "clean:all": "./scripts/clean-all.sh --all"
   },

@@ -15,6 +15,8 @@ Known limits: Zed/Codex ACP authenticated-session verification remains pending; 
 
 **Servy deployment verified (2026-11-06):** the rooted ARM Nix package serves the eight-cell `dev-workspace` profile under systemd. Local/public discovery returns 236 live tools, versus 230 in feature-disabled probes; all three Genome mission tools are present. Deployed doctor and strict version/pin checks pass. Existing conflict archives and unrelated client processes were preserved. See [deployment evidence and remaining client/gateway work](docs/deployment-2026-11-06.md).
 
+**All-profile follow-up (2026-11-06):** all eight profiles pass runtime startup/discovery, exact tool/schema parity, and safe read-only routing in both namespacing modes (**16/16** checks). All ten standalone cells plus runtime pass strict version/pin verification; the 80 client-configuration combinations and four probe regressions pass. Machine selections and release snapshots are unchanged. See [profile verification](docs/profile-verification-2026-11-06.md).
+
 ## Historical v1.0.0 notes
 
 We are proud to announce the official **v1.0.0** release of the **HeLa MCP Ecosystem** — a modular, immortal cellular AI tooling stack built on the Model Context Protocol (MCP), engineered by Azzar.
