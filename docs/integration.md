@@ -1,369 +1,87 @@
-# MCP Ecosystem Suite Integration Guide
+# MCP client integration
 
-![Blotcat plugging various cables into different desktop IDE interfaces](../assets/blotcat-integration.jpg)
-## Table of Contents
+![Blotcat connecting desktop clients](../assets/blotcat-integration.jpg)
 
-- [Overview](#overview)
-- [Client Integration](#client-integration)
-  - [Cursor IDE Integration](#cursor-ide-integration)
-    - [Step 1: Install Cursor IDE](#step-1-install-cursor-ide)
-    - [Step 2: Setup MCP Configuration](#step-2-setup-mcp-configuration)
-    - [Step 3: Verify Installation](#step-3-verify-installation)
-  - [Claude Desktop Integration](#claude-desktop-integration)
-    - [Step 1: Locate Configuration File](#step-1-locate-configuration-file)
-    - [Step 2: Update Configuration](#step-2-update-configuration)
-    - [Step 3: Restart Claude Desktop](#step-3-restart-claude-desktop)
-  - [OpenCode Integration](#opencode-integration)
-    - [Step 1: Locate Configuration File](#step-1-locate-configuration-file-1)
-    - [Step 2: Update Configuration](#step-2-update-configuration-1)
-  - [Zed IDE Integration](#zed-ide-integration)
-    - [Step 1: Locate Settings File](#step-1-locate-settings-file)
-    - [Step 2: Update Configuration](#step-2-update-configuration-2)
-    - [Step 3: Restart OpenCode](#step-3-restart-opencode)
-- [API Keys and Tokens Setup](#api-keys-and-tokens-setup)
-  - [GitHub Token (Required for Chaining MCP)](#github-token-required-for-chaining-mcp)
-  - [Google API Keys (Required for Researcher MCP)](#google-api-keys-required-for-researcher-mcp)
-- [Environment Variables](#environment-variables)
-  - [Global Environment Variables](#global-environment-variables)
-  - [Server-Specific Variables](#server-specific-variables)
-- [Docker Deployment](#docker-deployment)
-  - [Prerequisites](#prerequisites)
-  - [Quick Start with Docker](#quick-start-with-docker)
-  - [Environment File (.env)](#environment-file-env)
-- [Development Integration](#development-integration)
-  - [VS Code Integration](#vs-code-integration)
-  - [Custom Client Integration](#custom-client-integration)
-- [Workflow Integration](#workflow-integration)
-  - [Development Workflow](#development-workflow)
-  - [CI/CD Integration](#cicd-integration)
-- [Troubleshooting Integration Issues](#troubleshooting-integration-issues)
-  - [Common Issues](#common-issues)
-    - [Server Won't Start](#server-wont-start)
-    - [Tools Not Available](#tools-not-available)
-    - [API Key Issues](#api-key-issues)
-    - [Network Issues](#network-issues)
-  - [Debug Mode](#debug-mode)
-- [Advanced Integration](#advanced-integration)
-  - [Custom Server Development](#custom-server-development)
-  - [Performance Optimization](#performance-optimization)
-  - [Security Considerations](#security-considerations)
-- [Support](#support)
+The canonical inventory and selected profile drive configuration. Do not copy old repository paths or hand-maintain a second list of servers. Current versions and counts are in [current versions](current-versions.md).
 
-## Overview
+## Generate configuration
 
-This guide provides detailed instructions for integrating the MCP Ecosystem Suite into your development workflow and AI agent harness setup. The suite is **profile-driven**: you choose a profile that best fits your use case and target system (GUI desktop or headless server), and the setup tool installs only the servers in that profile.
-
-The profile-driven configuration is generated automatically during `./setup.sh`, or on demand:
+Use Node 22 LTS and build the selected cells first:
 
 ```bash
-node scripts/generate-config.mjs <profile> --backend <cursor|claude|opencode|docker>
+./setup.sh --profile dev-workspace --client opencode --non-interactive
 ```
 
-See [Profiles](profiles.md) for the list of profiles and how to create custom ones.
-
-## Client Integration
-
-### Cursor IDE Integration
-
-#### Step 1: Install Cursor IDE
-1. Download and install Cursor IDE from [cursor.sh](https://cursor.sh)
-2. Ensure you have Node.js >= 18.0.0 installed
-
-#### Step 2: Setup MCP Configuration
-
-The MCP Ecosystem Suite uses a profile-based configuration. Create or update your `~/.cursor/mcp.json` file, ideally generated via `scripts/generate-config.mjs`:
-
-```json
-{
-  "mcpServers": {
-    "chaining": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/chaining-mcp/dist/index.js"],
-      "env": {
-        "AWESOME_COPILOT_ENABLED": "true",
-        "RELIABILITY_MONITORING_ENABLED": "true",
-        "GITHUB_TOKEN": "your-github-token"
-      }
-    },
-    "filesystem": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/filesystem-mcp-server/dist/index.js"]
-    },
-    "Project-Guardian": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/Project-Guardian-mcp-server/dist/index.js"]
-    },
-    "terminal": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/terminal-mcp-server/build/index.js"]
-    },
-    "menager": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/menager-mcp-server/build/index.js"]
-    },
-    "research": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/research-mcp-server/dist/index.js"],
-      "env": {
-        "GOOGLE_API_KEY": "your-google-api-key",
-        "GOOGLE_CSE_ID": "your-google-cse-id"
-      }
-    },
-    "browser-agent": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/browser-agent/src/server.js"]
-    },
-    "the-designer": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/the-designer/dist/index.js"]
-    }
-  }
-}
-```
-
-This matches the `dev-workspace` profile. The authoritative copy is `config/cursor-example.json` — regenerate it (and any other profile) with:
+To inspect a generated file without installing it into a client:
 
 ```bash
-node scripts/generate-config.mjs <profile> --backend cursor --root /absolute/path/to/mcp-ecosystem --out config/cursor-example.json
+node scripts/generate-config.mjs --profile dev-workspace --client opencode \
+  --root /absolute/path/to/MCPservers/hela-mcp-ecosystem --stdout
 ```
 
-1. Replace `/absolute/path/to/mcp-ecosystem` with your actual path.
-2. Configure the required API keys and tokens.
+`--root` points to the ecosystem checkout. Cell directories normally sit beside it under `MCPservers/`; their exact `dir` and `entry` come from `config/inventory.json`, including `ll3m-mcp/brain` for Plastid.
 
-#### Step 3: Verify Installation
-1. Restart Cursor IDE.
-2. Open the MCP panel and verify the profile's servers are connected and show available tools.
+Output may contain credentials supplied through environment variables or options. Do not publish generated private configuration. The committed examples use placeholders and no real keys.
 
-### Claude Desktop Integration
+## Client formats and locations
 
-#### Step 1: Locate Configuration File
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
-- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+- **Cursor:** `mcpServers` JSON in `~/.cursor/mcp.json`.
+- **Claude:** `mcpServers` JSON. Claude Desktop commonly uses `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, `%APPDATA%/Claude/claude_desktop_config.json` on Windows, and `~/.config/Claude/claude_desktop_config.json` on Linux; CLI integrations can use a different location. Confirm the file used by your installed client.
+- **Gemini / Antigravity:** `mcpServers` JSON; the installer supports the configured Gemini/Antigravity path. Confirm your client version's actual file before merging.
+- **OpenCode / Kilo:** `mcp` JSON. Local entries have `type: "local"` and a command array.
+- **Zed:** `context_servers` JSON in `~/.config/zed/settings.json`. Preserve unrelated settings and shared server definitions.
+- **Codex:** TOML under **`[mcp_servers.<name>]`**, not `[mcpServers.<name>]`, in `~/.codex/config.toml`.
 
-#### Step 2: Update Configuration
+Generate a private output file with `--out <path>` and review/merge it instead of replacing an existing client configuration blindly. Eight profiles and ten generator backends, including Docker and skip, are checked by the CLI matrix. Browser previews use placeholder paths; the CLI is the installation/configuration source.
 
-Add your profile's servers to the Claude Desktop config file. For the `dev-workspace` profile:
+## Single-endpoint runtime
 
-```json
-{
-  "mcpServers": {
-    "chaining": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/chaining-mcp/dist/index.js"],
-      "env": {
-        "AWESOME_COPILOT_ENABLED": "true",
-        "RELIABILITY_MONITORING_ENABLED": "true",
-        "GITHUB_TOKEN": "your-github-token"
-      }
-    },
-    "filesystem": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/filesystem-mcp-server/dist/index.js"]
-    },
-    "Project-Guardian": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/Project-Guardian-mcp-server/dist/index.js"]
-    },
-    "terminal": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/terminal-mcp-server/build/index.js"]
-    },
-    "menager": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/menager-mcp-server/build/index.js"]
-    },
-    "research": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/research-mcp-server/dist/index.js"],
-      "env": {
-        "GOOGLE_API_KEY": "your-google-api-key",
-        "GOOGLE_CSE_ID": "your-google-cse-id"
-      }
-    },
-    "browser-agent": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/browser-agent/src/server.js"]
-    },
-    "the-designer": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/the-designer/dist/index.js"]
-    }
-  }
-}
-```
-
-Or generate it from a profile:
+Keep the selected profile and add the serve-mode flag:
 
 ```bash
-node scripts/generate-config.mjs <profile> --backend claude --root /absolute/path/to/mcp-ecosystem --out config/claude-example.json
+./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
-#### Step 3: Restart Claude Desktop
-Restart Claude Desktop to load the new MCP server configuration.
+There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `dev-workspace`. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
 
-### OpenCode Integration
-
-#### Step 1: Locate Configuration File
-- **Linux/macOS**: `~/.config/opencode/opencode.json`
-
-#### Step 2: Update Configuration
-
-OpenCode uses a distinct schema: servers live under `mcp` with `type: "local"`, a `command` array, and `environment` (not `env`). Generate it from a profile:
+The installer generates the selected-profile schema catalog. After rebuilding a cell:
 
 ```bash
-node scripts/generate-config.mjs <profile> --backend opencode --root /absolute/path/to/mcp-ecosystem --out /tmp/opencode-mcp.json
+npm run catalog:generate -- --profile dev-workspace
+./setup.sh doctor --profile dev-workspace --runtime
 ```
 
-Example (`dev-workspace`):
+See [on-demand runtime](on-demand-runtime.md) for stale-cache refusal and explicit `hela.pipe` bootstrap. A healthy HTTP liveness endpoint alone is not full MCP or external-integration acceptance evidence.
 
-```json
-{
-  "mcp": {
-    "research": {
-      "type": "local",
-      "enabled": true,
-      "command": ["node", "/absolute/path/to/mcp-ecosystem/research-mcp-server/dist/index.js"],
-      "environment": {
-        "GOOGLE_API_KEY": "your-google-api-key",
-        "GOOGLE_CSE_ID": "your-google-cse-id"
-      }
-    }
-  }
-}
-```
+## Zed and Codex ACP ownership
 
-OpenCode merges config files, so add the `mcp` object to your `~/.config/opencode/opencode.json` without overwriting its `provider`/`model` settings. The authoritative `dev-workspace` example is at `config/opencode-example.json`.
+Codex-native MCP entries and Zed-forwarded entries can have the same name. A duplicate warning can refer to the forwarded duplicate rather than failure of the native entry. `codex mcp list` inspects configuration; it does not execute servers or prove connectivity.
 
-#### Step 3: Restart OpenCode
-Restart OpenCode to pick up the new MCP servers.
+Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP/GUI warning verification remains separate from isolated MCP discovery. See the adapter-version-specific guidance in [troubleshooting](troubleshooting.md#zed-forwards-a-server-that-codex-already-defines); the optional merge override is not enabled by this guide.
 
-### Zed IDE Integration
+## Keys and optional services
 
-#### Step 1: Locate Settings File
-- **macOS/Linux**: `~/.config/zed/settings.json`
+GitHub tokens are optional for live remote prompt/catalog operations. Enzyme can use keyless network fallbacks when Google CSE credentials are absent; configured CSE uses `GOOGLE_API_KEY` and **`GOOGLE_CSE_ID`**. Model-backed tools require their configured engine/provider. SQLite remains Genome's base engine; Obsidian and Redis are optional. Read [keys and services](keys-and-secrets.md) and the selected server's generated canonical tool reference.
 
-#### Step 2: Update Configuration
+## Docker scaffolds
 
-Zed natively supports MCP servers under the `context_servers` key.
-
-Generate it from a profile:
+The generator's `docker` backend emits a Compose scaffold, not evidence that every cell image, transport, or device integration has been deployed:
 
 ```bash
-node scripts/generate-config.mjs <profile> --backend zed --root /absolute/path/to/mcp-ecosystem --out /tmp/zed-mcp.json
+node scripts/generate-config.mjs --profile headless-server --client docker \
+  --out config/docker-compose.generated.yml
 ```
 
-Example (`dev-workspace` snippet):
+JSON output is valid YAML for Compose. Review image/build paths, stdio versus HTTP transport, device access, persistence, and credentials before use. Do not assume exposed ports turn arbitrary stdio servers into HTTP servers.
 
-```json
-{
-  "context_servers": {
-    "chaining": {
-      "command": "node",
-      "args": ["/absolute/path/to/mcp-ecosystem/chaining-mcp/dist/index.js"],
-      "env": {
-      }
-    }
-  }
-}
-```
-
-Copy the generated `context_servers` block into your `~/.config/zed/settings.json` file. The authoritative `dev-workspace` example is available at `config/zed-example.json`.
-
-#### Step 3: Restart Zed
-Zed will automatically restart the context servers upon saving `settings.json`, but restarting the editor entirely ensures all extensions reload correctly.
-
-## API Keys and Tokens Setup
-
-### GitHub Token (Required for Chaining MCP)
-1. Go to [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
-2. Generate a new token with `repo` and `read:org` permissions.
-
-### Google API Keys (Required for Researcher MCP)
-1. Go to [Google Cloud Console](https://console.cloud.google.com/) and enable the Custom Search JSON API.
-2. Create an API Key.
-3. Create a Custom Search Engine at [cse.google.com](https://cse.google.com) and get your Search Engine ID.
-
-## Environment Variables
-
-### Global Environment Variables
-```bash
-# Required for Chaining MCP
-export GITHUB_TOKEN="your-github-token-here"
-
-# Required for Researcher MCP
-export GOOGLE_API_KEY="your-google-api-key-here"
-export GOOGLE_SEARCH_ENGINE_ID="your-search-engine-id-here"
-```
-
-## Docker Deployment
-
-### Prerequisites
-- Docker >= 20.0.0
-- Docker Compose >= 2.0.0
-
-### Quick Start with Docker
-1. Run the setup script and select "Docker Compose":
-   ```bash
-   ./setup.sh
-   # Select option 4 (Docker Compose)
-   ```
-2. The setup tool writes a profile-specific compose file to `config/docker-compose.generated.yml`. Edit the `config/docker-compose.yml` template (or the generated file) with your API keys:
-   ```bash
-   nano config/docker-compose.yml
-   ```
-3. Start all services:
-   ```bash
-   cd config
-   docker-compose -f docker-compose.generated.yml up -d
-   ```
-
-### Environment File (.env)
-Create a `.env` file in the mcp-ecosystem root directory:
+## Acceptance and reloads
 
 ```bash
-# GitHub Integration (Required for Chaining MCP Server)
-GITHUB_TOKEN=your-github-token-here
-
-# Google Search API (Required for Researcher MCP Server)
-GOOGLE_API_KEY=your-google-api-key-here
-GOOGLE_SEARCH_ENGINE_ID=your-search-engine-id-here
-
-# Optional: Data persistence paths
-DATA_PATH=./data
-WORKSPACE_PATH=./workspace
-
-# Optional: Server-specific settings
-AWESOME_COPILOT_ENABLED=true
-RELIABILITY_MONITORING_ENABLED=true
+./setup.sh doctor --profile dev-workspace --runtime
+npm run test:matrix
+npm run docs:check
 ```
 
-## Workflow Integration
+Use `--runtime` only when that runtime is installed. Run full-stack integration/profile tests on a machine with the required cells, or select the installed subset. Reload only the relevant clients after review; some clients auto-reload immediately on settings changes. Back up live databases/vaults before changing synchronization hooks. Do not restore over active SQLite files, force a vault conflict winner, or kill unrelated processes during verification.
 
-### Development Workflow
-1. **Project Setup**: Use Project Guardian to initialize project knowledge.
-2. **Code Analysis**: Use chaining server for comprehensive code analysis.
-3. **Research**: Use Researcher MCP for unified web and knowledge base research.
-4. **Browser Automation**: Use Browser Agent for interactive web tasks and verification.
-5. **File Operations**: Use Filesystem MCP for project file management.
-6. **System Tasks**: Use Terminal MCP for build and deployment tasks.
-
-## Troubleshooting Integration Issues
-
-### Common Issues
-
-#### Server Won't Start
-- Check Node.js version (>= 18.0.0)
-- Verify all dependencies are installed (`npm install`)
-- For Browser Agent, ensure Playwright dependencies are installed or use Docker.
-
-#### Tools Not Available
-- Verify MCP client configuration and absolute paths.
-- Check environment variables are correctly set.
-- Restart MCP client after any configuration changes.
-
-## Support
-
-For integration issues and questions:
-- Check the [troubleshooting guide](./troubleshooting.md)
-- Open issues in individual server repositories.
+Powerful filesystem, command, browser, and agent tools run with their server account's privileges. Current verification is not a security sandbox or authenticated-public-endpoint guarantee; see [security status](security-audit.md).

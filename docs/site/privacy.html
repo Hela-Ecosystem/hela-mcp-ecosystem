@@ -41,7 +41,7 @@
     <aside class="doc-sidebar" aria-label="Documentation sections">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVERS · 292 TOOLS</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 CELLS</div>
       </div>
       <nav aria-label="Documentation">
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
@@ -84,10 +84,11 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_07 // Hela-Ecosystem-MCP</span><span>DOSSIER: PRIVACY_POLICY</span></div>
           <h1 class="doc-title" data-i18n="privacy.title">Privacy Policy</h1>
-          <p class="doc-lead">Effective 2026-09-21. Short version: this site collects nothing. The software runs on your machines, and your keys stay there too.</p>
+          <p class="doc-lead">Effective 2026-09-21. This site has no analytics. The software can run locally or on an operator-controlled remote runtime; review your deployment before sending sensitive data.</p>
         </header>
 
         <h2 id="collect">What this site collects</h2>
+        <p>The browser stores your language preference in <code>localStorage</code> (<code>hela_lang</code>). This preference stays in your browser and is not an analytics identifier. Last reviewed: 2026-11-06.</p>
         <p>Nothing. No accounts, no analytics, no cookies, no fingerprinting, no newsletter, no contact forms. There is no server-side code on this site that records who you are or what you read.</p>
 
         <h2 id="third-parties">Third parties you touch by loading this site</h2>
@@ -107,7 +108,7 @@
         </section>
 
         <h2 id="software">The software itself is local-first</h2>
-        <p>The HeLa MCP servers run on your own machines over stdio. API keys in client configs (OpenRouter, GitHub, Google) stay in your local files and are sent only to the provider you configured. Needle model telemetry is forced off in our integration, and there is no phone-home in the codebase — every line is auditable in the public repositories.</p>
+        <p>HeLa can run on local machines over stdio or on an operator-controlled remote HTTP runtime. Tools can send workloads to configured providers, access files/devices, and store memory in SQLite or an optional Obsidian mirror. Credentials may be stored in private client/server configuration. Review the deployment operator and provider policies before sending sensitive data; generated configuration/stdout is not automatically safe to share.</p>
 
         <h2 id="changes">Changes and contact</h2>
         <p>If this policy ever changes, the change ships as a dated commit to this page. Questions: open an issue at <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem" target="_blank" rel="noopener noreferrer">Hela-Ecosystem/hela-mcp-ecosystem</a>.</p>
@@ -122,12 +123,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search 292 tools, pages, profiles…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search tools, pages, profiles…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="app.js"></script>
+  <script src="release-data.js?v=1.5.1"></script>
+  <script src="app.js?v=1.5.1"></script>
 </body>
 </html>

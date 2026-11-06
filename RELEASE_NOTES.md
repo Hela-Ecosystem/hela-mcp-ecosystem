@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.5.1 — current documentation and bilingual website
+
+Documentation-only refresh: all ten cells remain **3.0.0**, and runtime remains **1.2.0**. The new source snapshot pins the documentation commits without rewriting v1.0.0–v1.5.0. Plastid and Receptor documentation was merged into their default branches without discarding unrelated dependency updates; the snapshot deliberately pins the documentation-only parents, not those dependency changes.
+
+The EN/ID website now loads generated versions, canonical tool names, and profile metadata. Configuration previews use real repository directories and Codex `mcp_servers` sections. Source guides cover all eight profiles, cold discovery, optional integrations, safe backup/restore, and the limits of current verification. Generated private configurations may contain supplied credentials; committed examples are regenerated with a sanitized environment.
+
+Documentation checks cover 74 regression cases plus local links/anchors and structured metadata; the CLI matrix covers 80 combinations. Browser verification covers 64 visible selections per language and all 16 pages at desktop/mobile widths. These are documentation/UI checks, not new authenticated ACP, provider, Android, or Blender acceptance. Publication does not restart the runtime or change deferred access controls, credentials, databases, or vault conflicts.
+
 ## v1.5.0 — on-demand runtime and canonical discovery
 
 Runtime **1.2.0** starts cells only when invoked, shares concurrent startup attempts, and discovers schemas without spawning cells. Revision/build/config-aware caches reject stale entries; legacy/corrupt caches fall back to a validated generated catalog. Unknown calls no longer start unrelated cells. Standalone servers, all eight profiles, and the `dev-workspace` default are preserved.

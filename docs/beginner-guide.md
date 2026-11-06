@@ -1,128 +1,67 @@
-# Beginner's Guide: How to Use the HeLa MCP Ecosystem
+# Beginner's Guide: HeLa MCP Ecosystem
 
-![Blotcat 1-Click Beginner Setup](../assets/blotcat-beginner.jpg)
+![Blotcat beginner setup](../assets/blotcat-beginner.jpg)
 
-> **Target Audience:** Anyone. No advanced coding, terminal expertise, or system administration experience required. If you can copy and paste a single command, you can set this up in under 3 minutes.
+HeLa connects an AI client to tools for memory, files, commands, research, design, browsers, Android, and Blender. Install only the profile you need. Tools can change files and run commands with the server account's privileges; review your client's permissions before use.
 
----
+Current software versions are listed in [current versions](current-versions.md). Setup time depends on dependencies and downloads; browser and hardware workflows need extra software.
 
-## What is the HeLa MCP Ecosystem? (In Plain English)
+## Requirements
 
-Think of your AI assistant (like Claude, Cursor, ChatGPT, Gemini, or Antigravity) like a brilliant mind in a room. By default, it can only talk to you.
+- Node.js **22 LTS** is the tested full-stack environment. Enzyme requires at least 20.18.1; Receptor requires 22. Individual packages can declare different standalone engine ranges.
+- Git and a terminal. Use a POSIX shell on Linux/macOS or WSL on Windows for `setup.sh`.
+- Optional capabilities: Chromium/Playwright for browser work, ADB and a device for Android, and the Blender bridge for 3D.
 
-The **HeLa MCP Ecosystem** gives your AI assistant **hands, tools, and long-term memory** through specialized cellular components:
-* **HeLa Genome**: Gives your AI persistent memory so it never forgets your project plans, architectural decisions, or open tasks across chats.
-* **HeLa Mitosis**: Helps your AI think step-by-step, brainstorm multiple solutions, and pick the best strategy.
-* **HeLa Membrane**: Lets your AI read, create, search, and organize project files on your computer safely.
-* **HeLa Nucleus & HeLa Ribosome**: Lets your AI safely run commands and terminal tests for you.
-* **HeLa Enzyme**: Allows your AI to search Google and Wikipedia for real-time facts and documentation.
-* **HeLa Phenotype**: Helps your AI create color palettes, design tokens, and modern user interfaces.
-* **HeLa Cytosol**: Lets your AI open a browser, click buttons, and inspect web pages.
-* **HeLa Receptor & HeLa Plastid**: Enables physical Android device control and 3D Blender modeling.
-
----
-
-## 3-Minute Quick Start
-
-### Step 1: Open Your Terminal
-* **macOS**: Press `Cmd + Space`, type `Terminal`, and press `Enter`.
-* **Windows**: Open `PowerShell` or `Windows Terminal` (WSL / Ubuntu recommended).
-* **Linux**: Press `Ctrl + Alt + T`.
-
-### Step 2: Copy & Run This Command
-Paste this command into your terminal and press `Enter`:
+## Install a profile
 
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh
+./setup.sh --profile dev-workspace --client opencode --non-interactive
 ```
 
----
+Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. Run `./setup.sh` without flags for the interactive menus; menu ordering depends on the available profiles and system selection.
 
-## Step-by-Step Walkthrough of the Setup Wizard
+All eight profiles are supported:
 
-When you run `./setup.sh`, you will see an interactive menu:
+- `minimal`: three research/memory cells.
+- `dev-workspace`: eight development/browser/design cells; runtime default.
+- `headless-server`: seven cells without browser/device dependencies.
+- `research`: five research/browser/workspace cells.
+- `web-devops`: six frontend/browser/design cells.
+- `android-testing`: five cells including device control.
+- `3d-modeling`: five cells including Blender.
+- `all`: all ten cells.
 
-```
-[INFO] HeLa MCP Ecosystem setup & configuration
-[SUCCESS] Prerequisites OK (Node.js v20.x.x)
+See [profiles](profiles.md) for membership. Your selection is independent of other machines: lappy's ten-cell roster and servy's eight-cell roster are examples, not required configurations for everyone.
 
-[INFO] Available profiles:
-  1) Dev Workspace (Full desktop workstation with browser automation)
-  2) Headless Server (Core 7 servers - recommended for most users)
-  3) Research Terminal (Dedicated research node)
-  4) Web Dev + Browser Automation
-  5) Android Testing Rig
-  6) 3D / Blender Station
-  7) All (full inventory)
+## One connection or separate servers
 
-[QUESTION] Enter profile number (1-7):
-```
-**Selection:** Type `1` (or `2`) and press `Enter`.
-
----
-
-### Selecting Your AI App
-
-Next, the wizard will ask which AI application you use:
-
-```
-[INFO] Generate MCP client config?
-  1) Cursor IDE (~/.cursor/mcp.json)
-  2) Claude Desktop / CLI (~/.claude.json)
-  3) Antigravity CLI / Gemini (~/.gemini/antigravity-cli/mcp_config.json)
-  4) OpenCode (config/opencode.generated.json)
-  5) Kilo CLI (~/.config/kilo/config.json)
-  6) Zed Editor (~/.config/zed/settings.json)
-  7) Codex / ChatGPT (~/.codex/config.toml)
-  8) Docker Compose
-  9) Skip
-
-[QUESTION] Choice (1-9):
-```
-**Selection:** Type the number for your AI app (e.g., `1` for Cursor, `2` for Claude) and press `Enter`.
-
----
-
-### Optional API Keys (Press Enter to Skip)
-
-The wizard will ask if you have any optional API keys:
-
-```
-[INFO] Configuring Optional API Keys & Secrets:
-  (All keys are optional. Press Enter to skip and use offline fallback mode)
-  See docs/keys-and-secrets.md for documentation & sign-up URLs.
-
-[QUESTION] OpenRouter API Key (sk-or-v1-..., optional):
-[QUESTION] GitHub Personal Access Token (ghp_..., optional):
-[QUESTION] Google API Key (optional):
-[QUESTION] Google Custom Search Engine ID (optional):
-```
-
-**What to do:**
-* **If you have keys:** Paste them in.
-* **If you don't have keys:** Just press `Enter` to skip every prompt. The ecosystem will run in 100% offline fallback mode at no cost.
-
----
-
-## Verifying Your Setup with `doctor`
-
-To verify that your installation is completely healthy, run:
+The installer normally configures separate MCP servers. Add `--runtime` to keep the same profile behind one endpoint:
 
 ```bash
-./setup.sh doctor
+./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
-When everything is ready, you will see a green success confirmation:
+Runtime is a serve mode, not a profile named `runtime`. Its catalog advertises schemas without starting cells; a first call starts only its target. [Runtime details](on-demand-runtime.md) explain catalog generation, missing metadata, and recovery.
+
+## Optional keys
+
+OpenRouter, GitHub, and Google keys are optional for discovery and keyless capabilities. Keyless does **not** mean every operation is offline: web research and external design services still need network access, and generative-model features require their configured provider or local engine. See [keys and services](keys-and-secrets.md).
+
+Generated configuration can contain credentials you explicitly provide. Keep it private, and do not paste the complete file into a chat or issue.
+
+## Verify the selected installation
+
+```bash
+./setup.sh doctor --profile dev-workspace
+# If installed through the runtime:
+./setup.sh doctor --profile dev-workspace --runtime
+npm run test:matrix
 ```
-SUCCESS: All required HeLa MCP servers and dependencies are healthy and ready!
-```
 
----
+Doctor checks selected paths, versions, revisions, and actual isolated MCP replies. Runtime checking also verifies catalog parity and zero discovery startups. The configuration matrix checks 80 profile/client combinations; it does not log in to GUI agents or exercise hardware.
 
-## Next Steps
+On a full ten-cell checkout you can also run `npm test` and `npm run test:profiles`. On a partial checkout use `npm run test:profiles -- --profile <id>`. Missing unselected hardware repositories are not a reason to change your machine's profile.
 
-1. **Restart your AI app** (Cursor, Claude, Zed, etc.).
-2. Ask your AI: *"What MCP tools do you have available?"*
-3. Read the **[Workflows Guide](workflows.md)** to see examples of autonomous feature development, research, and design.
+Reload the relevant client deliberately after reviewing configuration changes. Some clients, including Zed, can auto-reload servers when settings are saved. Do not change live vault hooks or restart unrelated clients merely to silence a warning. See [integration](integration.md) and [troubleshooting](troubleshooting.md).

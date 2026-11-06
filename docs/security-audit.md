@@ -1,82 +1,33 @@
-# HeLa MCP Ecosystem: Security & Reliability Audit
+# Security status and verification scope
 
-![Blotcat Security & Reliability Audit](../assets/blotcat-security.jpg)
+![Blotcat security reference](../assets/blotcat-security.jpg)
 
-This document outlines the security architecture, threat model, mitigation strategies, and reliability standards implemented across the **HeLa MCP Ecosystem**.
+This is an operational status document, **not a completed security certification**. Earlier architecture descriptions overstated guarantees about sandboxing, credential isolation, offline operation, and test coverage. A process boundary, a profile, or a passing health endpoint does not establish those guarantees.
 
----
+## Explicitly deferred work
 
-## 1. Threat Model & Architectural Boundaries
+Endpoint authentication, per-client authorization, exposed-credential rotation, public-exposure review, and resource/session limits remain deferred by the operator's development decision. Deferred does not mean implemented or safe for unrestricted public use. The documentation refresh does not change access controls or rotate credentials.
 
-The HeLa MCP Ecosystem operates on a multi-layer isolation model designed to safely execute autonomous AI agent workflows while protecting the host environment, developer workspaces, and API credentials.
+Filesystem, shell, PTY, browser, model-agent, and device operations can act with the server account's privileges. Scope and deploy them accordingly. Runtime profiles select eligible cells; they are not a substitute for an authorization policy or an OS sandbox.
 
-```
-                      ┌────────────────────────────────────────┐
-                      │          AI Client Orchestrator        │
-                      └───────────────────┬────────────────────┘
-                                          │ stdio JSON-RPC
-                      ┌───────────────────▼────────────────────┐
-                      │       Dual-Backbone Supervision        │
-                      │   HeLa Mitosis  |  HeLa Genome         │
-                      └───────────────────┬────────────────────┘
-                                          │
-       ┌──────────────────┬───────────────┴───────────────┬──────────────────┐
-       ▼                  ▼                               ▼                  ▼
-┌──────────────┐   ┌──────────────┐                ┌──────────────┐   ┌──────────────┐
-│hela-membrane │   │ hela-nucleus │                │hela-ribosome │   │ hela-cytosol │
-│Filesystem    │   │Terminal Exec │                │PTY Lifecycle │   │Browser DOM   │
-└──────┬───────┘   └──────┬───────┘                └──────┬───────┘   └──────┬───────┘
-       │                  │                               │                  │
-       ▼                  ▼                               ▼                  ▼
-[Path Sandboxing]  [Env & Cwd Guard]               [Process Isolation] [SSRF Filter]
-```
+## What the current checks establish
 
----
+- Source snapshots pin revisions. Runtime schema catalogs additionally validate versions/build digests and declared feature variants; private caches separate profiles, roots, namespace modes, revisions, builds, and declared configuration.
+- Isolated tests cover runtime timeouts, process exit before restart, bounded retries, first-call startup, concurrent calls, stale-cache refusal, and shutdown. This is lifecycle/reliability evidence, not complete adversarial testing.
+- Doctor checks real isolated MCP initialize/discovery, selected paths/versions/revisions, and optional runtime catalog parity. Hardware, provider, and authenticated GUI checks remain separate.
+- Genome's online backups include committed WAL data and validate integrity; restore refuses existing destinations and sidecars. This does not authorize overwriting an active database.
+- Vault synchronization preserves divergent notes in conflict archives. Archived conflicts still need deliberate review; transport success does not prove reconciliation.
 
-## 2. Capability-Specific Security Controls
+See [runtime verification](on-demand-runtime.md), [profile verification](profile-verification-2026-11-06.md), and each server's current tool reference for exact scope. Do not promote historical benchmark/test totals into current security claims.
 
-### 2.1 Filesystem Sandboxing (`hela-membrane` / `filesystem-mcp-server`)
-- **Path Canonicalization**: All path inputs are resolved using `path.resolve()` against the allowed workspace roots.
-- **Directory Traversal Prevention**: Strict validation prevents `../` path traversal outside designated workspace directories.
-- **Atomic File Writes**: Write operations employ atomic write-then-rename patterns to prevent file corruption during interrupted agent turns.
-- **Output Truncation**: File reading tools enforce pagination and byte limits to prevent denial-of-service via large binary or log dumps.
+## Credentials and generated output
 
-### 2.2 Terminal Execution Isolation (`hela-nucleus` / `terminal-mcp-server`)
-- **Command Sanitization**: Command execution wrappers enforce clean execution environments.
-- **Explicit Working Directory (`cwd`)**: Every command invocation explicitly binds to an absolute, verified directory.
-- **Execution Timeouts**: Subprocesses are bounded by default timeout limits (`CHAINING_TOOL_TIMEOUT_MS`) to prevent hanging zombie processes.
-- **Environment Isolation**: Subprocesses inherit only explicitly declared or sanitized environment variables, preventing unintentional token leakage into build tool logs.
+Doctor and schema-generation probes do not display credential values; isolated probes exclude inherited keys and live vault hooks. Generated client configuration, however, can contain credentials explicitly supplied by its user. Treat configuration files, generator stdout, backups, and issue attachments as private. Never paste a raw client configuration or process environment into a public issue.
 
-### 2.3 PTY Process Lifecycle & Cleanup (`hela-ribosome` / `menager-mcp-server`)
-- **Process Group Tracking**: Each interactive PTY session runs within an isolated process group.
-- **Graceful Teardown**: Session termination follows a phased teardown hierarchy (`SIGTERM` → 2000ms grace period → `SIGKILL`).
-- **Zombie Process Prevention**: Process exit handlers ensure that dying master sessions immediately terminate and reap all child worker processes.
-- **Buffer Flow Control**: Terminal output streams are buffered in ring-buffers with hard memory caps to prevent process memory exhaustion.
+Presence of an API key does not prove provider readiness. Keyless research can still make network requests. Needle's local execution depends on its engine/model, and some generative operations need a configured model provider. Optional remote runtime/vault deployment also changes where data is processed and stored.
 
-### 2.4 Browser Automation & SSRF Protection (`hela-cytosol` / `browser-agent`)
-- **Local Network Filtering**: Internal infrastructure endpoints (e.g. `169.254.169.254`, cloud metadata services) are restricted.
-- **Headless Isolation**: Browser sessions run with isolated user data directories (`--incognito` / ephemeral contexts).
-- **DOM-First Analysis**: Prefer structural accessibility trees (`browser_get_content (axtree)`) over full-screen bitmap captures to minimize token consumption and visual attack surfaces.
+## Carry-forward validation
 
----
+PTY orphan handling, SSH failures/transfers, browser network boundaries, archive/symlink policies, Android hardware, Blender execution, live search fallbacks, and external design services still need their own targeted checks. Tests for some of these exist, but full coverage is not implied by ecosystem configuration or discovery checks.
 
-## 3. Credential & Secret Management Policy
-
-### 3.1 Zero-Exposure Logging Standard
-- **No Credential Echoing**: Tools, scripts, and logs MUST NEVER print raw API keys, bearer tokens, or database passwords to stdout/stderr.
-- **Redaction in Diagnostics**: `./setup.sh doctor` and diagnostic tools report only boolean configuration presence (`[Configured]` vs `[Not set]`).
-- **Snapshot Immutability**: Release snapshots (`config/snapshots/*.json`) record ONLY commit hashes and repository URLs—never developer secrets.
-
-### 3.2 Offline-First Graceful Degradation
-- All 10 HeLa MCP servers operate fully in **zero-key offline mode**:
-  - `HeLa Mitosis`: Uses local deterministic heuristic routing (<30ms) when `OPENROUTER_API_KEY` is omitted.
-  - `HeLa Enzyme`: Automatically routes queries to Wikipedia offline cache when Google Custom Search keys are absent.
-  - `HeLa Genome`: Stores all state locally in SQLite (`memory.db`) without cloud dependencies.
-
----
-
-## 4. Reliability & Idempotence Guarantees
-
-1. **Deterministic Snapshots**: Environments can be pinned to immutable commit hashes (`--snapshot v1.2.0`), preventing breaking upstream changes from destabilizing production pipelines.
-2. **Build Idempotence**: Setup tools verify existing build artifacts (`dist/index.js`, `build/index.js`) and commit hashes before rebuilding, allowing instant reconfigurations in <1s.
-3. **Automated Matrix Verification**: Continuous integration runs 70/70 backend matrix tests on every pull request to ensure zero configuration regression.
+Current package versions and generated counts are in [current versions](current-versions.md). Historical release notes and immutable snapshots retain their original versions and evidence; they are not current acceptance guarantees.

@@ -12,8 +12,8 @@ Thank you for your interest in contributing to the **HeLa MCP Ecosystem**! This 
 * **The 4-Tier Naming Architecture**:
   * Tier 1: Public Identity (`HeLa <Component>`, e.g. *HeLa Mitosis*, *HeLa Genome*)
   * Tier 2: Machine Identifier (`hela-*`, e.g. `hela-mitosis`, `hela-genome`)
-  * Tier 3: Technical Source Repository (`chaining-mcp-server`, `Project-Guardian-mcp-server`, etc.)
-  * Tier 4: Immutable Commit Hash (`config/snapshots/v1.0.0.json`)
+  * Tier 3: Technical Source Repository (`chaining-mcp`, `project-mcp`, etc.)
+  * Tier 4: Immutable Commit Hash (the selected immutable snapshot in `config/snapshots/`)
 * **Repository Autonomy**: Upstream repositories remain independent and modular.
 
 ---
@@ -34,13 +34,18 @@ Before submitting changes, ensure all test suites pass locally:
 # 1. Run diagnostic health checks
 npm run doctor
 
-# 2. Run 70-combination multi-client matrix tests
+# 2. Run 80-combination client configuration checks
 npm run test:matrix
 
-# 3. Run master integration test suite (295 tools across all 10 servers)
+# 3. Run standalone MCP integration (tool counts depend on features)
 npm test
 
-# 4. Run pre-commit linters
+# 4. Keep generated versions, tool references and site metadata current
+npm run docs:generate
+npm run docs:check
+npm run test:docs
+
+# 5. Run configured pre-commit checks
 pre-commit run --all-files
 ```
 
@@ -48,14 +53,14 @@ pre-commit run --all-files
 
 ## 3. Pull Request Guidelines
 
-1. **Target Branch**: Submit all pull requests against the `development` branch.
+1. **Target Branch**: Target the maintained default branch (`master`) unless a maintainer requests a release/development branch.
 2. **Commit Conventions**: Follow standard Conventional Commits:
    * `feat(scope): ...`
    * `fix(scope): ...`
    * `docs(scope): ...`
    * `test(scope): ...`
    * `chore(scope): ...`
-3. **CI Matrix Conformance**: Ensure GitHub Actions passes across all matrix targets (`ubuntu-latest`, `macos-latest` on Node.js 18, 20, and 22).
+3. **CI Matrix Conformance**: Configuration/documentation checks cover `ubuntu-latest` and `macos-latest` on Node.js 18, 20, and 22. This is not MCP runtime compatibility evidence for Node 18; use Node 22 LTS for the tested full-stack development environment. Hardware, provider and authenticated GUI integrations need separate validation.
 
 ---
 

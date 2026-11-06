@@ -1,13 +1,16 @@
 version: '3.8'
 
-# HeLa MCP Ecosystem — Docker Compose Configuration
+# HeLa MCP Ecosystem — historical seven-cell deployment scaffold
+# Not a validated full-profile deployment. Review Dockerfiles, transport,
+# volumes and device permissions before use; port mappings do not add HTTP.
+# Paths are relative to config/; canonical profile generation is preferred.
 # Environment variables can be defined in a .env file
 
 services:
   # HeLa Mitosis (Chaining MCP) — Orchestration Backbone
   hela-mitosis:
     build:
-      context: ../chaining-mcp
+      context: ../../chaining-mcp
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
@@ -29,7 +32,7 @@ services:
   # HeLa Membrane (Filesystem MCP) — Workspace Boundary
   hela-membrane:
     build:
-      context: ../filesystem-mcp-server
+      context: ../../filesystem-mcp
       dockerfile: Dockerfile
     ports:
       - "3002:3002"
@@ -41,7 +44,7 @@ services:
   # HeLa Genome (Project Guardian) — Persistent State Backbone
   hela-genome:
     build:
-      context: ../Project-Guardian-mcp-server
+      context: ../../project-mcp
       dockerfile: Dockerfile
     ports:
       - "3003:3003"
@@ -53,7 +56,7 @@ services:
   # HeLa Nucleus (Terminal MCP) — Command Execution
   hela-nucleus:
     build:
-      context: ../terminal-mcp-server
+      context: ../../terminal-mcp
       dockerfile: Dockerfile
     ports:
       - "3004:3004"
@@ -64,7 +67,7 @@ services:
   # HeLa Ribosome (Menager MCP) — PTY Terminal Harness
   hela-ribosome:
     build:
-      context: ../menager-mcp-server
+      context: ../../menager-mcp
       dockerfile: Dockerfile
     ports:
       - "3007:3007"
@@ -75,20 +78,20 @@ services:
   # HeLa Enzyme (Researcher MCP) — Unified Research Engine
   hela-enzyme:
     build:
-      context: ../research-mcp-server
+      context: ../../researcher-mcp
       dockerfile: Dockerfile
     ports:
       - "3005:3005"
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
-      - GOOGLE_CSE_ID=${GOOGLE_SEARCH_ENGINE_ID}
+      - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
     networks:
       - mcp-network
 
   # HeLa Cytosol (Browser Agent) — Web Interaction
   hela-cytosol:
     build:
-      context: ../browser-agent
+      context: ../../browser-mcp
       dockerfile: Dockerfile
     ports:
       - "3006:3006"

@@ -2,7 +2,7 @@
 
 ![Blotcat Secrets & Credentials Vault](../assets/blotcat-secrets.jpg)
 
-This document explains system prerequisites, all optional API keys/secrets across the **HeLa MCP Ecosystem**, where to acquire them, and how the ecosystem operates in zero-cost, offline fallback modes.
+This document explains prerequisites and optional provider credentials. Keyless operation is not the same as offline operation or a guarantee of free/unlimited external services. See [current versions](current-versions.md) for software metadata and [security status](security-audit.md) for unresolved access-control work.
 
 ---
 
@@ -10,19 +10,17 @@ This document explains system prerequisites, all optional API keys/secrets acros
 
 Before running setup, ensure your system meets the baseline requirements:
 
-| Prerequisite | Minimum Version | Recommended | Installation Command |
-|---|---|---|---|
-| **Node.js** | `>= 18.0.0` | `20.x` or `22.x` LTS | `curl -fsSL https://deb.nodesource.com/setup_20.x \| sudo -E bash - && sudo apt-get install -y nodejs` |
-| **npm** | `>= 8.0.0` | `>= 10.0.0` | Bundled with Node.js (`npm install -g npm@latest`) |
-| **Git** | `>= 2.25.0` | Latest | `sudo apt install git` / `brew install git` |
-| **SQLite3** | `>= 3.30.0` | Latest | Bundled with system / `sudo apt install sqlite3` |
-| **Docker** *(Optional)* | `>= 20.10.0` | Latest with Compose v2 | `sudo apt install docker-compose-plugin` |
+- **Node.js:** 22 LTS is the tested full-stack environment. Enzyme requires at least 20.18.1 and Receptor requires 22; other packages declare their own standalone ranges.
+- **npm:** use the version bundled with the selected Node runtime and install locked dependencies with `npm ci`; no global npm upgrade is required by this guide.
+- **Git:** use a current version (release snapshots specify at least 2.30).
+- **SQLite:** Genome uses Node SQLite bindings; the SQLite CLI is optional for inspection. Do not replace active database files during upgrades.
+- **Docker/Compose:** optional, and generated Compose files are scaffolds requiring transport/device/persistence review.
 
 ---
 
 ## 2. Keys & Secrets Catalog
 
-All keys and secrets in this ecosystem are **100% OPTIONAL**. The entire suite is engineered with graceful degradation and offline fallbacks. You can run all servers out of the box with zero keys.
+Provider credentials are optional for MCP discovery and keyless capabilities. A selected external operation can still require credentials, network access, an installed local engine, or a live external service.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -30,12 +28,14 @@ All keys and secrets in this ecosystem are **100% OPTIONAL**. The entire suite i
 ├───────────────────────┬──────────────────────┬─────────────┬───────────┤
 │ Secret Name           │ Target Component     │ Necessity   │ Fallback  │
 ├───────────────────────┼──────────────────────┼─────────────┼───────────┤
-│ OPENROUTER_API_KEY    │ HeLa Mitosis         │ Optional    │ Heuristic │
+│ OPENROUTER_API_KEY    │ HeLa Mitosis         │ Optional    │ Local*    │
 │ GITHUB_TOKEN          │ HeLa Mitosis         │ Optional    │ Bundled   │
 │ GOOGLE_API_KEY        │ HeLa Enzyme          │ Optional    │ Wikipedia │
 │ GOOGLE_CSE_ID         │ HeLa Enzyme          │ Optional    │ Wikipedia │
 └───────────────────────┴──────────────────────┴─────────────┴───────────┘
 ```
+
+`Local*` depends on the bundled/configured Needle engine and model. The matrix is not a guarantee that every tool can complete without its required provider or hardware.
 
 ---
 
@@ -47,10 +47,10 @@ All keys and secrets in this ecosystem are **100% OPTIONAL**. The entire suite i
   1. Visit [OpenRouter API Keys](https://openrouter.ai/keys).
   2. Create a free account.
   3. Generate an API key (`sk-or-v1-...`).
-  4. *Note*: OpenRouter provides free models (e.g. `openrouter/free`) that do not require paid credits.
+  4. Provider model availability, quotas, and pricing can change; check the provider before relying on a free route.
 * **If you DO NOT have it**:
-  * **Consequence**: The server will not make external LLM calls.
-  * **Fallback Behavior**: `hela-mitosis` runs its bundled Needle 3 agent runtime fully offline (plan → execute → observe, ~25MB RAM). OpenRouter is used only as a budgeted escalation backend. With no key, escalation hands control back to the calling agent (`handoff: true`) with the full state trail — never a fabricated answer. `brainstorming` is the one exception: it needs a generative model and fails honestly without a key. Zero crashes, zero process hangs.
+   * **Consequence**: Provider-backed calls need some configured provider credentials; another configured provider can still be used when supported. Local planning can work without keys when its engine/model are available.
+   * **Fallback Behavior**: Needle planning/execution and budgeted escalation are separate. Unavailable escalation can hand control back to the caller; `brainstorming` needs a generative model and fails when none is configured. This is not a universal latency, crash-freedom, or offline guarantee.
 
 ---
 
@@ -63,7 +63,7 @@ All keys and secrets in this ecosystem are **100% OPTIONAL**. The entire suite i
   2. Generate a token with public read-only access.
 * **If you DO NOT have it**:
   * **Consequence**: Live GitHub syncing is disabled.
-  * **Fallback Behavior**: The server operates 100% offline from its bundled local catalog (42 pre-indexed instructions). `search_instructions` and `load_instruction` respond in `<1ms`.
+   * **Fallback Behavior**: Bundled prompt/instruction catalogs remain available. This does not make unrelated research, browser, provider, or remote-runtime operations offline.
 
 ---
 
@@ -72,10 +72,10 @@ All keys and secrets in this ecosystem are **100% OPTIONAL**. The entire suite i
 * **Target Component**: **HeLa Enzyme** (`hela-enzyme` / `researcher-mcp`)
 * **Purpose**: Optional Tier 1 web search queries via the Google Custom Search JSON API.
 * **Where to get them**:
-  1. **API Key**: Create an API key at [Google Cloud Console](https://console.cloud.google.com/apis/credentials). Enable the *Custom Search API* (100 free searches/day).
+   1. **API Key**: Use [Google Cloud Console](https://console.cloud.google.com/apis/credentials) and check current Custom Search API availability and quotas for your account.
   2. **CSE ID**: Create a Search Engine ID at [Programmable Search Engine](https://programmablesearchengine.google.com/controlpanel/all) (set Search the entire web = ON).
 * **If you DO NOT have them**:
-  * **Consequence**: None — all 24 tools work 100% free out of the box with zero broken endpoints.
+   * **Consequence**: Configured Google CSE is unavailable; supported keyless network fallbacks may still work. Network failures, rate limits, and provider availability remain possible.
   * **Fallback Behavior**: Live web search cascades to keyless parallel search (DuckDuckGo, Bing, etc.) and Wikipedia fallback. `academic_search` queries arXiv's public OpenSearch API, `news_monitor` queries Google News RSS feeds, `search_trends` queries Hacker News Algolia, and content extraction falls back to Jina Reader (`r.jina.ai`).
 
 ---
@@ -87,7 +87,7 @@ Run the setup script:
 ```bash
 ./setup.sh
 ```
-The wizard interactively asks for your keys (with an option to press `Enter` to skip and use offline defaults).
+The wizard asks for optional keys. Pressing Enter skips them; keyless defaults can still use the network. Generated files/stdout can contain explicitly supplied credentials, so keep them private.
 
 ### Reconfiguring Keys Anytime
 To update keys or change clients on an installed ecosystem:

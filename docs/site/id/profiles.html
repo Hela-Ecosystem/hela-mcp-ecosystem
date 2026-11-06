@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVER · 292 ALAT</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -73,7 +73,7 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_04 // Hela-Ecosystem-MCP</span><span>DOSIR: PROFIL_DAN_MATRIKS_KLIEN</span></div>
           <h1 class="doc-title">Profil &amp; Konfigurasi</h1>
-          <p class="doc-lead">Delapan profil deployment. Pilih tumpukan server yang sesuai dengan spesifikasi mesin Anda, lalu buat berkas konfigurasi klien yang presisi secara langsung — 80 kombinasi profil × klien, tervalidasi skemanya.</p>
+          <p class="doc-lead">Delapan profil instalasi. Lihat pratinjau konfigurasi klien di bawah; gunakan CLI untuk membuat konfigurasi terpasang. Matriks CLI menguji 80 kombinasi profil/backend.</p>
         </header>
 
         <figure class="figure-plate">
@@ -94,17 +94,17 @@
               <tr><td>web-devops</td><td>Otomasi frontend, QA, dan verifikasi web</td><td>mitosis, genome, membrane, nucleus, phenotype, cytosol</td></tr>
               <tr><td>android-testing</td><td>Insinyur QA mobile Android</td><td>mitosis, genome, nucleus, receptor, enzyme</td></tr>
               <tr><td>3d-modeling</td><td>Desainer 3D &amp; pengembang game Blender</td><td>mitosis, genome, plastid, membrane, nucleus</td></tr>
-              <tr><td>all</td><td>Master agen tanpa batas</td><td>Seluruh 10 sel (292 alat)</td></tr>
+              <tr><td>all</td><td>Seluruh kapabilitas</td><td>Sepuluh sel; jumlah alat mengikuti fitur yang diaktifkan</td></tr>
             </tbody>
           </table>
         </div>
         <div class="admonition">
           <div class="admonition-title">ATURAN HEADLESS</div>
-          <div><code>headless-server</code> mengecualikan cytosol, receptor, dan plastid — nol dependensi Playwright/Chromium, ADB, atau Blender, startup instan pada server VPS/CI.</div>
+          <div><code>headless-server</code> mengecualikan cytosol, receptor, dan plastid sehingga dependensi browser/perangkatnya tidak diperlukan. Tambahkan <code>--runtime</code> pada profil apa pun untuk satu endpoint; discovery tidak menjalankan sel. Profil bawaan runtime tetap <code>dev-workspace</code>, bukan <code>minimal</code>.</div>
         </div>
 
         <h2 id="configurator">Meja Kerja Konfigurasi</h2>
-        <p>Pilih profil dan klien agen tujuan Anda. Output konfigurasi di bawah ini identik dengan apa yang dituliskan oleh skrip <code>setup.sh</code>.</p>
+        <p>Pilih profil dan klien untuk pratinjau path/format tanpa kunci. Ganti <code>/absolute/path/to/MCPservers</code> dengan direktori induk repositori Anda. CLI menambahkan environment khusus instalasi; pratinjau ini tidak identik byte-per-byte dengan hasilnya. Output Docker hanya scaffold: pemetaan port tidak mengubah stdio menjadi HTTP.</p>
         <div class="field-row">
           <div class="field">
             <label for="profileSelect">Profil target</label>
@@ -139,13 +139,13 @@
         </div>
 
         <h2 id="keys">Kunci API &amp; Akses</h2>
-        <p>Hanya dua sel yang memerlukan kredensial opsional; delapan sel lainnya berjalan sepenuhnya tanpa kunci (zero-key). Jangan pernah melakukan commit kunci rahasia ke Git — skrip installer hanya menyuntikkannya ke file klien lokal.</p>
+        <p>Discovery tidak membutuhkan kunci provider. Alat eksternal dapat memerlukan kredensial, jaringan, hardware, atau engine model lokal. Konfigurasi privat CLI dapat memuat kredensial yang Anda berikan; jangan dipublikasikan. SQLite tetap mesin utama Genome, dengan integrasi Obsidian/Redis opsional.</p>
         <div class="doc-table-wrap">
           <table class="doc-table">
-            <caption>TABEL 4.2 — KUNCI RAHASIA YANG DIBUTUHKAN</caption>
+            <caption>TABEL 4.2 — PENGATURAN PROVIDER OPSIONAL</caption>
             <thead><tr><th scope="col">Sel</th><th scope="col">Variabel Lingkungan</th><th scope="col">Catatan Penggunaan</th></tr></thead>
             <tbody>
-              <tr><td>mitosis</td><td><code>OPENROUTER_API_KEY</code>, <code>GITHUB_TOKEN</code></td><td>Perkakas LLM + sinkronisasi prompt jarak jauh; berjalan offline dengan heuristik &amp; Needle 3 jika tidak disetel</td></tr>
+              <tr><td>mitosis</td><td><code>OPENROUTER_API_KEY</code>, <code>GITHUB_TOKEN</code></td><td>Generasi berbasis provider dan katalog jarak jauh; eksekusi lokal bergantung pada engine/model yang dikonfigurasi</td></tr>
               <tr><td>enzyme</td><td><code>GOOGLE_API_KEY</code>, <code>GOOGLE_CSE_ID</code></td><td>Pencarian Google kustom; otomatis fallback zero-key ke DuckDuckGo/arXiv/Google News/Wikipedia jika tidak disetel</td></tr>
             </tbody>
           </table>
@@ -161,12 +161,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari 292 alat, halaman, profil…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari alat, halaman, profil…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../app.js"></script>
+  <script src="../release-data.js?v=1.5.1"></script>
+  <script src="../app.js?v=1.5.1"></script>
 </body>
 </html>

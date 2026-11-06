@@ -2,9 +2,9 @@
 
 A modular, immortal cellular AI tooling ecosystem built on the Model Context Protocol (MCP), engineered by Azzar to equip AI agents with full-spectrum autonomous capabilities across reasoning, persistent memory, workspace management, system execution, research, design, device automation, and 3D modeling.
 
-> **New to MCP or non-technical?** Read the **[Beginner's Step-by-Step Guide](docs/beginner-guide.md)** for a 3-minute, zero-code onboarding walkthrough.
+> **New to MCP?** Read the **[Beginner's Guide](docs/beginner-guide.md)** for requirements, profile selection, installation, and verification.
 
-Current source snapshot: **v1.5.0**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.5.1**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -69,9 +69,9 @@ flowchart TB
 ## Quick Start
 
 ### 1. Prerequisites
-* **Node.js**: `>=20.18.1`; Node 22 LTS is the validated development/runtime environment.
+* **Node.js**: use Node 22 LTS for the tested full stack. Individual packages declare their own engine ranges; Receptor requires 22 and Enzyme requires at least 20.18.1.
 * **Git**: `>= 2.30.0`
-* **SQLite3**: System CLI or built-in Node SQLite bindings
+* **SQLite**: Genome uses Node bindings; the SQLite CLI is optional for inspection.
 
 ### 2. Run Diagnostics (`setup.sh doctor`)
 Check your host environment, compiler readiness, external runtimes, and API key fallbacks:
@@ -101,7 +101,7 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.0 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.1 --non-interactive
 ```
 
 **Single-Endpoint Runtime (one MCP connection for the selected profile):**

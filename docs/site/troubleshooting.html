@@ -41,7 +41,7 @@
     <aside class="doc-sidebar" aria-label="Documentation sections">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVERS · 292 TOOLS</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 CELLS</div>
       </div>
       <nav aria-label="Documentation">
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
@@ -84,7 +84,7 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_06 // Hela-Ecosystem-MCP</span><span>DOSSIER: DOCTOR_AND_FAILURES</span></div>
           <h1 class="doc-title" data-i18n="diag.title">Diagnostics</h1>
-          <p class="doc-lead">First run <code>setup.sh doctor</code> — it classifies the failure for you. The scenarios below cover everything the doctor flags.</p>
+          <p class="doc-lead">Start with doctor for the selected profile. Configuration, MCP discovery, external services, authenticated clients, and hardware are separate checks.</p>
         </header>
 
         <figure class="figure-plate">
@@ -95,11 +95,10 @@
         <h2 id="doctor">Doctor report anatomy</h2>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // DOCTOR_SECTIONS</span><button class="copy-btn" type="button">Copy</button></div>
-          <pre><code>./setup.sh doctor
-# 1. Runtime: Node 20+, Git, SQLite3 (WAL)
-# 2. Component health: entrypoint present + stdio handshake + tool count
-# 3. External drivers: Playwright / ADB / Blender (optional, per scope)
-# 4. API keys: OpenRouter / GitHub / Google (optional, graceful fallback)</code></pre>
+          <pre><code>./setup.sh doctor --profile dev-workspace
+# If using the runtime: verify cold catalog parity too
+./setup.sh doctor --profile dev-workspace --runtime
+# Tested full-stack environment: Node 22 LTS</code></pre>
         </div>
 
         <h2 id="scenarios">Scenarios &amp; fixes</h2>
@@ -114,34 +113,39 @@
         <section class="diag-card" aria-labelledby="d-handshake">
           <div class="diag-card-header" id="d-handshake">Handshake failure</div>
           <div class="diag-card-body">
-            <p><strong>Symptom:</strong> entrypoint present but JSON-RPC fails. <strong>Causes:</strong> wrong Node major (<code>node --version</code>, need 20+), or a crashed native binding (<code>node-pty</code> in ribosome needs build tools: <code>build-essential</code>/<code>python3</code>). Reinstall that cell's <code>node_modules</code> and rebuild.</p>
+            <p><strong>Symptom:</strong> entrypoint present but JSON-RPC fails. Check <code>node --version</code> in the client environment; use Node 22 LTS for the tested full stack. Native bindings can require matching build tools and ABI. Use the selected project's reproducible environment, run <code>npm ci</code>, and rebuild only that cell.</p>
           </div>
         </section>
 
         <section class="diag-card" aria-labelledby="d-quota">
           <div class="diag-card-header" id="d-quota">Google quota / OpenRouter errors</div>
           <div class="diag-card-body">
-            <p><strong>Symptom:</strong> enzyme Google calls fail; mitosis LLM tools report HTTP errors. <strong>By design:</strong> enzyme falls back to Wikipedia flagged <code>degraded (quota)</code>; mitosis falls back to offline heuristics. <strong>Fix:</strong> check quotas/keys, or continue degraded — the system never hard-fails on key issues.</p>
+            <p>Check credentials, quota, network, and the configured model/provider. Enzyme supports keyless network fallbacks; those can also fail. Mitosis local execution depends on its engine/model, and generative tools can fail when no provider is configured. Successful discovery does not establish provider readiness.</p>
           </div>
         </section>
 
         <section class="diag-card" aria-labelledby="d-matrix">
           <div class="diag-card-header" id="d-matrix">Matrix failure after editing inventory</div>
           <div class="diag-card-body">
-            <p><strong>Symptom:</strong> <code>test:matrix</code> fails post-edit. <strong>Cause:</strong> almost always a missing trailing newline or invalid JSON in <code>config/inventory.json</code> (pre-commit <code>end-of-file-fixer</code> enforces this). Validate JSON, ensure newline, re-run.</p>
+            <p>Check the failing assertion: JSON validity, canonical profile membership, repository directory/entrypoint, environment shape, and Codex <code>mcp_servers</code> sections. Re-run <code>npm run test:matrix</code>. After changing version/revision metadata or builds, regenerate and validate the selected schema catalog and documentation.</p>
           </div>
         </section>
 
         <section class="diag-card" aria-labelledby="d-client">
           <div class="diag-card-header" id="d-client">Client sees no tools</div>
           <div class="diag-card-body">
-            <p><strong>Symptom:</strong> harness starts but lists zero tools. <strong>Checklist:</strong> absolute paths in the client file (no <code>~</code>), <code>node</code> on PATH for the harness, <code>enabled: true</code> on the cell, then restart the harness (configs load at startup).</p>
+            <p>Check absolute paths, the client's Node PATH, enabled servers, and the selected profile. Review configuration before deliberately reloading only the affected client; some clients auto-reload on save. Preserve unrelated definitions and live synchronization hooks.</p>
           </div>
         </section>
 
+        <h2 id="runtime">Runtime catalog and client ownership</h2>
+        <p>A missing or stale catalog must not trigger eager startup. After a cell build, run <code>npm run catalog:generate -- --profile dev-workspace</code>, then runtime doctor. Cold discovery should start zero cells. Runtime is a serve mode (<code>--runtime</code>), not a profile.</p>
+        <p>Zed can forward a server already owned by Codex, producing duplicate warnings. Do not remove shared top-level definitions to silence them. Authenticated ACP verification is separate; see the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/troubleshooting.md#zed-forwards-a-server-that-codex-already-defines">version-specific client guidance</a>.</p>
+        <p>Before database or vault changes, take validated backups. Never restore over active SQLite files or force a conflict winner. Documentation publication needs no runtime restart.</p>
+
         <div class="admonition warning">
           <div class="admonition-title">STILL STUCK</div>
-          <div>Open an issue at <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem" target="_blank" rel="noopener noreferrer">Hela-Ecosystem/hela-mcp-ecosystem</a> with the full <code>setup.sh doctor</code> output and the failing gate.</div>
+          <div>Open an issue at <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues" target="_blank" rel="noopener noreferrer">Hela-Ecosystem/hela-mcp-ecosystem</a> with reviewed/redacted doctor output and the failing gate. Never attach private client configuration, credentials, or raw environments.</div>
         </div>
 
         <footer class="doc-footer"><span>MIT LICENSE · AZZAR</span><span>ARCHIVAL_RECORD_SEALED // HELA_MCP_ECOSYSTEM</span></footer>
@@ -154,12 +158,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search 292 tools, pages, profiles…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search tools, pages, profiles…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="app.js"></script>
+  <script src="release-data.js?v=1.5.1"></script>
+  <script src="app.js?v=1.5.1"></script>
 </body>
 </html>

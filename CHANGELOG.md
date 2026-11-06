@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.5.1] - 2026-11-06
+
+- Refresh current EN/ID web pages, setup/integration/troubleshooting guides, and all ten cells' version/tool references from canonical metadata.
+- Validate generated documentation, local links/anchors, and browser configuration previews before Pages publication.
+- Refresh sanitized client examples and document deferred security, provider/hardware validation, SQLite safety, and optional Obsidian mirroring accurately.
+- Pin documentation-only cell commits in a new immutable snapshot. Cells remain 3.0.0; runtime remains 1.2.0. Historical snapshots, vendor versions, and live services are unchanged.
+
 ## [1.5.0] - 2026-11-06
 
 - Pin runtime 1.2.0 with true first-call startup and profile/build/config-aware schema caching.

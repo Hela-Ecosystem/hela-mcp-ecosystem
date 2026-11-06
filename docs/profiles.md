@@ -11,11 +11,17 @@ The HeLa MCP Ecosystem organizes capabilities into **agent-oriented profiles**. 
 Every profile in the ecosystem includes the core dual backbone:
 
 * **HeLa Mitosis (`hela-mitosis` / `chaining-mcp`)**: Intelligent tool discovery, Needle-planned routing, Needle-backed sequential thinking, task decomposition, skills catalog, and workflow orchestration.
-* **HeLa Genome (`hela-genome` / `Project-Guardian-mcp-server`)**: Living SQLite knowledge graph (`memory.db`), task tracking, architectural decisions, and cross-session context restoration.
+* **HeLa Genome (`hela-genome` / `project-mcp`)**: Living SQLite knowledge graph (`memory.db`), task tracking, architectural decisions, and cross-session context restoration.
 
 ---
 
 ## Profile Catalog
+
+There are eight profiles. The canonical membership is `config/profiles.json`; current versions and generated tool counts are in [current versions](current-versions.md) and [profile counts](generated-profile-counts.md).
+
+### `minimal` — HeLa Minimal
+
+Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the smallest research/memory stack; it does not require browser, Android, or Blender dependencies. Keyless research still uses the network.
 
 ### 1. `dev-workspace` — HeLa Dev Workspace
 
@@ -151,7 +157,7 @@ The HeLa Runtime is **not a profile** — it is a serve method. Any profile can 
 HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with minimal profile
 ```
 
-The runtime boots only the cells in the chosen profile, then exposes them through one MCP endpoint. Use `--runtime` with any profile; the `HELA_PROFILE` env var selects the cell set.
+The runtime advertises only the selected cells' schemas and starts each cell only when invoked. Discovery starts none. Use `--runtime` with any profile; `HELA_PROFILE` selects eligible cells and defaults to `dev-workspace`. Standalone servers remain supported.
 
 ---
 
@@ -159,6 +165,7 @@ The runtime boots only the cells in the chosen profile, then exposes them throug
 
 | Profile ID | Target System | Total Servers | Backbone Servers | Headless Compatible | Requires External Runtime / Device |
 |---|---|:---:|:---:|:---:|---|
+| `minimal` | Any / Headless | 3 | Mitosis + Genome | Yes | Network for online research |
 | `dev-workspace` | GUI / Desktop | 8 | Mitosis + Genome | Yes (Playwright) | Playwright / Chromium |
 | `headless-server` | Headless | 7 | Mitosis + Genome | Yes | None |
 | `research` | Headless / GUI | 5 | Mitosis + Genome | Yes | None |

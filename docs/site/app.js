@@ -4,84 +4,14 @@
  * Covers: client configurator, command palette, copy buttons.
  */
 
-const INVENTORY = {
-  "hela-mitosis": {
-    "alias": "HeLa Mitosis", "source": "chaining-mcp", "scope": "core",
-    "role": "Orchestrator Backbone", "entry": "dist/index.js", "toolsCount": 29,
-    "tools": ["agent_run", "analyze_with_sequential_thinking", "sequentialthinking", "workflow_orchestrator", "workflow_status", "workflow_cancel", "llm_decompose_task", "llm_suggest_route", "llm_query", "llm_summarize", "list_skills", "search_skills", "get_skill", "suggest_skill_chain", "search_prompts", "get_prompt", "list_mcp_servers", "validate_tool_chain"],
-    "desc": "Cognitive division and orchestration backbone. Bundled Needle 3 agent runtime, peer discovery, Needle-backed sequential reasoning, task decomposition, skills catalog, prompt templates."
-  },
-  "hela-genome": {
-    "alias": "HeLa Genome", "source": "project-mcp", "scope": "core",
-    "role": "State and Memory Backbone", "entry": "dist/index.js", "toolsCount": 38,
-    "tools": ["initialize_memory", "memory_edit", "read_graph", "search_nodes", "open_node", "get_file_context", "get_timeline", "get_session_context", "sync_central_memory", "execute_sql", "query_data", "inspect_untrusted_text", "security_scan"],
-    "desc": "Living SQLite knowledge graph with FTS5 search, entity tracking, and session restoration."
-  },
-  "hela-membrane": {
-    "alias": "HeLa Membrane", "source": "filesystem-mcp", "scope": "core",
-    "role": "Workspace Filesystem", "entry": "dist/index.js", "toolsCount": 16,
-    "tools": ["read_file", "write_file", "copy_file", "move_file", "delete_file", "get_file_info", "create_directory", "list_directory", "find_files", "search_in_files", "watch_file", "archive_files", "extract_archive"],
-    "desc": "Sandboxed filesystem boundary. Recursive search, watching, archives."
-  },
-  "hela-nucleus": {
-    "alias": "HeLa Nucleus", "source": "terminal-mcp", "scope": "core",
-    "role": "Execution Boundary", "entry": "build/index.js", "toolsCount": 7,
-    "tools": ["execute_command", "transfer_file", "terminal_ls", "terminal_grep", "terminal_cat", "terminal_session_close", "terminal_session_list"],
-    "desc": "Isolated command execution with RTK token optimization."
-  },
-  "hela-ribosome": {
-    "alias": "HeLa Ribosome", "source": "menager-mcp", "scope": "core",
-    "role": "Process Harness", "entry": "build/index.js", "toolsCount": 28,
-    "tools": ["session_spawn", "session_write", "session_read", "session_hook", "session_wait", "session_close", "agent_spawn", "agent_send", "agent_fork", "agent_list", "opencode_models", "opencode_server_spawn"],
-    "desc": "PTY multiplexing plus native opencode agent orchestration."
-  },
-  "hela-enzyme": {
-    "alias": "HeLa Enzyme", "source": "researcher-mcp", "scope": "core",
-    "role": "Knowledge Synthesis", "entry": "dist/index.js", "toolsCount": 29,
-    "tools": ["google_search", "wikipedia_search", "wikipedia_get", "fact_checker", "academic_search", "content_summarizer", "extract_content", "research_brief", "keyword_extraction"],
-    "desc": "Google + Wikipedia research with caching, fact-checking, and one-call briefs."
-  },
-  "hela-cytosol": {
-    "alias": "HeLa Cytosol", "source": "browser-mcp", "scope": "core",
-    "role": "Browser Interaction", "entry": "src/server.js", "toolsCount": 73,
-    "tools": ["browser_navigate", "browser_click", "browser_fill_form", "browser_screenshot", "browser_get_content", "browser_intercept", "browser_extract_schema"],
-    "desc": "Playwright automation with AX-tree perception and intercepts."
-  },
-  "hela-phenotype": {
-    "alias": "HeLa Phenotype", "source": "designer-mcp", "scope": "specialized",
-    "role": "Design and Tokens", "entry": "dist/index.js", "toolsCount": 29,
-    "tools": ["generate_rules", "design_tokens", "palette", "brand_fetch_design_md", "generate_8state_component", "design_audit", "evaluate_style", "logo_workflow"],
-    "desc": "OKLCH tokens, brand references, Tailwind synthesis, 8-state components."
-  },
-  "hela-receptor": {
-    "alias": "HeLa Receptor", "source": "scrcpy-mcp", "scope": "specialized",
-    "role": "Mobile Automation", "entry": "dist/server.js", "toolsCount": 46,
-    "tools": ["start_session", "device_list", "device_info", "ui_dump", "ui_find_element", "tap", "swipe", "input_text", "key_event", "screenshot", "screen_record_start", "app_install", "shell_exec"],
-    "desc": "Android automation over ADB with XML hierarchy inspection."
-  },
-  "hela-plastid": {
-    "alias": "HeLa Plastid", "source": "ll3m-mcp", "scope": "specialized",
-    "role": "3D Blender Modeling", "entry": "brain/dist/index.js", "toolsCount": 15,
-    "tools": ["generate_modeling_plan", "execute_blender_code", "get_scene_summary", "render_output", "save_blend", "get_screenshot", "get_fast_feedback"],
-    "desc": "Procedural Blender modeling, materials, lighting, rendering."
-  }
-};
-
-const PROFILES = {
-  "minimal": { "name": "Minimal (Mitosis + Genome + Enzyme)", "servers": ["hela-mitosis", "hela-genome", "hela-enzyme"] },
-  "dev-workspace": { "name": "Dev Workspace (Full Desktop)", "servers": ["hela-mitosis", "hela-genome", "hela-membrane", "hela-nucleus", "hela-ribosome", "hela-enzyme", "hela-phenotype", "hela-cytosol"] },
-  "headless-server": { "name": "Headless Server (Core 7)", "servers": ["hela-mitosis", "hela-genome", "hela-membrane", "hela-nucleus", "hela-ribosome", "hela-enzyme", "hela-phenotype"] },
-  "research": { "name": "Research Terminal", "servers": ["hela-mitosis", "hela-genome", "hela-enzyme", "hela-membrane", "hela-cytosol"] },
-  "web-devops": { "name": "Web Dev and Verification", "servers": ["hela-mitosis", "hela-genome", "hela-membrane", "hela-nucleus", "hela-phenotype", "hela-cytosol"] },
-  "android-testing": { "name": "Android Mobile QA", "servers": ["hela-mitosis", "hela-genome", "hela-nucleus", "hela-receptor", "hela-enzyme"] },
-  "3d-modeling": { "name": "Blender 3D Modeling", "servers": ["hela-mitosis", "hela-genome", "hela-plastid", "hela-membrane", "hela-nucleus"] },
-  "all": { "name": "All (Full 10-MCP Stack)", "servers": Object.keys(INVENTORY) }
-};
+// hela:inventory:start
+const { inventory: INVENTORY, profiles: PROFILES } = globalThis.HELA_DOCS_DATA;
+// hela:inventory:end
 
 function renderConfig(profileKey, clientKey) {
   const prof = PROFILES[profileKey] || PROFILES["dev-workspace"];
-  const root = "/absolute/path/to/hela-mcp-ecosystem";
-  const servers = prof.servers.map((k) => ({ id: k, dir: INVENTORY[k].source, entry: INVENTORY[k].entry }));
+  const root = "/absolute/path/to/MCPservers";
+  const servers = prof.servers.map((k) => ({ id: k, dir: INVENTORY[k].dir, entry: INVENTORY[k].entry }));
 
   if (["cursor", "claude", "gemini", "antigravity"].includes(clientKey)) {
     const mcpServers = {};
@@ -100,7 +30,7 @@ function renderConfig(profileKey, clientKey) {
   }
   if (clientKey === "codex") {
     const lines = ["# Generated Codex / ChatGPT MCP Server Configuration"];
-    for (const s of servers) lines.push("\n[mcpServers." + s.id + ']\ncommand = "node"\nargs = ["' + root + "/" + s.dir + "/" + s.entry + '"]');
+    for (const s of servers) lines.push("\n[mcp_servers." + s.id + ']\ncommand = "node"\nargs = [' + JSON.stringify(root + "/" + s.dir + "/" + s.entry) + ']');
     return lines.join("\n");
   }
   if (clientKey === "docker") {
@@ -161,7 +91,7 @@ const I18N = {
     "index.verify_title": "Verify",
     "index.verify_desc": "Three gates, all expected green before use:",
     "profiles.title": "Profiles & Config",
-    "profiles.lead": "Eight deployment profiles. Pick the stack that matches the machine, then generate the exact client file below — 80 profile × client combinations, schema-validated.",
+    "profiles.lead": "Eight deployment profiles. Preview a client configuration below; use the CLI to generate the installed configuration. The CLI matrix checks 80 profile/backend combinations.",
     "profiles.matrix_title": "Profile matrix",
     "profiles.configurator_title": "Configuration workbench",
     "profiles.label_profile": "Target profile",
@@ -173,7 +103,7 @@ const I18N = {
     "arch.transport_title": "Transport",
     "arch.keys_title": "API keys",
     "workflows.title": "Workflows",
-    "workflows.lead": "Six cross-cell pipelines demonstrated end-to-end. Every pipeline uses Mitosis to reason, Genome to record, and specialized cells to act.",
+    "workflows.lead": "Six cross-cell workflow recipes. Each combines Mitosis planning, Genome memory, and specialized tools; required hardware and providers need separate verification.",
     "diag.title": "Diagnostics",
     "diag.lead": "How to diagnose, inspect, and repair any cell in the ecosystem. From the single-command doctor report to known failure modes and verified fixes.",
     "showcase.title": "Showcase",
@@ -207,7 +137,7 @@ const I18N = {
     "index.verify_title": "Verifikasi",
     "index.verify_desc": "Tiga gerbang verifikasi, semuanya diharapkan berstatus hijau sebelum digunakan:",
     "profiles.title": "Profil & Konfigurasi",
-    "profiles.lead": "Delapan profil instalasi. Pilih tumpukan server yang sesuai dengan mesin Anda, lalu buat berkas konfigurasi klien yang presisi di bawah ini — 80 kombinasi profil × klien, tervalidasi skemanya.",
+    "profiles.lead": "Delapan profil instalasi. Lihat pratinjau konfigurasi klien di bawah; gunakan CLI untuk membuat konfigurasi terpasang. Matriks CLI menguji 80 kombinasi profil/backend.",
     "profiles.matrix_title": "Matriks Profil",
     "profiles.configurator_title": "Meja Kerja Konfigurasi",
     "profiles.label_profile": "Profil target",
@@ -219,7 +149,7 @@ const I18N = {
     "arch.transport_title": "Transport Komunikasi",
     "arch.keys_title": "Kunci API & Akses",
     "workflows.title": "Alur Kerja",
-    "workflows.lead": "Enam pipeline lintas-sel yang didemonstrasikan menyeluruh. Setiap alur kerja memanfaatkan Mitosis untuk menalar, Genome untuk mencatat, dan sel-sel terspesialisasi untuk bertindak.",
+    "workflows.lead": "Enam resep alur kerja lintas-sel yang memadukan perencanaan Mitosis, memori Genome, dan alat khusus. Hardware serta provider yang dibutuhkan harus diverifikasi terpisah.",
     "diag.title": "Diagnostik",
     "diag.lead": "Cara memeriksa, menganalisis, dan memperbaiki sel apa pun dalam ekosistem. Mulai dari laporan satu perintah (doctor) hingga penanganan mode kegagalan yang umum.",
     "showcase.title": "Pameran & Bukti",
@@ -313,19 +243,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Copy buttons (code dossiers + configurator)
   document.querySelectorAll(".copy-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const pane = btn.closest(".code-dossier");
       const target = pane ? pane.querySelector("pre code") : null;
       const text = target ? target.textContent : "";
-      const done = () => {
+      const feedback = (message) => {
         const orig = btn.textContent;
-        btn.textContent = "COPIED";
+        btn.textContent = message;
+        btn.setAttribute("aria-live", "polite");
         setTimeout(() => { btn.textContent = orig; }, 2000);
       };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done).catch(done);
-      } else {
-        done();
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+        await navigator.clipboard.writeText(text);
+        feedback(isId ? "TERSALIN" : "COPIED");
+      } catch {
+        feedback(isId ? "SALIN MANUAL" : "COPY MANUALLY");
       }
     });
   });

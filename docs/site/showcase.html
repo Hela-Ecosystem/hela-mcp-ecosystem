@@ -41,7 +41,7 @@
     <aside class="doc-sidebar" aria-label="Documentation sections">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVERS · 292 TOOLS</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 CELLS</div>
       </div>
       <nav aria-label="Documentation">
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
@@ -92,7 +92,8 @@
           <figcaption class="figure-caption"><strong>FIG.</strong><span>PLATE 06 · blotcat-web-workbench.jpg · Verified outputs</span></figcaption>
         </figure>
 
-        <h2 id="gates">Verification gates</h2>
+        <h2 id="gates">Historical recorded gates</h2>
+        <p>The recordings and older totals below are historical, not current release acceptance. Current checks include 32 runtime regressions on both Linux architectures, 16 profile/namespace checks, and 80 CLI configuration combinations. Hardware and authenticated GUI checks remain separate; see the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/on-demand-runtime.md">current verification scope</a>.</p>
         <div class="doc-table-wrap">
           <table class="doc-table">
             <caption>TABLE 5.1 — RECORDED GATE RESULTS</caption>
@@ -106,13 +107,13 @@
         </div>
 
         <h2 id="demos">Video demonstrations</h2>
-        <p>Recorded walkthroughs of two cells doing their primary job.</p>
+        <p>Historical walkthroughs may show older tool names or the removed Genome UI. They do not establish current hardware or GUI acceptance.</p>
         <div class="video-grid">
           <div>
             <div class="video-frame">
-              <iframe src="https://www.youtube-nocookie.com/embed/BnbDg1-be4g" title="HeLa Phenotype and design token generation demo" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+              <iframe src="https://www.youtube-nocookie.com/embed/BnbDg1-be4g" title="Historical LL3M / HeLa Plastid demo" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <p class="video-caption">DEMO_01 // PHENOTYPE — design tokens and OKLCH palettes</p>
+            <p class="video-caption">DEMO_01 // PLASTID — historical LL3M demonstration</p>
           </div>
           <div>
             <div class="video-frame">
@@ -154,12 +155,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search 292 tools, pages, profiles…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search tools, pages, profiles…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="app.js"></script>
+  <script src="release-data.js?v=1.5.1"></script>
+  <script src="app.js?v=1.5.1"></script>
 </body>
 </html>

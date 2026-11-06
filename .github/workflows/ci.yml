@@ -57,13 +57,18 @@ jobs:
             console.log("All profiles cleanly resolve to canonical inventory entries.");
           '
 
-      - name: Run 70-Combination Multi-Client Matrix Test Suite
+      - name: Run 80-Combination Multi-Client Matrix Test Suite
         run: npm run test:matrix
+
+      - name: Check generated documentation and browser configuration previews
+        run: |
+          npm run docs:check
+          npm run test:docs
 
       - name: Verify Setup & Doctor Script Interfaces
         run: |
           ./setup.sh --help
-          node scripts/doctor.mjs --help || true
+          node --check scripts/doctor.mjs
 
   shell-and-precommit:
     name: Shell Scripts & Pre-Commit Validation

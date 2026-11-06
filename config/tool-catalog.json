@@ -2,7 +2,7 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "b8c8f11c8848bca9134d826216fc7ab9346c6327",
+      "revision": "3c1d49532669196c0b34e842360e9d9b8d12b6cc",
       "version": "3.0.0",
       "digests": [
         "5ba7d8ce6be8ab98bf700df593b943085bb713653503d6837b63b392885ccaa2"
@@ -247,7 +247,7 @@
             },
             {
               "name": "brainstorming",
-              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key — no template ideas)",
+              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key \u2014 no template ideas)",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -982,7 +982,7 @@
             },
             {
               "name": "brainstorming",
-              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key — no template ideas)",
+              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key \u2014 no template ideas)",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -1754,7 +1754,7 @@
             },
             {
               "name": "brainstorming",
-              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key — no template ideas)",
+              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key \u2014 no template ideas)",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2270,7 +2270,7 @@
             },
             {
               "name": "llm_decompose_task",
-              "description": "Decompose a complex goal into ordered subtasks with recommended tool categories. [Legacy compat API — routes via the Needle planner when MITOSIS_AGENT_ENABLED=true.]",
+              "description": "Decompose a complex goal into ordered subtasks with recommended tool categories. [Legacy compat API \u2014 routes via the Needle planner when MITOSIS_AGENT_ENABLED=true.]",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2286,7 +2286,7 @@
             },
             {
               "name": "llm_suggest_route",
-              "description": "Use LLM intelligence to score and rank optimal multi-tool execution routes. [Legacy compat API — prefer agent_run when MITOSIS_AGENT_ENABLED=true.]",
+              "description": "Use LLM intelligence to score and rank optimal multi-tool execution routes. [Legacy compat API \u2014 prefer agent_run when MITOSIS_AGENT_ENABLED=true.]",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2575,7 +2575,7 @@
             },
             {
               "name": "brainstorming",
-              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key — no template ideas)",
+              "description": "Generate creative ideas via a generative model (requires CHAINING_LLM_ENABLED with OPENROUTER_API_KEY; fails honestly without a key \u2014 no template ideas)",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -3091,7 +3091,7 @@
             },
             {
               "name": "llm_decompose_task",
-              "description": "Decompose a complex goal into ordered subtasks with recommended tool categories. [Legacy compat API — routes via the Needle planner when MITOSIS_AGENT_ENABLED=true.]",
+              "description": "Decompose a complex goal into ordered subtasks with recommended tool categories. [Legacy compat API \u2014 routes via the Needle planner when MITOSIS_AGENT_ENABLED=true.]",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -3107,7 +3107,7 @@
             },
             {
               "name": "llm_suggest_route",
-              "description": "Use LLM intelligence to score and rank optimal multi-tool execution routes. [Legacy compat API — prefer agent_run when MITOSIS_AGENT_ENABLED=true.]",
+              "description": "Use LLM intelligence to score and rank optimal multi-tool execution routes. [Legacy compat API \u2014 prefer agent_run when MITOSIS_AGENT_ENABLED=true.]",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -3197,7 +3197,7 @@
       ]
     },
     "hela-genome": {
-      "revision": "16fc4f31735e139d690ae0ace8d4feaf1a603563",
+      "revision": "a0e12890a41a752423c030ddf267a34f835e9b01",
       "version": "3.0.0",
       "digests": [
         "6a67000496cbc30748ef8105e8b4bff663f0339735494a9a2c4e506242138592"
@@ -4260,7 +4260,7 @@
       ]
     },
     "hela-membrane": {
-      "revision": "69863287a659cc1697e520fbc9f4fb0d706b2797",
+      "revision": "6160599d55d19565b8fabe5dd6b11855da7acd18",
       "version": "3.0.0",
       "digests": [
         "1dda0a1d9210e380cf9a0e50674922876f78c53b9049dbbb6e289ed0a46c3db4"
@@ -4792,7 +4792,7 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "808f3ac063eb98948b4d104169fb158d3ac593ba",
+      "revision": "6f348fd5d42c26cffb251ec9f5bae673f274176f",
       "version": "3.0.0",
       "digests": [
         "0cf31422124eced841ed5be64fff6233537830df640b8e8a009d10b6f0fd0c51",
@@ -5072,7 +5072,7 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "76f536245e2cabbee72dbc573eedb3a7584e92d9",
+      "revision": "8580bbcf208ad48e276343b681cf3bb51d3766e2",
       "version": "3.0.0",
       "digests": [
         "9c640e4752577ea4704494f7c8644a406317e5612155f7fd5eb17a15ee0804dc"
@@ -5730,7 +5730,7 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "5399e33c7c8a5b75ad620dc33f66a1cbf49972f7",
+      "revision": "f056764a54039f3432f90284d0462952fc39b8a9",
       "version": "3.0.0",
       "digests": [
         "eb6938b58285f69589e4be17ca14f951c5c1c98867d176f554d537b2aa8560c3"
@@ -6504,7 +6504,7 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "99bd0a924190d3d2238415284cbad421d97760a1",
+      "revision": "0632f0ed84c0a85d5e3823932079fa159acd7602",
       "version": "3.0.0",
       "digests": [
         "aad5d35de2b90b7edd090d0c4d86b37f2c5376aac2d2af05d9fcee7c30733c39"
@@ -6729,7 +6729,7 @@
             },
             {
               "name": "browser_fill_form",
-              "description": "Fill multiple form fields at once. Set typeAware=true to auto-detect input types (date, number, email, tel, url, select, checkbox, radio, file, contenteditable) and format values with the right Playwright method — much more reliable for structured forms than raw fill.",
+              "description": "Fill multiple form fields at once. Set typeAware=true to auto-detect input types (date, number, email, tel, url, select, checkbox, radio, file, contenteditable) and format values with the right Playwright method \u2014 much more reliable for structured forms than raw fill.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6948,7 +6948,7 @@
             },
             {
               "name": "browser_get_state",
-              "description": "Capture the current page state: URL, title, headings, text blocks, interactive elements (with ref numbers), AX tree, popups, and CAPTCHA status. Auto-saves snapshot for browser_state_diff. Pass screenshot=true to also include a visual screenshot — only do this when elements may be hidden from the AX tree (canvas, shadow DOM, iframes, visual-only widgets) or when layout context is needed.",
+              "description": "Capture the current page state: URL, title, headings, text blocks, interactive elements (with ref numbers), AX tree, popups, and CAPTCHA status. Auto-saves snapshot for browser_state_diff. Pass screenshot=true to also include a visual screenshot \u2014 only do this when elements may be hidden from the AX tree (canvas, shadow DOM, iframes, visual-only widgets) or when layout context is needed.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -6958,7 +6958,7 @@
                   "screenshot": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Include a screenshot. Default false — only pass true when visual context is needed (canvas, iframes, hidden-from-AX elements)."
+                    "description": "Include a screenshot. Default false \u2014 only pass true when visual context is needed (canvas, iframes, hidden-from-AX elements)."
                   },
                   "mark_elements": {
                     "type": "boolean",
@@ -7181,7 +7181,7 @@
             },
             {
               "name": "browser_handle_captcha",
-              "description": "Detect and handle CAPTCHA. Default: clicks checkbox, detects challenge type, returns immediately. Image: returns screenshot + prompt for agent to solve visually via browser_solve_captcha_grid. Audio: set audio=true to attempt whisper solve (with timeout param). Verify: set verify=true to check if solved. Agent is never blocked — can always use browser_screenshot or other tools between calls.",
+              "description": "Detect and handle CAPTCHA. Default: clicks checkbox, detects challenge type, returns immediately. Image: returns screenshot + prompt for agent to solve visually via browser_solve_captcha_grid. Audio: set audio=true to attempt whisper solve (with timeout param). Verify: set verify=true to check if solved. Agent is never blocked \u2014 can always use browser_screenshot or other tools between calls.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -7232,7 +7232,7 @@
             },
             {
               "name": "browser_agent_create",
-              "description": "Create or switch to a named page/agent. Each named page is independent — use this to run parallel automation flows.",
+              "description": "Create or switch to a named page/agent. Each named page is independent \u2014 use this to run parallel automation flows.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -7575,7 +7575,7 @@
                     "description": "HTTP status code for mock responses."
                   },
                   "body": {
-                    "description": "Response body for mock (string or object — objects are JSON-serialized)."
+                    "description": "Response body for mock (string or object \u2014 objects are JSON-serialized)."
                   },
                   "contentType": {
                     "type": "string",
@@ -7691,7 +7691,7 @@
             },
             {
               "name": "browser_observe",
-              "description": "Return only interactable elements (buttons, inputs, links, selects) without a screenshot. Each element gets a stable `ref` number. Use before planning an action to enumerate available targets with minimal token cost — then act with browser_click(ref=...) or browser_type.",
+              "description": "Return only interactable elements (buttons, inputs, links, selects) without a screenshot. Each element gets a stable `ref` number. Use before planning an action to enumerate available targets with minimal token cost \u2014 then act with browser_click(ref=...) or browser_type.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -7702,7 +7702,7 @@
             },
             {
               "name": "browser_console_messages",
-              "description": "Return captured browser console messages and page errors (last 100). Useful for debugging — check for JS errors after interactions. Read-only.",
+              "description": "Return captured browser console messages and page errors (last 100). Useful for debugging \u2014 check for JS errors after interactions. Read-only.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -7763,7 +7763,7 @@
             },
             {
               "name": "browser_extract_schema",
-              "description": "Extract structured data from the page matching a JSON schema. Provide a schema object with property names and descriptions — the tool scrapes the page and returns a typed JSON object. More reliable than text extraction for structured data (prices, tables, forms, product info).",
+              "description": "Extract structured data from the page matching a JSON schema. Provide a schema object with property names and descriptions \u2014 the tool scrapes the page and returns a typed JSON object. More reliable than text extraction for structured data (prices, tables, forms, product info).",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -8121,7 +8121,7 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "3e87ca6b006b3be54f78c89c29ecb6afcffe200d",
+      "revision": "3e3696b4282297843d593cc4b55323617292732b",
       "version": "3.0.0",
       "digests": [
         "0960c5e0b10e4792bc1edce2d2a19a2dcd4ff5237d5a830b49205c5317cfde38"
@@ -9271,7 +9271,7 @@
       ]
     },
     "hela-receptor": {
-      "revision": "0f6cc0d532b9dad69860b0450badb13a689c2c9e",
+      "revision": "f8649606b38179cbc188e293af7317e04fd9874d",
       "version": "3.0.0",
       "digests": [
         "9a4f2ae274400d2737cdf11753cfdae5c5ec7e5744ba791d96b842046521bbd6"
@@ -9350,7 +9350,7 @@
                       "height"
                     ],
                     "additionalProperties": false,
-                    "description": "Native display resolution — tap/swipe use these native coordinates, matching ui_dump / ui_find_element bounds directly (no scaling)"
+                    "description": "Native display resolution \u2014 tap/swipe use these native coordinates, matching ui_dump / ui_find_element bounds directly (no scaling)"
                   },
                   "videoAvailable": {
                     "type": "boolean",
@@ -11983,7 +11983,7 @@
                       "height"
                     ],
                     "additionalProperties": false,
-                    "description": "Native display resolution — tap/swipe use these native coordinates (no scaling)"
+                    "description": "Native display resolution \u2014 tap/swipe use these native coordinates (no scaling)"
                   },
                   "viewer": {
                     "type": "string",
@@ -12047,7 +12047,7 @@
       ]
     },
     "hela-plastid": {
-      "revision": "72dca1eb143f4c3604dd4aa2f469f34d963c6c1f",
+      "revision": "e19270c8b68a10e361d3a68d061922ff8380e1bd",
       "version": "3.0.0",
       "digests": [
         "7d18428ec5d8bf8668977768aa9d9144ffdc8e36c4d72e7260fae9cc54e6e932"

@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVER · 292 ALAT</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -84,11 +84,10 @@
         <h2 id="doctor">Anatomi laporan doctor</h2>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // BAGIAN_DOKTOR</span><button class="copy-btn" type="button">Salin</button></div>
-          <pre><code>./setup.sh doctor
-# 1. Runtime: Node 20+, Git, SQLite3 (WAL)
-# 2. Kesehatan komponen: entrypoint hadir + stdio handshake + jumlah tool
-# 3. Driver eksternal: Playwright / ADB / Blender (opsional, sesuai cakupan)
-# 4. Kunci API: OpenRouter / GitHub / Google (opsional, fallback adaptif)</code></pre>
+          <pre><code>./setup.sh doctor --profile dev-workspace
+# Jika menggunakan runtime: periksa katalog tanpa startup sel
+./setup.sh doctor --profile dev-workspace --runtime
+# Environment full-stack yang diuji: Node 22 LTS</code></pre>
         </div>
 
         <h2 id="scenarios">Skenario kegagalan &amp; perbaikan</h2>
@@ -103,34 +102,39 @@
         <section class="diag-card" aria-labelledby="d-handshake">
           <div class="diag-card-header" id="d-handshake">Kegagalan handshake JSON-RPC</div>
           <div class="diag-card-body">
-            <p><strong>Gejala:</strong> entrypoint ada tetapi protokol JSON-RPC gagal. <strong>Penyebab:</strong> versi mayor Node keliru (jalankan <code>node --version</code>, membutuhkan 20+), atau kegagalan native binding (<code>node-pty</code> pada ribosome memerlukan build tools: <code>build-essential</code>/<code>python3</code>). Instal ulang <code>node_modules</code> sel terkait dan lakukan build ulang.</p>
+            <p><strong>Gejala:</strong> entrypoint tersedia tetapi JSON-RPC gagal. Periksa <code>node --version</code> pada environment klien; gunakan Node 22 LTS untuk full stack yang diuji. Native binding memerlukan toolchain dan ABI yang sesuai. Gunakan environment proyek, jalankan <code>npm ci</code>, lalu bangun ulang hanya sel terkait.</p>
           </div>
         </section>
 
         <section class="diag-card" aria-labelledby="d-quota">
           <div class="diag-card-header" id="d-quota">Kuota Google / Galat OpenRouter</div>
           <div class="diag-card-body">
-            <p><strong>Gejala:</strong> pemanggilan Google API oleh enzyme gagal; perkakas LLM mitosis melaporkan galat HTTP. <strong>Sesuai Desain:</strong> enzyme beralih secara anggun ke Wikipedia dengan status <code>degraded (quota)</code>; mitosis beralih ke heuristik offline. <strong>Solusi:</strong> periksa kuota/kunci API, atau biarkan sistem beroperasi dalam mode terdegradasi — sistem dirancang untuk tidak pernah crash total karena kendala API keys.</p>
+            <p>Periksa kredensial, kuota, jaringan, dan model/provider terkonfigurasi. Enzyme mendukung fallback jaringan tanpa kunci, tetapi fallback juga dapat gagal. Eksekusi lokal Mitosis bergantung pada engine/model; alat generatif dapat gagal tanpa provider. Keberhasilan discovery bukan bukti kesiapan provider.</p>
           </div>
         </section>
 
         <section class="diag-card" aria-labelledby="d-matrix">
           <div class="diag-card-header" id="d-matrix">Kegagalan matriks setelah mengedit inventaris</div>
           <div class="diag-card-body">
-            <p><strong>Gejala:</strong> pengujian <code>test:matrix</code> gagal setelah pengeditan. <strong>Penyebab:</strong> hampir selalu akibat ketiadaan baris baru di akhir berkas (trailing newline) atau JSON yang tidak valid di <code>config/inventory.json</code> (pemeriksaan pre-commit <code>end-of-file-fixer</code> mewajibkan hal ini). Validasi struktur JSON, pastikan baris baru di akhir, lalu jalankan kembali.</p>
+            <p>Periksa assertion yang gagal: validitas JSON, anggota profil, direktori/entrypoint, format environment, dan bagian <code>mcp_servers</code> Codex. Jalankan ulang <code>npm run test:matrix</code>. Setelah metadata versi/revisi atau build berubah, buat ulang dan validasi katalog skema serta dokumentasi.</p>
           </div>
         </section>
 
         <section class="diag-card" aria-labelledby="d-client">
           <div class="diag-card-header" id="d-client">Klien tidak melihat perkakas</div>
           <div class="diag-card-body">
-            <p><strong>Gejala:</strong> harness agen berjalan tetapi melaporkan nol (0) perkakas. <strong>Daftar Periksa:</strong> gunakan path absolut dalam konfigurasi klien (hindari simbol pintasan <code>~</code>), pastikan biner <code>node</code> berada di PATH environment harness, pastikan nilai <code>enabled: true</code> untuk sel tersebut, lalu muat ulang (restart) harness agen (konfigurasi dimuat hanya saat inisialisasi awal).</p>
+            <p>Periksa path absolut, PATH Node milik klien, server aktif, dan profil terpilih. Tinjau konfigurasi sebelum sengaja memuat ulang hanya klien terkait; sebagian klien otomatis reload saat disimpan. Pertahankan definisi lain dan hook sinkronisasi aktif.</p>
           </div>
         </section>
 
+        <h2 id="runtime">Katalog runtime dan kepemilikan klien</h2>
+        <p>Katalog hilang atau usang tidak boleh memicu startup semua sel. Setelah build, jalankan <code>npm run catalog:generate -- --profile dev-workspace</code>, lalu doctor runtime. Discovery dingin harus menjalankan nol sel. Runtime adalah mode penyajian (<code>--runtime</code>), bukan profil.</p>
+        <p>Zed dapat meneruskan server yang sudah dimiliki Codex sehingga muncul peringatan duplikat. Jangan hapus definisi bersama hanya untuk membungkamnya. Verifikasi ACP terautentikasi tetap terpisah; lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/troubleshooting.md#zed-forwards-a-server-that-codex-already-defines">panduan khusus versi klien</a>.</p>
+        <p>Sebelum mengubah database atau vault, buat cadangan tervalidasi. Jangan menimpa SQLite aktif atau memaksakan pemenang konflik. Publikasi dokumentasi tidak membutuhkan restart runtime.</p>
+
         <div class="admonition warning">
           <div class="admonition-title">MASIH MENGALAMI KENDALA?</div>
-          <div>Buka tiket kendala pada repositori <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem" target="_blank" rel="noopener noreferrer">Hela-Ecosystem/hela-mcp-ecosystem</a> dengan menyertakan keluaran lengkap dari perintah <code>setup.sh doctor</code> serta gerbang verifikasi yang gagal.</div>
+          <div>Buka isu pada <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues" target="_blank" rel="noopener noreferrer">Hela-Ecosystem/hela-mcp-ecosystem</a> dengan output doctor yang sudah ditinjau/disensor dan pemeriksaan yang gagal. Jangan lampirkan konfigurasi privat, kredensial, atau environment mentah.</div>
         </div>
 
         <footer class="doc-footer"><span>LISENSI MIT · AZZAR</span><span>CATATAN_ARSIP_TERSEGEL // HELA_MCP_ECOSYSTEM</span></footer>
@@ -143,12 +147,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari perkakas, halaman, atau profil" placeholder="Cari 292 perkakas, halaman, profil…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari perkakas, halaman, atau profil" placeholder="Cari perkakas, halaman, profil…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../app.js"></script>
+  <script src="../release-data.js?v=1.5.1"></script>
+  <script src="../app.js?v=1.5.1"></script>
 </body>
 </html>

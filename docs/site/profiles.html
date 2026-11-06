@@ -41,7 +41,7 @@
     <aside class="doc-sidebar" aria-label="Documentation sections">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVERS · 292 TOOLS</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 CELLS</div>
       </div>
       <nav aria-label="Documentation">
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
@@ -84,7 +84,7 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_04 // Hela-Ecosystem-MCP</span><span>DOSSIER: PROFILES_AND_CLIENT_MATRIX</span></div>
           <h1 class="doc-title" data-i18n="profiles.title">Profiles &amp; Config</h1>
-          <p class="doc-lead" data-i18n="profiles.lead">Eight deployment profiles. Pick the stack that matches the machine, then generate the exact client file below — 80 profile × client combinations, schema-validated.</p>
+          <p class="doc-lead" data-i18n="profiles.lead">Eight deployment profiles. Preview a client configuration below; use the CLI to generate the installed configuration. The CLI matrix checks 80 profile/backend combinations.</p>
         </header>
 
         <figure class="figure-plate">
@@ -105,17 +105,17 @@
               <tr><td>web-devops</td><td>Frontend / QA automation</td><td>mitosis, genome, membrane, nucleus, phenotype, cytosol</td></tr>
               <tr><td>android-testing</td><td>Mobile QA engineers</td><td>mitosis, genome, nucleus, receptor, enzyme</td></tr>
               <tr><td>3d-modeling</td><td>3D designers / game devs</td><td>mitosis, genome, plastid, membrane, nucleus</td></tr>
-              <tr><td>all</td><td>Unrestricted master agent</td><td>All 10 cells (292 tools)</td></tr>
+              <tr><td>all</td><td>Full capability roster</td><td>All 10 cells; tool count depends on enabled features</td></tr>
             </tbody>
           </table>
         </div>
         <div class="admonition">
           <div class="admonition-title">HEADLESS RULE</div>
-          <div><code>headless-server</code> excludes cytosol, receptor, and plastid — zero Playwright/Chromium, ADB, or Blender dependencies, instant startup on VPS/CI.</div>
+          <div><code>headless-server</code> excludes cytosol, receptor, and plastid, so their browser/device dependencies are not required. Add <code>--runtime</code> to any profile for one endpoint; discovery starts no cells. The runtime defaults to <code>dev-workspace</code>, not <code>minimal</code>.</div>
         </div>
 
         <h2 id="configurator" data-i18n="profiles.configurator_title">Configuration workbench</h2>
-        <p>Select a profile and a client. The output is byte-identical in shape to what <code>setup.sh</code> writes.</p>
+        <p>Select a profile and client for a key-free path/format preview. Replace <code>/absolute/path/to/MCPservers</code> with your repository parent. The CLI adds installation-specific environment settings; this preview is not byte-identical to its output. Docker output is only a scaffold: mapped ports do not convert stdio into HTTP.</p>
         <div class="field-row">
           <div class="field">
             <label for="profileSelect" data-i18n="profiles.label_profile">Target profile</label>
@@ -150,13 +150,13 @@
         </div>
 
         <h2 id="keys">API keys</h2>
-        <p>Only two cells need secrets; everything else runs keyless. Never commit keys — the installer injects them into the client file only.</p>
+        <p>Discovery does not need provider keys. External tools may need credentials, network access, hardware, or a local model engine. Generated private CLI configurations can include credentials you supply; never publish them. SQLite remains Genome's base engine, with optional Obsidian/Redis integrations.</p>
         <div class="doc-table-wrap">
           <table class="doc-table">
-            <caption>TABLE 4.2 — REQUIRED SECRETS</caption>
+            <caption>TABLE 4.2 — OPTIONAL PROVIDER SETTINGS</caption>
             <thead><tr><th scope="col">Cell</th><th scope="col">Variables</th><th scope="col">Notes</th></tr></thead>
             <tbody>
-              <tr><td>mitosis</td><td><code>OPENROUTER_API_KEY</code>, <code>GITHUB_TOKEN</code></td><td>LLM tools + remote prompt sync; offline heuristics without</td></tr>
+              <tr><td>mitosis</td><td><code>OPENROUTER_API_KEY</code>, <code>GITHUB_TOKEN</code></td><td>Provider-backed generation and remote catalogs; local execution depends on its configured engine/model</td></tr>
               <tr><td>enzyme</td><td><code>GOOGLE_API_KEY</code>, <code>GOOGLE_CSE_ID</code></td><td>Google search; Wikipedia works keyless with fallback</td></tr>
             </tbody>
           </table>
@@ -172,12 +172,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search 292 tools, pages, profiles…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Search tools, pages, or profiles" placeholder="Search tools, pages, profiles…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="app.js"></script>
+  <script src="release-data.js?v=1.5.1"></script>
+  <script src="app.js?v=1.5.1"></script>
 </body>
 </html>

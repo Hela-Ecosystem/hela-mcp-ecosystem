@@ -126,30 +126,24 @@ Source references: [Zed forwarding](https://github.com/zed-industries/zed/blob/c
 **Fix**:
 Restore known-good, audited release snapshot:
 ```bash
-./setup.sh --snapshot v1.2.0 --profile dev-workspace --non-interactive
+./setup.sh --snapshot v1.5.1 --profile dev-workspace --non-interactive
 ```
 
 ---
 
 ### 2.5 SQLite Database Lock or Corruption (`HeLa Genome`)
 
-**Symptom**: `database is locked` or `SQLite error` in `Project-Guardian-mcp-server`.
+**Symptom**: `database is locked` or `SQLite error` in `project-mcp`.
 
-**Root Cause**: Multiple concurrent processes accessed `memory.db` without WAL mode enabled, or an ungraceful shutdown occurred.
+**Possible causes**: Competing writers, a long transaction, permissions, filesystem failures, or a damaged database. A lock error alone does not prove corruption or missing WAL mode.
 
 **Fix**:
-1. Verify database integrity using the SQLite CLI:
+1. Identify the actual database path and owning processes. Inspect integrity read-only:
    ```bash
-   sqlite3 <server-dir>/memory.db "PRAGMA integrity_check;"
+   sqlite3 -readonly /absolute/path/to/memory.db "PRAGMA integrity_check;"
    ```
-2. Enable Write-Ahead Logging (WAL) for robust concurrent reads/writes:
-   ```bash
-   sqlite3 <server-dir>/memory.db "PRAGMA journal_mode=WAL;"
-   ```
-3. If corrupted, restore from automated daily backups:
-   ```bash
-   cp <server-dir>/memory.db.bak <server-dir>/memory.db
-   ```
+2. Take an online, validated backup that includes committed WAL data. Do not copy only the main file while SQLite is active; no daily-backup schedule is implied by the package.
+3. Restore only to a new, absent destination with no SQLite sidecars, verify integrity, and review a controlled switchover. Never overwrite an active database. Preserve divergent Obsidian notes and existing conflict archives instead of choosing a winner automatically.
 
 ---
 
@@ -179,6 +173,6 @@ Restore known-good, audited release snapshot:
 
 ## 3. Getting Further Support
 
-* **Run Integration Tests**: `npm test` (executes 292 tool discovery tests across all 10 servers).
-* **Run Matrix Tests**: `npm run test:matrix` (verifies all 70 client configuration combinations).
-* **File an Issue**: Open an issue on GitHub at [`https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with the output of `./setup.sh doctor --json`.
+* **Run Integration Tests**: `npm test` discovers the installed cells; use `-- --profile <id>` for a selected subset. Tool counts depend on enabled features.
+* **Run Matrix Tests**: `npm run test:matrix` verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.
+* **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `./setup.sh doctor --json` and the failed check. Do not attach private configs or environments.
