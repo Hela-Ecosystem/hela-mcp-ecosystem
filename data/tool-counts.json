@@ -1,0 +1,61 @@
+{
+  "generatedFrom": "config/inventory.json + config/tool-catalog.json",
+  "profiles": {
+    "minimal": {
+      "cells": 3,
+      "runtimeTools": {
+        "min": 78,
+        "max": 84
+      }
+    },
+    "dev-workspace": {
+      "cells": 8,
+      "runtimeTools": {
+        "min": 230,
+        "max": 236
+      }
+    },
+    "headless-server": {
+      "cells": 7,
+      "runtimeTools": {
+        "min": 157,
+        "max": 163
+      }
+    },
+    "research": {
+      "cells": 5,
+      "runtimeTools": {
+        "min": 167,
+        "max": 173
+      }
+    },
+    "web-devops": {
+      "cells": 6,
+      "runtimeTools": {
+        "min": 178,
+        "max": 184
+      }
+    },
+    "android-testing": {
+      "cells": 5,
+      "runtimeTools": {
+        "min": 131,
+        "max": 137
+      }
+    },
+    "3d-modeling": {
+      "cells": 5,
+      "runtimeTools": {
+        "min": 92,
+        "max": 98
+      }
+    },
+    "all": {
+      "cells": 10,
+      "runtimeTools": {
+        "min": 291,
+        "max": 297
+      }
+    }
+  }
+}
