@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVER · 292 ALAT</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -81,7 +81,8 @@
           <figcaption class="figure-caption"><strong>GMBAR.</strong><span>PELAT 06 · blotcat-web-workbench.jpg · Hasil terverifikasi</span></figcaption>
         </figure>
 
-        <h2 id="gates">Gerbang Verifikasi</h2>
+        <h2 id="gates">Rekaman Gerbang Verifikasi Historis</h2>
+        <p>Rekaman dan total lama di bawah adalah catatan historis, bukan bukti penerimaan rilis saat ini. Pemeriksaan terbaru mencakup 32 regresi runtime pada dua arsitektur Linux, 16 pemeriksaan profil/namespace, serta 80 konfigurasi CLI. Hardware dan sesi GUI terautentikasi tetap terpisah; lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/on-demand-runtime.md">cakupan verifikasi terbaru</a>.</p>
         <div class="doc-table-wrap">
           <table class="doc-table">
             <caption>TABEL 5.1 — HASIL REKAMAN GERBANG PENGUJIAN</caption>
@@ -95,13 +96,13 @@
         </div>
 
         <h2 id="demos">Demonstrasi Video</h2>
-        <p>Rekaman demonstrasi langsung dari dua sel yang menjalankan tugas utamanya.</p>
+        <p>Rekaman historis dapat menampilkan nama alat lama atau UI Genome yang sudah dihapus. Rekaman ini bukan verifikasi hardware atau GUI saat ini.</p>
         <div class="video-grid">
           <div>
             <div class="video-frame">
-              <iframe src="https://www.youtube-nocookie.com/embed/BnbDg1-be4g" title="Demo HeLa Phenotype dan pembuatan token desain" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+              <iframe src="https://www.youtube-nocookie.com/embed/BnbDg1-be4g" title="Demo historis LL3M / HeLa Plastid" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <p class="video-caption">DEMO_01 // PHENOTYPE — token desain &amp; palet warna OKLCH</p>
+            <p class="video-caption">DEMO_01 // PLASTID — demonstrasi historis LL3M</p>
           </div>
           <div>
             <div class="video-frame">
@@ -143,12 +144,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari 292 alat, halaman, profil…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari alat, halaman, profil…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../app.js"></script>
+  <script src="../release-data.js?v=1.5.1"></script>
+  <script src="../app.js?v=1.5.1"></script>
 </body>
 </html>

@@ -41,7 +41,7 @@
     <aside class="doc-sidebar" aria-label="Documentation sections">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a>
-        <div class="doc-brand-meta">v1.5.0 · 10 SERVERS · ON-DEMAND CELLS</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 CELLS</div>
       </div>
       <nav aria-label="Documentation">
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
@@ -84,7 +84,7 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_02 // Hela-Ecosystem-MCP</span><span>DOSSIER: DUAL_BACKBONE_TOPOLOGY</span></div>
           <h1 class="doc-title" data-i18n="arch.title">Architecture</h1>
-          <p class="doc-lead">Two backbones coordinate ten cells over standard MCP stdio (JSON-RPC 2.0). Mitosis reasons and routes; Genome remembers. Every other cell is stateless behind its boundary.</p>
+          <p class="doc-lead">Two backbones coordinate ten cells: Mitosis plans and routes; Genome keeps durable memory. Other cells own their domain state, including browser and terminal sessions. Connect separately over stdio or through the optional runtime.</p>
         </header>
 
         <figure class="figure-plate">
@@ -106,109 +106,109 @@
         <p>Interaction rule: agents reason through Mitosis, persist through Genome, act through the remaining cells. Verified synergies (see <code>npm test</code>): Mitosis+Genome (backbone), Enzyme+Cytosol (research), Membrane+Nucleus+Ribosome (workspace).</p>
 
         <h2 id="transport" data-i18n="arch.transport_title">Transport</h2>
-        <p>All cells speak MCP over stdio: newline-delimited JSON-RPC 2.0 on stdin/stdout, logs on stderr. No ports, no auth, no network — the client spawns <code>node &lt;dir&gt;/&lt;entry&gt;</code> per <code>config/inventory.json</code>. Pinned revisions per cell keep installs deterministic (<code>--dev</code> tracks branches instead).</p>
+        <p>Standalone clients spawn cells over MCP stdio using the canonical inventory paths. The optional runtime also supports Streamable HTTP. Transport choice does not prevent tools from using the network or changing host resources. Endpoint authentication and authorization remain deferred; process separation is not an OS sandbox.</p>
 
         <h2 id="servers" data-i18n="arch.servers_title">Server reference</h2>
         <p>Ten cells. Scope <span class="badge badge-core">CORE</span> runs headless; <span class="badge badge-special">SPECIALIZED</span> needs GUI, device, or runtime extras.</p>
 
         <section class="server-card" aria-labelledby="srv-mitosis">
-          <div class="server-card-header"><h3 id="srv-mitosis">HeLa Mitosis</h3><span class="server-card-id">hela-mitosis · chaining-mcp · <span class="badge badge-core">CORE</span> · 29 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-mitosis">HeLa Mitosis</h3><span class="server-card-id">hela-mitosis · chaining-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 24–29 tools</span></div>
           <div class="server-card-body">
-            <p>Cognitive division and orchestration. Bundled Needle 3 agent runtime (plan → execute → observe, fully offline), peer tool discovery, Needle-backed sequential reasoning, task decomposition, 40 domain prompt templates, skills catalog, optional OpenRouter escalation (<code>X-Title: hela-mitosis</code>).</p>
+            <p>Planning and orchestration with bundled Needle 3, peer discovery, sequential reasoning, task decomposition, prompts, and skills. Local execution depends on its engine/model; generative or escalation operations need a configured provider when unavailable locally. Keyless does not guarantee offline completion.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/chaining-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/chaining-mcp</code></a> · env <code>OPENROUTER_API_KEY, CHAINING_LLM_MODEL, CHAINING_LLM_ENABLED, GITHUB_TOKEN…</code></p>
-            <p class="tool-list">agent_run, analyze_with_sequential_thinking, sequentialthinking, workflow_orchestrator, workflow_status, workflow_cancel, llm_decompose_task, llm_suggest_route, llm_query, llm_summarize, list_skills, search_skills, get_skill, suggest_skill_chain, search_prompts, get_prompt, list_mcp_servers, validate_tool_chain</p>
+            <p class="tool-list">agent_run, analyze_tool_chain_performance, analyze_tools, analyze_with_sequential_thinking, brainstorming, convert_time, generate_route_suggestions, get_current_time, get_prompt, get_resource_set, get_skill, get_tool_chain_analysis, list_mcp_servers, list_skills, llm_decompose_task, llm_query, llm_suggest_route, llm_summarize, load_instruction, search_instructions, search_prompts, search_resource_sets, search_skills, sequentialthinking, suggest_skill_chain, validate_tool_chain, workflow_cancel, workflow_orchestrator, workflow_status</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-genome">
-          <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · 29 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 29 tools</span></div>
           <div class="server-card-body">
             <p>Living SQLite knowledge graph (<code>memory.db</code>) with FTS5 search, entity-relation tracking, cross-session restoration, secret scanning.</p>
             <p>SQLite remains the base engine; Obsidian is an optional mirror. Genome's memory-safety update adds conflict-aware vault synchronization, WAL-safe validated backups, and exclusive mission claims within one shared SQLite ledger. Separate machine-local databases are not a distributed lock; rebuild and verify the updated cell before deployment.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/project-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/project-mcp</code></a></p>
-            <p class="tool-list">initialize_memory, memory_edit, read_graph, search_nodes, open_node, get_file_context, get_timeline, get_session_context, sync_central_memory, create_mission, list_missions, update_mission, execute_sql, query_data, inspect_untrusted_text, security_scan</p>
+            <p class="tool-list">analyze_git_changes, cache, create_mission, delete_data, execute_sql, export_data, get_file_context, get_project_guidance, get_session_context, get_timeline, harness_sessions, import_data, initialize_memory, insert_data, inspect_untrusted_text, list_missions, memory_edit, obsidian_vault, open_node, query_data, read_graph, read_graph_stream, search_nodes, security_scan, set_project_root, setup_pre_commit, sync_central_memory, update_data, update_mission</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-membrane">
-          <div class="server-card-header"><h3 id="srv-membrane">HeLa Membrane</h3><span class="server-card-id">hela-membrane · filesystem-mcp · <span class="badge badge-core">CORE</span> · 16 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-membrane">HeLa Membrane</h3><span class="server-card-id">hela-membrane · filesystem-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 16 tools</span></div>
           <div class="server-card-body">
-            <p>Sandboxed filesystem boundary: recursive search, watching, binary inspection, archives.</p>
+            <p>Filesystem operations: recursive search, watching, binary inspection, and archives. Operations run with the server account's privileges; this is not an OS sandbox.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/filesystem-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/filesystem-mcp</code></a></p>
-            <p class="tool-list">read_file, write_file, copy_file, move_file, delete_file, get_file_info, create_directory, list_directory, find_files, search_in_files, watch_file, archive_files, extract_archive</p>
+            <p class="tool-list">archive_files, compare_files, copy_file, create_directory, delete_file, extract_archive, find_files, get_directory_size, get_file_info, list_directory, move_file, read_file, search_in_files, stop_watching, watch_file, write_file</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-nucleus">
-          <div class="server-card-header"><h3 id="srv-nucleus">HeLa Nucleus</h3><span class="server-card-id">hela-nucleus · terminal-mcp · <span class="badge badge-core">CORE</span> · 7 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-nucleus">HeLa Nucleus</h3><span class="server-card-id">hela-nucleus · terminal-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 7 tools</span></div>
           <div class="server-card-body">
-            <p>Isolated command execution with subshell containment and RTK token optimization.</p>
+            <p>Local/SSH command execution, persistent terminal sessions, file transfers, and optional RTK output compression. Commands run with the selected account's privileges.</p>
             <p class="server-card-id">entry <code>build/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/terminal-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/terminal-mcp</code></a></p>
-            <p class="tool-list">execute_command, transfer_file, terminal_ls, terminal_grep, terminal_cat, terminal_session_close, terminal_session_list</p>
+            <p class="tool-list">execute_command, terminal_cat, terminal_grep, terminal_ls, terminal_session_close, terminal_session_list, transfer_file</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-ribosome">
-          <div class="server-card-header"><h3 id="srv-ribosome">HeLa Ribosome</h3><span class="server-card-id">hela-ribosome · menager-mcp · <span class="badge badge-core">CORE</span> · 28 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-ribosome">HeLa Ribosome</h3><span class="server-card-id">hela-ribosome · menager-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 28 tools</span></div>
           <div class="server-card-body">
             <p>Polyglot PTY multiplexing plus a native opencode control plane: spawn/send/fork routed agent sessions, model discovery, usage stats, warm <code>serve</code> instances.</p>
             <p class="server-card-id">entry <code>build/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/menager-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/menager-mcp</code></a></p>
-            <p class="tool-list">session_spawn, session_write, session_read, session_hook, session_wait, session_close, agent_spawn, agent_send, agent_fork, agent_list, opencode_models, opencode_server_spawn</p>
+            <p class="tool-list">agent_close, agent_create, agent_fork, agent_info, agent_list, agent_send, agent_spawn, opencode_auth_list, opencode_db, opencode_export, opencode_import, opencode_mcp_list, opencode_models, opencode_server_spawn, opencode_session_delete, opencode_stats, opencode_status, session_close, session_hook, session_info, session_list, session_prune, session_read, session_resize, session_signal, session_spawn, session_wait, session_write</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-enzyme">
-          <div class="server-card-header"><h3 id="srv-enzyme">HeLa Enzyme</h3><span class="server-card-id">hela-enzyme · researcher-mcp · <span class="badge badge-core">CORE</span> · 24 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-enzyme">HeLa Enzyme</h3><span class="server-card-id">hela-enzyme · researcher-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 24 tools</span></div>
           <div class="server-card-body">
             <p>Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia research with caching, fact-checking, and the one-call <code>research_brief</code> fan-out (parallel sources, cross-source dedup, freshness stamps).</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/researcher-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/researcher-mcp</code></a> · env <code>GOOGLE_API_KEY, GOOGLE_CSE_ID, WIKIPEDIA_*</code></p>
-            <p class="tool-list">google_search, wikipedia_search, wikipedia_get, fact_checker, academic_search, content_summarizer, extract_content, research_brief, keyword_extraction</p>
+            <p class="tool-list">academic_search, archive_org_search, citation_formatter, content_deduplication, content_sentiment_analysis, content_summarizer, data_export, extract_content, fact_checker, google_search, keyword_extraction, multi_site_search, news_monitor, research_assistant, research_brief, research_session_manager, search_analytics, search_trends, url_metadata_extractor, wikipedia_get, wikipedia_get_pages_in_category, wikipedia_page_languages, wikipedia_random, wikipedia_search</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-cytosol">
-          <div class="server-card-header"><h3 id="srv-cytosol">HeLa Cytosol</h3><span class="server-card-id">hela-cytosol · browser-mcp · <span class="badge badge-core">CORE</span> · 73 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-cytosol">HeLa Cytosol</h3><span class="server-card-id">hela-cytosol · browser-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 73 tools</span></div>
           <div class="server-card-body">
             <p>Full Playwright automation: AX-tree perception, form filling, intercepts, screenshots, session persistence.</p>
             <p class="server-card-id">entry <code>src/server.js</code> · repo <a href="https://github.com/Hela-Ecosystem/browser-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/browser-mcp</code></a></p>
-            <p class="tool-list">browser_navigate, browser_click, browser_fill_form, browser_screenshot, browser_get_content, browser_intercept, browser_extract_schema</p>
+            <p class="tool-list">browser_agent_create, browser_agent_list, browser_agent_remove, browser_agent_switch, browser_assert, browser_back, browser_batch_answer_quiz, browser_cache_stats, browser_check, browser_clear, browser_clear_intercepts, browser_clear_mocks, browser_clear_recording, browser_click, browser_close, browser_console_messages, browser_dialog, browser_dismiss_popups, browser_download_click, browser_drag, browser_emulate, browser_evaluate, browser_export_state, browser_extract_schema, browser_extract_table, browser_fill_form, browser_forward, browser_generate_playwright_test, browser_get_captured_apis, browser_get_content, browser_get_cookies, browser_get_state, browser_handle_captcha, browser_health, browser_highlight, browser_hover, browser_intercept, browser_intercept_api, browser_intercept_list, browser_list_sessions, browser_list_tabs, browser_load_session, browser_mock_network, browser_navigate, browser_network_requests, browser_new_tab, browser_observe, browser_ocr, browser_parallel_execute, browser_performance, browser_press, browser_print_to_pdf, browser_record_macro, browser_reload, browser_replay_macro, browser_resize_page, browser_save_session, browser_screenshot, browser_scroll, browser_search, browser_select, browser_select_by_index, browser_set_agent_profile, browser_solve_captcha_grid, browser_start_trace, browser_state_diff, browser_stop_trace, browser_switch_tab, browser_switch_to_new_tab, browser_type, browser_uncheck, browser_upload, browser_wait</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-phenotype">
-          <div class="server-card-header"><h3 id="srv-phenotype">HeLa Phenotype</h3><span class="server-card-id">hela-phenotype · designer-mcp · <span class="badge badge-special">SPECIALIZED</span> · 28 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-phenotype">HeLa Phenotype</h3><span class="server-card-id">hela-phenotype · designer-mcp · <span class="badge badge-special">SPECIALIZED</span> · v3.0.0 · 28 tools</span></div>
           <div class="server-card-body">
             <p>Design-Theory-as-a-Service: OKLCH tokens, brand references (Linear, Stripe…), Tailwind synthesis, 8-state components, WCAG audits, anti-slop gates.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/designer-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/designer-mcp</code></a></p>
-            <p class="tool-list">generate_rules, design_tokens, palette, brand_fetch_design_md, generate_8state_component, design_audit, evaluate_style, logo_workflow</p>
+            <p class="tool-list">brand_fetch_design_md, brand_list, design_audit, design_tokens, detect_genre, evaluate_style, export_project, generate_8state_component, generate_motion_snippet, generate_rules, generate_template, get_component, get_cross_cutting_rules, get_ellis_ui_template, get_reference, list_ellis_ui_designs, list_installed_skills, list_options, list_themes, logo_workflow, palette, stitch_create, stitch_find, stitch_generate, stitch_resource, stitch_screen_audit, stitch_sync_design_system, validate_combo</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-receptor">
-          <div class="server-card-header"><h3 id="srv-receptor">HeLa Receptor</h3><span class="server-card-id">hela-receptor · scrcpy-mcp · <span class="badge badge-special">SPECIALIZED</span> · 46 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-receptor">HeLa Receptor</h3><span class="server-card-id">hela-receptor · scrcpy-mcp · <span class="badge badge-special">SPECIALIZED</span> · v3.0.0 · 46 tools</span></div>
           <div class="server-card-body">
             <p>Android automation over ADB: XML hierarchy inspection, tap/swipe/text, recording, app lifecycle. Needs device or emulator.</p>
             <p class="server-card-id">entry <code>dist/server.js</code> · repo <a href="https://github.com/Hela-Ecosystem/scrcpy-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/scrcpy-mcp</code></a></p>
-            <p class="tool-list">start_session, device_list, device_info, ui_dump, ui_find_element, tap, swipe, input_text, key_event, screenshot, screen_record_start, app_install, shell_exec</p>
+            <p class="tool-list">app_current, app_install, app_list, app_start, app_stop, app_uninstall, clipboard_get, clipboard_set, collapse_panels, connect_wifi, device_info, device_list, disconnect_wifi, drag_drop, expand_notifications, expand_settings, file_list, file_pull, file_push, form_fill, input_text, key_event, long_press, rotate_device, screen_off, screen_on, screen_record_start, screen_record_stop, screenshot, scroll, scroll_to_element, shell_exec, start_session, start_video_stream, stop_session, stop_video_stream, swipe, tap, ui_dump, ui_find_element, ui_get_state, ui_smart_fill, ui_tap_element, ui_wait_for_element, version, wait</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-plastid">
-          <div class="server-card-header"><h3 id="srv-plastid">HeLa Plastid</h3><span class="server-card-id">hela-plastid · ll3m-mcp · <span class="badge badge-special">SPECIALIZED</span> · 15 tools</span></div>
+          <div class="server-card-header"><h3 id="srv-plastid">HeLa Plastid</h3><span class="server-card-id">hela-plastid · ll3m-mcp · <span class="badge badge-special">SPECIALIZED</span> · v3.0.0 · 15 tools</span></div>
           <div class="server-card-body">
             <p>Autonomous Blender modeling: plan → procedural script → render → <code>.blend</code>. Needs Blender 4+.</p>
             <p class="server-card-id">entry <code>brain/dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/ll3m-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/ll3m-mcp</code></a></p>
-            <p class="tool-list">generate_modeling_plan, execute_blender_code, get_scene_summary, render_output, save_blend, get_screenshot, get_fast_feedback</p>
+            <p class="tool-list">execute_blender_code, execute_staged_refinement, generate_modeling_plan, get_agent_instructions, get_api_docs, get_blender_helpers, get_blendfile_summary, get_fast_feedback, get_modeling_patterns, get_object_details, get_scene_summary, get_screenshot, navigation, render_output, save_blend</p>
           </div>
         </section>
 
-        <section class="server-card" id="srv-runtime">
+        <section class="server-card" aria-labelledby="srv-runtime">
           <div class="server-card-header"><h3 id="srv-runtime">HeLa Runtime</h3><span class="server-card-id">hela-runtime · hela-runtime · <span class="badge badge-core">OPTIONAL</span> · profile-scoped tools</span></div>
           <div class="server-card-body">
             <p>Optional runtime 1.2.0: exposes generated, revision/build/config-validated schemas without starting cells. A first tool call starts only its target; concurrent calls share startup. The default remains <code>dev-workspace</code> (eight eligible cells). Timeout recovery reaps the old process before restarting; namespacing remains opt-in. Node 22 Nix packages build on x86_64-linux and aarch64-linux.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/hela-runtime" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/hela-runtime</code></a></p>
             <p class="tool-list">hela.pipe, optional hela.agent.run when Mitosis exposes agent_run, plus selected cell tools (proxied)</p>
-            <p>Servy verification (2026-11-06): eight supervised cells, 236 live tools, all three Genome mission tools, and passing local/public MCP discovery. Feature-disabled probes expose 230 tools. Authenticated ACP sessions, client reloads, and vault conflict review remain separate.</p>
+            <p>Servy verification (2026-11-06): eight eligible cells and 236 live tools, including the three Genome mission tools. Local/public cold discovery starts zero cells; a safe Nucleus call starts only Nucleus. Feature-disabled probes expose 230 tools. Authenticated ACP, client reloads, and vault conflict review remain separate.</p>
           </div>
         </section>
 
@@ -228,6 +228,7 @@
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="app.js"></script>
+  <script src="release-data.js?v=1.5.1"></script>
+  <script src="app.js?v=1.5.1"></script>
 </body>
 </html>

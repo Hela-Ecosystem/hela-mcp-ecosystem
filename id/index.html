@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVER · 292 ALAT</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -104,7 +104,7 @@
         <p>Katalog lengkap perkakas, entrypoint, dan repositori: <a href="architecture.html">04 Arsitektur</a>. Dinamai sebagai penghormatan kepada <strong>Henrietta Lacks</strong> (1920–1951): spesialisasi modular, replikasi deterministik, dan daya tahan jangka panjang.</p>
 
         <h2 id="installation">Instalasi</h2>
-        <p>Kebutuhan sistem: Node.js 20+ LTS, Git 2.25+, SQLite3. Opsional per sel: Playwright Chromium (cytosol), ADB (receptor), Blender 4+ (plastid).</p>
+        <p>Gunakan Node.js 22 LTS untuk full stack yang diuji dan Git 2.30+. Genome memakai binding SQLite Node; CLI SQLite bersifat opsional. Alur kerja browser, Android, dan Blender memerlukan runtime/perangkat masing-masing.</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // KLONING_DAN_INSTAL</span><button class="copy-btn" type="button">Salin</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
@@ -112,18 +112,19 @@ cd hela-mcp-ecosystem
 ./setup.sh --profile dev-workspace --client opencode</code></pre>
         </div>
         <p>Skrip <code>setup.sh</code> mengkloning, membangun, dan menuliskan konfigurasi klien untuk profil yang dipilih. Flag yang berguna: <code>--system gui|headless</code>, <code>--reconfigure</code> (hanya perbarui konfigurasi), <code>--dev</code> (ikuti branch alih-alih pin revisi), <code>doctor</code> (diagnostik).</p>
+        <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Profil bawaan tetap <code>dev-workspace</code>, sedangkan instalasi lain bebas memilih salah satu dari delapan profil.</p>
 
         <h2 id="verify">Verifikasi</h2>
         <p>Tiga gerbang verifikasi, semuanya diharapkan berstatus hijau sebelum digunakan:</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // GERBANG_VERIFIKASI</span><button class="copy-btn" type="button">Salin</button></div>
-          <pre><code>./setup.sh doctor     # 10/10 [READY] Stdio JSON-RPC OK
-npm test              # 13 passed: 10 handshakes + 3 sinergi lintas-sel
-npm run test:matrix   # 80 passed: akurasi skema profil × klien</code></pre>
+          <pre><code>./setup.sh doctor --profile dev-workspace
+npm test -- --profile dev-workspace
+npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
         </div>
         <div class="admonition success">
           <div class="admonition-title">HASIL YANG DIHARAPKAN</div>
-          <div>Laporan doctor menyatakan kesepuluh sel READY; suite integrasi lolos 13/13 dalam waktu ~2.5 detik; matriks konfigurasi lolos 80/80. Jika ada kendala: buka <a href="troubleshooting.html">08 Diagnostik</a>.</div>
+          <div>Doctor memeriksa sel pada profil terpilih, bukan mewajibkan sepuluh server. Tambahkan <code>--runtime</code> jika runtime dipasang untuk memeriksa kecocokan katalog tanpa startup sel. Konfigurasi, sesi GUI terautentikasi, provider eksternal, dan perangkat keras adalah pemeriksaan terpisah. Lihat <a href="troubleshooting.html">08 Diagnostik</a>.</div>
         </div>
 
         <h2 id="next">Langkah Selanjutnya</h2>
@@ -143,12 +144,13 @@ npm run test:matrix   # 80 passed: akurasi skema profil × klien</code></pre>
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari 292 alat, halaman, profil…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari alat, halaman, atau profil" placeholder="Cari alat, halaman, profil…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../app.js"></script>
+  <script src="../release-data.js?v=1.5.1"></script>
+  <script src="../app.js?v=1.5.1"></script>
 </body>
 </html>

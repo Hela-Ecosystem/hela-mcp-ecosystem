@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.5.0 · 10 SERVER · SEL SESUAI PEMANGGILAN</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -73,7 +73,7 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_02 // Hela-Ecosystem-MCP</span><span>DOSIR: TOPOLOGI_DUAL_BACKBONE</span></div>
           <h1 class="doc-title">Arsitektur Ekosistem</h1>
-          <p class="doc-lead">Dua tulang punggung (backbone) mengoordinasikan sepuluh sel melalui standar MCP stdio (JSON-RPC 2.0). Mitosis merencanakan dan merutekan tugas; Genome mengingat memori persisten. Setiap sel lainnya bersifat stateless di balik batas domainnya.</p>
+          <p class="doc-lead">Dua backbone mengoordinasikan sepuluh sel: Mitosis merencanakan dan merutekan tugas; Genome menyimpan memori persisten. Sel lain mengelola status domainnya, termasuk sesi browser dan terminal. Hubungkan secara terpisah melalui stdio atau lewat runtime opsional.</p>
         </header>
 
         <figure class="figure-plate">
@@ -95,99 +95,99 @@
         <p>Aturan interaksi: agen berpikir melalui Mitosis, menyimpan memori melalui Genome, dan bertindak melalui sel-sel lainnya. Sinergi terverifikasi (lihat <code>npm test</code>): Mitosis+Genome (backbone), Enzyme+Cytosol (riset), Membrane+Nucleus+Ribosome (workspace).</p>
 
         <h2 id="transport">Transport Komunikasi</h2>
-        <p>Semua sel berkomunikasi melalui protokol MCP via stdio: JSON-RPC 2.0 per baris pada stdin/stdout, dan log pada stderr. Tanpa port terbuka, tanpa autentikasi jaringan, tanpa latensi soket — klien mengeksekusi <code>node &lt;dir&gt;/&lt;entry&gt;</code> sesuai <code>config/inventory.json</code>. Pin revisi commit per sel memastikan instalasi selalu deterministik (gunakan flag <code>--dev</code> jika ingin mengikuti branch aktif).</p>
+        <p>Klien standalone menjalankan sel melalui MCP stdio menggunakan path inventori. Runtime opsional juga mendukung Streamable HTTP. Pilihan transport tidak mencegah alat mengakses jaringan atau mengubah sumber daya host. Autentikasi dan otorisasi endpoint masih ditunda; pemisahan proses bukan sandbox OS.</p>
 
         <h2 id="servers">Referensi Server &amp; Organel</h2>
         <p>Sepuluh sel. Cakupan <span class="badge badge-core">CORE</span> berjalan murni headless; <span class="badge badge-special">SPECIALIZED</span> membutuhkan GUI, emulator perangkat, atau dependensi runtime khusus.</p>
 
         <section class="server-card" aria-labelledby="srv-mitosis">
-          <div class="server-card-header"><h3 id="srv-mitosis">HeLa Mitosis</h3><span class="server-card-id">hela-mitosis · chaining-mcp · <span class="badge badge-core">CORE</span> · 29 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-mitosis">HeLa Mitosis</h3><span class="server-card-id">hela-mitosis · chaining-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 24–29 alat</span></div>
           <div class="server-card-body">
-            <p>Pembagian kognitif dan orkestrasi alur kerja. Dilengkapi runtime agen Needle 3 terbundel (rencana → eksekusi → observasi, sepenuhnya offline), penemuan alat peer, penalaran sekuensial bertenaga Needle, dekomposisi tugas, 40 template prompt domain, katalog skills, dan eskalasi opsional OpenRouter (<code>X-Title: hela-mitosis</code>).</p>
+            <p>Perencanaan dan orkestrasi melalui Needle 3 terbundel, discovery peer, penalaran sekuensial, dekomposisi tugas, prompt, dan skills. Eksekusi lokal bergantung pada engine/model; operasi generatif atau eskalasi memerlukan provider jika tidak tersedia lokal. Tanpa kunci bukan jaminan seluruh operasi offline.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/chaining-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/chaining-mcp</code></a> · env <code>OPENROUTER_API_KEY, CHAINING_LLM_MODEL, CHAINING_LLM_ENABLED, GITHUB_TOKEN…</code></p>
-            <p class="tool-list">agent_run, analyze_with_sequential_thinking, sequentialthinking, workflow_orchestrator, workflow_status, workflow_cancel, llm_decompose_task, llm_suggest_route, llm_query, llm_summarize, list_skills, search_skills, get_skill, suggest_skill_chain, search_prompts, get_prompt, list_mcp_servers, validate_tool_chain</p>
+            <p class="tool-list">agent_run, analyze_tool_chain_performance, analyze_tools, analyze_with_sequential_thinking, brainstorming, convert_time, generate_route_suggestions, get_current_time, get_prompt, get_resource_set, get_skill, get_tool_chain_analysis, list_mcp_servers, list_skills, llm_decompose_task, llm_query, llm_suggest_route, llm_summarize, load_instruction, search_instructions, search_prompts, search_resource_sets, search_skills, sequentialthinking, suggest_skill_chain, validate_tool_chain, workflow_cancel, workflow_orchestrator, workflow_status</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-genome">
-          <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · 29 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 29 alat</span></div>
           <div class="server-card-body">
             <p>Grafik pengetahuan SQLite hidup (<code>memory.db</code>) dengan pencarian teks penuh FTS5, pelacakan relasi entitas, pemulihan konteks lintas-sesi, dan pemindaian rahasia/kredensial.</p>
             <p>SQLite tetap menjadi mesin utama; Obsidian hanya cermin opsional. Pembaruan keamanan data Genome menambahkan sinkronisasi vault dengan penanganan konflik, cadangan tervalidasi yang mencakup WAL, dan klaim misi eksklusif pada satu ledger SQLite bersama. Database lokal terpisah bukan kunci terdistribusi; bangun ulang dan verifikasi sel terbaru sebelum deployment.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/project-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/project-mcp</code></a></p>
-            <p class="tool-list">initialize_memory, memory_edit, read_graph, search_nodes, open_node, get_file_context, get_timeline, get_session_context, sync_central_memory, create_mission, list_missions, update_mission, execute_sql, query_data, inspect_untrusted_text, security_scan</p>
+            <p class="tool-list">analyze_git_changes, cache, create_mission, delete_data, execute_sql, export_data, get_file_context, get_project_guidance, get_session_context, get_timeline, harness_sessions, import_data, initialize_memory, insert_data, inspect_untrusted_text, list_missions, memory_edit, obsidian_vault, open_node, query_data, read_graph, read_graph_stream, search_nodes, security_scan, set_project_root, setup_pre_commit, sync_central_memory, update_data, update_mission</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-membrane">
-          <div class="server-card-header"><h3 id="srv-membrane">HeLa Membrane</h3><span class="server-card-id">hela-membrane · filesystem-mcp · <span class="badge badge-core">CORE</span> · 16 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-membrane">HeLa Membrane</h3><span class="server-card-id">hela-membrane · filesystem-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 16 alat</span></div>
           <div class="server-card-body">
-            <p>Batas sistem berkas terisolasi: pencarian rekursif, pengawasan berkas (file watch), inspeksi biner, dan ekstraksi arsip.</p>
+            <p>Operasi sistem berkas: pencarian rekursif, pengawasan berkas, inspeksi biner, dan arsip. Operasi memakai hak akun server; ini bukan sandbox OS.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/filesystem-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/filesystem-mcp</code></a></p>
-            <p class="tool-list">read_file, write_file, copy_file, move_file, delete_file, get_file_info, create_directory, list_directory, find_files, search_in_files, watch_file, archive_files, extract_archive</p>
+            <p class="tool-list">archive_files, compare_files, copy_file, create_directory, delete_file, extract_archive, find_files, get_directory_size, get_file_info, list_directory, move_file, read_file, search_in_files, stop_watching, watch_file, write_file</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-nucleus">
-          <div class="server-card-header"><h3 id="srv-nucleus">HeLa Nucleus</h3><span class="server-card-id">hela-nucleus · terminal-mcp · <span class="badge badge-core">CORE</span> · 7 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-nucleus">HeLa Nucleus</h3><span class="server-card-id">hela-nucleus · terminal-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 7 alat</span></div>
           <div class="server-card-body">
-            <p>Eksekusi perintah terisolasi dengan pembatasan subshell aman dan optimasi token RTK.</p>
+            <p>Eksekusi perintah lokal/SSH, sesi terminal persisten, transfer berkas, dan kompresi output RTK opsional. Perintah memakai hak akun yang dipilih.</p>
             <p class="server-card-id">entry <code>build/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/terminal-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/terminal-mcp</code></a></p>
-            <p class="tool-list">execute_command, transfer_file, terminal_ls, terminal_grep, terminal_cat, terminal_session_close, terminal_session_list</p>
+            <p class="tool-list">execute_command, terminal_cat, terminal_grep, terminal_ls, terminal_session_close, terminal_session_list, transfer_file</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-ribosome">
-          <div class="server-card-header"><h3 id="srv-ribosome">HeLa Ribosome</h3><span class="server-card-id">hela-ribosome · menager-mcp · <span class="badge badge-core">CORE</span> · 28 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-ribosome">HeLa Ribosome</h3><span class="server-card-id">hela-ribosome · menager-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 28 alat</span></div>
           <div class="server-card-body">
             <p>Multiplexing proses PTY polyglot ditambah kontrol plane opencode bawaan: spawn/send/fork sesi agen terarah, penemuan model, statistik penggunaan, dan instance <code>serve</code> cepat.</p>
             <p class="server-card-id">entry <code>build/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/menager-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/menager-mcp</code></a></p>
-            <p class="tool-list">session_spawn, session_write, session_read, session_hook, session_wait, session_close, agent_spawn, agent_send, agent_fork, agent_list, opencode_models, opencode_server_spawn</p>
+            <p class="tool-list">agent_close, agent_create, agent_fork, agent_info, agent_list, agent_send, agent_spawn, opencode_auth_list, opencode_db, opencode_export, opencode_import, opencode_mcp_list, opencode_models, opencode_server_spawn, opencode_session_delete, opencode_stats, opencode_status, session_close, session_hook, session_info, session_list, session_prune, session_read, session_resize, session_signal, session_spawn, session_wait, session_write</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-enzyme">
-          <div class="server-card-header"><h3 id="srv-enzyme">HeLa Enzyme</h3><span class="server-card-id">hela-enzyme · researcher-mcp · <span class="badge badge-core">CORE</span> · 24 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-enzyme">HeLa Enzyme</h3><span class="server-card-id">hela-enzyme · researcher-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 24 alat</span></div>
           <div class="server-card-body">
             <p>Pencarian web zero-key dual-tier + arXiv + Google News RSS + riset Wikipedia dengan sistem cache, pemeriksa fakta, dan fan-out satu panggilan <code>research_brief</code> (sumber paralel, dedup lintas sumber, stempel kesegaran).</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/researcher-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/researcher-mcp</code></a> · env <code>GOOGLE_API_KEY, GOOGLE_CSE_ID, WIKIPEDIA_*</code></p>
-            <p class="tool-list">google_search, wikipedia_search, wikipedia_get, fact_checker, academic_search, content_summarizer, extract_content, research_brief, keyword_extraction</p>
+            <p class="tool-list">academic_search, archive_org_search, citation_formatter, content_deduplication, content_sentiment_analysis, content_summarizer, data_export, extract_content, fact_checker, google_search, keyword_extraction, multi_site_search, news_monitor, research_assistant, research_brief, research_session_manager, search_analytics, search_trends, url_metadata_extractor, wikipedia_get, wikipedia_get_pages_in_category, wikipedia_page_languages, wikipedia_random, wikipedia_search</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-cytosol">
-          <div class="server-card-header"><h3 id="srv-cytosol">HeLa Cytosol</h3><span class="server-card-id">hela-cytosol · browser-mcp · <span class="badge badge-core">CORE</span> · 73 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-cytosol">HeLa Cytosol</h3><span class="server-card-id">hela-cytosol · browser-mcp · <span class="badge badge-core">CORE</span> · v3.0.0 · 73 alat</span></div>
           <div class="server-card-body">
             <p>Otomasi penuh Playwright: persepsi hierarki pohon aksesibilitas (AX-tree), pengisian formulir multi-tipe, intersep jaringan, tangkapan layar, dan persistensi sesi.</p>
             <p class="server-card-id">entry <code>src/server.js</code> · repo <a href="https://github.com/Hela-Ecosystem/browser-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/browser-mcp</code></a></p>
-            <p class="tool-list">browser_navigate, browser_click, browser_fill_form, browser_screenshot, browser_get_content, browser_intercept, browser_extract_schema</p>
+            <p class="tool-list">browser_agent_create, browser_agent_list, browser_agent_remove, browser_agent_switch, browser_assert, browser_back, browser_batch_answer_quiz, browser_cache_stats, browser_check, browser_clear, browser_clear_intercepts, browser_clear_mocks, browser_clear_recording, browser_click, browser_close, browser_console_messages, browser_dialog, browser_dismiss_popups, browser_download_click, browser_drag, browser_emulate, browser_evaluate, browser_export_state, browser_extract_schema, browser_extract_table, browser_fill_form, browser_forward, browser_generate_playwright_test, browser_get_captured_apis, browser_get_content, browser_get_cookies, browser_get_state, browser_handle_captcha, browser_health, browser_highlight, browser_hover, browser_intercept, browser_intercept_api, browser_intercept_list, browser_list_sessions, browser_list_tabs, browser_load_session, browser_mock_network, browser_navigate, browser_network_requests, browser_new_tab, browser_observe, browser_ocr, browser_parallel_execute, browser_performance, browser_press, browser_print_to_pdf, browser_record_macro, browser_reload, browser_replay_macro, browser_resize_page, browser_save_session, browser_screenshot, browser_scroll, browser_search, browser_select, browser_select_by_index, browser_set_agent_profile, browser_solve_captcha_grid, browser_start_trace, browser_state_diff, browser_stop_trace, browser_switch_tab, browser_switch_to_new_tab, browser_type, browser_uncheck, browser_upload, browser_wait</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-phenotype">
-          <div class="server-card-header"><h3 id="srv-phenotype">HeLa Phenotype</h3><span class="server-card-id">hela-phenotype · designer-mcp · <span class="badge badge-special">SPECIALIZED</span> · 28 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-phenotype">HeLa Phenotype</h3><span class="server-card-id">hela-phenotype · designer-mcp · <span class="badge badge-special">SPECIALIZED</span> · v3.0.0 · 28 alat</span></div>
           <div class="server-card-body">
             <p>Teori Desain sebagai Layanan: token warna OKLCH, referensi merek terkenal (Linear, Stripe…), sintesis Tailwind, komponen 8-state, audit aksesibilitas WCAG, dan gerbang anti-slop.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/designer-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/designer-mcp</code></a></p>
-            <p class="tool-list">generate_rules, design_tokens, palette, brand_fetch_design_md, generate_8state_component, design_audit, evaluate_style, logo_workflow</p>
+            <p class="tool-list">brand_fetch_design_md, brand_list, design_audit, design_tokens, detect_genre, evaluate_style, export_project, generate_8state_component, generate_motion_snippet, generate_rules, generate_template, get_component, get_cross_cutting_rules, get_ellis_ui_template, get_reference, list_ellis_ui_designs, list_installed_skills, list_options, list_themes, logo_workflow, palette, stitch_create, stitch_find, stitch_generate, stitch_resource, stitch_screen_audit, stitch_sync_design_system, validate_combo</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-receptor">
-          <div class="server-card-header"><h3 id="srv-receptor">HeLa Receptor</h3><span class="server-card-id">hela-receptor · scrcpy-mcp · <span class="badge badge-special">SPECIALIZED</span> · 46 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-receptor">HeLa Receptor</h3><span class="server-card-id">hela-receptor · scrcpy-mcp · <span class="badge badge-special">SPECIALIZED</span> · v3.0.0 · 46 alat</span></div>
           <div class="server-card-body">
             <p>Otomasi Android melalui ADB: inspeksi hierarki XML antarmuka, sentuhan tap/swipe/text, perekaman layar, dan siklus hidup aplikasi. Membutuhkan perangkat fisik atau emulator.</p>
             <p class="server-card-id">entry <code>dist/server.js</code> · repo <a href="https://github.com/Hela-Ecosystem/scrcpy-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/scrcpy-mcp</code></a></p>
-            <p class="tool-list">start_session, device_list, device_info, ui_dump, ui_find_element, tap, swipe, input_text, key_event, screenshot, screen_record_start, app_install, shell_exec</p>
+            <p class="tool-list">app_current, app_install, app_list, app_start, app_stop, app_uninstall, clipboard_get, clipboard_set, collapse_panels, connect_wifi, device_info, device_list, disconnect_wifi, drag_drop, expand_notifications, expand_settings, file_list, file_pull, file_push, form_fill, input_text, key_event, long_press, rotate_device, screen_off, screen_on, screen_record_start, screen_record_stop, screenshot, scroll, scroll_to_element, shell_exec, start_session, start_video_stream, stop_session, stop_video_stream, swipe, tap, ui_dump, ui_find_element, ui_get_state, ui_smart_fill, ui_tap_element, ui_wait_for_element, version, wait</p>
           </div>
         </section>
 
         <section class="server-card" aria-labelledby="srv-plastid">
-          <div class="server-card-header"><h3 id="srv-plastid">HeLa Plastid</h3><span class="server-card-id">hela-plastid · ll3m-mcp · <span class="badge badge-special">SPECIALIZED</span> · 15 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-plastid">HeLa Plastid</h3><span class="server-card-id">hela-plastid · ll3m-mcp · <span class="badge badge-special">SPECIALIZED</span> · v3.0.0 · 15 alat</span></div>
           <div class="server-card-body">
             <p>Pemodelan Blender otonom: rencana → skrip prosedural → render → simpan berkas <code>.blend</code>. Membutuhkan instalasi Blender 4+.</p>
             <p class="server-card-id">entry <code>brain/dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/ll3m-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/ll3m-mcp</code></a></p>
-            <p class="tool-list">generate_modeling_plan, execute_blender_code, get_scene_summary, render_output, save_blend, get_screenshot, get_fast_feedback</p>
+            <p class="tool-list">execute_blender_code, execute_staged_refinement, generate_modeling_plan, get_agent_instructions, get_api_docs, get_blender_helpers, get_blendfile_summary, get_fast_feedback, get_modeling_patterns, get_object_details, get_scene_summary, get_screenshot, navigation, render_output, save_blend</p>
           </div>
         </section>
 
@@ -197,7 +197,7 @@
             <p>Runtime opsional 1.2.0 menyediakan skema hasil generasi yang divalidasi menurut revisi/build/konfigurasi tanpa menjalankan sel. Pemanggilan alat pertama hanya menjalankan sel tujuannya; panggilan bersamaan berbagi satu startup. Profil bawaan tetap <code>dev-workspace</code> (delapan sel yang tersedia). Saat timeout, proses lama dihentikan sebelum restart; namespacing tetap opt-in. Paket Nix Node 22 dibangun pada x86_64-linux dan aarch64-linux.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/hela-runtime" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/hela-runtime</code></a></p>
             <p class="tool-list">hela.pipe, hela.agent.run opsional jika Mitosis menyediakan agent_run, serta alat dari sel yang dipilih</p>
-            <p>Verifikasi servy (2026-11-06): delapan sel terawasi, 236 alat aktif, ketiga alat misi Genome tersedia, serta discovery MCP lokal/publik berhasil. Probe tanpa fitur model menyediakan 230 alat. Sesi ACP terautentikasi, reload klien, dan tinjauan konflik vault tetap terpisah.</p>
+            <p>Verifikasi servy (2026-11-06): delapan sel tersedia dan 236 alat aktif, termasuk ketiga alat misi Genome. Discovery lokal/publik tidak menjalankan sel; panggilan Nucleus yang aman hanya menjalankan Nucleus. Probe tanpa fitur model menyediakan 230 alat. ACP terautentikasi, reload klien, dan tinjauan konflik vault tetap terpisah.</p>
           </div>
         </section>
 
@@ -217,6 +217,7 @@
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../app.js"></script>
+  <script src="../release-data.js?v=1.5.1"></script>
+  <script src="../app.js?v=1.5.1"></script>
 </body>
 </html>

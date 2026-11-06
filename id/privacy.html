@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.2.0 · 10 SERVER · 292 ALAT</div>
+        <div class="doc-brand-meta">v1.5.1 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -73,10 +73,11 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_07 // Hela-Ecosystem-MCP</span><span>DOSIR: KEBIJAKAN_PRIVASI</span></div>
           <h1 class="doc-title">Kebijakan Privasi</h1>
-          <p class="doc-lead">Berlaku sejak 2026-09-21. Ringkasan jelas: situs ini tidak mengumpulkan data apa pun. Perangkat lunak berjalan secara lokal di komputer Anda sendiri, dan kunci akses Anda tetap aman di sana.</p>
+          <p class="doc-lead">Berlaku sejak 2026-09-21. Situs ini tidak memakai analitik. Perangkat lunak dapat berjalan lokal atau pada runtime jarak jauh pilihan operator; tinjau kebijakan deployment sebelum mengirim data sensitif.</p>
         </header>
 
         <h2 id="collect">Apa yang dikumpulkan situs ini</h2>
+        <p>Browser menyimpan pilihan bahasa di <code>localStorage</code> (<code>hela_lang</code>). Preferensi ini tetap berada di browser dan bukan pengenal analitik. Terakhir ditinjau: 2026-11-06.</p>
         <p>Sama sekali tidak ada. Tanpa akun pengguna, tanpa pelacak analitik, tanpa cookie, tanpa teknik fingerprinting, tanpa buletin berkala, dan tanpa formulir kontak. Tidak ada kode pemrosesan sisi server (server-side) pada situs dokumentasi ini yang mencatat identitas Anda atau konten apa yang Anda telusuri.</p>
 
         <h2 id="third-parties">Layanan pihak ketiga saat memuat situs</h2>
@@ -96,7 +97,7 @@
         </section>
 
         <h2 id="software">Perangkat lunak berarsitektur local-first</h2>
-        <p>Seluruh server HeLa MCP dieksekusi langsung pada mesin lokal Anda melalui komunikasi stdio standar. Kunci API yang Anda simpan dalam konfigurasi klien (seperti OpenRouter, GitHub token, atau Google Search key) berada sepenuhnya pada berkas lokal komputer Anda dan hanya dipancarkan ke penyedia layanan yang telah Anda setujui secara eksplisit. Fitur telemetri model Needle dinonaktifkan secara permanen dalam integrasi kami, dan tidak terdapat mekanisme pelaporan diam-diam (phone-home / telemetry) dalam basis kode — setiap baris kode dapat diaudit secara transparan pada repositori publik kami.</p>
+        <p>HeLa dapat berjalan lokal melalui stdio atau melalui runtime HTTP jarak jauh yang dikelola operator. Alat dapat mengirim pekerjaan ke provider terkonfigurasi, mengakses berkas/perangkat, serta menyimpan memori di SQLite atau mirror Obsidian opsional. Kredensial dapat tersimpan pada konfigurasi privat klien/server. Tinjau operator deployment dan kebijakan provider sebelum mengirim data sensitif; hasil generator konfigurasi/stdout tidak otomatis aman untuk dibagikan.</p>
 
         <h2 id="changes">Pembaruan kebijakan &amp; kontak</h2>
         <p>Apabila kebijakan ini diperbarui di masa mendatang, perubahan akan dicatat sebagai commit bertanggal resmi pada halaman ini. Pertanyaan atau masukan: silakan buka tiket issue di <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem" target="_blank" rel="noopener noreferrer">Hela-Ecosystem/hela-mcp-ecosystem</a>.</p>
@@ -111,12 +112,13 @@
     <div class="cmd-modal">
       <div class="cmd-input-row">
         <span aria-hidden="true">§</span>
-        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari perkakas, halaman, atau profil" placeholder="Cari 292 perkakas, halaman, profil…">
+        <input type="text" class="cmd-input" id="cmdInput" aria-label="Cari perkakas, halaman, atau profil" placeholder="Cari perkakas, halaman, profil…">
         <span class="cmd-item-tag">ESC</span>
       </div>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../app.js"></script>
+  <script src="../release-data.js?v=1.5.1"></script>
+  <script src="../app.js?v=1.5.1"></script>
 </body>
 </html>
