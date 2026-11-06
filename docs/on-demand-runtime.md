@@ -40,3 +40,18 @@ Doctor validates selected paths/builds, real isolated MCP handshakes, package/in
 - Reproducible Nix packages use Node 22.23.4 and pinned/fixed-output inputs on both Linux architectures. Runtime versions derive from package metadata.
 
 These checks do not authenticate GUI ACP sessions, reconcile live vault conflicts, exercise Android/Blender hardware, invoke model providers, or complete deferred endpoint security. Lappy retains its ten-server roster; servy retains its eight-cell `dev-workspace` selection.
+
+## Verified servy rollout
+
+Runtime source `9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0` and ecosystem source release `1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf` are deployed. Final-source Nix outputs are:
+
+- x86_64-linux: `/nix/store/r15rmywrswf01nj2xrvx753p1fh4f6rh-hela-runtime-1.2.0`.
+- aarch64-linux: `/nix/store/bhm781bld50yi9brmy2mn74p1ybzdzcy-hela-runtime-1.2.0`.
+
+The ARM package is rooted under `/home/ubuntu/.local/state/hela/deployments/todo103-psnzx8x4/runtime`. Promotion fast-forwarded clean source checkouts, retained the old build/drop-in, and took fresh integrity-checked online backups of three databases plus a vault archive. Existing profile, environment, host, port, and security settings were preserved; only the selected runtime executable changed.
+
+Local and public HTTP initialize/discovery report runtime **1.2.0**, **236 unique tools**, all three Genome mission tools, and no hardware-only tools. Both discovery checks left the service with **zero child cells**. A safe `terminal_session_list` call started only Nucleus; Genome did not start. Observed Nucleus calls were approximately **471 ms cold** and **13 ms warm** in this one run, including HTTP/MCP overhead—not a portable benchmark.
+
+Deployed doctor reports READY, catalog parity is exact, revision checks pass, and the GC root is verified. All previous HTTP-service PIDs exited. All **633** pre-rollout conflict archive files retained their hashes. No database file was restored/replaced, and unrelated client-owned runtimes and the legacy PM2 gateway were not stopped.
+
+The rollout directory contains `manifest.json`, `http-verification.json`, `doctor.log`, `versions.log`, `catalog.log`, `backup/`, `rollback-dist/`, and the package GC root. Native committed-source staging/test evidence remains under `/home/ubuntu/.local/state/hela/staging/todo103-release-ah25pauz/`; local test/measurement logs are under `/var/tmp/scratch/opencode/todo103/`. Authenticated ACP, deliberate external-client reloads, gateway consumer review, vault reconciliation, and deferred security remain separate.
