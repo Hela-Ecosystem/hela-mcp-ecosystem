@@ -14,7 +14,7 @@ The new `npm run test:profiles` command passed on lappy for all eight profiles: 
 
 Each profile runs twice, with namespacing off and on: **16/16 runtime checks**. The verifier obtains actual tool schemas from the ten standalone cells, then checks that each runtime:
 
-- Boots exactly the selected cells, with no additional cells.
+- Advertises exactly the selected cells. Runtime 1.2.0 starts none during discovery and only starts the safely invoked cells during routing checks; see the [on-demand follow-up](on-demand-runtime.md).
 - Exposes exactly their tools plus `hela.pipe`, without collisions or out-of-profile tools.
 - Preserves each tool's input schema, including namespaced tool names.
 - Includes all three Genome mission tools.

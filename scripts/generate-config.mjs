@@ -12,6 +12,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadInventory, resolveServerDir } from './inventory.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -21,7 +22,7 @@ function readJson(p) {
 }
 
 function readInventoryData() {
-  const data = readJson(path.join(ECOSYSTEM_ROOT, 'config/inventory.json'));
+  const data = loadInventory(ECOSYSTEM_ROOT);
   return {
     inventory: data.inventory,
     aliases: data.aliases || {},
@@ -29,7 +30,7 @@ function readInventoryData() {
 }
 
 function readProfiles() {
-  return readJson(path.join(ECOSYSTEM_ROOT, 'config/profiles.json')).profiles;
+  return loadInventory(ECOSYSTEM_ROOT).profiles;
 }
 
 function parseArgs(argv) {
@@ -82,19 +83,6 @@ function resolveServers(profile, inventory, aliases = {}) {
   return resolved;
 }
 
-function resolveServerDir(s, root) {
-  const primary = path.join(root, s.dir);
-  if (fs.existsSync(primary)) return primary;
-  const sibling = path.join(root, '..', s.dir);
-  if (fs.existsSync(sibling)) return sibling;
-  const shortDir = s.dir.replace('-mcp-server', '').replace('-mcp', '');
-  const siblingShort = path.join(root, '..', shortDir);
-  if (fs.existsSync(siblingShort)) return siblingShort;
-  const primaryShort = path.join(root, shortDir);
-  if (fs.existsSync(primaryShort)) return primaryShort;
-  return primary;
-}
-
 function entryArgs(server, root) {
   if (!server.entry) return [];
   const dir = resolveServerDir(server, root);
@@ -111,6 +99,9 @@ function buildServerEnv(s, root, options = {}) {
       env[key] = '10000';
     } else if (key === 'CHAINING_LLM_ENABLED') {
       env[key] = options.openrouterKey ? 'true' : 'false';
+    } else if (key === 'MITOSIS_AGENT_ENABLED') {
+      const value = process.env.MITOSIS_AGENT_ENABLED?.toLowerCase();
+      if (value === 'true' || value === 'false') env[key] = value;
     } else if (key === 'CHAINING_LLM_MODEL') {
       env[key] = 'openrouter/free';
     } else if (key === 'CHAINING_LLM_BASE_URL') {

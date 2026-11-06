@@ -4,22 +4,22 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { probeMcp } from './mcp-probe.mjs';
+import { loadInventory, resolveServerDir, selectProfile } from './inventory.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const inventory = JSON.parse(fs.readFileSync(path.join(root, 'config/inventory.json'), 'utf8')).inventory;
+const data = loadInventory(root);
+const inventory = data.inventory;
 const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'config/snapshots/latest-stable.json'), 'utf8'));
 const profileIndex = process.argv.indexOf('--profile');
 const profile = profileIndex === -1 ? null : process.argv[profileIndex + 1];
-const profiles = JSON.parse(fs.readFileSync(path.join(root, 'config/profiles.json'), 'utf8')).profiles;
-const selected = profile ? profiles.find(candidate => candidate.id === profile) : null;
+const selected = profile ? selectProfile(data, profile) : null;
 if (profileIndex !== -1 && !selected) throw new Error('Unknown or missing verification profile');
 const report = [];
 
 for (const spec of Object.values(inventory)) {
   const runtime = spec.kind === 'runtime' || spec.id === 'hela-runtime';
   if (selected && !runtime && !selected.servers.includes(spec.id)) continue;
-  const sibling = path.join(root, '..', spec.dir);
-  const directory = fs.existsSync(sibling) ? sibling : path.join(root, spec.dir);
+  const directory = resolveServerDir(spec, root);
   const result = { id: spec.id, ok: false, package: null, initialize: null, inventory: spec.version ?? null,
     snapshot: snapshot.servers?.[spec.id]?.serverVersion ?? null, tools: 0, commitMatch: false };
   try {

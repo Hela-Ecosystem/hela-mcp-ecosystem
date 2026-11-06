@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.5.0 — on-demand runtime and canonical discovery
+
+Runtime **1.2.0** starts cells only when invoked, shares concurrent startup attempts, and discovers schemas without spawning cells. Revision/build/config-aware caches reject stale entries; legacy/corrupt caches fall back to a validated generated catalog. Unknown calls no longer start unrelated cells. Standalone servers, all eight profiles, and the `dev-workspace` default are preserved.
+
+The canonical inventory drives config generation, doctor/version/profile checks, schema catalogs, and generated documentation counts. Doctor can verify exact runtime discovery with no cell startup via `--runtime`. A new immutable v1.5.0 snapshot pins runtime `9c92dbf`; older versioned snapshots are unchanged.
+
+Verification: **32** runtime regressions on both Linux architectures, **16** all-profile namespace-mode checks, **80** client configurations, four probe regressions, and four inventory regressions. Cold/warm measurements are recorded, not treated as universal benchmarks. See [implementation and verification scope](docs/on-demand-runtime.md). ACP authentication, external client reloads, gateway retirement, vault conflict review, hardware/provider integrations, and deferred security remain separate work.
+
 ## v1.4.0 — memory safety and runtime verification
 
 The v1.4.0 source snapshot pins the published cell revisions and runtime 1.1.0. Older versioned snapshots are unchanged. `latest-stable.json` tracks this source snapshot, not a guarantee that every optional integration or GUI session has been exercised.

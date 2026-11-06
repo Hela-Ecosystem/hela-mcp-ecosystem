@@ -4,11 +4,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { probeMcp } from './mcp-probe.mjs';
+import { loadInventory, resolveServerDir } from './inventory.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const readConfig = name => JSON.parse(fs.readFileSync(path.join(root, 'config', name), 'utf8'));
-const inventory = readConfig('inventory.json').inventory;
-const profiles = readConfig('profiles.json').profiles;
+const { inventory, profiles } = loadInventory(root);
 
 async function main() {
   let selected = profiles;
@@ -26,9 +25,8 @@ async function main() {
   const entryFor = id => {
     const spec = inventory[id];
     assert.ok(spec, `Unknown cell: ${id}`);
-    const candidates = [path.join(root, '..', spec.dir, spec.entry), path.join(root, spec.dir, spec.entry)];
-    const entry = candidates.find(candidate => fs.existsSync(candidate));
-    assert.ok(entry, `Missing ${id} build; install/build the cells required by the selected profiles`);
+    const entry = path.join(resolveServerDir(spec, root), spec.entry);
+    assert.ok(fs.existsSync(entry), `Missing ${id} build; install/build the cells required by the selected profiles`);
     return entry;
   };
   const required = new Set(selected.flatMap(profile => profile.servers));
@@ -52,6 +50,7 @@ async function main() {
         }
       }
       const calls = [{ name: expose('hela-genome', 'get_session_context'), arguments: { limit: 1 } }];
+      calls.push({ ...calls[0] });
       if (profile.servers.includes('hela-nucleus')) {
         calls.push({ name: expose('hela-nucleus', 'terminal_session_list'), arguments: {} });
       }
@@ -59,7 +58,9 @@ async function main() {
         ecosystemRoot: root, profile: profile.id, runtime: true, namespaced, calls,
       });
       assert.equal(runtime.serverInfo.version, inventory['hela-runtime'].version);
-      assert.deepEqual(runtime.bootedCells, [...profile.servers].sort(), `${profile.id} booted unexpected cells`);
+      assert.deepEqual(runtime.discoveryBootedCells, [], `${profile.id} spawned a cell during discovery`);
+      const invoked = ['hela-genome', ...(profile.servers.includes('hela-nucleus') ? ['hela-nucleus'] : [])].sort();
+      assert.deepEqual(runtime.bootedCells, invoked, `${profile.id} booted cells that were not invoked`);
       assert.deepEqual(runtime.tools.map(tool => tool.name).sort(), [...expected.keys(), 'hela.pipe'].sort(),
         `${profile.id} tool surface must exactly match selected cells plus hela.pipe`);
       for (const tool of runtime.tools) {
@@ -68,9 +69,10 @@ async function main() {
       for (const name of ['create_mission', 'list_missions', 'update_mission']) {
         assert.ok(expected.has(expose('hela-genome', name)), `${profile.id} missing mission tool ${name}`);
       }
-      results.push({ profile: profile.id, cells: runtime.bootedCells.length, namespaced, tools: runtime.tools.length,
-        readOnlyCalls: runtime.calls.length, exactSurface: true, schemaParity: true, isolated: true });
-      if (!json) console.log(`PASS ${profile.id}: ${runtime.bootedCells.length} cells, ${runtime.tools.length} tools, namespaced=${namespaced}, exact schemas and read-only routing`);
+      results.push({ profile: profile.id, cells: profile.servers.length, bootedCells: runtime.bootedCells, namespaced, tools: runtime.tools.length,
+        discoveryMs: runtime.discoveryMs, coldCallMs: runtime.calls[0].durationMs, warmCallMs: runtime.calls[1].durationMs,
+        readOnlyCalls: runtime.calls.length, zeroDiscoverySpawns: true, exactSurface: true, schemaParity: true, isolated: true });
+      if (!json) console.log(`PASS ${profile.id}: ${profile.servers.length} selected cells, ${runtime.tools.length} tools, namespaced=${namespaced}, zero discovery spawns, exact schemas and read-only routing`);
     }
   }
   if (json) console.log(JSON.stringify({ profiles: selected.length, runtimeChecks: results.length,

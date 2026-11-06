@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.4.0 · 10 SERVER · ALAT SESUAI PROFIL</div>
+        <div class="doc-brand-meta">v1.5.0 · 10 SERVER · SEL SESUAI PEMANGGILAN</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -194,7 +194,7 @@
         <section class="server-card" aria-labelledby="srv-runtime">
           <div class="server-card-header"><h3 id="srv-runtime">HeLa Runtime</h3><span class="server-card-id">hela-runtime · <span class="badge badge-core">OPSIONAL</span> · alat sesuai profil</span></div>
           <div class="server-card-body">
-            <p>Daemon opsional yang menjalankan sel sesuai profil sebagai proses MCP terawasi melalui satu endpoint stdio atau HTTP. Profil bawaan tetap <code>dev-workspace</code> (delapan sel). Saat timeout, proses lama dihentikan sebelum restart; namespacing tetap opt-in. Startup berjalan bertahap di latar belakang, belum benar-benar menunggu pemanggilan alat pertama. Paket Nix Node 22 sudah dibangun pada x86_64-linux dan aarch64-linux.</p>
+            <p>Runtime opsional 1.2.0 menyediakan skema hasil generasi yang divalidasi menurut revisi/build/konfigurasi tanpa menjalankan sel. Pemanggilan alat pertama hanya menjalankan sel tujuannya; panggilan bersamaan berbagi satu startup. Profil bawaan tetap <code>dev-workspace</code> (delapan sel yang tersedia). Saat timeout, proses lama dihentikan sebelum restart; namespacing tetap opt-in. Paket Nix Node 22 dibangun pada x86_64-linux dan aarch64-linux.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/hela-runtime" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/hela-runtime</code></a></p>
             <p class="tool-list">hela.pipe, hela.agent.run opsional jika Mitosis menyediakan agent_run, serta alat dari sel yang dipilih</p>
             <p>Verifikasi servy (2026-11-06): delapan sel terawasi, 236 alat aktif, ketiga alat misi Genome tersedia, serta discovery MCP lokal/publik berhasil. Probe tanpa fitur model menyediakan 230 alat. Sesi ACP terautentikasi, reload klien, dan tinjauan konflik vault tetap terpisah.</p>

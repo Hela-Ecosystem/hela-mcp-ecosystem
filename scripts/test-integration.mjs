@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { probeMcp } from './mcp-probe.mjs';
+import { loadInventory, resolveServerDir } from './inventory.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -32,19 +33,6 @@ const colors = {
 
 function readJson(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
-}
-
-function resolveServerDir(s, root) {
-  const primary = path.join(root, s.dir);
-  if (fs.existsSync(primary)) return primary;
-  const sibling = path.join(root, '..', s.dir);
-  if (fs.existsSync(sibling)) return sibling;
-  const shortDir = s.dir.replace('-mcp-server', '').replace('-mcp', '');
-  const siblingShort = path.join(root, '..', shortDir);
-  if (fs.existsSync(siblingShort)) return siblingShort;
-  const primaryShort = path.join(root, shortDir);
-  if (fs.existsSync(primaryShort)) return primaryShort;
-  return primary;
 }
 
 class McpClient {
@@ -81,19 +69,20 @@ class McpClient {
 async function runSuite() {
   console.log(`\n${colors.bold}${colors.cyan}=== HeLa MCP Ecosystem — Master Integration Test Suite ===${colors.reset}\n`);
 
-  const inventoryData = readJson(path.join(ECOSYSTEM_ROOT, 'config/inventory.json'));
+  const inventoryData = loadInventory(ECOSYSTEM_ROOT);
   const inventory = inventoryData.inventory;
   const aliases = inventoryData.aliases || {};
 
-  let targetProfileId = null;
+  let targetProfileId = 'all';
   const pIndex = process.argv.indexOf('--profile');
-  if (pIndex !== -1 && process.argv[pIndex + 1]) {
+  if (pIndex !== -1) {
     targetProfileId = process.argv[pIndex + 1];
+    if (!targetProfileId || targetProfileId.startsWith('--')) throw new Error('Missing integration profile');
   }
 
   let serverKeys = Object.keys(inventory);
   if (targetProfileId) {
-    const profilesData = readJson(path.join(ECOSYSTEM_ROOT, 'config/profiles.json')).profiles;
+    const profilesData = inventoryData.profiles;
     const prof = profilesData.find((p) => p.id === targetProfileId);
     if (!prof) {
       console.error(`Unknown profile: ${targetProfileId}`);

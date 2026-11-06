@@ -4,7 +4,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 > **New to MCP or non-technical?** Read the **[Beginner's Step-by-Step Guide](docs/beginner-guide.md)** for a 3-minute, zero-code onboarding walkthrough.
 
-Current source snapshot: **v1.4.0**. Memory safety, runtime timeout recovery, clean dependency builds, and Linux Nix packages are covered by isolated verification. Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution are not implied; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.5.0**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -101,7 +101,7 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.4.0 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.0 --non-interactive
 ```
 
 **Single-Endpoint Runtime (one MCP connection for the selected profile):**
@@ -145,6 +145,8 @@ The HeLa MCP Ecosystem generates tailored, valid configuration formats across 10
 > **Single-endpoint serve mode:** add `--runtime` to a profile command. The default profile remains `dev-workspace`, not `all`.
 
 Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (**16 checks**), including exact tool/schema parity and safe read-only routing. Lappy's ten-server `all` roster and servy's eight-cell `dev-workspace` setup remain different by design. See [all-profile verification](docs/profile-verification-2026-11-06.md); run `npm run test:profiles`, or append `-- --profile <id>` on a partial installation.
+
+Runtime discovery now starts **zero cells**; only invoked cells are started. [Generated profile counts](docs/generated-profile-counts.md) come from the inventory/catalog rather than static client-specific totals. `./setup.sh doctor --profile <id> --runtime` checks cold catalog parity as well as versions, paths, and revisions.
 
 For complete persona guides and pipeline specifications, see **[Profiles Catalog](docs/profiles.md)**.
 

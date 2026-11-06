@@ -3,16 +3,16 @@
  * HeLa MCP Ecosystem — Diagnostic Health Checker (doctor)
  *
  * Inspects:
- *  1. Host environment (Node.js >=18, Git, npm, SQLite3, OS, Arch)
+ *  1. Host environment (Node.js >=20.18.1, Git, SQLite3, OS, Arch)
  *  2. Selected profile / all 10 HeLa MCP servers
  *  3. Git revisions vs. pinned snapshot commits
  *  4. Build artifacts & executable entrypoints
- *  5. Stdio JSON-RPC startup smoke readiness (<300ms subprocess check)
+ *  5. Isolated MCP initialize/discovery and optional cold runtime catalog parity
  *  6. External runtimes (Playwright/Chromium, ADB/Android, Blender CLI, PTY)
  *  7. API keys & graceful offline fallback modes
  *
  * Usage:
- *   node scripts/doctor.sh [--profile <id>] [--json]
+ *   node scripts/doctor.mjs [--profile <id>] [--runtime] [--json]
  */
 
 import fs from 'node:fs';
@@ -21,6 +21,7 @@ import { spawnSync, execSync } from 'node:child_process';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { probeMcp } from './mcp-probe.mjs';
+import { loadInventory, resolveServerDir, selectProfile } from './inventory.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -43,27 +44,15 @@ function readJson(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
-function resolveServerDir(s, root) {
-  const primary = path.join(root, s.dir);
-  if (fs.existsSync(primary)) return primary;
-  const sibling = path.join(root, '..', s.dir);
-  if (fs.existsSync(sibling)) return sibling;
-  const shortDir = s.dir.replace('-mcp-server', '').replace('-mcp', '');
-  const siblingShort = path.join(root, '..', shortDir);
-  if (fs.existsSync(siblingShort)) return siblingShort;
-  const primaryShort = path.join(root, shortDir);
-  if (fs.existsSync(primaryShort)) return primaryShort;
-  return primary;
-}
-
-async function checkServerProcess(entryPath, dirPath) {
+async function checkServerProcess(entryPath, dirPath, profile) {
   if (!fs.existsSync(entryPath)) {
     return { ok: false, reason: 'Entrypoint file missing' };
   }
   try {
     const runtime = path.basename(dirPath) === 'hela-runtime';
-    const result = await probeMcp(entryPath, { ecosystemRoot: ECOSYSTEM_ROOT, runtime });
-    return { ok: true, note: 'Isolated MCP initialize and tools/list passed', version: result.serverInfo.version, tools: result.tools.length };
+    const result = await probeMcp(entryPath, { ecosystemRoot: ECOSYSTEM_ROOT, runtime, profile });
+    return { ok: true, note: 'Isolated MCP initialize and tools/list passed', version: result.serverInfo.version,
+      tools: result.tools.length, toolNames: result.tools.map(tool => tool.name), bootedCells: result.discoveryBootedCells, discoveryMs: result.discoveryMs };
   } catch (error) { return { ok: false, reason: error.message }; }
 }
 
@@ -84,14 +73,16 @@ function getGitCommit(dir) {
 
 async function runDoctor(options = {}) {
   const isJson = options.json || process.argv.includes('--json');
-  let targetProfileId = options.profile || null;
+  let targetProfileId = options.profile || process.env.HELA_PROFILE || 'dev-workspace';
   const pIndex = process.argv.indexOf('--profile');
-  if (pIndex !== -1 && process.argv[pIndex + 1]) {
+  if (pIndex !== -1) {
     targetProfileId = process.argv[pIndex + 1];
+    if (!targetProfileId || targetProfileId.startsWith('--')) throw new Error('Missing doctor profile');
   }
 
-  const inventoryData = readJson(path.join(ECOSYSTEM_ROOT, 'config/inventory.json'));
-  const profilesData = readJson(path.join(ECOSYSTEM_ROOT, 'config/profiles.json')).profiles;
+  const inventoryData = loadInventory(ECOSYSTEM_ROOT);
+  const selectedProfile = selectProfile(inventoryData, targetProfileId);
+  const snapshot = readJson(path.join(ECOSYSTEM_ROOT, 'config/snapshots/latest-stable.json'));
   const inventory = inventoryData.inventory;
   const aliases = inventoryData.aliases || {};
 
@@ -101,11 +92,13 @@ async function runDoctor(options = {}) {
     dependencies: {},
     servers: [],
     status: 'READY',
+    profile: selectedProfile.id,
   };
 
   // 1. Host System Inspection
   const nodeVer = process.version;
   const nodeMajor = parseInt(nodeVer.replace('v', '').split('.')[0], 10);
+  const [, nodeMinor, nodePatch] = nodeVer.replace('v', '').split('.').map(Number);
   const osType = `${os.type()} ${os.release()} (${os.arch()})`;
 
   let gitVer = null;
@@ -116,7 +109,7 @@ async function runDoctor(options = {}) {
 
   report.system = {
     os: osType,
-    node: { version: nodeVer, valid: nodeMajor >= 18 },
+    node: { version: nodeVer, valid: nodeMajor > 20 || (nodeMajor === 20 && (nodeMinor > 18 || (nodeMinor === 18 && nodePatch >= 1))) },
     git: { version: gitVer, valid: !!gitVer },
     sqlite3: { version: sqliteVer, valid: !!sqliteVer },
   };
@@ -124,13 +117,15 @@ async function runDoctor(options = {}) {
   // 2. External Runtimes
   let playwrightReady = false;
   try {
-    const pwCheck = spawnSync('node', ['-e', 'require("playwright")'], { stdio: 'ignore' });
+    if (!selectedProfile.servers.includes('hela-cytosol')) throw new Error('Not selected');
+    const pwCheck = spawnSync(process.execPath, ['-e', 'require("playwright")'], { cwd: resolveServerDir(inventory['hela-cytosol'], ECOSYSTEM_ROOT), stdio: 'ignore' });
     playwrightReady = pwCheck.status === 0;
   } catch {}
 
   let adbReady = false;
   let adbDevices = [];
   try {
+    if (!selectedProfile.servers.includes('hela-receptor')) throw new Error('Not selected');
     const adbOut = execSync('adb devices', { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] });
     adbReady = true;
     adbDevices = adbOut.split('\n').filter((l) => l.includes('\tdevice')).map((l) => l.split('\t')[0]);
@@ -139,6 +134,7 @@ async function runDoctor(options = {}) {
   let blenderReady = false;
   let blenderVer = null;
   try {
+    if (!selectedProfile.servers.includes('hela-plastid')) throw new Error('Not selected');
     blenderVer = execSync('blender --version', { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).split('\n')[0];
     blenderReady = !!blenderVer;
   } catch {}
@@ -152,25 +148,18 @@ async function runDoctor(options = {}) {
 
   // 3. Secrets / API Keys (Safe Checks)
   report.secrets = {
-    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY ? 'Configured (Live LLM active)' : 'Not set (Offline Heuristic Mode <30ms active)',
-    GITHUB_TOKEN: process.env.GITHUB_TOKEN ? 'Configured (Live Prompt sync active)' : 'Not set (Bundled Catalog active)',
-    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY ? 'Configured (Live CSE active)' : 'Not set (Zero-Key Dual-Tier Fallback active)',
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY ? 'Configured (value hidden)' : 'Not set',
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN ? 'Configured (value hidden)' : 'Not set',
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY ? 'Configured (value hidden)' : 'Not set',
     GOOGLE_CSE_ID: process.env.GOOGLE_CSE_ID ? 'Configured' : 'Not set',
   };
 
   // 4. Server Selection
-  let targetServerKeys = Object.keys(inventory);
-  if (targetProfileId) {
-    const prof = profilesData.find((p) => p.id === targetProfileId);
-    if (!prof) {
-      console.error(`Error: Unknown profile "${targetProfileId}".`);
-      process.exit(1);
-    }
-    targetServerKeys = prof.servers.map((k) => aliases[k] || k);
-  }
+  const targetServerKeys = [...selectedProfile.servers];
+  if (process.argv.includes('--runtime')) targetServerKeys.push('hela-runtime');
 
   // 5. Audit Servers
-  let allHealthy = true;
+  let allHealthy = report.system.node.valid && report.system.git.valid;
   for (const key of targetServerKeys) {
     const s = inventory[key] || inventory[aliases[key]];
     if (!s) continue;
@@ -180,11 +169,12 @@ async function runDoctor(options = {}) {
     const entryFile = s.entry ? path.join(dirPath, s.entry) : null;
     const entryExists = entryFile ? fs.existsSync(entryFile) : false;
     const currentCommit = exists ? getGitCommit(dirPath) : null;
-    const isPinnedCommit = s.revision && currentCommit ? currentCommit === s.revision : false;
+    const snapshotCommit = snapshot.servers?.[s.id]?.commit;
+    const isPinnedCommit = s.revision && currentCommit ? currentCommit === s.revision && currentCommit === snapshotCommit : false;
 
     let smokeStatus = { ok: false, reason: 'Not checked' };
     if (exists && entryExists) {
-      smokeStatus = await checkServerProcess(entryFile, dirPath);
+      smokeStatus = await checkServerProcess(entryFile, dirPath, selectedProfile.id);
     }
 
     // Version check (Phase 7): package.json vs inventory serverVersion
@@ -196,7 +186,8 @@ async function runDoctor(options = {}) {
       }
     }
     const expectedVersion = s.version || '3.0.0';
-    const versionMatch = pkgVersion !== null && pkgVersion === expectedVersion && smokeStatus.version === pkgVersion;
+    const versionMatch = pkgVersion !== null && pkgVersion === expectedVersion && smokeStatus.version === pkgVersion
+      && snapshot.servers?.[s.id]?.serverVersion === pkgVersion;
     if (!versionMatch && s.scope === 'core') allHealthy = false;
 
     const serverHealthy = exists && (s.entry ? entryExists : true) && smokeStatus.ok && versionMatch && isPinnedCommit;
@@ -221,8 +212,20 @@ async function runDoctor(options = {}) {
       version: pkgVersion,
       expectedVersion,
       versionMatch,
+      snapshotCommit: snapshotCommit?.slice(0, 7) ?? 'missing',
       status: serverHealthy ? 'READY' : exists && entryExists ? 'WARNING' : 'ERROR',
     });
+  }
+
+  const runtimeReport = report.servers.find(server => server.id === 'hela-runtime');
+  if (runtimeReport?.smoke.ok) {
+    const expected = new Set(report.servers.filter(server => server.id !== 'hela-runtime').flatMap(server => server.smoke.toolNames ?? []));
+    expected.add('hela.pipe');
+    const actual = new Set(runtimeReport.smoke.toolNames);
+    const catalogMatch = actual.size === expected.size && [...expected].every(name => actual.has(name));
+    runtimeReport.catalogMatch = catalogMatch;
+    runtimeReport.onDemand = runtimeReport.smoke.bootedCells.length === 0;
+    if (!catalogMatch || !runtimeReport.onDemand) { allHealthy = false; runtimeReport.status = 'WARNING'; }
   }
 
   report.status = allHealthy ? 'READY' : 'DEGRADED';
@@ -269,7 +272,7 @@ async function runDoctor(options = {}) {
 
   console.log('\n' + '='.repeat(78));
   if (allHealthy) {
-    console.log(`${colors.green}${colors.bold}SUCCESS: All required HeLa MCP servers and dependencies are healthy and ready!${colors.reset}\n`);
+    console.log(`${colors.green}${colors.bold}SUCCESS: Selected MCP components verified; optional hardware/provider integrations are separate.${colors.reset}\n`);
     process.exit(0);
   } else {
     console.log(`${colors.red}${colors.bold}ATTENTION: Some core servers or dependencies require attention. Review table above.${colors.reset}\n`);
@@ -277,4 +280,4 @@ async function runDoctor(options = {}) {
   }
 }
 
-runDoctor();
+runDoctor().catch(error => { console.error(error.message); process.exitCode = 1; });

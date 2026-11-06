@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.4.0",
-  "created_at": "2026-11-05T18:46:25Z",
-  "description": "Memory-safety and runtime-recovery source snapshot. Versions, lockfile installs, isolated MCP handshakes, and native Linux Nix builds verified; GUI ACP authentication and live vault conflict reconciliation remain separate.",
+  "snapshot_version": "1.5.0",
+  "created_at": "2026-11-06T09:35:30.665625Z",
+  "description": "True on-demand runtime 1.2.0, profile/build/config-aware schemas, generated canonical catalog/counts, and isolated all-profile acceptance. GUI/hardware integrations and deferred endpoint security remain separate.",
   "environment": {
     "node_minimum": ">=20.18.1",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -82,28 +82,38 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "797bad451b45d0d67631eeb8cdb1c93d259f614c",
+      "commit": "9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.1.0"
+      "serverVersion": "1.2.0"
     }
   },
-  "verified_profiles": ["dev-workspace"],
+  "verified_profiles": [
+    "minimal",
+    "dev-workspace",
+    "headless-server",
+    "research",
+    "web-devops",
+    "android-testing",
+    "3d-modeling",
+    "all"
+  ],
   "verified_clients": [],
   "verification": {
-    "genome_suites": 19,
-    "genome_tests": 242,
-    "runtime_fault_tests": 20,
-    "enzyme_tests": 79,
-    "phenotype_tests": 74,
+    "runtime_fault_lazy_cache_tests": 32,
+    "fixture_pids_reaped": 41,
+    "profile_runtime_checks": 16,
     "client_configuration_combinations": 80,
-    "probe_regression_tests": 3,
-    "isolated_readonly_parity_calls": 3,
-    "isolated_standalone_servers": 10,
-    "isolated_standalone_tools_llm_and_agent_disabled": 290,
-    "isolated_dev_workspace_runtime_tools_llm_and_agent_disabled": 230,
-    "nix_build_systems": ["x86_64-linux", "aarch64-linux"],
-    "client_scope": "Configuration generation/parser checks and isolated Codex MCP discovery, not authenticated GUI sessions.",
-    "hardware_scope": "MCP discovery only; Android and Blender integration are not implied."
+    "probe_regression_tests": 4,
+    "canonical_inventory_tests": 4,
+    "standalone_cells": 10,
+    "all_runtime_tools_model_features_disabled": 291,
+    "dev_workspace_runtime_tools_model_features_disabled": 230,
+    "discovery_cell_spawns": 0,
+    "nix_build_systems": [
+      "x86_64-linux",
+      "aarch64-linux"
+    ],
+    "scope": "Isolated MCP discovery/schema/routing and cold/warm measurements; authenticated GUI sessions, model/provider calls and hardware integrations are not implied."
   }
 }

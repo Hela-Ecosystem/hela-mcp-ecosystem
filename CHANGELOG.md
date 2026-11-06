@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.5.0] - 2026-11-06
+
+- Pin runtime 1.2.0 with true first-call startup and profile/build/config-aware schema caching.
+- Generate standalone schema catalogs and documentation counts from canonical inventory metadata and isolated feature-variant probes.
+- Share inventory validation/path resolution across config, doctor, version, profile, and integration tooling; verify runtime catalog parity without child startup.
+- Measure cold/warm routing across all profiles; retain standalone compatibility and machine selections.
+
 ## [1.4.0] - 2026-11-06
 
 - Pin current published cell/runtime revisions in a new snapshot; retain v1.0.0–v1.3.0 unchanged and correct runtime snapshot metadata to 1.1.0.

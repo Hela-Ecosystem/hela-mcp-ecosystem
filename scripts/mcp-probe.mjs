@@ -3,7 +3,10 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 
-export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runtime = false, namespaced = false, timeoutMs = 20000, calls = [], prepareWorkspace } = {}) {
+export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runtime = false, namespaced = false, featureFlags = {}, timeoutMs = 20000, calls = [], prepareWorkspace } = {}) {
+  for (const [key, value] of Object.entries(featureFlags)) {
+    if (!/^[A-Z][A-Z0-9_]*_ENABLED$/.test(key) || typeof value !== 'boolean') throw new Error('Invalid probe feature flag');
+  }
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'hela-mcp-probe-'));
   const workspace = path.join(root, 'workspace');
   fs.mkdirSync(workspace);
@@ -21,6 +24,8 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
     HELA_NAMESPACE_TOOLS: namespaced ? '1' : '0',
   });
   if (ecosystemRoot) env.HELA_ECOSYSTEM_ROOT = ecosystemRoot;
+  for (const [key, value] of Object.entries(featureFlags)) env[key] = String(value);
+  const started = performance.now();
   const child = spawn(process.execPath, [path.resolve(entry)], {
     cwd: workspace, env, detached: process.platform !== 'win32', stdio: ['pipe', 'pipe', 'pipe'],
   });
@@ -85,18 +90,6 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
     });
     if (!initialized?.serverInfo?.version || !initialized.capabilities) throw new Error('Invalid MCP initialize response');
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
-    if (runtime) {
-      if (!ecosystemRoot) throw new Error('Runtime probe requires an ecosystem root');
-      const profiles = JSON.parse(fs.readFileSync(path.join(ecosystemRoot, 'config/profiles.json'), 'utf8')).profiles;
-      const selected = profiles.find(candidate => candidate.id === profile);
-      if (!selected) throw new Error('Unknown verification profile');
-      const deadline = Date.now() + timeoutMs;
-      while (!selected.servers.every(id => booted.has(id))) {
-        if (failure) throw failure;
-        if (Date.now() > deadline) throw new Error('Runtime cells did not become ready before verification deadline');
-        await new Promise(resolve => setTimeout(resolve, 25));
-      }
-    }
     const result = await request('tools/list', {});
     if (!Array.isArray(result?.tools) || !result.tools.length) throw new Error('MCP tools/list returned no tools');
     const names = new Set();
@@ -104,11 +97,15 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
       if (typeof tool.name !== 'string' || !tool.inputSchema || names.has(tool.name)) throw new Error('Invalid or duplicate MCP tool schema');
       names.add(tool.name);
     }
+    const discoveryMs = performance.now() - started;
+    const discoveryBootedCells = [...booted].sort();
     const responses = [];
     for (const call of calls) {
       if (!names.has(call.name)) throw new Error(`Verification tool unavailable: ${call.name}`);
       const args = typeof call.arguments === 'function' ? call.arguments(workspace) : call.arguments || {};
+      const callStarted = performance.now();
       const response = await request('tools/call', { name: call.name, arguments: args });
+      const durationMs = performance.now() - callStarted;
       if (response?.isError) throw new Error(`Verification tool failed: ${call.name}`);
       for (const block of response?.content || []) {
         if (block.type !== 'text') continue;
@@ -116,9 +113,9 @@ export async function probeMcp(entry, { ecosystemRoot, profile = 'minimal', runt
         try { payload = JSON.parse(block.text); } catch { continue; }
         if (payload?.success === false || payload?.error) throw new Error(`Verification tool failed: ${call.name}`);
       }
-      responses.push({ name: call.name, result: JSON.parse(JSON.stringify(response).replaceAll(root, '<sandbox>')) });
+      responses.push({ name: call.name, result: JSON.parse(JSON.stringify(response).replaceAll(root, '<sandbox>')), durationMs });
     }
-    return { serverInfo: initialized.serverInfo, tools: result.tools, calls: responses, bootedCells: [...booted].sort(), isolated: true };
+    return { serverInfo: initialized.serverInfo, tools: result.tools, calls: responses, discoveryMs, discoveryBootedCells, bootedCells: [...booted].sort(), isolated: true };
   } finally {
     rejectPending(new Error('MCP verification complete'));
     if (child.pid) {
