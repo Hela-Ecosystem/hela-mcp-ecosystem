@@ -4,6 +4,8 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 > **New to MCP?** Read the **[Beginner's Guide](docs/beginner-guide.md)** for requirements, profile selection, installation, and verification.
 
+**Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and historical project records are published in full, with search and source downloads. Documents retain their source language.
+
 Current source snapshot: **v1.5.3**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)

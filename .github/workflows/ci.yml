@@ -60,7 +60,12 @@ jobs:
       - name: Run 80-Combination Multi-Client Matrix Test Suite
         run: npm run test:matrix
 
+      - name: Install pinned documentation build dependencies
+        if: ${{ matrix.node-version == 22 }}
+        run: npm ci --ignore-scripts --no-fund
+
       - name: Check generated documentation and browser configuration previews
+        if: ${{ matrix.node-version == 22 }}
         run: |
           npm run docs:check
           npm run test:docs

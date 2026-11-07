@@ -15,11 +15,15 @@
     "catalog:check": "node scripts/generate-tool-catalog.mjs --check",
     "docs:generate": "node scripts/generate-docs.mjs",
     "docs:check": "node scripts/generate-docs.mjs --check",
-    "test:docs": "node --test scripts/test-docs.mjs",
+    "docs:build": "node scripts/build-site.mjs",
+    "test:docs": "node --test scripts/test-docs.mjs scripts/test-document-library.mjs",
     "test:install": "node --test scripts/test-installation.mjs",
     "test:install:modes": "node scripts/test-install-modes.mjs",
     "build:all": "./scripts/build-all.sh --all",
     "clean:all": "./scripts/clean-all.sh --all"
+  },
+  "devDependencies": {
+    "markdown-it": "15.0.3"
   },
   "keywords": [
     "mcp",

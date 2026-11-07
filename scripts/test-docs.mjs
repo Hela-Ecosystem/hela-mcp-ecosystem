@@ -4,11 +4,15 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { test } from 'node:test';
+import { test, after } from 'node:test';
+import { tmpdir } from 'node:os';
+import { buildSite } from './build-site.mjs';
 import { loadInventory } from './inventory.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const site = path.join(root, 'docs/site');
+const temporary = fs.mkdtempSync(path.join(tmpdir(), 'hela-docs-tests-'));
+const site = buildSite({ root, output: temporary }).output;
+after(() => fs.rmSync(temporary, { recursive: true, force: true }));
 const data = loadInventory(root);
 const version = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version;
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'config/tool-catalog.json'), 'utf8'));

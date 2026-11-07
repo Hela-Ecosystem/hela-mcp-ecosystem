@@ -6,7 +6,18 @@ on:
       - master
     paths:
       - 'docs/site/**'
+      - '**/*.md'
+      - 'LICENSE'
+      - 'config/**'
+      - 'conductor/**'
       - 'assets/**'
+      - 'scripts/generate-docs.mjs'
+      - 'scripts/build-site.mjs'
+      - 'scripts/document-library.mjs'
+      - 'scripts/test-docs.mjs'
+      - 'scripts/test-document-library.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
@@ -32,21 +43,16 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install pinned build-only documentation dependencies
+        run: npm ci --ignore-scripts --no-fund
+
       - name: Verify documentation before publication
         run: |
           npm run docs:check
           npm run test:docs
 
-      - name: Prepare Static Site Distribution
-        run: |
-          mkdir -p _site
-          # Copy all web platform files from docs/site/ to root of _site
-          cp -r docs/site/* _site/
-          # Ensure assets/ directory exists in _site for Blotcat illustrations and icons
-          mkdir -p _site/assets
-          cp -r assets/* _site/assets/
-          # Ensure .nojekyll is present so GitHub Pages does not ignore files
-          touch _site/.nojekyll
+      - name: Build complete static documentation distribution
+        run: npm run docs:build
 
       - name: Deploy to Dedicated gh-pages Branch
         uses: peaceiris/actions-gh-pages@v4
@@ -54,6 +60,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           publish_branch: gh-pages
+          exclude_assets: '.github,.hela-docs-build.json'
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: 'deploy(site): automated build and sync from master (${{ github.sha }})'

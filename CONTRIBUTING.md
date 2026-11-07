@@ -41,6 +41,7 @@ npm run test:matrix
 npm test
 
 # 4. Keep generated versions, tool references and site metadata current
+npm ci --ignore-scripts
 npm run docs:generate
 npm run docs:check
 npm run test:docs
@@ -48,6 +49,23 @@ npm run test:docs
 # 5. Run configured pre-commit checks
 pre-commit run --all-files
 ```
+
+### 2.3 Build and preview the complete documentation site
+
+Use Node.js 22 LTS. Markdown rendering is a pinned build-only dependency; visitors receive static HTML, not a client-side Markdown framework.
+
+```bash
+npm ci --ignore-scripts
+npm run docs:generate
+npm run docs:build
+python3 -m http.server 8080 --bind 127.0.0.1 --directory _site
+```
+
+Open `http://127.0.0.1:8080/library.html`. The builder publishes tracked root documentation, all Markdown under `docs/` (except website source files), Conductor records, the license, and public configuration examples. Add new documents to Git before building so they enter the publication inventory. Untracked notes, credentials, databases, Git internals and unrelated directories are not published.
+
+The document bodies remain in their source language; English and Indonesian navigation lead to the same source content. Dated verification reports and milestone tracks are labeled historical. Relative document links, heading anchors and illustrations resolve within the website; original source downloads and `llms-full.txt` are generated from the same files.
+
+`npm run test:docs` checks publication coverage, links and anchors, safe Markdown rendering, source downloads, search, and deterministic builds. The existing Pages workflow installs the locked dependencies, checks the docs, and publishes `_site` to `gh-pages` when public documentation changes. Do not edit `_site` by hand.
 
 ---
 
@@ -60,7 +78,7 @@ pre-commit run --all-files
    * `docs(scope): ...`
    * `test(scope): ...`
    * `chore(scope): ...`
-3. **CI Matrix Conformance**: Configuration/documentation checks cover `ubuntu-latest` and `macos-latest` on Node.js 18, 20, and 22. This is not MCP runtime compatibility evidence for Node 18; use Node 22 LTS for the tested full-stack development environment. Hardware, provider and authenticated GUI integrations need separate validation.
+3. **CI Matrix Conformance**: Configuration checks cover `ubuntu-latest` and `macos-latest` on Node.js 18, 20, and 22; documentation builds and tests run on Node 22. This is not MCP runtime compatibility evidence for Node 18; use Node 22 LTS for the tested full-stack development environment. Hardware, provider and authenticated GUI integrations need separate validation.
 
 ---
 
