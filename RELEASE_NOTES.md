@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.5.2 — replicated vault convergence
+
+Pin Genome source `c32ae94`: replicated notes keep the earliest creation timestamp and latest update timestamp, while incoming observation supersets can retain their order without losing database-only facts. The explicit programmatic repair API archives both originals, respects snapshot/lock checks, and permits rejecting a plan before publication. Normal CLI sync does not choose conflict winners automatically.
+
+Genome's 19 suites / 263 tests and TypeScript build pass, including regressions reproducing the previous timestamp/order loops and validating SQL bindings, JSON rows and tool arguments. Source lint reports zero errors and warnings, covers top-level files and fails on warnings. Package versions remain 3.0.0 for cells and 1.2.0 for runtime; this source snapshot records the exact fixed Genome commit. Other pins and historical snapshots are unchanged. Real vault repair and MCP reconnection require separate, backed-up operational verification; no private vault data is published here.
+
 ## v1.5.1 — current documentation and bilingual website
 
 Documentation-only refresh: all ten cells remain **3.0.0**, and runtime remains **1.2.0**. The new source snapshot pins the documentation commits without rewriting v1.0.0–v1.5.0. Plastid and Receptor documentation was merged into their default branches without discarding unrelated dependency updates; the snapshot deliberately pins the documentation-only parents, not those dependency changes.

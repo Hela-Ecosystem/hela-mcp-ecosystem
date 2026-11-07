@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.5.1",
-  "created_at": "2026-11-06T14:14:06Z",
-  "description": "Documentation-only cell pins, canonical version/tool references, sanitized client examples, and complete EN/ID website. Runtime implementation and live services unchanged; unrelated dependency updates are not included.",
+  "snapshot_version": "1.5.2",
+  "created_at": "2026-11-07T08:34:49Z",
+  "description": "Genome vault convergence, explicit archived repair policies and warning-free typed source. Other cell/runtime pins are retained; older versioned snapshots are unchanged.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -19,7 +19,7 @@
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "a0e12890a41a752423c030ddf267a34f835e9b01",
+      "commit": "c32ae9412617feed7fb5b74a889dc71d9a4df38c",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
@@ -88,17 +88,14 @@
       "serverVersion": "1.2.0"
     }
   },
-  "verified_profiles": ["minimal", "dev-workspace", "headless-server", "research", "web-devops", "android-testing", "3d-modeling", "all"],
+  "verified_profiles": ["dev-workspace"],
   "verified_clients": [],
   "verification": {
     "documentation_regressions": 74,
     "client_configuration_combinations": 80,
-    "browser_configurator_selections": 128,
-    "responsive_page_layout_checks": 32,
-    "profile_runtime_checks": 16,
-    "strict_version_pin_checks": 11,
-    "native_arm_catalog_cells": 8,
-    "runtime_baseline_snapshot": "v1.5.0",
-    "scope": "Documentation generation, local links/anchors, structured metadata and EN/ID UI. Authenticated clients, providers and hardware are not implied. No live runtime restart or security/configuration change."
+    "genome_regression_tests": 263,
+    "genome_lint_errors": 0,
+    "genome_lint_warnings": 0,
+    "scope": "Genome regression/build checks and generated metadata. Vault repair is an explicit backed-up operation; normal CLI sync still refuses divergent notes. Other profiles, authenticated GUI clients, providers and hardware are not new acceptance claims."
   }
 }

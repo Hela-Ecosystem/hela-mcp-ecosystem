@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.5.2] - 2026-11-07
+
+- Pin Genome's replicated vault timestamp/order convergence fix and explicit archived repair API; ordinary CLI sync still leaves divergent notes unresolved.
+- Replace Genome's unsafe `any` types with typed database results and validated request/import boundaries. Source lint now covers top-level files and fails on warnings; 19 suites / 263 tests and the TypeScript build pass.
+- Retain the managed individual/runtime/Docker/Nix installer and doctor shipped after 1.5.1; its mechanism acceptance remains documented separately.
+- Keep all other cell/runtime pins and historical versioned snapshots unchanged. No vault content, credentials, or operational backups are included in this source snapshot.
+
 ## [1.5.1] - 2026-11-06
 
 - Refresh current EN/ID web pages, setup/integration/troubleshooting guides, and all ten cells' version/tool references from canonical metadata.

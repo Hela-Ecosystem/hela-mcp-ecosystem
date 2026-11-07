@@ -4,7 +4,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 > **New to MCP?** Read the **[Beginner's Guide](docs/beginner-guide.md)** for requirements, profile selection, installation, and verification.
 
-Current source snapshot: **v1.5.1**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.5.2**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -102,7 +102,7 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.1 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.2 --non-interactive
 ```
 
 **Single-Endpoint Runtime (one MCP connection for the selected profile):**
