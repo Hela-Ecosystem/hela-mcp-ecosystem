@@ -1,0 +1,43 @@
+# Changelog
+
+All notable changes to this project.
+
+## [1.5.3] - 2026-11-07
+
+- Render Genome relation links in canonical order so replicas with different SQLite insertion orders produce identical notes.
+- Add an insertion-order regression; all 19 suites / 264 tests, the TypeScript build and zero-warning source lint pass.
+- Preserve the published 1.5.2 snapshot and all other cell/runtime pins.
+
+## [1.5.2] - 2026-11-07
+
+- Pin Genome's replicated vault timestamp/order convergence fix and explicit archived repair API; ordinary CLI sync still leaves divergent notes unresolved.
+- Replace Genome's unsafe `any` types with typed database results and validated request/import boundaries. Source lint now covers top-level files and fails on warnings; 19 suites / 263 tests and the TypeScript build pass.
+- Retain the managed individual/runtime/Docker/Nix installer and doctor shipped after 1.5.1; its mechanism acceptance remains documented separately.
+- Keep all other cell/runtime pins and historical versioned snapshots unchanged. No vault content, credentials, or operational backups are included in this source snapshot.
+
+## [1.5.1] - 2026-11-06
+
+- Refresh current EN/ID web pages, setup/integration/troubleshooting guides, and all ten cells' version/tool references from canonical metadata.
+- Validate generated documentation, local links/anchors, and browser configuration previews before Pages publication.
+- Refresh sanitized client examples and document deferred security, provider/hardware validation, SQLite safety, and optional Obsidian mirroring accurately.
+- Pin documentation-only cell commits in a new immutable snapshot. Cells remain 3.0.0; runtime remains 1.2.0. Historical snapshots, vendor versions, and live services are unchanged.
+
+## [1.5.0] - 2026-11-06
+
+- Pin runtime 1.2.0 with true first-call startup and profile/build/config-aware schema caching.
+- Generate standalone schema catalogs and documentation counts from canonical inventory metadata and isolated feature-variant probes.
+- Share inventory validation/path resolution across config, doctor, version, profile, and integration tooling; verify runtime catalog parity without child startup.
+- Measure cold/warm routing across all profiles; retain standalone compatibility and machine selections.
+
+## [1.4.0] - 2026-11-06
+
+- Pin current published cell/runtime revisions in a new snapshot; retain v1.0.0–v1.3.0 unchanged and correct runtime snapshot metadata to 1.1.0.
+- Include Genome memory safety, atomic claims, runtime timeout recovery, and clean-install Zod 4 compatibility fixes.
+- Replace process-alive smoke checks with isolated MCP initialize/tool discovery and strict version/pin agreement.
+- Correct Codex TOML to `mcp_servers`, escape generated values, and verify the 80-combination configuration matrix.
+- Record native x86_64/aarch64 Linux Nix builds separately from client authentication, hardware testing, and unresolved vault conflicts.
+
+## [3.0.0] - 2026-10-31
+
+### Changed
+- **Version reset to 3.0.0** — per-server version metadata baseline reset (Phase 7). All `package.json`, MCP `ServerInfo.version`, and HTTP metadata now report `3.0.0`. This is a metadata/interface baseline reset; for `hela-plastid` it is not an upgrade from the previous `4.2.0` advert.

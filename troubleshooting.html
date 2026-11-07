@@ -34,6 +34,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="library.css?v=1.5.3&amp;rev=6eb8e00d967d">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -44,6 +45,7 @@
         <div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 CELLS</div>
       </div>
       <nav aria-label="Documentation">
+<ol class="doc-nav"><li><a href="library.html"><span class="doc-nav-num">00</span> Document library</a></li></ol>
       <div class="doc-nav-section" data-i18n="nav.section.started">GETTING STARTED</div>
       <ol class="doc-nav">
         <li><a href="index.html"><span class="doc-nav-num">01</span> <span data-i18n="nav.overview">Overview</span></a></li>
@@ -107,7 +109,7 @@
         <section class="diag-card" aria-labelledby="d-entry">
           <div class="diag-card-header" id="d-entry">Entrypoint missing</div>
           <div class="diag-card-body">
-            <p><strong>Symptom:</strong> missing or changed build, or an incomplete-install marker. Re-run setup with the same prefix, mode, and profile: it installs locked dependencies, rebuilds, and probes MCP. Dirty sources, origin mismatches, and unmanaged directories are refused; preserve your changes rather than resetting them. See the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">installation guide</a>. Do not remove a lock belonging to an active installer.</p>
+            <p><strong>Symptom:</strong> missing or changed build, or an incomplete-install marker. Re-run setup with the same prefix, mode, and profile: it installs locked dependencies, rebuilds, and probes MCP. Dirty sources, origin mismatches, and unmanaged directories are refused; preserve your changes rather than resetting them. See the <a href="library/docs/installation.html">installation guide</a>. Do not remove a lock belonging to an active installer.</p>
           </div>
         </section>
 
@@ -141,7 +143,7 @@
 
         <h2 id="runtime">Runtime catalog and client ownership</h2>
         <p>A missing or stale catalog must not trigger eager startup. After a cell build, run <code>npm run catalog:generate -- --profile dev-workspace</code>, then runtime doctor. Cold discovery should start zero cells. Runtime is a serve mode (<code>--runtime</code>), not a profile.</p>
-        <p>Zed can forward a server already owned by Codex, producing duplicate warnings. Do not remove shared top-level definitions to silence them. Authenticated ACP verification is separate; see the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/troubleshooting.md#zed-forwards-a-server-that-codex-already-defines">version-specific client guidance</a>.</p>
+        <p>Zed can forward a server already owned by Codex, producing duplicate warnings. Do not remove shared top-level definitions to silence them. Authenticated ACP verification is separate; see the <a href="library/docs/troubleshooting.html#zed-forwards-a-server-that-codex-already-defines">version-specific client guidance</a>.</p>
         <p>Before database or vault changes, take validated backups. Never restore over active SQLite files or force a conflict winner. Documentation publication needs no runtime restart.</p>
 
         <div class="admonition warning">
@@ -166,6 +168,8 @@
     </div>
   </div>
   <script src="release-data.js?v=1.5.3"></script>
-  <script src="app.js?v=1.5.3"></script>
+  <script src="library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
 </body>
 </html>

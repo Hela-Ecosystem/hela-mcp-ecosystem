@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Implementation Plan: Milestone 5 — Showcase Recordings, Documentation Landing Site &amp; v1.0.0 Release — HeLa MCP Ecosystem</title>
+  <meta name="description" content="[x] Task: Record ecosystem diagnostics cast (./setup.sh doctor) via asciinema">
+  <link rel="canonical" href="https://hela.my.id/id/library/conductor/tracks/m5-showcase-release/plan.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/conductor/tracks/m5-showcase-release/plan.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/conductor/tracks/m5-showcase-release/plan.html">
+  <link rel="icon" type="image/svg+xml" href="../../../../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../../style.css">
+  <link rel="stylesheet" href="../../../../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../../../">
+  <a href="#main-content" class="skip-link">Langsung ke isi</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Pustaka dokumentasi">
+      <div class="doc-brand"><a href="../../../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 SEL</div></div>
+      <nav aria-label="Pustaka dokumentasi"><details class="library-mobile-nav" open><summary>Jelajahi dokumentasi</summary><div class="doc-nav-section">DOKUMENTASI</div><ul class="doc-nav"><li><a href="../../../../index.html">Ikhtisar</a></li>
+<li><a href="../../../../architecture.html">Arsitektur</a></li>
+<li><a href="../../../../workflows.html">Alur kerja</a></li>
+<li><a href="../../../../profiles.html">Profil &amp; konfigurasi</a></li>
+<li><a href="../../../../troubleshooting.html">Diagnostik</a></li>
+<li><a href="../../../../library.html" aria-current="page">Pustaka dokumentasi</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../../../library.html">Pustaka dokumentasi</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn" data-lang="en" href="../../../../../library/conductor/tracks/m5-showcase-release/plan.html">EN</a><a class="lang-btn active" data-lang="id" href="plan.html">ID</a></div><button class="btn open-cmd-palette" type="button">Cari <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="implementation-plan-milestone-5--showcase-recordings-documentation-landing-site--v100-release" class="doc-title">Implementation Plan: Milestone 5 — Showcase Recordings, Documentation Landing Site &amp; v1.0.0 Release</h1>
+<header class="library-document-meta" lang="id"><p class="library-kicker">Arsip historis</p><p class="library-source">conductor/tracks/m5-showcase-release/plan.md</p><p>Isi dalam bahasa sumber. <a href="../../../../../library/source/conductor/tracks/m5-showcase-release/plan.md" download>Unduh sumber</a> · <a href="../../../../library.html">Semua dokumen</a></p></header><p class="admonition library-history">Catatan historis: versi dan hasil verifikasi menggambarkan kondisi pada saat dokumen ditulis.</p><h2 id="phase-1-terminal-cast-recordings--showcase-asset-preparation">Phase 1: Terminal Cast Recordings &amp; Showcase Asset Preparation</h2>
+<ul>
+<li>[x] Task: Record ecosystem diagnostics cast (<code>./setup.sh doctor</code>) via asciinema</li>
+<li>[x] Task: Record 70-combination matrix test cast (<code>npm run test:matrix</code>) via asciinema</li>
+<li>[x] Task: Record master integration suite cast (<code>npm test</code>) via asciinema</li>
+<li>[x] Task: Record deterministic snapshot installation cast (<code>./setup.sh</code>) via asciinema</li>
+<li>[x] Task: Upload or bundle <code>.cast</code> recordings and organize showcase metadata (YouTube + Asciinema)</li>
+<li>[x] Task: Phase Verification &amp; Checkpoint</li>
+</ul>
+<hr>
+<h2 id="phase-2-interactive-documentation-landing-site-docssite">Phase 2: Interactive Documentation Landing Site (<code>docs/site/</code>)</h2>
+<ul>
+<li>[x] Task: Scaffold modern responsive landing page structure in <code>docs/site/index.html</code></li>
+<li>[x] Task: Implement modern design tokens, typography, dark/light cellular aesthetic in <code>docs/site/style.css</code></li>
+<li>[x] Task: Build interactive Client &amp; Profile Configurator in <code>docs/site/app.js</code> with live copyable configs</li>
+<li>[x] Task: Build Video &amp; Asciinema Showcase section embedding YouTube videos (<code>BnbDg1-be4g</code>, <code>O6nYKjmlaGk</code>) and terminal players</li>
+<li>[x] Task: Build 10-MCP Cellular Taxonomy Directory with instant search and tool breakdown</li>
+<li>[x] Task: Phase Verification &amp; Checkpoint</li>
+</ul>
+<hr>
+<h2 id="phase-3-release-documentation-verification--git-synchronization">Phase 3: Release Documentation, Verification &amp; Git Synchronization</h2>
+<ul>
+<li>[x] Task: Author <code>RELEASE_NOTES.md</code> capturing v1.0.0 milestone achievements and architecture</li>
+<li>[x] Task: Verify landing page rendering and link integrity across all browsers</li>
+<li>[x] Task: Run pre-commit hooks, verify matrix tests and integration suites</li>
+<li>[x] Task: Update Project Guardian memory and Conductor registry</li>
+<li>[x] Task: Commit, push to <code>development</code>, and merge to <code>master</code></li>
+<li>[x] Task: Phase Verification &amp; Checkpoint</li>
+</ul>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../../../library.html">Pustaka dokumentasi</a></footer></main>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#phase-1-terminal-cast-recordings--showcase-asset-preparation">Phase 1: Terminal Cast Recordings &amp; Showcase Asset Preparation</a></li><li><a href="#phase-2-interactive-documentation-landing-site-docssite">Phase 2: Interactive Documentation Landing Site (docs/site/)</a></li><li><a href="#phase-3-release-documentation-verification--git-synchronization">Phase 3: Release Documentation, Verification &amp; Git Synchronization</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../../../../release-data.js?v=1.5.3"></script>
+  <script src="../../../../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../../../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../../../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

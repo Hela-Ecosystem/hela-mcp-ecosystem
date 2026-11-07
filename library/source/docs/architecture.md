@@ -1,0 +1,191 @@
+# HeLa MCP Ecosystem Architecture
+
+This document provides a comprehensive architectural reference for the **HeLa MCP Ecosystem**, detailing its cellular design principles, dual-backbone topology, component taxonomies, and cross-MCP communication mechanisms.
+
+Current package versions and feature-dependent tool counts are generated in [current versions](current-versions.md). Each of the ten MCP cells has its own version; the ecosystem snapshot and optional runtime have independent versions.
+
+![Blotcat acting as a conductor in front of a modular system of interconnected server blocks](../assets/blotcat-architecture.jpg)
+
+---
+
+## 1. Architectural Philosophy: The Cellular Metaphor
+
+The **HeLa MCP Ecosystem** is architected around a cellular biology metaphor, respectfully recognizing **Henrietta Lacks** (1920–1951) and the immortal legacy of HeLa cells in biomedical research:
+
+1. **Cellular Specialization**: In biological systems, organelles perform distinct biochemical functions while cooperating as a unified organism. In the HeLa ecosystem, servers act as specialized cellular components (Nucleus, Membrane, Enzyme, Ribosome, Plastid) coordinated by a dual backbone.
+2. **Reproducible source selection**: Commit-pinned snapshots under `config/snapshots/` select known revisions. Platform dependencies and external integrations still require separate validation.
+3. **Repository Autonomy**: Underlying repositories, Git histories, and package dependencies remain completely autonomous and uncoupled.
+
+---
+
+## 2. The 4-Tier Naming Architecture
+
+To balance brand clarity, backwards compatibility, and technical provenance, the ecosystem enforces a 4-tier naming model:
+
+```mermaid
+flowchart LR
+    T1["Tier 1: Public Identity<br/>HeLa Genome"]
+    T2["Tier 2: Machine ID<br/>hela-genome"]
+    T3["Tier 3: Technical Repo<br/>project-mcp"]
+    T4["Tier 4: Immutable Commit<br/>72bca15ebe..."]
+
+    T1 --> T2 --> T3 --> T4
+```
+
+1. **Tier 1 (Public Identity)**: Clean, uniform human-facing persona name (e.g. *HeLa Mitosis*, *HeLa Genome*, *HeLa Membrane*).
+2. **Tier 2 (Machine Identifier)**: Stable hyphenated identifier (`hela-*`) used in configuration files (`mcpServers`), CLI flags, and profile definitions.
+3. **Tier 3 (Technical Source Repo)**: Independent Git repository name on GitHub maintaining upstream authorship and commit history.
+4. **Tier 4 (Immutable Commit Pin)**: Exact SHA-1 hash recorded in `config/snapshots/` ensuring reproducible builds.
+
+---
+
+## 3. Dual-Backbone Coordination Topology
+
+Every deployed profile in the ecosystem is grounded by a dual backbone:
+
+```mermaid
+flowchart TB
+    Client["AI Client / Orchestrator"]
+
+    Mitosis["HeLa Mitosis<br/>(hela-mitosis)<br/>- Dynamic Routing<br/>- Step Reasoning<br/>- Task Decomposition<br/>- Prompt Catalog"]
+    Genome["HeLa Genome<br/>(hela-genome)<br/>- Knowledge Graph<br/>- Living SQLite DB<br/>- Entity / Relations<br/>- Milestones & State"]
+
+    Membrane["HeLa Membrane<br/>(Files)"]
+    Nucleus["HeLa Nucleus<br/>(Exec)"]
+    Ribosome["HeLa Ribosome<br/>(PTY)"]
+    Enzyme["HeLa Enzyme<br/>(Search)"]
+    Cytosol["HeLa Cytosol<br/>(Browser)"]
+    Phenotype["HeLa Phenotype<br/>(Design)"]
+
+    Client -- "stdio JSON-RPC" --> Mitosis & Genome
+    Mitosis <-->|"Shared Memory"| Genome
+    Mitosis & Genome --> Membrane & Nucleus & Ribosome & Enzyme & Cytosol & Phenotype
+```
+
+* **HeLa Mitosis (Routing & Planning Backbone)**: Bundled Needle 3 agent runtime (plan → execute → observe with recorded AgentState), suggests multi-step execution paths, Needle-backed sequential analysis, and serves 40 curated domain prompts. Offline-first; OpenRouter is an escalation backend only.
+* **HeLa Genome (State & Memory Backbone)**: Maintains the living SQLite knowledge graph (`memory.db`), restores cross-session context, records task states, and manages project milestones.
+
+---
+
+## 4. Component Taxonomy
+
+### 4.1 Core Backbone Servers
+
+#### 1. HeLa Mitosis (`hela-mitosis` / `chaining-mcp`)
+* **Role**: Orchestration, dynamic routing, and Needle-backed sequential reasoning.
+* **Entrypoint**: `dist/index.js`
+* **Tools**: `agent_run`, `sequentialthinking`, `analyze_with_sequential_thinking`, `analyze_tools`, `generate_route_suggestions`, `llm_decompose_task`, `llm_suggest_route`, `workflow_orchestrator`, `workflow_status`, `workflow_cancel`, `list_skills`, `search_skills`, `get_skill`, `suggest_skill_chain`, plus prompt/resource, time, and validation tools.
+* **Zero-Key Behavior**: The bundled Needle 3 agent runs fully offline. Without `OPENROUTER_API_KEY`, escalation hands control back to the calling agent (`handoff: true`) with the full state trail — never a fabricated answer. `brainstorming` is the one exception: it needs a generative model and fails honestly without a key.
+
+#### 2. HeLa Genome (`hela-genome` / `project-mcp`)
+* **Role**: Living memory graph, entity-relation-observation state tracking.
+* **Entrypoint**: `dist/index.js`
+* **Tools**: `memory_edit` (entity/relation/observation CRUD), `read_graph`, `search_nodes`, `get_session_context`, `sync_central_memory`, `security_scan`, and the three mission tools `create_mission`, `list_missions`, `update_mission`.
+* **Storage**: Embedded SQLite database (`memory.db`) with FTS5 full-text indexing.
+
+---
+
+### 4.2 Core Capability Servers
+
+#### 3. HeLa Membrane (`hela-membrane` / `filesystem-mcp`)
+* **Role**: Sandboxed workspace filesystem operations and search.
+* **Entrypoint**: `dist/index.js`
+* **Tools**: `read_file`, `write_file`, `find_files`, `search_in_files`, `copy_file`, `move_file`, `delete_file`, `archive_files`.
+
+#### 4. HeLa Nucleus (`hela-nucleus` / `terminal-mcp`)
+* **Role**: Isolated command execution and RTK token optimization.
+* **Entrypoint**: `build/index.js`
+* **Tools**: `execute_command`, `transfer_file`, `terminal_ls`, `terminal_grep`, `terminal_cat`, `terminal_session_close`, `terminal_session_list`.
+
+#### 5. HeLa Ribosome (`hela-ribosome` / `menager-mcp`)
+* **Role**: Polyglot interactive PTY session multiplexing and Regex hook engine.
+* **Entrypoint**: `build/index.js`
+* **Tools**: `session_spawn`, `session_write`, `session_read`, `session_hook`, `session_close`, `session_list`, `session_prune`.
+
+#### 6. HeLa Enzyme (`hela-enzyme` / `researcher-mcp`)
+* **Role**: Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia caching.
+* **Entrypoint**: `dist/index.js`
+* **Tools**: `google_search`, `wikipedia_search`, `wikipedia_get`, `content_summarizer`, `fact_checker`, `keyword_extraction`.
+
+#### 7. HeLa Cytosol (`hela-cytosol` / `browser-mcp`)
+* **Role**: Playwright-based browser automation and DOM accessibility perception.
+* **Entrypoint**: `src/server.js`
+* **Tools**: `browser_navigate`, `browser_screenshot`, `browser_click`, `browser_type`, `browser_get_content`.
+
+---
+
+### 4.3 Specialized Capability Servers
+
+#### 8. HeLa Phenotype (`hela-phenotype` / `designer-mcp`)
+* **Role**: UI/UX design tokens, OKLCH palettes, and Tailwind component synthesis.
+* **Entrypoint**: `dist/index.js`
+* **Tools**: `design_tokens`, `palette`, `design_audit`, `generate_template`, `logo_workflow`.
+
+#### 9. HeLa Receptor (`hela-receptor` / `scrcpy-mcp`)
+* **Role**: Android mobile device control via ADB bridge.
+* **Entrypoint**: `dist/server.js`
+* **Tools**: `start_session`, `ui_dump`, `ui_find_element`, `tap`, `swipe`, `input_text`, `screenshot`.
+
+#### 10. HeLa Plastid (`hela-plastid` / `ll3m-mcp`)
+* **Role**: Autonomous 3D procedural modeling and rendering in Blender.
+* **Entrypoint**: `dist/index.js` (under `brain/`)
+* **Tools**: `generate_modeling_plan`, `execute_blender_code`, `render_output`, `save_blend`, `get_fast_feedback`.
+
+---
+
+### 4.4 Canonical Tool Boundaries (v1.2.0)
+
+Several organelles expose overlapping capabilities. Descriptions and the Mitosis capability router now enforce a single canonical choice per intent, keeping a restricted alternative only for its niche:
+
+| Intent | Canonical | Restricted alternative | Restricted use |
+|--------|-----------|------------------------|----------------|
+| Web search | `hela-enzyme:google_search` | `hela-cytosol:browser_search` | Visual browser workflows only |
+| Content extraction | `hela-enzyme:extract_content` | `hela-cytosol:browser_get_content` | Pages requiring client-side JavaScript |
+| Local file read | `hela-membrane:read_file` | `hela-nucleus:terminal_cat` | Remote SSH targets only (`host` required) |
+| Memory-graph inspection | `hela-genome:execute_sql` / `query_data` | `hela-ribosome:opencode_db` | OpenCode session database only |
+
+Tool names are unique ecosystem-wide after the Phase 1 rename, so the router matches boundaries by tool name without needing a server field.
+
+---
+
+### 4.5 HeLa Runtime (optional daemon, `hela-runtime`)
+
+The optional runtime supervises child MCP processes behind one stdio or Streamable HTTP endpoint. Its generated catalog exposes selected-profile schemas without starting cells. The first invocation starts only its target; concurrent first calls share startup. Unknown tool names do not trigger an all-cell scan.
+
+- **Source:** https://github.com/Hela-Ecosystem/hela-runtime
+- **Entry:** `hela-runtime/dist/index.js`
+- **Serve mode:** add `--runtime` to any profile, for example `./setup.sh --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; the default profile remains `dev-workspace`.
+- **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, `HELA_NAMESPACE_TOOLS`.
+- **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, opt-in namespacing, runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
+- **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
+- **Details:** [on-demand startup, cache invalidation and deployment evidence](on-demand-runtime.md).
+
+## 5. Security & Isolation Model
+
+```mermaid
+flowchart TB
+    Host["Host Operating System / Terminal Environment"]
+    Root["HeLa MCP Ecosystem Root"]
+    Sandbox["stdio JSON-RPC Sandbox"]
+    Membrane2["Path Canonicalization<br/>(HeLa Membrane)"]
+    Nucleus2["Explicit CWD & Timeout Limits<br/>(HeLa Nucleus)"]
+    Ribosome2["Process Group Teardown<br/>(HeLa Ribosome)"]
+    Cytosol2["SSRF IP Filtering<br/>(HeLa Cytosol)"]
+
+    Host --> Root
+    Root --> Sandbox & Membrane2 & Nucleus2 & Ribosome2 & Cytosol2
+```
+
+1. **Process Boundary**: Each server runs in an isolated Node.js child process communicating exclusively over standard input/output (`stdio`) via JSON-RPC 2.0 messages.
+2. **Memory Safety**: SQLite database operations in `hela-genome` use parameterized queries with WAL (Write-Ahead Logging) mode.
+3. **Credential handling**: Doctor reports presence, not values. Generated client configurations can contain explicitly configured credentials; treat those files and generator output as private. Process separation is not a security sandbox, and remote endpoint authentication/authorization remain explicitly deferred; see [security status](security-audit.md).
+
+---
+
+## 6. Profile System & Lifecycle Management
+
+The ecosystem configuration generator (`scripts/generate-config.mjs`) reads:
+1. **`config/inventory.json`**: Authoritative component catalog, entrypoints, Git repositories, and alias mappings.
+2. **`config/profiles.json`**: Curated stacks tailored to specific agent personas and hardware targets.
+
+The installer matches the selected profile against the inventory and chosen snapshot, then renders client syntax: `mcpServers` JSON, OpenCode/Kilo `mcp`, Zed `context_servers`, or Codex `[mcp_servers.*]` TOML. Runtime installation also refreshes selected-profile schema catalogs. All eight profiles are supported; lappy's full ten-cell roster and servy's eight-cell roster are installation choices, not code forks.

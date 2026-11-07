@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google JavaScript Style Guide Summary — HeLa MCP Ecosystem</title>
+  <meta name="description" content="This document summarizes key rules and best practices from the Google JavaScript Style Guide.">
+  <link rel="canonical" href="https://hela.my.id/library/conductor/code_styleguides/javascript.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/conductor/code_styleguides/javascript.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/conductor/code_styleguides/javascript.html">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Document library">
+      <div class="doc-brand"><a href="../../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 CELLS</div></div>
+      <nav aria-label="Document library"><details class="library-mobile-nav" open><summary>Browse documentation</summary><div class="doc-nav-section">DOCUMENTATION</div><ul class="doc-nav"><li><a href="../../../index.html">Overview</a></li>
+<li><a href="../../../architecture.html">Architecture</a></li>
+<li><a href="../../../workflows.html">Workflows</a></li>
+<li><a href="../../../profiles.html">Profiles &amp; config</a></li>
+<li><a href="../../../troubleshooting.html">Diagnostics</a></li>
+<li><a href="../../../library.html" aria-current="page">Document library</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="javascript.html">EN</a><a class="lang-btn" data-lang="id" href="../../../id/library/conductor/code_styleguides/javascript.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="google-javascript-style-guide-summary" class="doc-title">Google JavaScript Style Guide Summary</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Project & contribution</p><p class="library-source">conductor/code_styleguides/javascript.md</p><p>Original source language. <a href="../../source/conductor/code_styleguides/javascript.md" download>Download source</a> · <a href="../../../library.html">All documents</a></p></header><p>This document summarizes key rules and best practices from the Google JavaScript
+Style Guide.</p>
+<h2 id="1-source-file-basics">1. Source File Basics</h2>
+<ul>
+<li><strong>File Naming:</strong> All lowercase, with underscores (<code>_</code>) or dashes (<code>-</code>).
+Extension must be <code>.js</code>.</li>
+<li><strong>File Encoding:</strong> UTF-8.</li>
+<li><strong>Whitespace:</strong> Use only ASCII horizontal spaces (0x20). Tabs are forbidden
+for indentation.</li>
+</ul>
+<h2 id="2-source-file-structure">2. Source File Structure</h2>
+<ul>
+<li>New files should be ES modules (<code>import</code>/<code>export</code>).</li>
+<li><strong>Exports:</strong> Use named exports (<code>export {MyClass};</code>). <strong>Do not use default
+exports.</strong></li>
+<li><strong>Imports:</strong> Do not use line-wrapped imports. The <code>.js</code> extension in import
+paths is mandatory.</li>
+</ul>
+<h2 id="3-formatting">3. Formatting</h2>
+<ul>
+<li><strong>Braces:</strong> Required for all control structures (<code>if</code>, <code>for</code>, <code>while</code>,
+etc.), even single-line blocks. Use K&amp;R style (&quot;Egyptian brackets&quot;).</li>
+<li><strong>Indentation:</strong> +2 spaces for each new block.</li>
+<li><strong>Semicolons:</strong> Every statement must be terminated with a semicolon.</li>
+<li><strong>Column Limit:</strong> 80 characters.</li>
+<li><strong>Line-wrapping:</strong> Indent continuation lines at least +4 spaces.</li>
+<li><strong>Whitespace:</strong> Use single blank lines between methods. No trailing
+whitespace.</li>
+</ul>
+<h2 id="4-language-features">4. Language Features</h2>
+<ul>
+<li><strong>Variable Declarations:</strong> Use <code>const</code> by default, <code>let</code> if reassignment is
+needed. <strong><code>var</code> is forbidden.</strong></li>
+<li><strong>Array Literals:</strong> Use trailing commas. Do not use the <code>Array</code> constructor.</li>
+<li><strong>Object Literals:</strong> Use trailing commas and shorthand properties. Do not
+use the <code>Object</code> constructor.</li>
+<li><strong>Classes:</strong> Do not use JavaScript getter/setter properties (<code>get name()</code>).
+Provide ordinary methods instead.</li>
+<li><strong>Functions:</strong> Prefer arrow functions for nested functions to preserve
+<code>this</code> context.</li>
+<li><strong>String Literals:</strong> Use single quotes (<code>'</code>). Use template literals (<code>`</code>) for multi-line strings or complex interpolation.</li>
+<li><strong>Control Structures:</strong> Prefer <code>for-of</code> loops. <code>for-in</code> loops should only be
+used on dict-style objects.</li>
+<li><strong><code>this</code>:</strong> Only use <code>this</code> in class constructors, methods, or in arrow
+functions defined within them.</li>
+<li><strong>Equality Checks:</strong> Always use identity operators (<code>===</code> / <code>!==</code>).</li>
+</ul>
+<h2 id="5-disallowed-features">5. Disallowed Features</h2>
+<ul>
+<li><code>with</code> keyword.</li>
+<li><code>eval()</code> or <code>Function(...string)</code>.</li>
+<li>Automatic Semicolon Insertion.</li>
+<li>Modifying builtin objects (<code>Array.prototype.foo = ...</code>).</li>
+</ul>
+<h2 id="6-naming">6. Naming</h2>
+<ul>
+<li><strong>Classes:</strong> <code>UpperCamelCase</code>.</li>
+<li><strong>Methods &amp; Functions:</strong> <code>lowerCamelCase</code>.</li>
+<li><strong>Constants:</strong> <code>CONSTANT_CASE</code> (all uppercase with underscores).</li>
+<li><strong>Non-constant Fields &amp; Variables:</strong> <code>lowerCamelCase</code>.</li>
+</ul>
+<h2 id="7-jsdoc">7. JSDoc</h2>
+<ul>
+<li>JSDoc is used on all classes, fields, and methods.</li>
+<li>Use <code>@param</code>, <code>@return</code>, <code>@override</code>, <code>@deprecated</code>.</li>
+<li>Type annotations are enclosed in braces (e.g., <code>/** @param {string} userName */</code>).</li>
+</ul>
+<p><em>Source:
+<a href="https://google.github.io/styleguide/jsguide.html">Google JavaScript Style Guide</a></em></p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1-source-file-basics">1. Source File Basics</a></li><li><a href="#2-source-file-structure">2. Source File Structure</a></li><li><a href="#3-formatting">3. Formatting</a></li><li><a href="#4-language-features">4. Language Features</a></li><li><a href="#5-disallowed-features">5. Disallowed Features</a></li><li><a href="#6-naming">6. Naming</a></li><li><a href="#7-jsdoc">7. JSDoc</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../../release-data.js?v=1.5.3"></script>
+  <script src="../../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

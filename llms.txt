@@ -50,3 +50,55 @@ checks; discovery or a generated configuration does not prove either.
   exposes them over Streamable HTTP.
 - Behavior flags are opt-in environment variables documented in each server
   README (e.g. `HELA_ENVELOPE`, `HELA_ALLOWED_ROOTS`, `HELA_POLICY_PROFILE`).
+
+## Complete documentation
+
+- [Document library](https://hela.my.id/library.html)
+- [Full documentation text](https://hela.my.id/llms-full.txt)
+
+- [Changelog](https://hela.my.id/library/CHANGELOG.html): CHANGELOG.md
+- [Contributing to the HeLa MCP Ecosystem](https://hela.my.id/library/CONTRIBUTING.html): CONTRIBUTING.md
+- [MIT License](https://hela.my.id/library/LICENSE.html): LICENSE
+- [HeLa MCP Ecosystem](https://hela.my.id/library/README.html): README.md
+- [HeLa MCP Ecosystem Release Notes](https://hela.my.id/library/RELEASE_NOTES.html): RELEASE_NOTES.md
+- [General Code Style Principles](https://hela.my.id/library/conductor/code_styleguides/general.html): conductor/code_styleguides/general.md
+- [Google JavaScript Style Guide Summary](https://hela.my.id/library/conductor/code_styleguides/javascript.html): conductor/code_styleguides/javascript.md
+- [Google Python Style Guide Summary](https://hela.my.id/library/conductor/code_styleguides/python.html): conductor/code_styleguides/python.md
+- [Google TypeScript Style Guide Summary](https://hela.my.id/library/conductor/code_styleguides/typescript.html): conductor/code_styleguides/typescript.md
+- [Project Context](https://hela.my.id/library/conductor/index.html): conductor/index.md
+- [Product Guidelines: HeLa MCP Ecosystem](https://hela.my.id/library/conductor/product-guidelines.html): conductor/product-guidelines.md
+- [Product Definition: HeLa MCP Ecosystem](https://hela.my.id/library/conductor/product.html): conductor/product.md
+- [Technology Stack: HeLa MCP Ecosystem](https://hela.my.id/library/conductor/tech-stack.html): conductor/tech-stack.md
+- [Tracks Registry](https://hela.my.id/library/conductor/tracks.html): conductor/tracks.md
+- [Track: Milestone 1 — Baseline Audit & Canonical HeLa Aliasing](https://hela.my.id/library/conductor/tracks/m1-baseline-audit/index.html): conductor/tracks/m1-baseline-audit/index.md
+- [Implementation Plan: Milestone 1 — Baseline Audit & Canonical HeLa Aliasing](https://hela.my.id/library/conductor/tracks/m1-baseline-audit/plan.html): conductor/tracks/m1-baseline-audit/plan.md
+- [Specification: Milestone 1 — Baseline Audit & Canonical HeLa Aliasing](https://hela.my.id/library/conductor/tracks/m1-baseline-audit/spec.html): conductor/tracks/m1-baseline-audit/spec.md
+- [Track: Milestone 2 — Deterministic Snapshots & Doctor Command](https://hela.my.id/library/conductor/tracks/m2-determinism-doctor/index.html): conductor/tracks/m2-determinism-doctor/index.md
+- [Implementation Plan: Milestone 2 — Deterministic Snapshots & Doctor Command](https://hela.my.id/library/conductor/tracks/m2-determinism-doctor/plan.html): conductor/tracks/m2-determinism-doctor/plan.md
+- [Specification: Milestone 2 — Deterministic Snapshots & Doctor Command](https://hela.my.id/library/conductor/tracks/m2-determinism-doctor/spec.html): conductor/tracks/m2-determinism-doctor/spec.md
+- [Track: Milestone 3 — Backbone Integration Layer & Workflows A–F](https://hela.my.id/library/conductor/tracks/m3-integration-workflows/index.html): conductor/tracks/m3-integration-workflows/index.md
+- [Implementation Plan: Milestone 3 — Backbone Integration Layer & Workflows A–F](https://hela.my.id/library/conductor/tracks/m3-integration-workflows/plan.html): conductor/tracks/m3-integration-workflows/plan.md
+- [Specification: Milestone 3 — Backbone Integration Layer & Workflows A–F](https://hela.my.id/library/conductor/tracks/m3-integration-workflows/spec.html): conductor/tracks/m3-integration-workflows/spec.md
+- [Track: Milestone 4 — Security Audit, Multi-Client Matrix & CI Hardening](https://hela.my.id/library/conductor/tracks/m4-security-ci-clients/index.html): conductor/tracks/m4-security-ci-clients/index.md
+- [Implementation Plan: Milestone 4 — Security Audit, Multi-Client Matrix & CI Hardening](https://hela.my.id/library/conductor/tracks/m4-security-ci-clients/plan.html): conductor/tracks/m4-security-ci-clients/plan.md
+- [Specification: Milestone 4 — Security Audit, Multi-Client Matrix & CI Hardening](https://hela.my.id/library/conductor/tracks/m4-security-ci-clients/spec.html): conductor/tracks/m4-security-ci-clients/spec.md
+- [Track: Milestone 5 — Real Showcase Recordings, Documentation Site & Release](https://hela.my.id/library/conductor/tracks/m5-showcase-release/index.html): conductor/tracks/m5-showcase-release/index.md
+- [Implementation Plan: Milestone 5 — Showcase Recordings, Documentation Landing Site & v1.0.0 Release](https://hela.my.id/library/conductor/tracks/m5-showcase-release/plan.html): conductor/tracks/m5-showcase-release/plan.md
+- [Specification: Milestone 5 — Showcase Recordings, Documentation Landing Site & v1.0.0 Release](https://hela.my.id/library/conductor/tracks/m5-showcase-release/spec.html): conductor/tracks/m5-showcase-release/spec.md
+- [Project Workflow](https://hela.my.id/library/conductor/workflow.html): conductor/workflow.md
+- [HeLa MCP Ecosystem Architecture](https://hela.my.id/library/docs/architecture.html): docs/architecture.md
+- [Beginner's Guide: HeLa MCP Ecosystem](https://hela.my.id/library/docs/beginner-guide.html): docs/beginner-guide.md
+- [Current versions and tool surfaces](https://hela.my.id/library/docs/current-versions.html): docs/current-versions.md
+- [Servy deployment verification — 2026-11-06](https://hela.my.id/library/docs/deployment-2026-11-06.html): docs/deployment-2026-11-06.md
+- [Documentation refresh — 2026-11-06](https://hela.my.id/library/docs/documentation-refresh-2026-11-06.html): docs/documentation-refresh-2026-11-06.md
+- [Generated profile counts](https://hela.my.id/library/docs/generated-profile-counts.html): docs/generated-profile-counts.md
+- [Installer acceptance — 2026-11-07](https://hela.my.id/library/docs/installation-acceptance.html): docs/installation-acceptance.md
+- [Installation modes and doctor](https://hela.my.id/library/docs/installation.html): docs/installation.md
+- [MCP client integration](https://hela.my.id/library/docs/integration.html): docs/integration.md
+- [HeLa MCP Ecosystem: Keys & Secrets Guide](https://hela.my.id/library/docs/keys-and-secrets.html): docs/keys-and-secrets.md
+- [On-demand runtime and canonical discovery](https://hela.my.id/library/docs/on-demand-runtime.html): docs/on-demand-runtime.md
+- [All-profile verification — 2026-11-06](https://hela.my.id/library/docs/profile-verification-2026-11-06.html): docs/profile-verification-2026-11-06.md
+- [HeLa MCP Ecosystem — Profile & Agent Persona Catalog](https://hela.my.id/library/docs/profiles.html): docs/profiles.md
+- [Security status and verification scope](https://hela.my.id/library/docs/security-audit.html): docs/security-audit.md
+- [HeLa MCP Ecosystem Troubleshooting & Diagnostic Guide](https://hela.my.id/library/docs/troubleshooting.html): docs/troubleshooting.md
+- [HeLa MCP Ecosystem: Workflows & Integration Guide](https://hela.my.id/library/docs/workflows.html): docs/workflows.md

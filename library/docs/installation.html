@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation modes and doctor — HeLa MCP Ecosystem</title>
+  <meta name="description" content="The installer supports eight profiles through five modes: individual, runtime, docker, docker-runtime, and nix. Runtime-based modes support stdio and Streamable HTTP. A mode…">
+  <link rel="canonical" href="https://hela.my.id/library/docs/installation.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/installation.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/installation.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Document library">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 CELLS</div></div>
+      <nav aria-label="Document library"><details class="library-mobile-nav" open><summary>Browse documentation</summary><div class="doc-nav-section">DOCUMENTATION</div><ul class="doc-nav"><li><a href="../../index.html">Overview</a></li>
+<li><a href="../../architecture.html">Architecture</a></li>
+<li><a href="../../workflows.html">Workflows</a></li>
+<li><a href="../../profiles.html">Profiles &amp; config</a></li>
+<li><a href="../../troubleshooting.html">Diagnostics</a></li>
+<li><a href="../../library.html" aria-current="page">Document library</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="installation.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/installation.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="installation-modes-and-doctor" class="doc-title">Installation modes and doctor</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Getting started</p><p class="library-source">docs/installation.md</p><p>Original source language. <a href="../source/docs/installation.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>The installer supports eight profiles through five modes: <code>individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, and <code>nix</code>. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.</p>
+<p>See <a href="installation-acceptance.html">local acceptance evidence</a> for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.</p>
+<h2 id="requirements-and-boundaries">Requirements and boundaries</h2>
+<ul>
+<li>Use Node 22+ and Git. Native modules need Python, make, a C/C++ compiler, and platform headers. <code>--mode nix</code> supplies a pinned development toolchain and packages the runtime with Nix.</li>
+<li>Docker modes require a working Docker daemon and Compose v2. Their images build the selected cells from pinned source; they do not require host npm dependencies or per-cell Dockerfiles.</li>
+<li>Supported shell entry points are Linux, macOS, and Windows through WSL. Native Windows installation is not acceptance-tested; several upstream build scripts require POSIX tools.</li>
+<li>The pinned local Needle engine/model is installed by default on Linux x86_64/ARM64 and macOS ARM64. <code>--without-model</code> explicitly selects core MCP without that integration; it is needed on platforms without a pinned engine. Assets are fetched from an immutable upstream revision, checksum-verified, and accompanied by their license.</li>
+<li>Chromium/browser services, Android devices/ADB, Blender/its bridge, provider credentials, and GUI client authentication remain separate integration requirements. <code>READY</code> does not certify those operations or provide an OS sandbox.</li>
+</ul>
+<p>Installation does not start a persistent service, change system packages, replace existing repositories, or rewrite live client settings. Endpoint security and credential rotation are not changed by this installer.</p>
+<h2 id="managed-layout">Managed layout</h2>
+<p>Default prefix: <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/&lt;profile&gt;-&lt;mode&gt;</code>. Use <code>--prefix /absolute/path</code> to choose another directory.</p>
+<p>Each prefix contains its own ecosystem metadata, sibling source repositories, verified installation manifest, workspace, private data directories, and generated client fragments. Plastid is cloned at the repository root and built from <code>ll3m-mcp/brain</code>.</p>
+<p>The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked repositories, origin/pin/version mismatches, failed installs/builds, and existing explicit output files. A failed install retains a pending marker; doctor and launchers will not treat it as ready. Re-running the same installation performs locked dependency installation, rebuilds, and verifies it again. Existing data is not restored, reset, or deleted.</p>
+<h2 id="individual-servers">Individual servers</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode individual --profile dev-workspace
+</code></pre>
+</div>
+<p>Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.</p>
+<h2 id="single-stdio-runtime">Single stdio runtime</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --client codex --non-interactive
+./setup.sh doctor --mode runtime --profile dev-workspace
+</code></pre>
+</div>
+<p><code>--runtime</code> is an alias for <code>--mode runtime</code>. <code>--with-runtime</code> additionally builds the daemon for an individual installation without switching its client fragment to one connection.</p>
+<p>The selected-profile catalog is generated from fresh probes. Runtime verification checks exact cold catalog parity and zero cell startup, including its HTTP transport. The first actual cell call starts only its target.</p>
+<h2 id="docker-separate-cells-or-runtime">Docker: separate cells or runtime</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
+./setup.sh doctor --mode docker --profile dev-workspace
+
+./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode docker-runtime --profile dev-workspace
+</code></pre>
+</div>
+<p><code>--client docker</code> remains a shortcut for a Docker installation with Compose output. Use <code>--runtime</code> with it for the aggregated daemon. Both Docker modes build one profile image; client entries call Docker directly with the immutable image ID, launching separate cell containers or one runtime container. Those stdio clients do not need a host Node runtime after installation. <code>compose.json</code> provides the equivalent Compose services.</p>
+<p>Filesystem, terminal, and process tools operate inside the container and explicitly mounted workspace. Host SSH keys, device access, external browser engines, and Blender bridges are not silently copied or granted; configure those integrations deliberately.</p>
+<p>Stdio needs attached stdin, not published ports. Compose services have <code>stdin_open: true</code>, no TTY, and persistent named volumes. Use <code>docker compose -f /path/to/compose.json run --rm --no-deps -T &lt;service&gt;</code> for an attached stdio connection; <code>up -d</code> alone does not connect an MCP client to stdio.</p>
+<p>Doctor starts uniquely named temporary containers with no host data/vault mounts or inherited provider keys, verifies actual MCP replies and image source provenance, and removes those containers. It does not stop existing containers or clean global images/volumes.</p>
+<h2 id="nix-runtime">Nix runtime</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode nix --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode nix --profile dev-workspace
+</code></pre>
+</div>
+<p>Nix supplies the pinned Node/native-build toolchain for cell builds and builds the runtime package. The installation's <code>nix-runtime</code> output link is retained as a GC root. This is a packaged runtime plus locked cell builds, not a claim that all ten cells are independent Nix derivations. Keep private files untracked; Git-backed flake references exclude ignored credentials and data from Nix source copies.</p>
+<h2 id="http-runtime">HTTP runtime</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
+# Start the installed launcher explicitly; its path is printed by setup:
+node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
+./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+</code></pre>
+</div>
+<p>The same transport flags work with <code>--mode nix</code> and <code>--mode docker-runtime</code>. HTTP listeners bind to loopback on the host. Docker publishes only <code>127.0.0.1:&lt;port&gt;</code>; <code>compose.json</code> includes the HTTP command and port mapping. Explicitly start it with Compose <code>up -d</code> if desired.</p>
+<p>HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client backends fail clearly rather than emit unverified HTTP syntax; use <code>--client skip</code> and configure their MCP URL manually. No listener is auto-started during installation. Doctor's private HTTP probe does not substitute for checking the running URL.</p>
+<h2 id="snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
+./setup.sh --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
+./setup.sh doctor --prefix /path/to/existing/prefix --json
+</code></pre>
+</div>
+<p>Snapshots must declare exact commits and server versions. Incomplete historical metadata is rejected, not silently ignored. <code>--dev</code> follows recorded branches for host modes and records the resolved revisions/versions; Docker requires pinned snapshots. Optional provider keys are read from environment, not command-line secret flags. Generated fragments can contain those supplied credentials and are written with private permissions.</p>
+<p>Reconfiguration infers the existing mode/profile/transport from an explicit prefix and only generates another fragment. To change transport or port, rerun installation with the new settings; a stdio fragment must not point at an HTTP-only launcher.</p>
+<p>Doctor exits nonzero for missing or incomplete installations, modified builds, wrong revisions/versions, missing images, failed MCP replies, and runtime catalog/HTTP failures. A remote <code>--url</code> check verifies MCP initialize/discovery and the runtime version, not remote filesystem pins or hardware. Existing standalone sibling/nested checkouts remain diagnosable when no managed installation is selected.</p>
+<p>Never overwrite live SQLite files or force vault conflicts to resolve installation warnings. Use validated backups and a deliberate migration if you intend to move existing memory into a new managed prefix.</p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#requirements-and-boundaries">Requirements and boundaries</a></li><li><a href="#managed-layout">Managed layout</a></li><li><a href="#individual-servers">Individual servers</a></li><li><a href="#single-stdio-runtime">Single stdio runtime</a></li><li><a href="#docker-separate-cells-or-runtime">Docker: separate cells or runtime</a></li><li><a href="#nix-runtime">Nix runtime</a></li><li><a href="#http-runtime">HTTP runtime</a></li><li><a href="#snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.5.3"></script>
+  <script src="../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

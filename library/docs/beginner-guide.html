@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beginner&#39;s Guide: HeLa MCP Ecosystem — HeLa MCP Ecosystem</title>
+  <meta name="description" content="HeLa connects an AI client to tools for memory, files, commands, research, design, browsers, Android, and Blender. Install only the profile you need. Tools can change files and…">
+  <link rel="canonical" href="https://hela.my.id/library/docs/beginner-guide.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/beginner-guide.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/beginner-guide.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Document library">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 CELLS</div></div>
+      <nav aria-label="Document library"><details class="library-mobile-nav" open><summary>Browse documentation</summary><div class="doc-nav-section">DOCUMENTATION</div><ul class="doc-nav"><li><a href="../../index.html">Overview</a></li>
+<li><a href="../../architecture.html">Architecture</a></li>
+<li><a href="../../workflows.html">Workflows</a></li>
+<li><a href="../../profiles.html">Profiles &amp; config</a></li>
+<li><a href="../../troubleshooting.html">Diagnostics</a></li>
+<li><a href="../../library.html" aria-current="page">Document library</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="beginner-guide.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/beginner-guide.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="beginners-guide-hela-mcp-ecosystem" class="doc-title">Beginner's Guide: HeLa MCP Ecosystem</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Getting started</p><p class="library-source">docs/beginner-guide.md</p><p>Original source language. <a href="../source/docs/beginner-guide.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p><img src="../../assets/blotcat-beginner.jpg" alt="Blotcat beginner setup" loading="lazy"></p>
+<p>HeLa connects an AI client to tools for memory, files, commands, research, design, browsers, Android, and Blender. Install only the profile you need. Tools can change files and run commands with the server account's privileges; review your client's permissions before use.</p>
+<p>Current software versions are listed in <a href="current-versions.html">current versions</a>. Setup time depends on dependencies and downloads; browser and hardware workflows need extra software.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Node.js <strong>22 LTS</strong> is the tested full-stack environment. Enzyme requires at least 20.18.1; Receptor requires 22. Individual packages can declare different standalone engine ranges.</li>
+<li>Git and a terminal. Use a POSIX shell on Linux/macOS or WSL on Windows for <code>setup.sh</code>.</li>
+<li>Optional capabilities: Chromium/Playwright for browser work, ADB and a device for Android, and the Blender bridge for 3D.</li>
+</ul>
+<h2 id="install-a-profile">Install a profile</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
+cd hela-mcp-ecosystem
+./setup.sh --profile dev-workspace --client opencode --non-interactive
+</code></pre>
+</div>
+<p>Change the client to <code>cursor</code>, <code>claude</code>, <code>gemini</code>, <code>antigravity</code>, <code>kilo</code>, <code>zed</code>, or <code>codex</code> as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run <code>./setup.sh</code> without flags for interactive profile/mode/client selection.</p>
+<p>All eight profiles are supported:</p>
+<ul>
+<li><code>minimal</code>: three research/memory cells.</li>
+<li><code>dev-workspace</code>: eight development/browser/design cells; runtime default.</li>
+<li><code>headless-server</code>: seven cells without browser/device dependencies.</li>
+<li><code>research</code>: five research/browser/workspace cells.</li>
+<li><code>web-devops</code>: six frontend/browser/design cells.</li>
+<li><code>android-testing</code>: five cells including device control.</li>
+<li><code>3d-modeling</code>: five cells including Blender.</li>
+<li><code>all</code>: all ten cells.</li>
+</ul>
+<p>See <a href="profiles.html">profiles</a> for membership. Your selection is independent of other machines: lappy's ten-cell roster and servy's eight-cell roster are examples, not required configurations for everyone.</p>
+<h2 id="one-connection-or-separate-servers">One connection or separate servers</h2>
+<p>The installer normally configures separate MCP servers. Add <code>--runtime</code> to keep the same profile behind one endpoint:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+</code></pre>
+</div>
+<p>Runtime is a serve mode, not a profile named <code>runtime</code>. Its catalog advertises schemas without starting cells; a first call starts only its target. <a href="on-demand-runtime.html">Runtime details</a> explain catalog generation, missing metadata, and recovery.</p>
+<p>Other mechanisms are <code>--mode docker</code> (separate containers), <code>--mode docker-runtime</code> (one runtime container), and <code>--mode nix</code> (pinned toolchain and packaged runtime). Runtime modes also support <code>--transport http</code>. See <a href="installation.html">installation modes</a> for exact requirements and commands; Docker needs a working daemon, and HTTP listeners are started explicitly.</p>
+<h2 id="optional-keys">Optional keys</h2>
+<p>OpenRouter, GitHub, and Google keys are optional for discovery and keyless capabilities. Keyless does <strong>not</strong> mean every operation is offline: web research and external design services still need network access, and generative-model features require their configured provider or local engine. See <a href="keys-and-secrets.html">keys and services</a>.</p>
+<p>Generated configuration can contain credentials you explicitly provide. Keep it private, and do not paste the complete file into a chat or issue.</p>
+<h2 id="verify-the-selected-installation">Verify the selected installation</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh doctor --profile dev-workspace
+# If installed through the runtime:
+./setup.sh doctor --profile dev-workspace --runtime
+npm run test:matrix
+</code></pre>
+</div>
+<p>Doctor checks selected paths, versions, revisions, and actual isolated MCP replies. Runtime checking also verifies catalog parity and zero discovery startups. The configuration matrix checks 80 profile/client combinations; it does not log in to GUI agents or exercise hardware.</p>
+<p>For an explicit prefix, use <code>./setup.sh doctor --prefix /path/to/prefix</code>. For Docker or Nix defaults, select the same <code>--mode</code> and profile as installation. <code>doctor --url http://127.0.0.1:8080/mcp</code> checks a running HTTP endpoint; it does not inspect remote source revisions.</p>
+<p>On a full ten-cell checkout you can also run <code>npm test</code> and <code>npm run test:profiles</code>. On a partial checkout use <code>npm run test:profiles -- --profile &lt;id&gt;</code>. Missing unselected hardware repositories are not a reason to change your machine's profile.</p>
+<p>Reload the relevant client deliberately after reviewing configuration changes. Some clients, including Zed, can auto-reload servers when settings are saved. Do not change live vault hooks or restart unrelated clients merely to silence a warning. See <a href="integration.html">integration</a> and <a href="troubleshooting.html">troubleshooting</a>.</p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#requirements">Requirements</a></li><li><a href="#install-a-profile">Install a profile</a></li><li><a href="#one-connection-or-separate-servers">One connection or separate servers</a></li><li><a href="#optional-keys">Optional keys</a></li><li><a href="#verify-the-selected-installation">Verify the selected installation</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.5.3"></script>
+  <script src="../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

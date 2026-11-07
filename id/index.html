@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
@@ -33,6 +34,7 @@
         <div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
+<ol class="doc-nav"><li><a href="library.html"><span class="doc-nav-num">00</span> Pustaka dokumentasi</a></li></ol>
       <div class="doc-nav-section">MEMULAI</div>
       <ol class="doc-nav">
         <li><a href="index.html" aria-current="page"><span class="doc-nav-num">01</span> Ikhtisar</a></li>
@@ -112,7 +114,7 @@ cd hela-mcp-ecosystem
 ./setup.sh --profile dev-workspace --client opencode</code></pre>
         </div>
         <p><code>setup.sh</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>, memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
-        <p>Delapan profil mendukung <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker membutuhkan daemon aktif dan Compose v2; build native membutuhkan Python, make, dan compiler C/C++, atau toolchain Nix terkunci. Lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a> untuk persyaratan, Compose, GC root Nix, dan pemulihan kegagalan.</p>
+        <p>Delapan profil mendukung <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker membutuhkan daemon aktif dan Compose v2; build native membutuhkan Python, make, dan compiler C/C++, atau toolchain Nix terkunci. Lihat <a href="library/docs/installation.html">panduan instalasi</a> untuk persyaratan, Compose, GC root Nix, dan pemulihan kegagalan.</p>
         <p>Mode runtime mendukung <code>--transport http --port 8080</code>. Listener hanya di loopback dan harus dijalankan secara eksplisit; gunakan <code>doctor --url http://127.0.0.1:8080/mcp</code> untuk memeriksa endpoint aktif. Engine browser, kunci provider, bridge Android/Blender, dan autentikasi GUI tetap kebutuhan terpisah.</p>
         <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Profil bawaan tetap <code>dev-workspace</code>, sedangkan instalasi lain bebas memilih salah satu dari delapan profil.</p>
 
@@ -153,6 +155,8 @@ npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
     </div>
   </div>
   <script src="../release-data.js?v=1.5.3"></script>
-  <script src="../app.js?v=1.5.3"></script>
+  <script src="../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
 </body>
 </html>

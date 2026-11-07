@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation refresh — 2026-11-06 — HeLa MCP Ecosystem</title>
+  <meta name="description" content="Ecosystem 1.5.1 is a documentation-only source snapshot. The ten MCP cells remain 3.0.0; runtime remains 1.2.0 at its existing implementation revision. Current versions and…">
+  <link rel="canonical" href="https://hela.my.id/id/library/docs/documentation-refresh-2026-11-06.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/documentation-refresh-2026-11-06.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/documentation-refresh-2026-11-06.html">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Langsung ke isi</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Pustaka dokumentasi">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 SEL</div></div>
+      <nav aria-label="Pustaka dokumentasi"><details class="library-mobile-nav" open><summary>Jelajahi dokumentasi</summary><div class="doc-nav-section">DOKUMENTASI</div><ul class="doc-nav"><li><a href="../../index.html">Ikhtisar</a></li>
+<li><a href="../../architecture.html">Arsitektur</a></li>
+<li><a href="../../workflows.html">Alur kerja</a></li>
+<li><a href="../../profiles.html">Profil &amp; konfigurasi</a></li>
+<li><a href="../../troubleshooting.html">Diagnostik</a></li>
+<li><a href="../../library.html" aria-current="page">Pustaka dokumentasi</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Pustaka dokumentasi</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn" data-lang="en" href="../../../library/docs/documentation-refresh-2026-11-06.html">EN</a><a class="lang-btn active" data-lang="id" href="documentation-refresh-2026-11-06.html">ID</a></div><button class="btn open-cmd-palette" type="button">Cari <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="documentation-refresh--2026-11-06" class="doc-title">Documentation refresh — 2026-11-06</h1>
+<header class="library-document-meta" lang="id"><p class="library-kicker">Arsip historis</p><p class="library-source">docs/documentation-refresh-2026-11-06.md</p><p>Isi dalam bahasa sumber. <a href="../../../library/source/docs/documentation-refresh-2026-11-06.md" download>Unduh sumber</a> · <a href="../../library.html">Semua dokumen</a></p></header><p class="admonition library-history">Catatan historis: versi dan hasil verifikasi menggambarkan kondisi pada saat dokumen ditulis.</p><p>Ecosystem <strong>1.5.1</strong> is a documentation-only source snapshot. The ten MCP cells remain <strong>3.0.0</strong>; runtime remains <strong>1.2.0</strong> at its existing implementation revision. <a href="current-versions.html">Current versions</a> and <a href="generated-profile-counts.html">profile counts</a> are generated from canonical metadata.</p>
+<h2 id="scope">Scope</h2>
+<ul>
+<li>Audited all 12 repositories. Updated the ten cells' README version banners and generated canonical tool references; the runtime's existing 1.2.0 reference was already current.</li>
+<li>Completed all 16 English/Indonesian website pages, including current architecture, profiles, requirements, runtime behavior, diagnostics, privacy, and historical showcase labels.</li>
+<li>Corrected Codex keys and actual repository paths, including Plastid's <code>brain</code> entrypoint. Browser previews intentionally omit private environment values and are not byte-identical installation files.</li>
+<li>Regenerated seven committed client examples with a sanitized environment. The older seven-cell Compose file is explicitly a deployment scaffold, not full-profile or transport acceptance evidence.</li>
+<li>Preserved v1.0.0–v1.5.0 snapshots, historical release evidence, and independently versioned Blender/HyperFrames/vendor material.</li>
+</ul>
+<h2 id="verification">Verification</h2>
+<ul>
+<li>Documentation generation is idempotent; <code>docs:check</code> and all <strong>74</strong> documentation/configuration regressions pass. These checks include local web links/anchors, unique IDs, JSON-LD, current versions, canonical tool lists, script ordering, and release cache-busting.</li>
+<li>CLI matrix: <strong>80/80</strong> profile/backend cases. Probe and inventory regressions: <strong>4/4</strong> each. Strict package/MCP/inventory/snapshot versions and revision pins: <strong>11/11</strong>.</li>
+<li>Standalone integration and safe cross-cell checks: <strong>15/15</strong> across ten servers, with no tool-name collisions in the feature-disabled probe environment.</li>
+<li>All eight profiles: <strong>16/16</strong> namespace-mode checks pass, with exact schemas, zero discovery startups, and safe read-only routing.</li>
+<li>Fresh native ARM probes validate all eight <code>dev-workspace</code> cells against the new documentation revisions. Schema parity retains both verified Nucleus build digests; compiled implementation bytes were reused, not rebuilt as a new software release.</li>
+<li>Browser checks: <strong>64</strong> visible configurator selections per language; <strong>16</strong> pages at <strong>1200 px</strong> and <strong>390 px</strong> widths without document-level horizontal overflow. Desktop/mobile screenshots were inspected. Canonical search links, successful copy, and denied-clipboard feedback were checked; failed clipboard writes no longer claim success.</li>
+<li>Current Markdown file-link scan: <strong>104</strong> references checked, no missing targets. This is not an exhaustive external-link availability guarantee.</li>
+<li>Secret scanning found only the pre-existing probe-test sentinel; no new credentials were added. Hardware, providers, and authenticated ACP/GUI sessions were not exercised by this documentation refresh.</li>
+</ul>
+<h2 id="publication-boundaries">Publication boundaries</h2>
+<p>Plastid and Receptor had unrelated remote dependency updates. Documentation-only commits were merged into their default branches without discarding those updates. Snapshot v1.5.1 deliberately pins the documentation-only parents, not unvalidated dependency changes.</p>
+<p>The Pages workflow validates generated documentation and its tests before publishing. Source commit: <code>7f95832b4f0b9e6ba3057ffbb7df84b62e2bcd91</code>. Published Pages commit: <code>3077d3f8d02436637b4322407c58621069dfe922</code>.</p>
+<ul>
+<li><a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/actions/runs/42233639731">Ecosystem CI</a>: successful.</li>
+<li><a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/actions/runs/42233639734">Validated site build/sync</a>: successful.</li>
+<li><a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/actions/runs/42233666134">GitHub Pages deployment</a>: successful.</li>
+<li>Public checks at <a href="https://hela.my.id/">hela.my.id</a> and its Indonesian pages: all <strong>16</strong> pages return HTTP 200 with v1.5.1 and versioned scripts; all <strong>26</strong> discovered internal resources return success. Generated data, app, stylesheet, counts, and the hero image load successfully.</li>
+<li>Public browser configurators pass <strong>64 selections per language</strong>, with exact profile membership, current metadata, working canonical search links, and no desktop/mobile document overflow.</li>
+</ul>
+<p>No live runtime was restarted or reconfigured. Servy's service remained active at PID <code>715090</code>, with zero automatic restarts during native ARM catalog verification. Active databases, existing vault conflicts, security settings, credentials, and unrelated client configurations were not changed. Deferred endpoint security, authenticated ACP acceptance, deliberate external-client reloads, legacy gateway retirement, and conflict reconciliation remain separate work.</p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#scope">Scope</a></li><li><a href="#verification">Verification</a></li><li><a href="#publication-boundaries">Publication boundaries</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../../release-data.js?v=1.5.3"></script>
+  <script src="../../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

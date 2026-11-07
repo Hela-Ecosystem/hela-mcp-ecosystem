@@ -1,0 +1,83 @@
+{
+  "mcp": {
+    "hela-mitosis": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/chaining-mcp/dist/index.js"
+      ],
+      "environment": {
+        "MEMORY_FILE_PATH": "/absolute/path/to/MCPservers/chaining-mcp/data/memory.json",
+        "AWESOME_COPILOT_ENABLED": "true",
+        "RELIABILITY_MONITORING_ENABLED": "true",
+        "CHAINING_TOOL_TIMEOUT_MS": "10000",
+        "CHAINING_LLM_ENABLED": "false",
+        "CHAINING_LLM_MODEL": "openrouter/free",
+        "CHAINING_LLM_BASE_URL": "https://openrouter.ai/api/v1",
+        "HELA_PROFILE": "dev-workspace"
+      }
+    },
+    "hela-genome": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/project-mcp/dist/index.js"
+      ]
+    },
+    "hela-membrane": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/filesystem-mcp/dist/index.js"
+      ]
+    },
+    "hela-nucleus": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/terminal-mcp/build/index.js"
+      ]
+    },
+    "hela-ribosome": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/menager-mcp/build/index.js"
+      ]
+    },
+    "hela-enzyme": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/researcher-mcp/dist/index.js"
+      ],
+      "environment": {
+        "WIKIPEDIA_CACHE_MAX": "100",
+        "WIKIPEDIA_CACHE_TTL": "300000",
+        "WIKIPEDIA_DEFAULT_LANGUAGE": "en"
+      }
+    },
+    "hela-phenotype": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/designer-mcp/dist/index.js"
+      ]
+    },
+    "hela-cytosol": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "node",
+        "/absolute/path/to/MCPservers/browser-mcp/src/server.js"
+      ]
+    }
+  }
+}

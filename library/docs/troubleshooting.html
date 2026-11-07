@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeLa MCP Ecosystem Troubleshooting &amp; Diagnostic Guide — HeLa MCP Ecosystem</title>
+  <meta name="description" content="This guide provides systematic diagnostic procedures, error code explanations, and recovery workflows for the HeLa MCP Ecosystem.">
+  <link rel="canonical" href="https://hela.my.id/library/docs/troubleshooting.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/troubleshooting.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/troubleshooting.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Document library">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 CELLS</div></div>
+      <nav aria-label="Document library"><details class="library-mobile-nav" open><summary>Browse documentation</summary><div class="doc-nav-section">DOCUMENTATION</div><ul class="doc-nav"><li><a href="../../index.html">Overview</a></li>
+<li><a href="../../architecture.html">Architecture</a></li>
+<li><a href="../../workflows.html">Workflows</a></li>
+<li><a href="../../profiles.html">Profiles &amp; config</a></li>
+<li><a href="../../troubleshooting.html">Diagnostics</a></li>
+<li><a href="../../library.html" aria-current="page">Document library</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="troubleshooting.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/troubleshooting.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="hela-mcp-ecosystem-troubleshooting--diagnostic-guide" class="doc-title">HeLa MCP Ecosystem Troubleshooting &amp; Diagnostic Guide</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Operations & verification</p><p class="library-source">docs/troubleshooting.md</p><p>Original source language. <a href="../source/docs/troubleshooting.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>This guide provides systematic diagnostic procedures, error code explanations, and recovery workflows for the <strong>HeLa MCP Ecosystem</strong>.</p>
+<p><img src="../../assets/blotcat-troubleshooting.jpg" alt="Blotcat wearing a hard hat, looking at a smoking server block while consulting a thick manual" loading="lazy"></p>
+<hr>
+<h2 id="1-fast-diagnostic-workflow-setupsh-doctor">1. Fast Diagnostic Workflow: <code>setup.sh doctor</code></h2>
+<p>Before manual debugging, always run the automated diagnostic health check:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh doctor
+# or
+npm run doctor
+</code></pre>
+</div>
+<p>To run diagnostics against a specific profile:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh doctor --profile dev-workspace
+</code></pre>
+</div>
+<p>To output machine-readable JSON:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh doctor --json
+</code></pre>
+</div>
+<p>For managed installations, select the installed <code>--mode</code> and profile, or use an explicit prefix:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh doctor --prefix /path/to/prefix --json
+./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+</code></pre>
+</div>
+<p>The URL form checks an already-running HTTP endpoint, not its remote filesystem. See <a href="installation.html">installation modes</a> for Docker, Nix, listener startup, and private client fragments.</p>
+<h3 id="understanding-diagnostic-output">Understanding Diagnostic Output</h3>
+<ul>
+<li><strong><code>READY</code></strong>: Managed source/build/image identity and isolated MCP initialize/discovery checks passed. Runtime modes also check cold catalog parity and private HTTP discovery.</li>
+<li><strong><code>DEGRADED</code> / server <code>ERROR</code></strong>: A required check failed; inspect the JSON report for its server/error. Pending installations, changed builds, missing interpreters/images, and bad MCP replies fail readiness and return nonzero.</li>
+<li><strong>Integration scope</strong>: Discovery does not verify Playwright executables, Android/Blender bridges, provider credentials, GUI authentication, or arbitrary workspace access. Legacy unmanaged checkout diagnostics have a different report layout.</li>
+</ul>
+<hr>
+<h2 id="2-common-issues--recovery-procedures">2. Common Issues &amp; Recovery Procedures</h2>
+<h3 id="21-diagnostic-failure-missing-entrypoint-or-build-artifacts">2.1 Diagnostic Failure: Missing Entrypoint or Build Artifacts</h3>
+<p><strong>Symptom</strong>: <code>[ERROR] Entrypoint file missing</code> or <code>dist/index.js not found</code>.</p>
+<p><strong>Root Cause</strong>: The TypeScript source code has not been compiled into JavaScript build artifacts.</p>
+<p><strong>Fix</strong>:
+For a managed prefix, rerun the original setup command with the same mode/profile/prefix. Locked dependencies and selected builds are recreated and probed. Preserve dirty working-tree changes rather than resetting them. A pending marker is cleared only after successful verification.</p>
+<p>For manually maintained sibling checkouts:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash"># Rebuild all 10 servers automatically
+npm run build:all
+
+# Or build a single server manually
+cd &lt;server-directory&gt;
+npm run build
+</code></pre>
+</div>
+<hr>
+<h3 id="22-server-stdio-json-rpc-hang-or-crash">2.2 Server Stdio JSON-RPC Hang or Crash</h3>
+<p><strong>Symptom</strong>: <code>[ERROR] Exited early with code 1</code> or tool timeouts during execution.</p>
+<p><strong>Root Cause</strong>: Node module dependencies are missing, or environment variables are malformed.</p>
+<p><strong>Fix</strong>:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash"># Reinstall dependencies for the failing server
+cd &lt;server-directory&gt;
+npm ci
+npm run build
+</code></pre>
+</div>
+<p>Verify stdio responsiveness manually:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node &lt;entrypoint-file&gt;
+# The process should listen on stdin without throwing an uncaught exception. Press Ctrl+C to exit.
+</code></pre>
+</div>
+<hr>
+<h3 id="23-client-does-not-recognize-configured-mcp-servers">2.3 Client Does Not Recognize Configured MCP Servers</h3>
+<p><strong>Symptom</strong>: Cursor, Claude, Gemini, or Zed reports that tools are not available.</p>
+<p><strong>Root Cause</strong>: Configuration file was written to the wrong path, contains relative paths, or the client was not restarted.</p>
+<p><strong>Fix</strong>:</p>
+<ol>
+<li><strong>Regenerate configuration with absolute paths</strong>:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
+</code></pre>
+</div>
+</li>
+<li><strong>Review and merge the printed private fragment into the correct client file</strong>. Setup does not write these live files:
+<ul>
+<li><strong>Cursor IDE</strong>: <code>cat ~/.cursor/mcp.json</code></li>
+<li><strong>Claude Desktop</strong>: <code>cat ~/.claude.json</code></li>
+<li><strong>Gemini / Antigravity</strong>: <code>cat ~/.gemini/antigravity-cli/mcp_config.json</code></li>
+<li><strong>OpenCode</strong>: <code>cat ~/.config/opencode/opencode.json</code></li>
+<li><strong>Kilo CLI</strong>: <code>cat ~/.config/kilo/config.json</code></li>
+<li><strong>Zed Editor</strong>: <code>cat ~/.config/zed/settings.json</code></li>
+<li><strong>Codex / ChatGPT</strong>: <code>cat ~/.codex/config.toml</code></li>
+</ul>
+</li>
+<li><strong>Check reload behavior</strong>: some clients require a restart; Zed can restart context servers immediately when settings are saved. Back up active memory/vault state before changing sync hooks. Never paste raw client configuration containing credentials into an issue or chat.</li>
+</ol>
+<h3 id="zed-forwards-a-server-that-codex-already-defines">Zed forwards a server that Codex already defines</h3>
+<p>The message <code>MCP server hela-… was not started, because the Codex config already defines an MCP server with this name</code> refers to the forwarded duplicate. It does not prove that Codex failed to start its native entry. <code>codex mcp list</code> inspects configuration, not connectivity; check MCP startup/discovery or an actual safe tool call separately.</p>
+<p>Zed 1.27.0 forwards project context servers to external agents; native <code>agent.profiles.*.context_servers</code> controls are not a per-ACP forwarding switch. Do not remove shared top-level <code>context_servers</code> just to silence Codex warnings: native Zed and other agents may need them.</p>
+<p>The installed codex-acp 2.5.0 supports an optional per-agent environment override:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-json">&quot;env&quot;: { &quot;DISABLE_MCP_CONFIG_FILTERING&quot;: &quot;true&quot; }
+</code></pre>
+</div>
+<p>Place it under <code>agent_servers.codex-acp</code> only if deliberately choosing merged forwarded/native ownership. This disables adapter duplicate filtering, <strong>not forwarding</strong>; it can fail when future definitions disagree. Identical definitions passed isolated merge/discovery checks, but authenticated Zed ACP sessions still require verification. Keeping Codex-owned entries and leaving this toggle unset preserves native ownership, with the duplicate warning still possible.</p>
+<p>Source references: <a href="https://github.com/zed-industries/zed/blob/c84af5b99cbc366d675064e52b23664a015b6e35/crates/agent_servers/src/acp.rs#L44-L65">Zed forwarding</a>, <a href="https://github.com/zed-industries/zed/blob/c84af5b99cbc366d675064e52b23664a015b6e35/crates/settings_content/src/agent.rs#L842-L904">agent settings schema</a>, and <a href="https://github.com/agentclientprotocol/codex-acp/blob/v2.5.0/src/CodexAcpClient.ts#L1620-L1623">adapter toggle</a>.</p>
+<hr>
+<h3 id="24-pinned-snapshot-recovery--rollback">2.4 Pinned Snapshot Recovery &amp; Rollback</h3>
+<p><strong>Symptom</strong>: Upstream repository changes broke a server build or altered expected tool schemas.</p>
+<p><strong>Root Cause</strong>: Moving <code>main</code>/<code>master</code> branch contains unreleased or breaking changes.</p>
+<p><strong>Fix</strong>:
+Restore known-good, audited release snapshot:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --snapshot v1.5.1 --profile dev-workspace --non-interactive
+</code></pre>
+</div>
+<hr>
+<h3 id="25-sqlite-database-lock-or-corruption-hela-genome">2.5 SQLite Database Lock or Corruption (<code>HeLa Genome</code>)</h3>
+<p><strong>Symptom</strong>: <code>database is locked</code> or <code>SQLite error</code> in <code>project-mcp</code>.</p>
+<p><strong>Possible causes</strong>: Competing writers, a long transaction, permissions, filesystem failures, or a damaged database. A lock error alone does not prove corruption or missing WAL mode.</p>
+<p><strong>Fix</strong>:</p>
+<ol>
+<li>Identify the actual database path and owning processes. Inspect integrity read-only:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">sqlite3 -readonly /absolute/path/to/memory.db &quot;PRAGMA integrity_check;&quot;
+</code></pre>
+</div>
+</li>
+<li>Take an online, validated backup that includes committed WAL data. Do not copy only the main file while SQLite is active; no daily-backup schedule is implied by the package.</li>
+<li>Restore only to a new, absent destination with no SQLite sidecars, verify integrity, and review a controlled switchover. Never overwrite an active database. Preserve divergent Obsidian notes and existing conflict archives instead of choosing a winner automatically.</li>
+</ol>
+<hr>
+<h3 id="26-external-hardware-driver-issues">2.6 External Hardware Driver Issues</h3>
+<h4 id="hela-receptor-android--adb">HeLa Receptor (Android / ADB)</h4>
+<ul>
+<li><strong>Verify ADB availability</strong>: <code>adb version</code></li>
+<li><strong>Verify device connectivity</strong>: <code>adb devices</code> (ensure device is authorized with USB debugging enabled).</li>
+</ul>
+<h4 id="hela-cytosol-browser-automation">HeLa Cytosol (Browser Automation)</h4>
+<ul>
+<li><strong>Install Playwright browsers</strong>:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">npx playwright install chromium
+</code></pre>
+</div>
+</li>
+</ul>
+<h4 id="hela-plastid-blender-3d">HeLa Plastid (Blender 3D)</h4>
+<ul>
+<li><strong>Verify Blender CLI in PATH</strong>:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">blender --version
+</code></pre>
+</div>
+</li>
+<li>If installed outside standard PATH, create a symlink:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">sudo ln -s /path/to/blender /usr/local/bin/blender
+</code></pre>
+</div>
+</li>
+</ul>
+<hr>
+<h2 id="3-getting-further-support">3. Getting Further Support</h2>
+<ul>
+<li><strong>Run Integration Tests</strong>: <code>npm test</code> discovers the installed cells; use <code>-- --profile &lt;id&gt;</code> for a selected subset. Tool counts depend on enabled features.</li>
+<li><strong>Run Matrix Tests</strong>: <code>npm run test:matrix</code> verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.</li>
+<li><strong>File an Issue</strong>: Open an issue at <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues"><code>Hela-Ecosystem/hela-mcp-ecosystem/issues</code></a> with reviewed/redacted output from <code>./setup.sh doctor --json</code> and the failed check. Do not attach private configs or environments.</li>
+</ul>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1-fast-diagnostic-workflow-setupsh-doctor">1. Fast Diagnostic Workflow: setup.sh doctor</a></li><li><a href="#2-common-issues--recovery-procedures">2. Common Issues &amp; Recovery Procedures</a></li><li><a href="#3-getting-further-support">3. Getting Further Support</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.5.3"></script>
+  <script src="../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

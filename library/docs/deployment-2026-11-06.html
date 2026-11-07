@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servy deployment verification — 2026-11-06 — HeLa MCP Ecosystem</title>
+  <meta name="description" content="This records the earlier runtime 1.1.0 rollout. The subsequent runtime 1.2.0 on-demand deployment supersedes its process/startup state; the evidence below remains historical.">
+  <link rel="canonical" href="https://hela.my.id/library/docs/deployment-2026-11-06.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/deployment-2026-11-06.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/deployment-2026-11-06.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Document library">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 CELLS</div></div>
+      <nav aria-label="Document library"><details class="library-mobile-nav" open><summary>Browse documentation</summary><div class="doc-nav-section">DOCUMENTATION</div><ul class="doc-nav"><li><a href="../../index.html">Overview</a></li>
+<li><a href="../../architecture.html">Architecture</a></li>
+<li><a href="../../workflows.html">Workflows</a></li>
+<li><a href="../../profiles.html">Profiles &amp; config</a></li>
+<li><a href="../../troubleshooting.html">Diagnostics</a></li>
+<li><a href="../../library.html" aria-current="page">Document library</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="deployment-2026-11-06.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/deployment-2026-11-06.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="servy-deployment-verification--2026-11-06" class="doc-title">Servy deployment verification — 2026-11-06</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Historical records</p><p class="library-source">docs/deployment-2026-11-06.md</p><p>Original source language. <a href="../source/docs/deployment-2026-11-06.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p class="admonition library-history">Historical record: versions and verification results describe the state when this document was written.</p><p>This records the earlier runtime 1.1.0 rollout. The subsequent <a href="on-demand-runtime.html#verified-servy-rollout">runtime 1.2.0 on-demand deployment</a> supersedes its process/startup state; the evidence below remains historical.</p>
+<p>The v1.4.0 source release (<code>c9faa9b</code>) is deployed to servy's systemd-managed HTTP runtime. This record covers that deployment, not authenticated GUI sessions or live vault reconciliation.</p>
+<h2 id="published-source-and-builds">Published source and builds</h2>
+<ul>
+<li>Genome: <code>16fc4f31735e139d690ae0ace8d4feaf1a603563</code>.</li>
+<li>Enzyme: <code>5399e33c7c8a5b75ad620dc33f66a1cbf49972f7</code>.</li>
+<li>Runtime: <code>797bad451b45d0d67631eeb8cdb1c93d259f614c</code>, version <strong>1.1.0</strong>.</li>
+<li>Remaining cell pins are in <code>config/snapshots/v1.4.0.json</code>. Historical v1.0.0–v1.3.0 snapshots were not modified.</li>
+</ul>
+<p>Runtime recovery passes <strong>20/20</strong> isolated fault tests on x86_64-linux and native aarch64-linux; all 29 fixture PIDs per run were reaped. Coverage includes hung RPCs, SIGTERM/SIGKILL, exit-before-restart, pipe routing, bounded retries, profile boundaries, and shutdown cleanup. No live service cell was faulted during deployment.</p>
+<p>Final-source Nix builds use the committed lockfile, fixed-output npm dependencies, production installation, and Node <strong>22.23.4</strong>:</p>
+<ul>
+<li>x86_64-linux: <code>/nix/store/gzxl62xr29nh36yb75c242gp4mnsibsh-hela-runtime-1.1.0</code>.</li>
+<li>aarch64-linux: <code>/nix/store/y9hqz9kyx860s5xqx3gk23x7acsghis2-hela-runtime-1.1.0</code>.</li>
+</ul>
+<p>Genome's clean-install regression suite passes <strong>19 suites / 242 tests</strong>. Enzyme's <strong>79 tests</strong> and Phenotype's <strong>74 tests</strong> pass. Ten isolated standalone MCP handshakes, 80 client-configuration combinations, three probe regressions, and three isolated direct/runtime read-only parity calls pass. These checks do not establish authenticated GUI or hardware integration.</p>
+<h2 id="controlled-promotion">Controlled promotion</h2>
+<p>All eight selected cells, runtime, and ecosystem checkouts were clean before fast-forward promotion. Validated staged builds were promoted; Genome, Ribosome, Enzyme, and Phenotype received fresh ARM dependency trees. Old build/dependency directories remain in the rollout's <code>rollback/</code> directory. All ten deployed checkouts passed <code>npm ls --depth=0</code>; source revisions agreed with lappy at source-release verification.</p>
+<p>Before stopping the service, three online SQLite backups passed integrity checks and the live vault was archived again. Earlier backups were hash-verified. No active database file was replaced or restored.</p>
+<p>Only <code>hela-runtime.service</code> was stopped/restarted. Its old ten processes, including a duplicate Genome child, exited. The new service owns one runtime plus exactly eight direct child cells; all use Nix Node 22.23.4. At verification, systemd reported active state, zero automatic restarts, and successful exit status.</p>
+<p>The deployed package is rooted by:</p>
+<p><code>/home/ubuntu/.local/state/hela/deployments/todo102-z65w9kzr/runtime</code></p>
+<p>The drop-in <code>/etc/systemd/system/hela-runtime.service.d/10-nix-package.conf</code> selects that executable and prepends pinned Node to PATH. The original unit remains intact. Existing profile, vault setting, host, port, and endpoint-security configuration were not changed.</p>
+<h2 id="discovery-and-ownership">Discovery and ownership</h2>
+<ul>
+<li>Default profile: <strong>dev-workspace</strong>, eight cells; no Receptor or Plastid deployment on servy.</li>
+<li>Local <code>/healthz</code>: HTTP 200, runtime <strong>1.1.0</strong>.</li>
+<li>Local and public MCP initialize/tools discovery: <strong>236 unique tools</strong> at <code>/mcp</code>, including <code>create_mission</code>, <code>list_missions</code>, <code>update_mission</code>, and <code>hela.pipe</code>; hardware-only tools absent.</li>
+<li>Public endpoint: <code>https://hela-runtime.glassgallery.my.id/mcp</code>.</li>
+<li>A local HTTP <code>terminal_session_list</code> call passed MCP and payload-level error checks.</li>
+<li>Isolated strict package/initialize/inventory/snapshot/pin checks passed for eight cells and runtime; deployed doctor reported <strong>8/8 READY</strong>.</li>
+</ul>
+<p>The isolated feature-disabled runtime exposes <strong>230 tools</strong>. The live configuration adds <code>llm_query</code>, <code>llm_decompose_task</code>, <code>llm_suggest_route</code>, <code>llm_summarize</code>, <code>agent_run</code>, and runtime alias <code>hela.agent.run</code>. No isolated tools were missing from live discovery. Those additional model-backed tools were discovered, not invoked.</p>
+<p>The 211 unresolved divergent-note conflicts remain archived. All <strong>633</strong> existing servy conflict archive files retained their pre-rollout hashes. No conflict winner, explicit bulk deduplication, or deletion reconciliation was forced.</p>
+<h2 id="evidence-and-retained-recovery-material">Evidence and retained recovery material</h2>
+<p>Servy rollout directory:</p>
+<p><code>/home/ubuntu/.local/state/hela/deployments/todo102-z65w9kzr/</code></p>
+<p>It contains <code>manifest.json</code>, <code>backup/</code>, <code>rollback/</code>, the runtime GC root, <code>verify-versions.mjs.log</code>, <code>doctor.mjs.log</code>, <code>http-verification.json</code>, and <code>feature-difference.json</code>. These are local operational records, not public credential/configuration dumps.</p>
+<p>Previous backups remain at:</p>
+<ul>
+<li>lappy: <code>/home/azzar/.local/state/hela/backups/pre-10.2-d9nokk5t/</code>.</li>
+<li>servy: <code>/home/ubuntu/.local/state/hela/backups/pre-10.2-m6j95llu/</code>.</li>
+</ul>
+<p>Rollback material is retained, but no live rollback was performed. Any rollback must stop the service, preserve current databases/vaults, inspect compatibility, and select retained code/dependencies deliberately. Do not overwrite active databases or hard-reset repositories.</p>
+<h2 id="remaining-work">Remaining work</h2>
+<ul>
+<li>Authenticated Zed/Codex ACP session and GUI warning verification remain pending. Direct MCP and isolated Codex discovery passed; credentials were not copied and the optional ACP duplicate-filter override remains unset.</li>
+<li>Two older stdio runtimes owned by an active servy OpenCode client were preserved. They require a deliberate client reload; the HTTP service rollout does not update code already loaded in unrelated processes. Local client reload state also remains unverified.</li>
+<li>PM2 has no active or saved individual MCP cell entries. It still owns the legacy <code>mcp-gateway</code> on port <strong>8010</strong>, with no child cells and seven retired backends on <strong>8011–8017</strong> reporting down. Historical entries remain in <code>dump.pm2.bak</code>. Review consumers/routes before retiring this gateway; it does not serve the verified runtime endpoint on <strong>8090</strong>.</li>
+<li>Review archived vault conflicts before reconciliation. Deployment is not conflict resolution.</li>
+<li>True first-call ignition, full revision/configuration manifest invalidation, optional hardware integrations, and deferred endpoint authentication/credential rotation remain separate work.</li>
+</ul>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#published-source-and-builds">Published source and builds</a></li><li><a href="#controlled-promotion">Controlled promotion</a></li><li><a href="#discovery-and-ownership">Discovery and ownership</a></li><li><a href="#evidence-and-retained-recovery-material">Evidence and retained recovery material</a></li><li><a href="#remaining-work">Remaining work</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.5.3"></script>
+  <script src="../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

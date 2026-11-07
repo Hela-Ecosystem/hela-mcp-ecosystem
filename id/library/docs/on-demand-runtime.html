@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On-demand runtime and canonical discovery — HeLa MCP Ecosystem</title>
+  <meta name="description" content="Runtime 1.2.0 implements §10.3: no cell starts during runtime startup or tools/list. The first call starts only its target; concurrent calls share that startup. Cells already…">
+  <link rel="canonical" href="https://hela.my.id/id/library/docs/on-demand-runtime.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/on-demand-runtime.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/on-demand-runtime.html">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Langsung ke isi</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Pustaka dokumentasi">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 SEL</div></div>
+      <nav aria-label="Pustaka dokumentasi"><details class="library-mobile-nav" open><summary>Jelajahi dokumentasi</summary><div class="doc-nav-section">DOKUMENTASI</div><ul class="doc-nav"><li><a href="../../index.html">Ikhtisar</a></li>
+<li><a href="../../architecture.html">Arsitektur</a></li>
+<li><a href="../../workflows.html">Alur kerja</a></li>
+<li><a href="../../profiles.html">Profil &amp; konfigurasi</a></li>
+<li><a href="../../troubleshooting.html">Diagnostik</a></li>
+<li><a href="../../library.html" aria-current="page">Pustaka dokumentasi</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Pustaka dokumentasi</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn" data-lang="en" href="../../../library/docs/on-demand-runtime.html">EN</a><a class="lang-btn active" data-lang="id" href="on-demand-runtime.html">ID</a></div><button class="btn open-cmd-palette" type="button">Cari <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="on-demand-runtime-and-canonical-discovery" class="doc-title">On-demand runtime and canonical discovery</h1>
+<header class="library-document-meta" lang="id"><p class="library-kicker">Referensi</p><p class="library-source">docs/on-demand-runtime.md</p><p>Isi dalam bahasa sumber. <a href="../../../library/source/docs/on-demand-runtime.md" download>Unduh sumber</a> · <a href="../../library.html">Semua dokumen</a></p></header><p>Runtime <strong>1.2.0</strong> implements §10.3: no cell starts during runtime startup or <code>tools/list</code>. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime default stays <code>dev-workspace</code>.</p>
+<h2 id="one-inventory-generated-schemas-and-counts">One inventory, generated schemas and counts</h2>
+<p><code>config/inventory.json</code> remains the source of cell paths, revisions, versions, environment declarations, and conditional tool features. <code>config/profiles.json</code> selects membership. Config generation, doctor, version verification, integration, and profile tests use the same inventory loader/path resolution.</p>
+<p>The generated <code>config/tool-catalog.json</code> contains actual standalone MCP schemas, revision/version metadata, verified build digests, and feature variants. It is a derived artifact, not another server registry. Mitosis currently has four LLM/agent feature combinations; other cells have one schema variant. The generator enables registration flags only for discovery and never invokes model-backed tools.</p>
+<p>Build outputs can differ between machines even at one source revision. Multiple digests are retained together only if fresh probes return identical schemas for every declared variant. New or changed conditional tool registration must declare its switches under the cell's <code>toolFeatures</code>; other relevant settings belong in its <code>env</code> list. Configuration changes require a new runtime instance.</p>
+<p>Run from the ecosystem checkout after building the selected cells and runtime:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">npm run catalog:generate -- --profile dev-workspace
+npm run catalog:check -- --profile dev-workspace
+./setup.sh doctor --profile dev-workspace --runtime
+npm run test:profiles -- --profile dev-workspace
+</code></pre>
+</div>
+<p>The installer refreshes selected-profile catalog entries when installing the runtime. Partial installations do not need unrelated hardware cells. An installation with all cells can omit the profile argument to generate/check all entries.</p>
+<p>The same generator writes <a href="generated-profile-counts.html">profile-count documentation</a> and <code>docs/site/data/tool-counts.json</code>. Counts include <code>hela.pipe</code> and the optional agent alias; they are feature-dependent ranges, not fixed totals copied into each client configuration.</p>
+<h2 id="cache-isolation-and-stale-metadata">Cache isolation and stale metadata</h2>
+<p>The format-2 private cache separates ecosystem roots, profiles, and namespace modes. Per-cell fingerprints cover declared and actual revisions, build contents, effective feature flags, and declared environment settings. Cache files contain fingerprints and schemas only, not environment values. Atomic publication prevents partial reads.</p>
+<p>Legacy, corrupt, and mismatched cache entries are ignored. A valid generated catalog supplies cold schemas without child processes. Missing/stale catalog entries are not advertised. Unknown calls do not scan other cells. Explicit <code>hela.pipe</code> routing can start an uncatalogued named cell and learn its schemas; regenerating the catalog restores full cold discovery.</p>
+<p>Doctor validates selected paths/builds, real isolated MCP handshakes, package/inventory/snapshot versions and revisions, and—when <code>--runtime</code> is requested—exact catalog/tool agreement with zero discovery spawns. Hardware checks are limited to the selected profile and remain separate from MCP readiness. API-key checks report presence, never values or assumed provider readiness.</p>
+<h2 id="verification-scope">Verification scope</h2>
+<ul>
+<li><strong>32/32</strong> runtime regressions pass on x86_64 Linux and native ARM, covering timeout recovery, lazy startup, 24 concurrent first calls, cache invalidation, profile/root/namespace switching, legacy/corrupt caches, explicit bootstrap, and shutdown. <strong>41 fixture PIDs</strong> per run were verified reaped.</li>
+<li>All eight profiles pass <strong>16/16</strong> namespace-off/on discovery/schema/routing checks. Discovery starts zero cells; only the safe Genome/Nucleus probes start those cells. Cold discovery, cold first-call, and warm-call durations are recorded in JSON output without asserting machine-independent latency limits.</li>
+<li>The <strong>80</strong> client-configuration combinations, four probe regressions, and four canonical inventory regressions pass. Default standalone integration now excludes the multiplexing runtime from collision comparisons.</li>
+<li>Eight additional runtime discovery checks cover all four Mitosis feature combinations in both namespace modes, without invoking model tools or starting cells. Doctor reports READY with cold catalog parity for all eight profiles.</li>
+<li>Reproducible Nix packages use Node 22.23.4 and pinned/fixed-output inputs on both Linux architectures. Runtime versions derive from package metadata.</li>
+</ul>
+<p>These checks do not authenticate GUI ACP sessions, reconcile live vault conflicts, exercise Android/Blender hardware, invoke model providers, or complete deferred endpoint security. Lappy retains its ten-server roster; servy retains its eight-cell <code>dev-workspace</code> selection.</p>
+<h2 id="verified-servy-rollout">Verified servy rollout</h2>
+<p>Runtime source <code>9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0</code> and ecosystem source release <code>1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf</code> are deployed. Final-source Nix outputs are:</p>
+<ul>
+<li>x86_64-linux: <code>/nix/store/r15rmywrswf01nj2xrvx753p1fh4f6rh-hela-runtime-1.2.0</code>.</li>
+<li>aarch64-linux: <code>/nix/store/bhm781bld50yi9brmy2mn74p1ybzdzcy-hela-runtime-1.2.0</code>.</li>
+</ul>
+<p>The ARM package is rooted under <code>/home/ubuntu/.local/state/hela/deployments/todo103-psnzx8x4/runtime</code>. Promotion fast-forwarded clean source checkouts, retained the old build/drop-in, and took fresh integrity-checked online backups of three databases plus a vault archive. Existing profile, environment, host, port, and security settings were preserved; only the selected runtime executable changed.</p>
+<p>Local and public HTTP initialize/discovery report runtime <strong>1.2.0</strong>, <strong>236 unique tools</strong>, all three Genome mission tools, and no hardware-only tools. Both discovery checks left the service with <strong>zero child cells</strong>. A safe <code>terminal_session_list</code> call started only Nucleus; Genome did not start. Observed Nucleus calls were approximately <strong>471 ms cold</strong> and <strong>13 ms warm</strong> in this one run, including HTTP/MCP overhead—not a portable benchmark.</p>
+<p>Deployed doctor reports READY, catalog parity is exact, revision checks pass, and the GC root is verified. All previous HTTP-service PIDs exited. All <strong>633</strong> pre-rollout conflict archive files retained their hashes. No database file was restored/replaced, and unrelated client-owned runtimes and the legacy PM2 gateway were not stopped.</p>
+<p>The rollout directory contains <code>manifest.json</code>, <code>http-verification.json</code>, <code>doctor.log</code>, <code>versions.log</code>, <code>catalog.log</code>, <code>backup/</code>, <code>rollback-dist/</code>, and the package GC root. Native committed-source staging/test evidence remains under <code>/home/ubuntu/.local/state/hela/staging/todo103-release-ah25pauz/</code>; local test/measurement logs are under <code>/var/tmp/scratch/opencode/todo103/</code>. Authenticated ACP, deliberate external-client reloads, gateway consumer review, vault reconciliation, and deferred security remain separate.</p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#one-inventory-generated-schemas-and-counts">One inventory, generated schemas and counts</a></li><li><a href="#cache-isolation-and-stale-metadata">Cache isolation and stale metadata</a></li><li><a href="#verification-scope">Verification scope</a></li><li><a href="#verified-servy-rollout">Verified servy rollout</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../../release-data.js?v=1.5.3"></script>
+  <script src="../../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

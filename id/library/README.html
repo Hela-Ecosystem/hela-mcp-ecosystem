@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeLa MCP Ecosystem — HeLa MCP Ecosystem</title>
+  <meta name="description" content="A modular, immortal cellular AI tooling ecosystem built on the Model Context Protocol (MCP), engineered by Azzar to equip AI agents with full-spectrum autonomous capabilities…">
+  <link rel="canonical" href="https://hela.my.id/id/library/README.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/README.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/README.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
+</head>
+<body class="library-page" data-page-prefix="../">
+  <a href="#main-content" class="skip-link">Langsung ke isi</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Pustaka dokumentasi">
+      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 SEL</div></div>
+      <nav aria-label="Pustaka dokumentasi"><details class="library-mobile-nav" open><summary>Jelajahi dokumentasi</summary><div class="doc-nav-section">DOKUMENTASI</div><ul class="doc-nav"><li><a href="../index.html">Ikhtisar</a></li>
+<li><a href="../architecture.html">Arsitektur</a></li>
+<li><a href="../workflows.html">Alur kerja</a></li>
+<li><a href="../profiles.html">Profil &amp; konfigurasi</a></li>
+<li><a href="../troubleshooting.html">Diagnostik</a></li>
+<li><a href="../library.html" aria-current="page">Pustaka dokumentasi</a></li></ul></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../library.html">Pustaka dokumentasi</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn" data-lang="en" href="../../library/README.html">EN</a><a class="lang-btn active" data-lang="id" href="README.html">ID</a></div><button class="btn open-cmd-palette" type="button">Cari <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="hela-mcp-ecosystem" class="doc-title">HeLa MCP Ecosystem</h1>
+<header class="library-document-meta" lang="id"><p class="library-kicker">Memulai</p><p class="library-source">README.md</p><p>Isi dalam bahasa sumber. <a href="../../library/source/README.md" download>Unduh sumber</a> · <a href="../library.html">Semua dokumen</a></p></header><p>A modular, immortal cellular AI tooling ecosystem built on the Model Context Protocol (MCP), engineered by Azzar to equip AI agents with full-spectrum autonomous capabilities across reasoning, persistent memory, workspace management, system execution, research, design, device automation, and 3D modeling.</p>
+<blockquote>
+<p><strong>New to MCP?</strong> Read the <strong><a href="docs/beginner-guide.html">Beginner's Guide</a></strong> for requirements, profile selection, installation, and verification.</p>
+</blockquote>
+<p><strong>Read all documentation on the website:</strong> <a href="https://hela.my.id/library.html">Document library</a> · <a href="https://hela.my.id/id/library.html">Navigasi Bahasa Indonesia</a>. Guides, release history, contribution rules, and historical project records are published in full, with search and source downloads. Documents retain their source language.</p>
+<p>Current source snapshot: <strong>v1.5.3</strong>, with runtime <strong>1.2.0</strong>. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see <a href="docs/on-demand-runtime.html">on-demand runtime</a>. Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see <a href="RELEASE_NOTES.html">release notes</a>.</p>
+<p><img src="../../assets/blotcat-hero.jpg" alt="Blotcat plugging MCP server cables into the central AI Hub" loading="lazy"></p>
+<hr>
+<h2 id="respectful-attribution--metaphor">Respectful Attribution &amp; Metaphor</h2>
+<p>The <strong>HeLa MCP Ecosystem</strong> is named in respectful recognition of <strong>Henrietta Lacks</strong> (1920–1951) and the immortal scientific legacy of HeLa cells, which transformed global biomedical research. In this software architecture, HeLa serves as a <strong>cellular biology metaphor</strong>:</p>
+<ul>
+<li><strong>Cellular Modularity</strong>: Just as biological cells contain specialized organelles coordinated by the nucleus and genome, the HeLa MCP Ecosystem deploys specialized tool servers coordinated by a dual backbone.</li>
+<li><strong>Continuous Replicability &amp; Immortality</strong>: Environments can be snapshot-pinned, reproduced deterministically on any machine, and restored cleanly without state degradation.</li>
+<li><strong>Component Independence</strong>: Underlying repositories, technical package names, and Git commit histories remain autonomous and unaltered while functioning as a harmonious organism.</li>
+</ul>
+<hr>
+<h2 id="dual-backbone-architecture">Dual-Backbone Architecture</h2>
+<p>Every profile in the HeLa ecosystem is anchored by two core backbone servers:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-mermaid">flowchart TB
+    Agent[&quot;Agent / LLM Orchestrator&quot;]
+
+    Mitosis[&quot;HeLa Mitosis&lt;br/&gt;(Orchestrator)&lt;br/&gt;- Dynamic Routing&lt;br/&gt;- Step Reasoning&lt;br/&gt;- Tool Planning&quot;]
+    Genome[&quot;HeLa Genome&lt;br/&gt;(State &amp; Memory)&lt;br/&gt;- Knowledge Graph&lt;br/&gt;- Entities / Relations&lt;br/&gt;- Observations&quot;]
+
+    Membrane[&quot;HeLa Membrane&lt;br/&gt;Workspace FS&quot;]
+    Nucleus[&quot;HeLa Nucleus&lt;br/&gt;Command Exec&quot;]
+    Ribosome[&quot;HeLa Ribosome&lt;br/&gt;PTY Harness&quot;]
+    Enzyme[&quot;HeLa Enzyme&lt;br/&gt;Research / Wiki&quot;]
+    Cytosol[&quot;HeLa Cytosol&lt;br/&gt;Browser DOM&quot;]
+
+    Agent -- &quot;stdio JSON-RPC&quot; --&gt; Mitosis
+    Agent -- &quot;stdio JSON-RPC&quot; --&gt; Genome
+    Mitosis &lt;--&gt;|&quot;Shared Context&quot;| Genome
+    Mitosis --&gt; Membrane &amp; Nucleus &amp; Ribosome &amp; Enzyme &amp; Cytosol
+    Genome --&gt; Membrane &amp; Nucleus &amp; Ribosome &amp; Enzyme &amp; Cytosol
+</code></pre>
+</div>
+<ul>
+<li><strong>HeLa Mitosis (<code>hela-mitosis</code>)</strong>: Cellular division and orchestration backbone. Handles dynamic tool routing, prompt decomposition, Needle-backed sequential reasoning (<code>sequentialthinking</code> / <code>agent_run</code>), and multi-tool planning.</li>
+<li><strong>HeLa Genome (<code>hela-genome</code>)</strong>: Cellular memory and state backbone. Maintains the persistent SQLite knowledge graph (<code>memory.db</code>), entity-relation tracking, session restoration, and project milestones.</li>
+</ul>
+<hr>
+<h2 id="10-mcp-component-taxonomy">10-MCP Component Taxonomy</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">HeLa MCP Ecosystem — tabel 1</caption>
+<thead>
+<tr>
+<th scope="col">Canonical Identity</th>
+<th scope="col">Machine ID (<code>id</code>)</th>
+<th scope="col">Technical Source Repo</th>
+<th scope="col">Scope</th>
+<th scope="col">Cellular Metaphor &amp; Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HeLa Mitosis</strong></td>
+<td><code>hela-mitosis</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/chaining-mcp"><code>chaining-mcp</code></a></td>
+<td>Core</td>
+<td><strong>Orchestrator</strong>: Bundled Needle 3 agent runtime, dynamic routing, 40 bundled prompt templates</td>
+</tr>
+<tr>
+<td><strong>HeLa Genome</strong></td>
+<td><code>hela-genome</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/project-mcp"><code>project-mcp</code></a></td>
+<td>Core</td>
+<td><strong>State Backbone</strong>: Entity-relation knowledge graph, milestone tracking, memory persistence</td>
+</tr>
+<tr>
+<td><strong>HeLa Membrane</strong></td>
+<td><code>hela-membrane</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/filesystem-mcp"><code>filesystem-mcp</code></a></td>
+<td>Core</td>
+<td><strong>Workspace</strong>: Sandboxed filesystem operations, recursive search, archive extraction</td>
+</tr>
+<tr>
+<td><strong>HeLa Nucleus</strong></td>
+<td><code>hela-nucleus</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/terminal-mcp"><code>terminal-mcp</code></a></td>
+<td>Core</td>
+<td><strong>Execution</strong>: Command execution, subshell isolation, RTK token-optimized execution</td>
+</tr>
+<tr>
+<td><strong>HeLa Ribosome</strong></td>
+<td><code>hela-ribosome</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/menager-mcp"><code>menager-mcp</code></a></td>
+<td>Core</td>
+<td><strong>Process Harness</strong>: Interactive PTY multiplexing, Regex hooks, lifecycle management</td>
+</tr>
+<tr>
+<td><strong>HeLa Enzyme</strong></td>
+<td><code>hela-enzyme</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/researcher-mcp"><code>researcher-mcp</code></a></td>
+<td>Core</td>
+<td><strong>Knowledge</strong>: Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia synthesis and fact-checking</td>
+</tr>
+<tr>
+<td><strong>HeLa Cytosol</strong></td>
+<td><code>hela-cytosol</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/browser-mcp"><code>browser-mcp</code></a></td>
+<td>Core</td>
+<td><strong>Interaction</strong>: Playwright browser automation, accessibility trees, DOM perception</td>
+</tr>
+<tr>
+<td><strong>HeLa Phenotype</strong></td>
+<td><code>hela-phenotype</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/designer-mcp"><code>designer-mcp</code></a></td>
+<td>Specialized</td>
+<td><strong>Design</strong>: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis</td>
+</tr>
+<tr>
+<td><strong>HeLa Receptor</strong></td>
+<td><code>hela-receptor</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/scrcpy-mcp"><code>scrcpy-mcp</code></a></td>
+<td>Specialized</td>
+<td><strong>Mobile</strong>: Android device automation, ADB bridge, XML view hierarchy inspection</td>
+</tr>
+<tr>
+<td><strong>HeLa Plastid</strong></td>
+<td><code>hela-plastid</code></td>
+<td><a href="https://github.com/Hela-Ecosystem/ll3m-mcp"><code>ll3m-mcp</code></a></td>
+<td>Specialized</td>
+<td><strong>3D Modeling</strong>: Autonomous Blender procedural modeling, materials, and render pipeline</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="1-prerequisites">1. Prerequisites</h3>
+<ul>
+<li><strong>Node.js</strong>: use Node 22 LTS for the tested full stack. Individual packages declare their own engine ranges; Receptor requires 22 and Enzyme requires at least 20.18.1.</li>
+<li><strong>Git</strong>: <code>&gt;= 2.30.0</code></li>
+<li><strong>SQLite</strong>: Genome uses Node bindings; the SQLite CLI is optional for inspection.</li>
+</ul>
+<h3 id="2-run-diagnostics-setupsh-doctor">2. Run Diagnostics (<code>setup.sh doctor</code>)</h3>
+<p>Clone the source, then select an installation mode:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
+cd hela-mcp-ecosystem
+./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode individual --profile dev-workspace
+</code></pre>
+</div>
+<h3 id="3-interactive-installation--profile-selection">3. Interactive Installation &amp; Profile Selection</h3>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh
+</code></pre>
+</div>
+<h3 id="4-non-interactive-one-liners">4. Non-Interactive One-Liners</h3>
+<p><strong>Full Developer Desktop (Cursor IDE):</strong></p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client cursor --non-interactive
+</code></pre>
+</div>
+<p><strong>Headless Linux Server (Claude Desktop / CLI):</strong></p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile headless-server --client claude --non-interactive
+</code></pre>
+</div>
+<p><strong>Pinned Immutable Release Snapshot:</strong></p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.3 --non-interactive
+</code></pre>
+</div>
+<p><strong>Single-Endpoint Runtime (one MCP connection for the selected profile):</strong></p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+</code></pre>
+</div>
+<p><strong>Docker cells, Docker runtime, or Nix runtime:</strong></p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
+./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh --mode nix --profile dev-workspace --client codex --non-interactive
+</code></pre>
+</div>
+<p>Installs use private managed prefixes under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Existing repositories and live client files are not overwritten. Review and merge the generated client fragment. Use <code>--prefix</code> for an explicit location and pass it to doctor. See <a href="docs/installation.html">installation modes and doctor</a> for HTTP transport, Compose, Nix GC roots, snapshots, optional model assets, prerequisites, and failure recovery.</p>
+<hr>
+<h2 id="supported-ai-clients--output-formats">Supported AI Clients &amp; Output Formats</h2>
+<p>The installer writes private fragments inside its prefix, never directly into live client files:</p>
+<ul>
+<li>Cursor, Claude, Gemini, Antigravity: <code>mcpServers</code> JSON.</li>
+<li>OpenCode and Kilo: <code>mcp</code> JSON with an installed local launcher, or a runtime HTTP URL.</li>
+<li>Zed: <code>context_servers</code> JSON; preserve unrelated settings when merging.</li>
+<li>Codex: <code>[mcp_servers.*]</code> TOML, with a launcher or HTTP URL.</li>
+<li>Docker: functional <code>compose.json</code> for the built image, not speculative per-cell Dockerfiles or stdio port mappings.</li>
+</ul>
+<p><code>--client skip</code> installs without generating a client fragment. Client authentication and GUI acceptance remain separate.</p>
+<hr>
+<h2 id="available-agent-profiles">Available Agent Profiles</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">HeLa MCP Ecosystem — tabel 2</caption>
+<thead>
+<tr>
+<th scope="col">Profile ID</th>
+<th scope="col">Target System</th>
+<th scope="col">Backbone Included</th>
+<th scope="col">Servers Included</th>
+<th scope="col">Focus Area</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minimal</code></td>
+<td>Any</td>
+<td>Mitosis + Genome</td>
+<td>Enzyme</td>
+<td>Research and memory without GUI dependencies</td>
+</tr>
+<tr>
+<td><code>dev-workspace</code></td>
+<td>Any (GUI recommended)</td>
+<td>Mitosis + Genome</td>
+<td>Membrane, Nucleus, Ribosome, Enzyme, Phenotype, Cytosol</td>
+<td>Full-stack software engineering, testing, web UI</td>
+</tr>
+<tr>
+<td><code>headless-server</code></td>
+<td>Headless Linux</td>
+<td>Mitosis + Genome</td>
+<td>Membrane, Nucleus, Ribosome, Enzyme, Phenotype</td>
+<td>Cloud server administration, CI/CD, headless dev</td>
+</tr>
+<tr>
+<td><code>research</code></td>
+<td>Headless or GUI</td>
+<td>Mitosis + Genome</td>
+<td>Enzyme, Membrane, Cytosol</td>
+<td>Deep literature research, document synthesis, web crawling</td>
+</tr>
+<tr>
+<td><code>web-devops</code></td>
+<td>Headless or GUI</td>
+<td>Mitosis + Genome</td>
+<td>Membrane, Nucleus, Phenotype, Cytosol</td>
+<td>Frontend development, Tailwind styling, DOM verification</td>
+</tr>
+<tr>
+<td><code>android-testing</code></td>
+<td>Device connected</td>
+<td>Mitosis + Genome</td>
+<td>Nucleus, Receptor, Enzyme</td>
+<td>Mobile QA testing, ADB automation, APK validation</td>
+</tr>
+<tr>
+<td><code>3d-modeling</code></td>
+<td>GUI (Blender installed)</td>
+<td>Mitosis + Genome</td>
+<td>Plastid, Membrane, Nucleus</td>
+<td>3D procedural modeling, materials, rendering</td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td>Full workstation</td>
+<td>Mitosis + Genome</td>
+<td>All 10 HeLa MCP servers</td>
+<td>Complete full-spectrum AI agent capabilities</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Single-endpoint serve mode:</strong> add <code>--runtime</code> to a profile command. The default profile remains <code>dev-workspace</code>, not <code>all</code>.</p>
+</blockquote>
+<p>Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (<strong>16 checks</strong>), including exact tool/schema parity and safe read-only routing. Lappy's ten-server <code>all</code> roster and servy's eight-cell <code>dev-workspace</code> setup remain different by design. See <a href="docs/profile-verification-2026-11-06.html">all-profile verification</a>; run <code>npm run test:profiles</code>, or append <code>-- --profile &lt;id&gt;</code> on a partial installation.</p>
+<p>Runtime discovery now starts <strong>zero cells</strong>; only invoked cells are started. <a href="docs/generated-profile-counts.html">Generated profile counts</a> come from the inventory/catalog rather than static client-specific totals. <code>./setup.sh doctor --profile &lt;id&gt; --runtime</code> checks cold catalog parity as well as versions, paths, and revisions.</p>
+<p>For complete persona guides and pipeline specifications, see <strong><a href="docs/profiles.html">Profiles Catalog</a></strong>.</p>
+<hr>
+<h2 id="operational-workflows-workflows-af">Operational Workflows (Workflows A–F)</h2>
+<p>The ecosystem is built for structured multi-server agent workflows:</p>
+<ul>
+<li><strong>Workflow A: Autonomous Feature Engineering</strong>: Genome (restore) → Mitosis (decompose) → Membrane (code) → Nucleus (test) → Genome (persist).</li>
+<li><strong>Workflow B: Deep Research &amp; Architecture Synthesis</strong>: Enzyme (search) → Cytosol (scrape) → Mitosis (synthesize) → Genome (record) → Membrane (write).</li>
+<li><strong>Workflow C: Web Feature with Design &amp; Browser Verification</strong>: Phenotype (tokens) → Membrane (build) → Nucleus (serve) → Cytosol (DOM QA) → Genome (record).</li>
+<li><strong>Workflow D: Mobile App Test Automation</strong>: Genome (issue) → Nucleus (adb) → Receptor (drive UI) → Genome (record pass).</li>
+<li><strong>Workflow E: Autonomous 3D Asset Creation &amp; Render Pipeline</strong>: Genome (spec) → Mitosis (plan) → Plastid (Blender) → Membrane (save) → Genome (record).</li>
+<li><strong>Workflow F: Long-Horizon Complex Refactor with PTY Harness</strong>: Ribosome (PTY) → Nucleus (exec) → Genome (persist).</li>
+</ul>
+<p>For step-by-step tool invocation sequences, schemas, and diagrams, see <strong><a href="docs/workflows.html">Workflows &amp; Integration Guide</a></strong>.</p>
+<hr>
+<h2 id="project-health--diagnostics">Project Health &amp; Diagnostics</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash"># Run system and server diagnostic health check
+npm run doctor
+# or
+./setup.sh doctor
+
+# Run 80-combination client configuration checks (not GUI integration)
+npm run test:matrix
+
+# Run master integration test suite (295 tools across all 10 servers)
+npm test
+</code></pre>
+</div>
+<hr>
+<h2 id="documentation-index">Documentation Index</h2>
+<ul>
+<li><strong><a href="docs/beginner-guide.html">Beginner's Step-by-Step Guide</a></strong>: 3-minute, zero-code onboarding.</li>
+<li><strong><a href="docs/keys-and-secrets.html">Keys &amp; Secrets Guide</a></strong>: API key setup, sign-up URLs, and zero-key offline fallbacks.</li>
+<li><strong><a href="docs/profiles.html">Profiles Reference</a></strong>: Full persona reference and capability mappings.</li>
+<li><strong><a href="docs/workflows.html">Workflows &amp; Integration Guide</a></strong>: Cross-MCP workflow pipelines (Workflows A–F).</li>
+<li><strong><a href="docs/security-audit.html">Security &amp; Reliability Audit</a></strong>: Threat model, sandboxing, and isolation standards.</li>
+<li><strong><a href="docs/architecture.html">Architecture Guide</a></strong>: In-depth cellular architecture and communication topologies.</li>
+<li><strong><a href="docs/troubleshooting.html">Troubleshooting Guide</a></strong>: Common issues, diagnostic codes, and recovery procedures.</li>
+</ul>
+<hr>
+<h2 id="license--attribution">License &amp; Attribution</h2>
+<p>Distributed under the MIT License. Underlying repositories remain independently copyrighted by their respective authors.</p>
+<p>The HeLa project respectfully recognizes <strong>Henrietta Lacks</strong> and the enduring scientific legacy of HeLa cells.</p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../library.html">Pustaka dokumentasi</a></footer></main>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#respectful-attribution--metaphor">Respectful Attribution &amp; Metaphor</a></li><li><a href="#dual-backbone-architecture">Dual-Backbone Architecture</a></li><li><a href="#10-mcp-component-taxonomy">10-MCP Component Taxonomy</a></li><li><a href="#quick-start">Quick Start</a></li><li><a href="#supported-ai-clients--output-formats">Supported AI Clients &amp; Output Formats</a></li><li><a href="#available-agent-profiles">Available Agent Profiles</a></li><li><a href="#operational-workflows-workflows-af">Operational Workflows (Workflows A–F)</a></li><li><a href="#project-health--diagnostics">Project Health &amp; Diagnostics</a></li><li><a href="#documentation-index">Documentation Index</a></li><li><a href="#license--attribution">License &amp; Attribution</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.5.3"></script>
+  <script src="../../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
+</body>
+</html>

@@ -51,6 +51,7 @@ function renderConfig(profileKey, clientKey) {
 }
 
 const isIdPage = (typeof document !== "undefined" && (document.documentElement.lang === "id" || window.location.pathname.includes("/id/")));
+const pagePrefix = typeof document !== "undefined" ? document.body?.dataset?.pagePrefix || "" : "";
 
 const PAGES = isIdPage ? [
   { title: "01 Ikhtisar", link: "index.html" },
@@ -60,7 +61,8 @@ const PAGES = isIdPage ? [
   { title: "07 Pameran & Demo", link: "showcase.html" },
   { title: "08 Diagnostik", link: "troubleshooting.html" },
   { title: "09 Privasi", link: "privacy.html" },
-  { title: "10 Ketentuan", link: "terms.html" }
+  { title: "10 Ketentuan", link: "terms.html" },
+  { title: "Pustaka dokumentasi", link: "library.html" }
 ] : [
   { title: "01 Overview", link: "index.html" },
   { title: "04 Architecture", link: "architecture.html" },
@@ -69,7 +71,8 @@ const PAGES = isIdPage ? [
   { title: "07 Showcase", link: "showcase.html" },
   { title: "08 Diagnostics", link: "troubleshooting.html" },
   { title: "09 Privacy", link: "privacy.html" },
-  { title: "10 Terms", link: "terms.html" }
+  { title: "10 Terms", link: "terms.html" },
+  { title: "Document library", link: "library.html" }
 ];
 
 
@@ -243,9 +246,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const tocList = document.getElementById("tocList");
   if (tocList) {
     const heads = document.querySelectorAll("main.doc-content h2[id]");
-    tocList.innerHTML = Array.from(heads).map((h) =>
-      '<li><a href="#' + h.id + '">' + h.textContent + "</a></li>"
-    ).join("");
+    tocList.replaceChildren(...Array.from(heads).map(heading => {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = "#" + heading.id;
+      link.textContent = heading.textContent;
+      item.append(link);
+      return item;
+    }));
   }
 
   // Copy buttons (code dossiers + configurator)
@@ -277,36 +285,63 @@ document.addEventListener("DOMContentLoaded", () => {
   function matches() {
     const q = (cmdInput && cmdInput.value || "").toLowerCase().trim();
     const out = [];
+    const documents = typeof findLibraryDocuments === "function" ? findLibraryDocuments(q) : [];
+    documents.filter(entry => q && entry.title.toLowerCase().includes(q)).forEach(entry => {
+      out.push({ title: entry.title, tag: isId ? "dokumen" : "document", link: pagePrefix + entry.link });
+    });
+    PAGES.forEach(page => {
+      if (!q || page.title.toLowerCase().includes(q)) out.push({ title: page.title, tag: "page", link: pagePrefix + page.link });
+    });
     Object.keys(INVENTORY).forEach((k) => {
       const s = INVENTORY[k];
       s.tools.forEach((t) => {
         if (!q || t.toLowerCase().includes(q) || s.alias.toLowerCase().includes(q)) {
-          out.push({ title: s.alias + " · " + t, tag: "tool", link: "architecture.html#srv-" + k.replace("hela-", "") });
+          out.push({ title: s.alias + " · " + t, tag: "tool", link: pagePrefix + "architecture.html#srv-" + k.replace("hela-", "") });
         }
       });
     });
-    PAGES.forEach((p) => {
-      if (!q || p.title.toLowerCase().includes(q)) out.push({ title: p.title, tag: "page", link: p.link });
+    documents.filter(entry => !q || !entry.title.toLowerCase().includes(q)).forEach(entry => {
+      out.push({ title: entry.title, tag: isId ? "dokumen" : "document", link: pagePrefix + entry.link });
     });
     return out.slice(0, 12);
   }
   function renderMatches() {
     if (!cmdResults) return;
-    cmdResults.innerHTML = matches().map((m) =>
-      '<div class="cmd-item" data-link="' + m.link + '"><span>' + m.title + '</span><span class="cmd-item-tag">' + m.tag + "</span></div>"
-    ).join("");
-    cmdResults.querySelectorAll(".cmd-item").forEach((el) => {
-      el.addEventListener("click", () => { window.location.href = el.getAttribute("data-link"); });
-    });
+    const results = matches();
+    cmdResults.replaceChildren(...results.map(match => {
+      const link = document.createElement("a");
+      link.className = "cmd-item";
+      link.href = match.link;
+      const title = document.createElement("span");
+      title.textContent = match.title;
+      const tag = document.createElement("span");
+      tag.className = "cmd-item-tag";
+      tag.setAttribute("aria-hidden", "true");
+      tag.textContent = match.tag;
+      link.append(title, tag);
+      return link;
+    }));
+    if (!results.length) {
+      const empty = document.createElement("p");
+      empty.className = "cmd-item";
+      empty.textContent = isId ? "Tidak ada hasil yang cocok." : "No matching documentation or tools.";
+      cmdResults.append(empty);
+    }
   }
+  let paletteOpener;
   function openPalette() {
     if (!backdrop) return;
+    paletteOpener = document.activeElement;
+    backdrop.setAttribute("aria-modal", "true");
     backdrop.style.display = "flex";
     if (cmdInput) { cmdInput.value = ""; renderMatches(); cmdInput.focus(); }
   }
   function closePalette() {
+    if (!backdrop || backdrop.style.display !== "flex") return;
     if (backdrop) backdrop.style.display = "none";
+    paletteOpener?.focus();
   }
+  document.querySelectorAll(".cmd-close").forEach(button => button.addEventListener("click", closePalette));
   document.querySelectorAll(".open-cmd-palette").forEach((b) => b.addEventListener("click", openPalette));
   if (backdrop) backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closePalette(); });
   if (cmdInput) cmdInput.addEventListener("input", renderMatches);
@@ -317,5 +352,17 @@ document.addEventListener("DOMContentLoaded", () => {
       else openPalette();
     }
     if (e.key === "Escape") closePalette();
+    if (!backdrop || backdrop.style.display !== "flex") return;
+    const focusable = [...backdrop.querySelectorAll("input, a[href], button")];
+    if (e.key === "Tab" && focusable.length) {
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    if (e.key === "ArrowDown" && document.activeElement === cmdInput) {
+      const first = cmdResults?.querySelector("a");
+      if (first) { e.preventDefault(); first.focus(); }
+    }
+    if (e.key === "Enter" && document.activeElement === cmdInput) cmdResults?.querySelector("a")?.click();
   });
 });

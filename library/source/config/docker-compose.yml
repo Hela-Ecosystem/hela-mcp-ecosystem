@@ -1,0 +1,109 @@
+version: '3.8'
+
+# HeLa MCP Ecosystem — historical seven-cell deployment scaffold
+# Not a validated full-profile deployment. Review Dockerfiles, transport,
+# volumes and device permissions before use; port mappings do not add HTTP.
+# Paths are relative to config/; canonical profile generation is preferred.
+# Environment variables can be defined in a .env file
+
+services:
+  # HeLa Mitosis (Chaining MCP) — Orchestration Backbone
+  hela-mitosis:
+    build:
+      context: ../../chaining-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - AWESOME_COPILOT_ENABLED=true
+      - RELIABILITY_MONITORING_ENABLED=true
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - hela-membrane
+      - hela-genome
+      - hela-nucleus
+      - hela-enzyme
+      - hela-cytosol
+    networks:
+      - mcp-network
+
+  # HeLa Membrane (Filesystem MCP) — Workspace Boundary
+  hela-membrane:
+    build:
+      context: ../../filesystem-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./workspace:/workspace
+    networks:
+      - mcp-network
+
+  # HeLa Genome (Project Guardian) — Persistent State Backbone
+  hela-genome:
+    build:
+      context: ../../project-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./data:/app/data
+    networks:
+      - mcp-network
+
+  # HeLa Nucleus (Terminal MCP) — Command Execution
+  hela-nucleus:
+    build:
+      context: ../../terminal-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    privileged: true
+    networks:
+      - mcp-network
+
+  # HeLa Ribosome (Menager MCP) — PTY Terminal Harness
+  hela-ribosome:
+    build:
+      context: ../../menager-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3007:3007"
+    privileged: true
+    networks:
+      - mcp-network
+
+  # HeLa Enzyme (Researcher MCP) — Unified Research Engine
+  hela-enzyme:
+    build:
+      context: ../../researcher-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
+    networks:
+      - mcp-network
+
+  # HeLa Cytosol (Browser Agent) — Web Interaction
+  hela-cytosol:
+    build:
+      context: ../../browser-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "3006:3006"
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
+
+volumes:
+  workspace:
+    driver: local
+  data:
+    driver: local

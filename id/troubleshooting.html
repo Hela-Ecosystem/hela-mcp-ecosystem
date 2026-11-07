@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../library.css?v=1.5.3&amp;rev=6eb8e00d967d">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
@@ -33,6 +34,7 @@
         <div class="doc-brand-meta">v1.5.3 · Runtime 1.2.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
+<ol class="doc-nav"><li><a href="library.html"><span class="doc-nav-num">00</span> Pustaka dokumentasi</a></li></ol>
       <div class="doc-nav-section">MEMULAI</div>
       <ol class="doc-nav">
         <li><a href="index.html"><span class="doc-nav-num">01</span> Ikhtisar</a></li>
@@ -96,7 +98,7 @@
         <section class="diag-card" aria-labelledby="d-entry">
           <div class="diag-card-header" id="d-entry">Entrypoint tidak ditemukan</div>
           <div class="diag-card-body">
-            <p><strong>Gejala:</strong> build hilang/berubah atau ada penanda instalasi belum selesai. Jalankan ulang setup dengan prefix, mode, dan profil yang sama untuk memasang dependensi terkunci, membangun, dan menguji MCP. Sumber kotor, origin berbeda, dan direktori tidak terkelola ditolak; simpan perubahan Anda, jangan reset. Lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a>. Jangan hapus lock milik installer yang masih aktif.</p>
+            <p><strong>Gejala:</strong> build hilang/berubah atau ada penanda instalasi belum selesai. Jalankan ulang setup dengan prefix, mode, dan profil yang sama untuk memasang dependensi terkunci, membangun, dan menguji MCP. Sumber kotor, origin berbeda, dan direktori tidak terkelola ditolak; simpan perubahan Anda, jangan reset. Lihat <a href="library/docs/installation.html">panduan instalasi</a>. Jangan hapus lock milik installer yang masih aktif.</p>
           </div>
         </section>
 
@@ -130,7 +132,7 @@
 
         <h2 id="runtime">Katalog runtime dan kepemilikan klien</h2>
         <p>Katalog hilang atau usang tidak boleh memicu startup semua sel. Setelah build, jalankan <code>npm run catalog:generate -- --profile dev-workspace</code>, lalu doctor runtime. Discovery dingin harus menjalankan nol sel. Runtime adalah mode penyajian (<code>--runtime</code>), bukan profil.</p>
-        <p>Zed dapat meneruskan server yang sudah dimiliki Codex sehingga muncul peringatan duplikat. Jangan hapus definisi bersama hanya untuk membungkamnya. Verifikasi ACP terautentikasi tetap terpisah; lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/troubleshooting.md#zed-forwards-a-server-that-codex-already-defines">panduan khusus versi klien</a>.</p>
+        <p>Zed dapat meneruskan server yang sudah dimiliki Codex sehingga muncul peringatan duplikat. Jangan hapus definisi bersama hanya untuk membungkamnya. Verifikasi ACP terautentikasi tetap terpisah; lihat <a href="library/docs/troubleshooting.html#zed-forwards-a-server-that-codex-already-defines">panduan khusus versi klien</a>.</p>
         <p>Sebelum mengubah database atau vault, buat cadangan tervalidasi. Jangan menimpa SQLite aktif atau memaksakan pemenang konflik. Publikasi dokumentasi tidak membutuhkan restart runtime.</p>
 
         <div class="admonition warning">
@@ -155,6 +157,8 @@
     </div>
   </div>
   <script src="../release-data.js?v=1.5.3"></script>
-  <script src="../app.js?v=1.5.3"></script>
+  <script src="../library-data.js?v=1.5.3&amp;rev=0dd39ae610e6"></script>
+  <script src="../library.js?v=1.5.3&amp;rev=d98e2c92064e"></script>
+  <script src="../app.js?v=1.5.3&amp;rev=a305ef54f01d"></script>
 </body>
 </html>
