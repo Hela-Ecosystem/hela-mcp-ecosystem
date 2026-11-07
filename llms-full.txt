@@ -5,6 +5,13 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
+## [1.6.0] - 2026-11-08
+
+- Pin Enzyme 4.0.0, whose `google_search` now requires `query`. The old `q` argument is rejected rather than translated; batch tools keep `queries`.
+- Share one strict search schema between Enzyme's shipped and modular entrypoints: trimmed non-empty queries, integer result counts from 1 to 10, unknown fields refused before any provider request.
+- Regenerate the canonical tool catalog and documentation from the new Enzyme schema. Tool counts and all other cell/runtime pins are unchanged.
+- Preserve every historical snapshot from v1.0.0 through v1.5.3.
+
 ## [1.5.3] - 2026-11-07
 
 - Render Genome relation links in canonical order so replicas with different SQLite insertion orders produce identical notes.
@@ -185,7 +192,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.5.3**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.6.0**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -283,7 +290,7 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.5.3 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.6.0 --non-interactive
 ```
 
 **Single-Endpoint Runtime (one MCP connection for the selected profile):**
@@ -395,6 +402,14 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.6.0 — consistent Enzyme search input
+
+Pin Enzyme source `eb98982`. `google_search` now takes `query`, matching every other single text search in the cell. The former `q` argument is removed, so a client that still sends it gets an MCP validation error instead of a silent translation; requests that send both fields are rejected as well. Batch tools keep `queries`, and provider HTTP parameters are unaffected internally.
+
+Both Enzyme entrypoints share one strict schema: the query is trimmed and must be non-empty, `num` is an integer from 1 to 10, and unknown fields are refused before any provider call. Enzyme's contract tests cover discovery, dispatch, rejection of obsolete input, and provider failure for the shipped and modular servers; 32 contract tests and 111 total Enzyme tests pass with a clean TypeScript build and no lint errors. Enzyme moves to 4.0.0 because this is a breaking argument change.
+
+The catalog, generated documentation, and profile counts are rebuilt from the new schema. Counts stay at 24 Enzyme tools, so profile totals do not change. Other cells, the runtime, and every snapshot from v1.0.0 to v1.5.3 are untouched.
 
 ## v1.5.3 — canonical relation ordering
 
@@ -804,14 +819,14 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.5.3**; runtime **1.2.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.6.0**; runtime **1.2.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.0**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.0**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.0**, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.0**, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
 - **HeLa Ribosome** (`hela-ribosome`): server **3.0.0**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
-- **HeLa Enzyme** (`hela-enzyme`): server **3.0.0**, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
+- **HeLa Enzyme** (`hela-enzyme`): server **4.0.0**, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
 - **HeLa Cytosol** (`hela-cytosol`): server **3.0.0**, 73 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.0.0**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.0**, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).

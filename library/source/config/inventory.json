@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "project_name": "HeLa MCP Ecosystem",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "total_servers": 11,
   "core_headless_count": 7,
   "specialized_gui_count": 3,
@@ -23,7 +23,9 @@
       "needsDevice": false,
       "revision": "3c1d49532669196c0b34e842360e9d9b8d12b6cc",
       "toolFeatures": {
-        "CHAINING_LLM_ENABLED": { "default": true },
+        "CHAINING_LLM_ENABLED": {
+          "default": true
+        },
         "MITOSIS_AGENT_ENABLED": {
           "probePath": "assets/needle/needle",
           "probePathWindows": "assets/needle/needle.exe",
@@ -145,7 +147,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f056764a54039f3432f90284d0462952fc39b8a9",
+      "revision": "eb98982ee72f809113292be630ebd6735376a886",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -154,7 +156,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "3.0.0"
+      "version": "4.0.0"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",

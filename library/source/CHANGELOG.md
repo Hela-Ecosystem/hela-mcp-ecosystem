@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.6.0] - 2026-11-08
+
+- Pin Enzyme 4.0.0, whose `google_search` now requires `query`. The old `q` argument is rejected rather than translated; batch tools keep `queries`.
+- Share one strict search schema between Enzyme's shipped and modular entrypoints: trimmed non-empty queries, integer result counts from 1 to 10, unknown fields refused before any provider request.
+- Regenerate the canonical tool catalog and documentation from the new Enzyme schema. Tool counts and all other cell/runtime pins are unchanged.
+- Preserve every historical snapshot from v1.0.0 through v1.5.3.
+
 ## [1.5.3] - 2026-11-07
 
 - Render Genome relation links in canonical order so replicas with different SQLite insertion orders produce identical notes.
