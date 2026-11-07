@@ -61,9 +61,9 @@ npm run docs:build
 python3 -m http.server 8080 --bind 127.0.0.1 --directory _site
 ```
 
-Open `http://127.0.0.1:8080/library.html`. The builder publishes tracked root documentation, all Markdown under `docs/` (except website source files), Conductor records, the license, and public configuration examples. Add new documents to Git before building so they enter the publication inventory. Untracked notes, credentials, databases, Git internals and unrelated directories are not published.
+Open `http://127.0.0.1:8080/library.html`. The builder publishes tracked root documentation, all Markdown under `docs/` (except website source files), the license, and public configuration examples. Add new documents to Git before building so they enter the publication inventory. Untracked notes, credentials, databases, Git internals and unrelated directories are not published.
 
-The document bodies remain in their source language; English and Indonesian navigation lead to the same source content. Dated verification reports and milestone tracks are labeled historical. Relative document links, heading anchors and illustrations resolve within the website; original source downloads and `llms-full.txt` are generated from the same files.
+The document bodies remain in their source language; English and Indonesian navigation lead to the same source content. Dated verification reports are labeled historical. Relative document links, heading anchors and illustrations resolve within the website; original source downloads and `llms-full.txt` are generated from the same files.
 
 `npm run test:docs` checks publication coverage, links and anchors, safe Markdown rendering, source downloads, search, and deterministic builds. The existing Pages workflow installs the locked dependencies, checks the docs, and publishes `_site` to `gh-pages` when public documentation changes. Do not edit `_site` by hand.
 
