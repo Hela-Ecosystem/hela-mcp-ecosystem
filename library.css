@@ -47,15 +47,15 @@
 .cmd-item > span:first-child { min-width: 0; overflow-wrap: anywhere; }
 .cmd-item-tag { flex-shrink: 0; }
 .cmd-close { flex-shrink: 0; }
-.library-mobile-nav summary { display: none; color: var(--ink); padding: 12px 20px; font-weight: 700; cursor: pointer; }
-.library-mobile-nav summary:hover { background: var(--accent-wash); }
+.doc-mobile-nav summary { display: none; color: var(--ink); padding: 12px 20px; font-weight: 700; cursor: pointer; }
+.doc-mobile-nav summary:hover { background: var(--accent-wash); }
 .library-page .doc-topbar { flex-wrap: wrap; }
 .library-page .doc-topbar-title, .library-page .btn, .library-document-meta a { white-space: nowrap; }
 .library-page .topbar-actions { flex-wrap: wrap; }
 
 @media (max-width: 900px) {
-  .library-mobile-nav summary { display: list-item; list-style-position: inside; }
-  .library-mobile-nav[open] summary { border-bottom: 1px solid var(--rule); }
+  .doc-mobile-nav summary { display: list-item; list-style-position: inside; }
+  .doc-mobile-nav[open] summary { border-bottom: 1px solid var(--rule); }
 }
 
 @media (max-width: 600px) {

@@ -12,7 +12,7 @@ function findLibraryDocuments(query, category = '', sourcePrefix = '') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const navigation = document.querySelector('.library-mobile-nav');
+  const navigation = document.querySelector('.doc-mobile-nav');
   if (navigation) {
     const mobile = window.matchMedia('(max-width: 900px)');
     navigation.open = !mobile.matches;
