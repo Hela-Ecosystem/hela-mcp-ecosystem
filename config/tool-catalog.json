@@ -3197,10 +3197,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "c32ae9412617feed7fb5b74a889dc71d9a4df38c",
+      "revision": "9ba1d0e834b4e6d6485f3605d844245cf73bfd7a",
       "version": "3.0.0",
       "digests": [
-        "9dca1bb4bbbf792841e97365fb1055e58c1403424e3ffacaf237c103d28c047a"
+        "e9068e23eeef185cbeee31c0fe9762237faa850bc5a137e69fc98bd524c444b4"
       ],
       "variants": [
         {

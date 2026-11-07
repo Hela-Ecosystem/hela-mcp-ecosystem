@@ -2,6 +2,12 @@
 
 All notable changes to this project.
 
+## [1.5.3] - 2026-11-07
+
+- Render Genome relation links in canonical order so replicas with different SQLite insertion orders produce identical notes.
+- Add an insertion-order regression; all 19 suites / 264 tests, the TypeScript build and zero-warning source lint pass.
+- Preserve the published 1.5.2 snapshot and all other cell/runtime pins.
+
 ## [1.5.2] - 2026-11-07
 
 - Pin Genome's replicated vault timestamp/order convergence fix and explicit archived repair API; ordinary CLI sync still leaves divergent notes unresolved.

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.5.2",
-  "created_at": "2026-11-07T08:34:49Z",
-  "description": "Genome vault convergence, explicit archived repair policies and warning-free typed source. Other cell/runtime pins are retained; older versioned snapshots are unchanged.",
+  "snapshot_version": "1.5.3",
+  "created_at": "2026-11-07T12:50:50Z",
+  "description": "Genome canonical relation ordering completes the vault convergence and typed lint fixes from 1.5.2. Other cell/runtime pins and historical snapshots are unchanged.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -19,7 +19,7 @@
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "c32ae9412617feed7fb5b74a889dc71d9a4df38c",
+      "commit": "9ba1d0e834b4e6d6485f3605d844245cf73bfd7a",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
@@ -93,7 +93,7 @@
   "verification": {
     "documentation_regressions": 74,
     "client_configuration_combinations": 80,
-    "genome_regression_tests": 263,
+    "genome_regression_tests": 264,
     "genome_lint_errors": 0,
     "genome_lint_warnings": 0,
     "scope": "Genome regression/build checks and generated metadata. Vault repair is an explicit backed-up operation; normal CLI sync still refuses divergent notes. Other profiles, authenticated GUI clients, providers and hardware are not new acceptance claims."

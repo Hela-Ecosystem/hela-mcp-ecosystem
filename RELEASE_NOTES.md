@@ -1,5 +1,9 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.5.3 — canonical relation ordering
+
+Pin Genome source `9ba1d0e`. Relation links now render in one canonical order regardless of database insertion order, preventing relation-order-only conflicts after a lossless repair. All 19 suites / 264 tests pass; the TypeScript build and zero-warning source lint pass. The published 1.5.2 snapshot remains unchanged, as do all other cell/runtime pins and package versions.
+
 ## v1.5.2 — replicated vault convergence
 
 Pin Genome source `c32ae94`: replicated notes keep the earliest creation timestamp and latest update timestamp, while incoming observation supersets can retain their order without losing database-only facts. The explicit programmatic repair API archives both originals, respects snapshot/lock checks, and permits rejecting a plan before publication. Normal CLI sync does not choose conflict winners automatically.
