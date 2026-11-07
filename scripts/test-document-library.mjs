@@ -22,7 +22,7 @@ vm.runInContext(fs.readFileSync(path.join(output, 'library.js'), 'utf8'), contex
 test('every public source document has English and Indonesian navigation pages', () => {
   const expected = [...tracked].filter(isDocument);
   assert.deepEqual(result.documents.map(document => document.source), expected);
-  assert.ok(expected.includes('LICENSE') && expected.includes('conductor/workflow.md'));
+  assert.ok(expected.includes('LICENSE') && expected.includes('docs/installation.md'));
   for (const document of result.documents) {
     for (const prefix of ['', 'id/']) {
       const html = fs.readFileSync(path.join(output, prefix + document.link), 'utf8');
@@ -57,9 +57,9 @@ test('existing website pages link to the library and hosted guides instead of Gi
   assert.ok(overview.includes('href="library.html"'));
   assert.ok(overview.includes('href="library/docs/installation.html"'));
   assert.ok(!overview.includes('/blob/master/docs/installation.md'));
-  const nested = fs.readFileSync(path.join(output, 'id/library/conductor/tracks/m1-baseline-audit/spec.html'), 'utf8');
-  assert.ok(nested.includes('href="../../../../library.html"'));
-  assert.ok(nested.includes('href="../../../../../style.css"'));
+  const nested = fs.readFileSync(path.join(output, 'id/library/docs/installation.html'), 'utf8');
+  assert.ok(nested.includes('href="../../library.html"'));
+  assert.ok(nested.includes('href="../../../style.css"'));
 });
 
 test('all pages share the complete numbered sidebar, localized groups and mobile navigation', () => {
@@ -90,12 +90,13 @@ test('all pages share the complete numbered sidebar, localized groups and mobile
   }
 });
 
-test('full-text search finds commands, filenames, categories and project records', () => {
+test('full-text search finds commands, filenames, categories and source paths', () => {
   const search = (query, category = '', prefix = '') => JSON.parse(vm.runInContext(`JSON.stringify(findLibraryDocuments(${JSON.stringify(query)},${JSON.stringify(category)},${JSON.stringify(prefix)}))`, context));
   assert.ok(search('--without-model').some(document => document.source === 'docs/installation.md'));
   assert.ok(search('keys-and-secrets.md').some(document => document.source === 'docs/keys-and-secrets.md'));
   assert.ok(search('', 'archive').every(document => document.archived));
-  assert.ok(search('', '', 'conductor/code_styleguides/').length >= 4);
+  assert.ok(search('', '', 'docs/').length > 0);
+  assert.equal(search('', '', 'conductor/').length, 0);
   assert.equal(search('a-token-that-does-not-exist-here-2026').length, 0);
   assert.equal(search('').length, result.documents.length);
 });
@@ -141,7 +142,9 @@ test('builds cannot overwrite source directories or unowned output directories',
 });
 
 test('private directories, runtime databases, untracked notes and build dependencies are excluded', () => {
-  assert.ok(result.files.every(file => !/(?:^|\/)(?:\.git|node_modules|\.env|memory\.db|brag-output)(?:\/|$)/.test(file)));
+  assert.ok(result.files.every(file => !/(?:^|\/)(?:\.git|node_modules|\.env|memory\.db|brag-output|conductor)(?:\/|$)/.test(file)));
+  assert.ok(!isDocument('conductor/workflow.md'));
+  assert.ok(!isDocument('brag-output/notes.md'));
   assert.ok(!isDocument('.github/private.md'));
   assert.ok(!isDocument('private-notes.md'));
   assert.ok(!isDocument('docs/site/private.md'));
@@ -175,4 +178,23 @@ test('repeated builds are deterministic', () => {
   const repeated = buildSite({ root, output });
   assert.deepEqual(repeated.files, result.files);
   for (const [file, content] of before) assert.deepEqual(fs.readFileSync(path.join(output, file)), content, file);
+});
+
+test('rebuilding removes previously generated retired pages, downloads and indexes', () => {
+  const isolated = path.join(temporary, 'retired-output');
+  buildSite({ root, output: isolated });
+  const retired = ['library/conductor/workflow.html', 'id/library/conductor/workflow.html', 'library/source/conductor/workflow.md', 'library/source/conductor/tracks/old/metadata.json'];
+  const manifestPath = path.join(isolated, '.hela-docs-build.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  for (const file of retired) {
+    fs.mkdirSync(path.dirname(path.join(isolated, file)), { recursive: true });
+    fs.writeFileSync(path.join(isolated, file), 'retired planning record');
+    manifest.files.push(file);
+  }
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+  buildSite({ root, output: isolated });
+  for (const file of retired) assert.ok(!fs.existsSync(path.join(isolated, file)), `stale publication: ${file}`);
+  for (const file of ['library-data.js', 'sitemap.xml', 'llms.txt', 'llms-full.txt']) {
+    assert.ok(!/library\/(?:source\/)?conductor\//.test(fs.readFileSync(path.join(isolated, file), 'utf8')), `retired reference: ${file}`);
+  }
 });

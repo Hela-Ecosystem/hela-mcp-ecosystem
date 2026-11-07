@@ -8,6 +8,8 @@ yarn-error.log*
 
 # Build outputs
 _site/
+brag-output/
+conductor/
 dist/
 build/
 *.tsbuildinfo

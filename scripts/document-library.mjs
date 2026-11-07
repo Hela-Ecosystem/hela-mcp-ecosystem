@@ -24,7 +24,7 @@ export function trackedFiles(root) {
 }
 
 export function isDocument(file) {
-  return rootDocuments.has(file) || /^(?:docs\/(?!site\/)|conductor\/)[^\0]*\.md$/.test(file);
+  return rootDocuments.has(file) || /^docs\/(?!site\/)[^\0]*\.md$/.test(file);
 }
 
 export function readPublicFile(root, relative) {
@@ -41,9 +41,9 @@ export function readPublicFile(root, relative) {
 }
 
 function categoryFor(source) {
-  if (/\d{4}-\d{2}-\d{2}/.test(source) || source.startsWith('conductor/tracks/')) return 'archive';
+  if (/\d{4}-\d{2}-\d{2}/.test(source)) return 'archive';
   if (/^(?:CHANGELOG|RELEASE_NOTES)\.md$/.test(source)) return 'releases';
-  if (source.startsWith('conductor/') || rootDocuments.has(source) && source !== 'README.md') return 'project';
+  if (rootDocuments.has(source) && source !== 'README.md') return 'project';
   if (/README|beginner-guide|installation\.md|integration\.md|keys-and-secrets/.test(source)) return 'gettingStarted';
   if (/troubleshooting|security-audit|installation-acceptance/.test(source)) return 'operations';
   return 'reference';

@@ -15,7 +15,7 @@ export function buildSite({ root = defaultRoot, output = path.join(root, '_site'
   const suffix = [];
   while (!fs.existsSync(ancestor)) { suffix.unshift(path.basename(ancestor)); ancestor = path.dirname(ancestor); }
   output = path.join(fs.realpathSync(ancestor), ...suffix);
-  if (output === root || root.startsWith(output + path.sep) || ['docs', 'assets', 'scripts', 'config', 'conductor', 'node_modules', '.git'].some(name => output === path.join(root, name) || output.startsWith(path.join(root, name) + path.sep))) {
+  if (output === root || root.startsWith(output + path.sep) || ['docs', 'assets', 'scripts', 'config', 'node_modules', '.git'].some(name => output === path.join(root, name) || output.startsWith(path.join(root, name) + path.sep))) {
     throw new Error('Build output must not overwrite source directories');
   }
   const owner = path.join(output, '.hela-docs-build.json');
@@ -40,7 +40,7 @@ export function buildSite({ root = defaultRoot, output = path.join(root, '_site'
     return { ...describeDocument(source, text), text };
   });
   const bySource = new Map(documents.map(document => [document.source, document]));
-  const resources = new Set([...tracked].filter(source => /^config\/[^\0]+\.(?:json|toml|ya?ml)$/.test(source) || /^conductor\/tracks\/[^/]+\/metadata\.json$/.test(source)));
+  const resources = new Set([...tracked].filter(source => /^config\/[^\0]+\.(?:json|toml|ya?ml)$/.test(source)));
   const pkg = JSON.parse(readPublicFile(root, 'package.json'));
   const inventory = JSON.parse(readPublicFile(root, 'config/inventory.json'));
   const release = { ecosystem: pkg.version, runtime: inventory.inventory['hela-runtime'].version };

@@ -9,7 +9,6 @@ on:
       - '**/*.md'
       - 'LICENSE'
       - 'config/**'
-      - 'conductor/**'
       - 'assets/**'
       - 'scripts/generate-docs.mjs'
       - 'scripts/build-site.mjs'
