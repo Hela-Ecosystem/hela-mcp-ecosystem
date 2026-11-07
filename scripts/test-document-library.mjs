@@ -62,6 +62,34 @@ test('existing website pages link to the library and hosted guides instead of Gi
   assert.ok(nested.includes('href="../../../../../style.css"'));
 });
 
+test('all pages share the complete numbered sidebar, localized groups and mobile navigation', () => {
+  const links = ['library.html', 'index.html', 'index.html#installation', 'index.html#verify', 'architecture.html', 'workflows.html', 'profiles.html', 'showcase.html', 'troubleshooting.html', 'privacy.html', 'terms.html'];
+  const groups = { en: ['GETTING STARTED', 'REFERENCE', 'OPERATE', 'LEGAL'], id: ['MEMULAI', 'REFERENSI', 'PENGOPERASIAN', 'LEGAL &amp; HUKUM'] };
+  const sidebars = new Map();
+  for (const page of result.files.filter(file => file.endsWith('.html'))) {
+    const html = fs.readFileSync(path.join(output, page), 'utf8');
+    const sidebar = html.match(/<aside class="doc-sidebar"[^>]*>[\s\S]*?<\/aside>/)?.[0];
+    assert.ok(sidebar, `${page}: missing sidebar`);
+    const language = page.startsWith('id/') ? 'id' : 'en';
+    const navigation = [...sidebar.matchAll(/<li><a href="([^"]+)"([^>]*)><span class="doc-nav-num">(\d+)<\/span>/g)];
+    assert.equal(navigation.length, links.length, `${page}: incomplete numbered navigation`);
+    for (const [index, [, href, attributes, number]] of navigation.entries()) {
+      const [target, fragment] = href.split('#');
+      const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(page), target)) + (fragment ? '#' + fragment : '');
+      assert.equal(resolved, (language === 'id' ? 'id/' : '') + links[index], `${page}: wrong sidebar target`);
+      assert.equal(number, String(index).padStart(2, '0'));
+      const current = /(?:^|\/)library(?:\/|\.html)/.test(page) ? 'library.html' : path.posix.basename(page);
+      assert.equal(attributes.includes('aria-current="page"'), links[index] === current, `${page}: wrong active item`);
+    }
+    for (const label of groups[language]) assert.ok(sidebar.includes(`class="doc-nav-section">${label}</div>`), `${page}: missing group ${label}`);
+    assert.ok(sidebar.includes('<details class="doc-mobile-nav" open>'));
+    assert.ok(sidebar.includes(language === 'id' ? '>Ekosistem HeLa MCP</a>' : '>HeLa MCP Ecosystem</a>'));
+    const normalized = sidebar.replace(/ aria-current="page"/g, '').replace(/href="[^"]*"/g, 'href=""');
+    if (!sidebars.has(language)) sidebars.set(language, normalized);
+    assert.equal(normalized, sidebars.get(language), `${page}: sidebar structure differs`);
+  }
+});
+
 test('full-text search finds commands, filenames, categories and project records', () => {
   const search = (query, category = '', prefix = '') => JSON.parse(vm.runInContext(`JSON.stringify(findLibraryDocuments(${JSON.stringify(query)},${JSON.stringify(category)},${JSON.stringify(prefix)}))`, context));
   assert.ok(search('--without-model').some(document => document.source === 'docs/installation.md'));

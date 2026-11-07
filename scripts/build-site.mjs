@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { categories, describeDocument, escapeHtml, isDocument, ORIGIN, publishedDocumentPath, readPublicFile, relativeUrl, renderDocument, renderLibraryIndex, renderShell, rewriteLink, trackedFiles } from './document-library.mjs';
+import { categories, describeDocument, escapeHtml, isDocument, ORIGIN, publishedDocumentPath, readPublicFile, relativeUrl, renderDocument, renderLibraryIndex, renderShell, renderSidebar, rewriteLink, trackedFiles } from './document-library.mjs';
 
 const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -80,7 +80,8 @@ export function buildSite({ root = defaultRoot, output = path.join(root, '_site'
     const language = page.startsWith('id/') ? 'id' : 'en';
     const assetPrefix = language === 'id' ? '../' : '';
     let html = value.toString();
-    html = html.replace(/(<nav aria-label="(?:Documentation|Dokumentasi)">)/, `$1\n<ol class="doc-nav"><li><a href="library.html"><span class="doc-nav-num">00</span> ${language === 'id' ? 'Pustaka dokumentasi' : 'Document library'}</a></li></ol>`);
+    if (!/<aside class="doc-sidebar"[^>]*>[\s\S]*?<\/aside>/.test(html)) throw new Error(`Missing documentation sidebar: ${page}`);
+    html = html.replace(/<aside class="doc-sidebar"[^>]*>[\s\S]*?<\/aside>/, () => renderSidebar({ language, page, version: release.ecosystem, runtime: release.runtime }));
     html = html.replace(/(<link rel="stylesheet" href="(?:\.\.\/)?style\.css">)/, `$1\n  <link rel="stylesheet" href="${assetPrefix}library.css">`);
     html = html.replace(/(<script src="(?:\.\.\/)?app\.js[^"<>]*"><\/script>)/, `<script src="${assetPrefix}library-data.js?v=${release.ecosystem}"></script>\n  <script src="${assetPrefix}library.js?v=${release.ecosystem}"></script>\n  $1`);
     html = html.replace(/href="(https:\/\/github\.com\/Hela-Ecosystem\/hela-mcp-ecosystem\/blob\/master\/[^"<>]+)"/g, (full, href) => {

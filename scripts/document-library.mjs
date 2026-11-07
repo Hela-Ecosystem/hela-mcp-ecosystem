@@ -146,12 +146,25 @@ export function renderDocument(text, document, context) {
   return { html: headings.some(heading => heading.level === 1) ? html : `<h1 class="doc-title">${escapeHtml(document.title)}</h1>\n${html}`, headings };
 }
 
-export function documentNavigation(language, prefix) {
+export function documentNavigation(language, prefix, current = 'library.html') {
   const labels = language === 'id'
-    ? ['Ikhtisar', 'Arsitektur', 'Alur kerja', 'Profil & konfigurasi', 'Diagnostik', 'Pustaka dokumentasi']
-    : ['Overview', 'Architecture', 'Workflows', 'Profiles & config', 'Diagnostics', 'Document library'];
-  const links = ['index.html', 'architecture.html', 'workflows.html', 'profiles.html', 'troubleshooting.html', 'library.html'];
-  return links.map((link, index) => `<li><a href="${prefix}${link}"${link === 'library.html' ? ' aria-current="page"' : ''}>${escapeHtml(labels[index])}</a></li>`).join('\n');
+    ? ['Pustaka dokumentasi', 'Ikhtisar', 'Instalasi', 'Verifikasi', 'Arsitektur', 'Alur Kerja', 'Profil & Konfigurasi', 'Pameran & Demo', 'Diagnostik', 'Privasi', 'Ketentuan']
+    : ['Document library', 'Overview', 'Installation', 'Verify', 'Architecture', 'Workflows', 'Profiles & Config', 'Showcase', 'Diagnostics', 'Privacy', 'Terms'];
+  const links = ['library.html', 'index.html', 'index.html#installation', 'index.html#verify', 'architecture.html', 'workflows.html', 'profiles.html', 'showcase.html', 'troubleshooting.html', 'privacy.html', 'terms.html'];
+  const sections = language === 'id' ? ['MEMULAI', 'REFERENSI', 'PENGOPERASIAN', 'LEGAL & HUKUM'] : ['GETTING STARTED', 'REFERENCE', 'OPERATE', 'LEGAL'];
+  const item = index => `<li><a href="${prefix}${links[index]}"${links[index] === current ? ' aria-current="page"' : ''}><span class="doc-nav-num">${String(index).padStart(2, '0')}</span> <span>${escapeHtml(labels[index])}</span></a></li>`;
+  return `<ol class="doc-nav" start="0">${item(0)}</ol>\n` + [[1, 4], [4, 7], [7, 9], [9, 11]].map(([start, end], index) => `<div class="doc-nav-section">${escapeHtml(sections[index])}</div><ol class="doc-nav" start="${start}">${links.slice(start, end).map((_, offset) => item(start + offset)).join('\n')}</ol>`).join('\n');
+}
+
+export function renderSidebar({ language, page, version, runtime }) {
+  const languageRoot = language === 'id' ? 'id/' : '';
+  const relative = path.posix.relative(path.posix.dirname(page), languageRoot || '.');
+  const prefix = relative ? relative + '/' : '';
+  const current = /(?:^|\/)library(?:\/|\.html)/.test(page) ? 'library.html' : path.posix.basename(page);
+  return `<aside class="doc-sidebar" aria-label="${language === 'id' ? 'Bagian dokumentasi' : 'Documentation sections'}">
+      <div class="doc-brand"><a href="${prefix}index.html" class="doc-brand-title">${language === 'id' ? 'Ekosistem HeLa MCP' : 'HeLa MCP Ecosystem'}</a><div class="doc-brand-meta">v${version} · Runtime ${runtime} · 10 ${language === 'id' ? 'SEL' : 'CELLS'}</div></div>
+      <nav aria-label="${language === 'id' ? 'Dokumentasi' : 'Documentation'}"><details class="doc-mobile-nav" open><summary>${language === 'id' ? 'Jelajahi dokumentasi' : 'Browse documentation'}</summary>${documentNavigation(language, prefix, current)}</details></nav>
+    </aside>`;
 }
 
 export function renderShell({ language, page, title, description, content, toc = '', version, runtime }) {
@@ -185,10 +198,7 @@ export function renderShell({ language, page, title, description, content, toc =
 <body class="library-page" data-page-prefix="${pagePrefix}">
   <a href="#main-content" class="skip-link">${language === 'id' ? 'Langsung ke isi' : 'Skip to main content'}</a>
   <div class="doc-shell">
-    <aside class="doc-sidebar" aria-label="${label}">
-      <div class="doc-brand"><a href="${pagePrefix}index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v${version} · Runtime ${runtime} · 10 ${language === 'id' ? 'SEL' : 'CELLS'}</div></div>
-      <nav aria-label="${label}"><details class="library-mobile-nav" open><summary>${language === 'id' ? 'Jelajahi dokumentasi' : 'Browse documentation'}</summary><div class="doc-nav-section">${language === 'id' ? 'DOKUMENTASI' : 'DOCUMENTATION'}</div><ul class="doc-nav">${documentNavigation(language, pagePrefix)}</ul></details></nav>
-    </aside>
+    ${renderSidebar({ language, page, version, runtime })}
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="${pagePrefix}library.html">${label}</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn${language === 'en' ? ' active' : ''}" data-lang="en" href="${en}">EN</a><a class="lang-btn${language === 'id' ? ' active' : ''}" data-lang="id" href="${id}">ID</a></div><button class="btn open-cmd-palette" type="button">${language === 'id' ? 'Cari' : 'Search'} <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
       <main id="main-content" class="doc-content library-content">${content}<footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="${pagePrefix}library.html">${label}</a></footer></main>
