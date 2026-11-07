@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.5.3",
-  "created_at": "2026-11-07T12:50:50Z",
-  "description": "Genome canonical relation ordering completes the vault convergence and typed lint fixes from 1.5.2. Other cell/runtime pins and historical snapshots are unchanged.",
+  "snapshot_version": "1.6.0",
+  "created_at": "2026-11-08T04:00:00Z",
+  "description": "Enzyme 4.0.0 requires query for google_search, matching the other text-search tools; the q alias is removed. Other cell/runtime pins and historical snapshots are unchanged.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -47,10 +47,10 @@
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "f056764a54039f3432f90284d0462952fc39b8a9",
+      "commit": "eb98982ee72f809113292be630ebd6735376a886",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.0"
+      "serverVersion": "4.0.0"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
@@ -88,14 +88,14 @@
       "serverVersion": "1.2.0"
     }
   },
-  "verified_profiles": ["dev-workspace"],
+  "verified_profiles": [
+    "dev-workspace"
+  ],
   "verified_clients": [],
   "verification": {
-    "documentation_regressions": 74,
+    "enzyme_contract_tests": 32,
+    "enzyme_regression_tests": 111,
     "client_configuration_combinations": 80,
-    "genome_regression_tests": 264,
-    "genome_lint_errors": 0,
-    "genome_lint_warnings": 0,
-    "scope": "Genome regression/build checks and generated metadata. Vault repair is an explicit backed-up operation; normal CLI sync still refuses divergent notes. Other profiles, authenticated GUI clients, providers and hardware are not new acceptance claims."
+    "scope": "Enzyme contract/build/lint checks and generated metadata. Authenticated GUI clients, providers, hardware and other cell revisions are not new acceptance claims."
   }
 }

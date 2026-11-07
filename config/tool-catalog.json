@@ -5730,10 +5730,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "f056764a54039f3432f90284d0462952fc39b8a9",
-      "version": "3.0.0",
+      "revision": "eb98982ee72f809113292be630ebd6735376a886",
+      "version": "4.0.0",
       "digests": [
-        "eb6938b58285f69589e4be17ca14f951c5c1c98867d176f554d537b2aa8560c3"
+        "a2f61633a47e572a8afb5527d199dc549dcc0fa08241fdbe78d48826294339e2"
       ],
       "variants": [
         {
@@ -5955,21 +5955,23 @@
               "inputSchema": {
                 "type": "object",
                 "properties": {
-                  "q": {
+                  "query": {
                     "type": "string",
+                    "minLength": 1,
                     "description": "Search query"
                   },
                   "num": {
-                    "type": "number",
+                    "default": 5,
                     "description": "Number of results (1-10)",
+                    "type": "integer",
                     "minimum": 1,
-                    "maximum": 10,
-                    "default": 5
+                    "maximum": 10
                   }
                 },
                 "required": [
-                  "q"
-                ]
+                  "query"
+                ],
+                "additionalProperties": false
               }
             },
             {

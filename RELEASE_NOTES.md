@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.6.0 — consistent Enzyme search input
+
+Pin Enzyme source `eb98982`. `google_search` now takes `query`, matching every other single text search in the cell. The former `q` argument is removed, so a client that still sends it gets an MCP validation error instead of a silent translation; requests that send both fields are rejected as well. Batch tools keep `queries`, and provider HTTP parameters are unaffected internally.
+
+Both Enzyme entrypoints share one strict schema: the query is trimmed and must be non-empty, `num` is an integer from 1 to 10, and unknown fields are refused before any provider call. Enzyme's contract tests cover discovery, dispatch, rejection of obsolete input, and provider failure for the shipped and modular servers; 32 contract tests and 111 total Enzyme tests pass with a clean TypeScript build and no lint errors. Enzyme moves to 4.0.0 because this is a breaking argument change.
+
+The catalog, generated documentation, and profile counts are rebuilt from the new schema. Counts stay at 24 Enzyme tools, so profile totals do not change. Other cells, the runtime, and every snapshot from v1.0.0 to v1.5.3 are untouched.
+
 ## v1.5.3 — canonical relation ordering
 
 Pin Genome source `9ba1d0e`. Relation links now render in one canonical order regardless of database insertion order, preventing relation-order-only conflicts after a lossless repair. All 19 suites / 264 tests pass; the TypeScript build and zero-warning source lint pass. The published 1.5.2 snapshot remains unchanged, as do all other cell/runtime pins and package versions.

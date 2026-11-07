@@ -34,6 +34,42 @@ test('generated documentation matches canonical versions, schemas, and profile m
   for (const profile of data.profiles) assert.deepEqual(actual.profiles[profile.id].servers, profile.servers);
 });
 
+test('every advertised single-search tool takes query, never q', () => {
+  const singleQueryTools = ['google_search', 'wikipedia_search', 'academic_search', 'multi_site_search', 'research_brief'];
+  const batchTools = ['search_analytics'];
+  const verified = new Set();
+  const seen = new Set();
+  for (const entry of Object.values(catalog.cells)) {
+    for (const variant of entry.variants) {
+      for (const tool of variant.tools) {
+        const properties = tool.inputSchema?.properties ?? {};
+        seen.add(tool.name);
+        assert.ok(!Object.hasOwn(properties, 'q'), `${tool.name} must not expose the short query alias`);
+        if (Object.hasOwn(properties, 'query')) {
+          assert.equal(properties.query.type, 'string', `${tool.name} query type`);
+          verified.add(tool.name);
+        }
+      }
+    }
+  }
+  for (const name of singleQueryTools) {
+    assert.ok(seen.has(name), `missing advertised tool: ${name}`);
+    assert.ok(verified.has(name), `${name} must accept query`);
+  }
+  for (const name of batchTools) {
+    assert.ok(Object.hasOwn(catalog.cells['hela-enzyme'].variants[0].tools.find(tool => tool.name === name)?.inputSchema.properties ?? {}, 'queries'), `${name} must keep the plural queries field`);
+  }
+  const googleSearch = catalog.cells['hela-enzyme'].variants
+    .flatMap(variant => variant.tools)
+    .find(tool => tool.name === 'google_search');
+  assert.deepEqual(googleSearch.inputSchema.required, ['query']);
+  assert.equal(googleSearch.inputSchema.additionalProperties, false);
+  assert.deepEqual(googleSearch.inputSchema.properties.num, {
+    type: 'integer', minimum: 1, maximum: 10, default: 5, description: 'Number of results (1-10)',
+  });
+  assert.ok(!Object.hasOwn(googleSearch.inputSchema.properties, 'q'));
+});
+
 test('all EN/ID pages display current versions and load generated data before the app', () => {
   for (const dir of [site, path.join(site, 'id')]) for (const name of fs.readdirSync(dir).filter(name => name.endsWith('.html'))) {
     const text = fs.readFileSync(path.join(dir, name), 'utf8');
