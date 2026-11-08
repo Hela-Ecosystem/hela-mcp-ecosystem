@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../style.css">
-  <link rel="stylesheet" href="../../../library.css?v=1.6.0&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../../library.css?v=1.6.1&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../../">
   <a href="#main-content" class="skip-link">Langsung ke isi</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
-      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.6.0 · Runtime 1.2.0 · 10 SEL</div></div>
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.6.1 · Runtime 1.2.0 · 10 SEL</div></div>
       <nav aria-label="Dokumentasi"><details class="doc-mobile-nav" open><summary>Jelajahi dokumentasi</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Pustaka dokumentasi</span></a></li></ol>
 <div class="doc-nav-section">MEMULAI</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Ikhtisar</span></a></li>
 <li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Instalasi</span></a></li>
@@ -98,16 +98,25 @@ node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
 </div>
 <p>Snapshots must declare exact commits and server versions. Incomplete historical metadata is rejected, not silently ignored. <code>--dev</code> follows recorded branches for host modes and records the resolved revisions/versions; Docker requires pinned snapshots. Optional provider keys are read from environment, not command-line secret flags. Generated fragments can contain those supplied credentials and are written with private permissions.</p>
 <p>Reconfiguration infers the existing mode/profile/transport from an explicit prefix and only generates another fragment. To change transport or port, rerun installation with the new settings; a stdio fragment must not point at an HTTP-only launcher.</p>
+<h2 id="switch-modes-in-place">Switch modes in place</h2>
+<p><code>setup.sh mode</code> converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
+./setup.sh doctor --prefix /path/to/existing/prefix --json
+./setup.sh mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
+</code></pre>
+</div>
+<p>Every mode is a valid target: <code>individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, and <code>nix</code>. The profile, snapshot, workspace, and <code>data/</code> directories are preserved; only the artifacts the target mode needs are built. Host-mode switches reuse cells that already sit at the pinned revision with a clean worktree, so repeated conversions take seconds rather than rebuilding every package. Moving into a Docker mode builds the profile image; moving out deletes <code>compose.json</code>. Transport and port carry over unless <code>--transport</code> or <code>--port</code> is passed, and HTTP targets require a runtime mode. Switching to <code>--mode nix</code> must run inside Nix, exactly like a fresh Nix install.</p>
+<p>The command verifies the converted installation with the same doctor checks used after installation and generates a new client fragment when <code>--client</code> is supplied; it never edits live client settings. If verification fails, the previous manifest is restored, a pending marker is written, and the command exits nonzero so doctor reports the degraded state. A pending or unmanaged prefix is refused, and re-selecting the current mode is an error rather than a silent no-op.</p>
 <p>Doctor exits nonzero for missing or incomplete installations, modified builds, wrong revisions/versions, missing images, failed MCP replies, and runtime catalog/HTTP failures. A remote <code>--url</code> check verifies MCP initialize/discovery and the runtime version, not remote filesystem pins or hardware. Existing standalone sibling/nested checkouts remain diagnosable when no managed installation is selected.</p>
 <p>Never overwrite live SQLite files or force vault conflicts to resolve installation warnings. Use validated backups and a deliberate migration if you intend to move existing memory into a new managed prefix.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
-      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#requirements-and-boundaries">Requirements and boundaries</a></li><li><a href="#managed-layout">Managed layout</a></li><li><a href="#individual-servers">Individual servers</a></li><li><a href="#single-stdio-runtime">Single stdio runtime</a></li><li><a href="#docker-separate-cells-or-runtime">Docker: separate cells or runtime</a></li><li><a href="#nix-runtime">Nix runtime</a></li><li><a href="#http-runtime">HTTP runtime</a></li><li><a href="#snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#requirements-and-boundaries">Requirements and boundaries</a></li><li><a href="#managed-layout">Managed layout</a></li><li><a href="#individual-servers">Individual servers</a></li><li><a href="#single-stdio-runtime">Single stdio runtime</a></li><li><a href="#docker-separate-cells-or-runtime">Docker: separate cells or runtime</a></li><li><a href="#nix-runtime">Nix runtime</a></li><li><a href="#http-runtime">HTTP runtime</a></li><li><a href="#snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</a></li><li><a href="#switch-modes-in-place">Switch modes in place</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../../release-data.js?v=1.6.0"></script>
-  <script src="../../../library-data.js?v=1.6.0&amp;rev=30bc3e9dc6bc"></script>
-  <script src="../../../library.js?v=1.6.0&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../../app.js?v=1.6.0&amp;rev=a305ef54f01d"></script>
+  <script src="../../../release-data.js?v=1.6.1"></script>
+  <script src="../../../library-data.js?v=1.6.1&amp;rev=1011d5b79739"></script>
+  <script src="../../../library.js?v=1.6.1&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../../app.js?v=1.6.1&amp;rev=a305ef54f01d"></script>
 </body>
 </html>

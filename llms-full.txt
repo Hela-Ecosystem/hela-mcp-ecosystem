@@ -5,10 +5,18 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
+## [1.6.1] - 2026-11-08
+
+- Add `setup.sh mode` to convert an existing managed installation between `individual`, `runtime`, `docker`, `docker-runtime`, and `nix` in place.
+- Reuse cells already built at the pinned revision, preserve `data/` and the profile/snapshot, and verify the converted installation with doctor before reporting success.
+- Restore the previous manifest and leave a pending marker when verification fails; refuse pending, unmanaged, or unchanged targets.
+- Cover host-family switching, transport guards, pending markers, and Docker round-trips in tests and CI. Enzyme, runtime, and other cell pins are unchanged from 1.6.0.
+
 ## [1.6.0] - 2026-11-08
 
 - Pin Enzyme 4.0.0, whose `google_search` now requires `query`. The old `q` argument is rejected rather than translated; batch tools keep `queries`.
 - Share one strict search schema between Enzyme's shipped and modular entrypoints: trimmed non-empty queries, integer result counts from 1 to 10, unknown fields refused before any provider request.
+- Add `setup.sh mode` to convert a managed installation between individual, runtime, Docker, Docker-runtime, and Nix in place, reusing verified builds and preserving data directories.
 - Regenerate the canonical tool catalog and documentation from the new Enzyme schema. Tool counts and all other cell/runtime pins are unchanged.
 - Preserve every historical snapshot from v1.0.0 through v1.5.3.
 
@@ -192,7 +200,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.6.0**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.6.1**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -290,12 +298,17 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.6.0 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.6.1 --non-interactive
 ```
 
-**Single-Endpoint Runtime (one MCP connection for the selected profile):**
+**Single-endpoint Runtime (one MCP connection for the selected profile):**
 ```bash
 ./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+```
+
+**Change an existing installation's mode in place:**
+```bash
+./setup.sh mode --prefix /path/to/prefix --mode docker-runtime --client opencode --non-interactive
 ```
 
 **Docker cells, Docker runtime, or Nix runtime:**
@@ -402,6 +415,14 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.6.1 — switch deployment modes in place
+
+`./setup.sh mode --prefix PATH --mode MODE` converts an existing managed installation to another execution mechanism without a second prefix or a data migration. All five modes are valid targets. Profile, snapshot, workspace, transport, port, and the per-cell `data/` directories carry over; host-mode switches reuse packages already built at the pinned revision with a clean worktree, and Docker modes build or drop their image and `compose.json` accordingly.
+
+The command runs the same verification as a fresh installation and generates a new client fragment instead of editing live client settings. Failed verification restores the previous manifest and writes a pending marker so doctor reports the degraded state. Pending or unmanaged prefixes are refused, HTTP targets require a runtime mode, and re-selecting the current mode is an error.
+
+Enzyme stays at 4.0.0 and the runtime at 1.2.0; every cell pin is unchanged from 1.6.0. Tests cover host-family round-trips, transport guards, pending markers, and Docker switches.
 
 ## v1.6.0 — consistent Enzyme search input
 
@@ -819,7 +840,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.6.0**; runtime **1.2.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.6.1**; runtime **1.2.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.0**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.0**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1136,6 +1157,20 @@ HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client
 Snapshots must declare exact commits and server versions. Incomplete historical metadata is rejected, not silently ignored. `--dev` follows recorded branches for host modes and records the resolved revisions/versions; Docker requires pinned snapshots. Optional provider keys are read from environment, not command-line secret flags. Generated fragments can contain those supplied credentials and are written with private permissions.
 
 Reconfiguration infers the existing mode/profile/transport from an explicit prefix and only generates another fragment. To change transport or port, rerun installation with the new settings; a stdio fragment must not point at an HTTP-only launcher.
+
+## Switch modes in place
+
+`setup.sh mode` converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:
+
+```bash
+./setup.sh mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
+./setup.sh doctor --prefix /path/to/existing/prefix --json
+./setup.sh mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
+```
+
+Every mode is a valid target: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. The profile, snapshot, workspace, and `data/` directories are preserved; only the artifacts the target mode needs are built. Host-mode switches reuse cells that already sit at the pinned revision with a clean worktree, so repeated conversions take seconds rather than rebuilding every package. Moving into a Docker mode builds the profile image; moving out deletes `compose.json`. Transport and port carry over unless `--transport` or `--port` is passed, and HTTP targets require a runtime mode. Switching to `--mode nix` must run inside Nix, exactly like a fresh Nix install.
+
+The command verifies the converted installation with the same doctor checks used after installation and generates a new client fragment when `--client` is supplied; it never edits live client settings. If verification fails, the previous manifest is restored, a pending marker is written, and the command exits nonzero so doctor reports the degraded state. A pending or unmanaged prefix is refused, and re-selecting the current mode is an error rather than a silent no-op.
 
 Doctor exits nonzero for missing or incomplete installations, modified builds, wrong revisions/versions, missing images, failed MCP replies, and runtime catalog/HTTP failures. A remote `--url` check verifies MCP initialize/discovery and the runtime version, not remote filesystem pins or hardware. Existing standalone sibling/nested checkouts remain diagnosable when no managed installation is selected.
 
