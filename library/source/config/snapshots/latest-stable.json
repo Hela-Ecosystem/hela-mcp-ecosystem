@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.6.1",
-  "created_at": "2026-11-08T05:30:00Z",
-  "description": "Adds in-place deployment-mode switching to the installer. Cell and runtime pins are unchanged from 1.6.0.",
+  "snapshot_version": "1.6.2",
+  "created_at": "2026-11-08T08:30:00Z",
+  "description": "Adopts the Dependabot-updated Plastid and Receptor locks and pins Plastid MCP SDK to a caret range instead of latest. Cell versions and other pins are unchanged from 1.6.1.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -68,14 +68,14 @@
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
-      "commit": "f8649606b38179cbc188e293af7317e04fd9874d",
+      "commit": "1b21cb7418ae634e66d67732c6b16b6e86e3520f",
       "branch": "master",
       "entry": "dist/server.js",
       "serverVersion": "3.0.0"
     },
     "hela-plastid": {
       "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git",
-      "commit": "e19270c8b68a10e361d3a68d061922ff8380e1bd",
+      "commit": "aa438778aaf83ff7f467c83caecf88711a7afda1",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.0"
@@ -93,11 +93,12 @@
   ],
   "verified_clients": [],
   "verification": {
+    "plastid_regressions": 12,
+    "receptor_tests": 123,
     "installation_tests": 54,
     "documentation_regressions": 89,
     "client_configuration_combinations": 80,
     "inventory_tests": 4,
-    "integration_checks": 15,
-    "scope": "Installer mode-switch, documentation and configuration checks. Authenticated GUI clients, providers, hardware, Docker/Nix hosts and other cell revisions are not new acceptance claims."
+    "scope": "Dependency refreshes for Plastid and Receptor verified by their own suites and this repository checks. Hardware, Blender bridge, GUI clients and providers remain separate."
   }
 }

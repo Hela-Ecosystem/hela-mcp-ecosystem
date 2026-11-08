@@ -5,6 +5,13 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
+## [1.6.2] - 2026-11-08
+
+- Adopt the Dependabot-updated Plastid and Receptor lockfiles, clearing the open MCP SDK and `@hono/node-server` advisories.
+- Replace Plastid's `"@modelcontextprotocol/sdk": "latest"` with a caret range so future lock refreshes are reviewable instead of silent.
+- Plastid keeps 12 passing regressions and `npm audit` reports zero vulnerabilities; Receptor keeps 123 passing tests.
+- Cell versions and every other pin are unchanged from 1.6.1.
+
 ## [1.6.1] - 2026-11-08
 
 - Add `setup.sh mode` to convert an existing managed installation between `individual`, `runtime`, `docker`, `docker-runtime`, and `nix` in place.
@@ -200,7 +207,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.6.1**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.6.2**, with runtime **1.2.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -298,7 +305,7 @@ cd hela-mcp-ecosystem
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-./setup.sh --profile dev-workspace --client cursor --snapshot v1.6.1 --non-interactive
+./setup.sh --profile dev-workspace --client cursor --snapshot v1.6.2 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -415,6 +422,14 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.6.2 — Plastid and Receptor dependency refresh
+
+Plastid moves to `aa43877` and Receptor to `1b21cb7`, adopting the lockfile updates that had accumulated on their default branches. Both carried open advisories against `@modelcontextprotocol/sdk`; the refreshed locks resolve them, and `npm audit` is clean for Plastid's runtime dependencies while Receptor reports none.
+
+Plastid's manifest also declared `"@modelcontextprotocol/sdk": "latest"`. That is why its lockfile drifted without a reviewable diff; it is now `^1.32.2`. Builds and the existing suites pass — 12 Plastid regressions and 123 Receptor tests — and no cell version changed.
+
+Exposure was limited: the SDK advisories concern HTTP transports, body-size limits, and OAuth flows, while Plastid and Receptor run over stdio. Updating still removes the drift and the noise. Hardware, the Blender bridge, GUI clients, and providers remain separate checks.
 
 ## v1.6.1 — switch deployment modes in place
 
@@ -840,7 +855,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.6.1**; runtime **1.2.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.6.2**; runtime **1.2.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.0**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.0**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).

@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.6.2] - 2026-11-08
+
+- Adopt the Dependabot-updated Plastid and Receptor lockfiles, clearing the open MCP SDK and `@hono/node-server` advisories.
+- Replace Plastid's `"@modelcontextprotocol/sdk": "latest"` with a caret range so future lock refreshes are reviewable instead of silent.
+- Plastid keeps 12 passing regressions and `npm audit` reports zero vulnerabilities; Receptor keeps 123 passing tests.
+- Cell versions and every other pin are unchanged from 1.6.1.
+
 ## [1.6.1] - 2026-11-08
 
 - Add `setup.sh mode` to convert an existing managed installation between `individual`, `runtime`, `docker`, `docker-runtime`, and `nix` in place.
