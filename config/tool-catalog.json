@@ -9273,10 +9273,10 @@
       ]
     },
     "hela-receptor": {
-      "revision": "f8649606b38179cbc188e293af7317e04fd9874d",
+      "revision": "1b21cb7418ae634e66d67732c6b16b6e86e3520f",
       "version": "3.0.0",
       "digests": [
-        "9a4f2ae274400d2737cdf11753cfdae5c5ec7e5744ba791d96b842046521bbd6"
+        "b69816d30181a088c4dffa68b8de5733d29c2318c206e0b3c58e173cb7fe3614"
       ],
       "variants": [
         {
@@ -9555,48 +9555,32 @@
                     "description": "Resolved device serial"
                   },
                   "model": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ],
-                    "description": "Device model"
+                    "description": "Device model",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   },
                   "brand": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ],
-                    "description": "Device brand"
+                    "description": "Device brand",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   },
                   "manufacturer": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ],
-                    "description": "Device manufacturer"
+                    "description": "Device manufacturer",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   },
                   "androidVersion": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ],
-                    "description": "Android release version"
+                    "description": "Android release version",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   },
                   "sdkLevel": {
                     "anyOf": [
@@ -10551,24 +10535,16 @@
                 "properties": {
                   "keycode": {
                     "description": "Keycode name (e.g., 'HOME', 'BACK') or numeric value",
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "number"
-                      }
+                    "type": [
+                      "string",
+                      "number"
                     ]
                   },
                   "key": {
                     "description": "Alias for keycode",
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "number"
-                      }
+                    "type": [
+                      "string",
+                      "number"
                     ]
                   },
                   "serial": {
@@ -10965,15 +10941,11 @@
                     "description": "Package name of the foreground app"
                   },
                   "activity": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ],
-                    "description": "Foreground activity name, if resolvable"
+                    "description": "Foreground activity name, if resolvable",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
                   }
                 },
                 "required": [
@@ -12049,10 +12021,10 @@
       ]
     },
     "hela-plastid": {
-      "revision": "e19270c8b68a10e361d3a68d061922ff8380e1bd",
+      "revision": "aa438778aaf83ff7f467c83caecf88711a7afda1",
       "version": "3.0.0",
       "digests": [
-        "7d18428ec5d8bf8668977768aa9d9144ffdc8e36c4d72e7260fae9cc54e6e932"
+        "1d3cb411ecec6b40b36a229dfb0b13de8a79d0d63a1560745619bcb2704a162b"
       ],
       "variants": [
         {

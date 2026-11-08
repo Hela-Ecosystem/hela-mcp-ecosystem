@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.6.2 — Plastid and Receptor dependency refresh
+
+Plastid moves to `aa43877` and Receptor to `1b21cb7`, adopting the lockfile updates that had accumulated on their default branches. Both carried open advisories against `@modelcontextprotocol/sdk`; the refreshed locks resolve them, and `npm audit` is clean for Plastid's runtime dependencies while Receptor reports none.
+
+Plastid's manifest also declared `"@modelcontextprotocol/sdk": "latest"`. That is why its lockfile drifted without a reviewable diff; it is now `^1.32.2`. Builds and the existing suites pass — 12 Plastid regressions and 123 Receptor tests — and no cell version changed.
+
+Exposure was limited: the SDK advisories concern HTTP transports, body-size limits, and OAuth flows, while Plastid and Receptor run over stdio. Updating still removes the drift and the noise. Hardware, the Blender bridge, GUI clients, and providers remain separate checks.
+
 ## v1.6.1 — switch deployment modes in place
 
 `./setup.sh mode --prefix PATH --mode MODE` converts an existing managed installation to another execution mechanism without a second prefix or a data migration. All five modes are valid targets. Profile, snapshot, workspace, transport, port, and the per-cell `data/` directories carry over; host-mode switches reuse packages already built at the pinned revision with a clean worktree, and Docker modes build or drop their image and `compose.json` accordingly.
