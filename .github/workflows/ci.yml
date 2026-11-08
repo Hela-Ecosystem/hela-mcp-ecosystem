@@ -92,6 +92,12 @@ jobs:
         run: |
           ./setup.sh --mode docker-runtime --profile minimal --without-model --prefix "$RUNNER_TEMP/hela-docker" --client opencode --non-interactive
           ./setup.sh doctor --prefix "$RUNNER_TEMP/hela-docker" --json
+      - name: Switch deployment mode in place and verify each mode
+        run: |
+          ./setup.sh mode --prefix "$RUNNER_TEMP/hela-docker" --mode runtime --without-model --client skip --non-interactive
+          ./setup.sh doctor --prefix "$RUNNER_TEMP/hela-docker" --json
+          ./setup.sh mode --prefix "$RUNNER_TEMP/hela-docker" --mode docker-runtime --client skip --non-interactive
+          ./setup.sh doctor --prefix "$RUNNER_TEMP/hela-docker" --json
 
   nix-installation:
     name: Clean pinned Nix runtime installation

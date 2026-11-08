@@ -2,10 +2,18 @@
 
 All notable changes to this project.
 
+## [1.6.1] - 2026-11-08
+
+- Add `setup.sh mode` to convert an existing managed installation between `individual`, `runtime`, `docker`, `docker-runtime`, and `nix` in place.
+- Reuse cells already built at the pinned revision, preserve `data/` and the profile/snapshot, and verify the converted installation with doctor before reporting success.
+- Restore the previous manifest and leave a pending marker when verification fails; refuse pending, unmanaged, or unchanged targets.
+- Cover host-family switching, transport guards, pending markers, and Docker round-trips in tests and CI. Enzyme, runtime, and other cell pins are unchanged from 1.6.0.
+
 ## [1.6.0] - 2026-11-08
 
 - Pin Enzyme 4.0.0, whose `google_search` now requires `query`. The old `q` argument is rejected rather than translated; batch tools keep `queries`.
 - Share one strict search schema between Enzyme's shipped and modular entrypoints: trimmed non-empty queries, integer result counts from 1 to 10, unknown fields refused before any provider request.
+- Add `setup.sh mode` to convert a managed installation between individual, runtime, Docker, Docker-runtime, and Nix in place, reusing verified builds and preserving data directories.
 - Regenerate the canonical tool catalog and documentation from the new Enzyme schema. Tool counts and all other cell/runtime pins are unchanged.
 - Preserve every historical snapshot from v1.0.0 through v1.5.3.
 

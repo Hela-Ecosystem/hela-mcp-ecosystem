@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.6.1 — switch deployment modes in place
+
+`./setup.sh mode --prefix PATH --mode MODE` converts an existing managed installation to another execution mechanism without a second prefix or a data migration. All five modes are valid targets. Profile, snapshot, workspace, transport, port, and the per-cell `data/` directories carry over; host-mode switches reuse packages already built at the pinned revision with a clean worktree, and Docker modes build or drop their image and `compose.json` accordingly.
+
+The command runs the same verification as a fresh installation and generates a new client fragment instead of editing live client settings. Failed verification restores the previous manifest and writes a pending marker so doctor reports the degraded state. Pending or unmanaged prefixes are refused, HTTP targets require a runtime mode, and re-selecting the current mode is an error.
+
+Enzyme stays at 4.0.0 and the runtime at 1.2.0; every cell pin is unchanged from 1.6.0. Tests cover host-family round-trips, transport guards, pending markers, and Docker switches.
+
 ## v1.6.0 — consistent Enzyme search input
 
 Pin Enzyme source `eb98982`. `google_search` now takes `query`, matching every other single text search in the cell. The former `q` argument is removed, so a client that still sends it gets an MCP validation error instead of a silent translation; requests that send both fields are rejected as well. Batch tools keep `queries`, and provider HTTP parameters are unaffected internally.

@@ -8,6 +8,9 @@ import { loadInventory, selectProfile } from './inventory.mjs';
 export const modes = ['individual', 'runtime', 'docker', 'docker-runtime', 'nix'];
 export const clients = ['cursor', 'claude', 'gemini', 'antigravity', 'opencode', 'kilo', 'zed', 'codex', 'docker', 'skip'];
 
+export function modeNeedsRuntime(mode) { return mode !== 'individual'; }
+export function modeFamily(mode) { return mode.startsWith('docker') ? 'docker' : mode === 'nix' ? 'nix' : 'host'; }
+
 export function run(command, args, options = {}) {
   const result = spawnSync(command, args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, timeout: 600000, ...options });
   if (result.error || result.status !== 0) {
@@ -24,15 +27,19 @@ export function atomicJson(file, value) {
 }
 
 export function parseOptions(argv, sourceRoot) {
-  const options = { profile: process.env.HELA_PROFILE || 'dev-workspace', mode: 'individual', client: 'skip', root: sourceRoot,
+  const options = { command: 'install', profile: process.env.HELA_PROFILE || 'dev-workspace', mode: 'individual', client: 'skip', root: sourceRoot,
     nonInteractive: false, runtime: false, withRuntime: false, dev: false, reconfigure: false, snapshot: 'latest-stable', transport: 'stdio', port: 8080 };
+  const start = argv[0] === 'mode' ? 1 : 0;
+  if (start) options.command = 'mode';
+  options.transportProvided = argv.includes('--transport');
+  options.portProvided = argv.includes('--port');
   const values = new Map([['--profile', 'profile'], ['--mode', 'mode'], ['--client', 'client'], ['--prefix', 'prefix'],
     ['--root', 'root'], ['--snapshot', 'snapshot'], ['--out', 'out'], ['--workspace', 'workspace'], ['--image', 'image'], ['--system', 'system'],
     ['--transport', 'transport'], ['--port', 'port'], ['--url', 'url']]);
   const booleans = new Map([['--non-interactive', 'nonInteractive'], ['--runtime', 'runtime'], ['--with-runtime', 'withRuntime'],
     ['--reconfigure', 'reconfigure'], ['--dev', 'dev'], ['--json', 'json'], ['--help', 'help'], ['-h', 'help']]);
   booleans.set('--without-model', 'withoutModel');
-  for (let i = 0; i < argv.length; i++) {
+  for (let i = start; i < argv.length; i++) {
     const flag = argv[i];
     if (values.has(flag)) {
       const value = argv[++i];

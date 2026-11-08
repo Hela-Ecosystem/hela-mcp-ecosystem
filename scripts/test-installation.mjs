@@ -77,6 +77,15 @@ function install(prefix, extra = [], env = {}) {
   });
 }
 
+function switchMode(prefix, extra = [], env = {}) {
+  const environment = { ...process.env, ...env };
+  for (const key of ['OPENROUTER_API_KEY', 'GITHUB_TOKEN', 'GOOGLE_API_KEY', 'GOOGLE_CSE_ID', 'HELA_GENOME_OBSIDIAN_VAULT', 'HELA_GENOME_OBSIDIAN_SYNC_CMD']) delete environment[key];
+  return spawnSync(process.execPath, [path.join(root, 'scripts/install.mjs'), 'mode', '--root', metadata, '--prefix', prefix,
+    '--client', 'skip', '--non-interactive', ...extra], {
+    encoding: 'utf8', timeout: 600000, maxBuffer: 8 * 1024 * 1024, env: environment,
+  });
+}
+
 for (const profile of profiles.profiles) for (const mode of modes) {
   test(`installation plan: ${profile.id}/${mode}`, () => {
     const options = parseOptions(['--profile', profile.id, '--mode', mode, '--root', metadata, '--prefix', path.join(scratch, 'prefix with spaces')], root);
@@ -179,6 +188,71 @@ test('clean runtime install has exact cold catalog parity and no cell startup', 
   assert.ok(config.includes('hela-runtime'));
   fs.writeFileSync(path.join(prefix, '.hela-install.pending.json'), '{}');
   assert.equal((await checkInstallation(prefix)).status, 'DEGRADED');
+});
+
+test('mode switching reuses builds, preserves data and regenerates the fragment', async () => {
+  const prefix = path.join(scratch, 'switching');
+  const first = install(prefix, ['--client', 'zed']);
+  assert.equal(first.status, 0, first.stdout + first.stderr);
+  assert.equal(readInstallation(prefix).mode, 'individual');
+  assert.equal(readInstallation(prefix).servers.length, 10);
+  const dataFile = path.join(prefix, 'data', 'hela-genome', 'memory.db');
+  fs.mkdirSync(path.dirname(dataFile), { recursive: true });
+  fs.writeFileSync(dataFile, 'preserved memory');
+
+  const toRuntime = switchMode(prefix, ['--mode', 'runtime', '--client', 'codex']);
+  assert.equal(toRuntime.status, 0, toRuntime.stdout + toRuntime.stderr);
+  const runtime = readInstallation(prefix);
+  assert.equal(runtime.mode, 'runtime');
+  assert.equal(runtime.profile, 'all');
+  assert.equal(runtime.snapshot, snapshot.snapshot_version);
+  assert.equal(runtime.servers.length, 11);
+  assert.ok(runtime.servers.some(server => server.id === 'hela-runtime'));
+  assert.equal(fs.readFileSync(dataFile, 'utf8'), 'preserved memory');
+  const runtimeReport = await checkInstallation(prefix);
+  assert.equal(runtimeReport.status, 'READY', JSON.stringify(runtimeReport));
+  assert.equal(runtimeReport.catalogMatch, true);
+  assert.ok(toRuntime.stderr.includes('Reusing verified build: hela-mitosis'), 'cells must not be rebuilt');
+  const fragment = fs.readdirSync(prefix).find(name => name.startsWith('client-codex-'));
+  assert.equal(fs.readFileSync(path.join(prefix, fragment), 'utf8').split('[mcp_servers.').length - 1, 1);
+
+  const back = switchMode(prefix, ['--mode', 'individual']);
+  assert.equal(back.status, 0, back.stdout + back.stderr);
+  const individual = readInstallation(prefix);
+  assert.equal(individual.mode, 'individual');
+  assert.equal(individual.servers.length, 10);
+  assert.equal(fs.readFileSync(dataFile, 'utf8'), 'preserved memory');
+  assert.equal((await checkInstallation(prefix)).status, 'READY');
+
+  const sameMode = switchMode(prefix, ['--mode', 'individual']);
+  assert.equal(sameMode.status, 1);
+  assert.match(sameMode.stderr, /already uses mode individual/);
+
+  const httpOnIndividual = switchMode(prefix, ['--mode', 'runtime', '--transport', 'http', '--port', '18099']);
+  assert.equal(httpOnIndividual.status, 0, httpOnIndividual.stdout + httpOnIndividual.stderr);
+  assert.equal(readInstallation(prefix).transport, 'http');
+  assert.equal(readInstallation(prefix).port, 18099);
+  const toIndividual = switchMode(prefix, ['--mode', 'individual']);
+  assert.equal(toIndividual.status, 1);
+  assert.match(toIndividual.stderr, /HTTP transport requires runtime/);
+  assert.equal(readInstallation(prefix).mode, 'runtime');
+  fs.writeFileSync(path.join(prefix, '.hela-install.pending.json'), '{}');
+  const pending = switchMode(prefix, ['--mode', 'individual']);
+  assert.equal(pending.status, 1);
+  assert.match(pending.stderr, /incomplete installation is pending/);
+  fs.unlinkSync(path.join(prefix, '.hela-install.pending.json'));
+});
+
+test('mode switching refuses unmanaged prefixes and missing values', () => {
+  const unmanaged = path.join(scratch, 'switch-unmanaged');
+  fs.mkdirSync(unmanaged, { recursive: true });
+  const result = switchMode(unmanaged, ['--mode', 'runtime']);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /existing managed --prefix/);
+  assert.equal(fs.readdirSync(unmanaged).length, 0);
+  const missing = spawnSync(path.join(root, 'setup.sh'), ['mode', '--prefix', path.join(scratch, 'switching'), '--mode'], { encoding: 'utf8', timeout: 5000 });
+  assert.equal(missing.status, 1);
+  assert.match(missing.stderr, /Missing value/);
 });
 
 test('unmanaged prefixes and existing output files are preserved', () => {

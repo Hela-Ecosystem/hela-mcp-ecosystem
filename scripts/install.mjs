@@ -7,10 +7,10 @@ import { createInterface } from 'node:readline/promises';
 import { probeMcp } from './mcp-probe.mjs';
 import { provisionNeedle } from './provision-needle.mjs';
 import { modes, clients, parseOptions, installationPlan, readInstallation, run, atomicJson, isolatedBuildEnvironment,
-  artifactDigest, composeConfiguration } from './installation.mjs';
+  artifactDigest, composeConfiguration, modeFamily } from './installation.mjs';
 
 const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const help = `Usage: ./setup.sh [doctor] [OPTIONS]
+const help = `Usage: ./setup.sh [doctor|mode] [OPTIONS]
   --mode individual|runtime|docker|docker-runtime|nix
   --profile ID          Any of the eight canonical profiles (default dev-workspace)
   --prefix PATH         Managed installation directory; existing unmanaged directories are refused
@@ -31,6 +31,8 @@ const help = `Usage: ./setup.sh [doctor] [OPTIONS]
   --help                Show help
 
 Doctor accepts --prefix/--mode/--profile/--runtime/--json, or --url URL for a running HTTP endpoint.
+Mode switching reuses an existing managed prefix and preserves its data directories:
+  ./setup.sh mode --prefix PATH --mode individual|runtime|docker|docker-runtime|nix [--client NAME]
 Hardware/providers are separate checks.
 Node 22+ required; --mode nix bootstraps the pinned Nix development environment.
 Optional provider keys are read from environment, never CLI arguments. Client settings are merged manually.`;
@@ -62,7 +64,7 @@ function assertPrefix(prefix) {
   throw new Error(`Refusing unmanaged nonempty installation directory: ${prefix}`);
 }
 
-async function installSources(options, plan) {
+async function installSources(options, plan, { reuseBuilt = false } = {}) {
   const home = path.join(options.prefix, '.build-home');
   fs.mkdirSync(home, { recursive: true, mode: 0o700 });
   const env = isolatedBuildEnvironment(home), verified = [];
@@ -79,10 +81,15 @@ async function installSources(options, plan) {
     }
     if (run('git', ['remote', 'get-url', 'origin'], { cwd: repository, env }) !== spec.repo) throw new Error(`Repository origin mismatch: ${id}`);
     const target = options.dev ? pin.branch : spec.revision;
-    run('git', ['fetch', '--quiet', 'origin', target], { cwd: repository, env });
-    const revision = run('git', ['rev-parse', 'FETCH_HEAD'], { cwd: repository, env });
-    if (!options.dev && revision !== spec.revision) throw new Error(`Fetched revision mismatch: ${id}`);
-    run('git', ['checkout', '--quiet', '--detach', revision], { cwd: repository, env });
+    const current = run('git', ['rev-parse', 'HEAD'], { cwd: repository, env });
+    if (!options.dev && current === spec.revision) log(`Reusing source at pinned revision: ${id}`);
+    else {
+      run('git', ['fetch', '--quiet', 'origin', target], { cwd: repository, env });
+      const revision = run('git', ['rev-parse', 'FETCH_HEAD'], { cwd: repository, env });
+      if (!options.dev && revision !== spec.revision) throw new Error(`Fetched revision mismatch: ${id}`);
+      run('git', ['checkout', '--quiet', '--detach', revision], { cwd: repository, env });
+    }
+    const revision = run('git', ['rev-parse', 'HEAD'], { cwd: repository, env });
     if (!fs.realpathSync(directory).startsWith(fs.realpathSync(repository) + path.sep) && fs.realpathSync(directory) !== fs.realpathSync(repository)) throw new Error(`Package escapes repository: ${id}`);
     spec.revision = revision;
     const pkg = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf8'));
@@ -93,19 +100,23 @@ async function installSources(options, plan) {
       if (needle?.ready) Object.assign(env, { NEEDLE_ENGINE_PATH: needle.enginePath, NEEDLE_MODEL_PATH: needle.modelPath });
     }
     if (!fs.existsSync(path.join(directory, 'package-lock.json'))) throw new Error(`Locked dependencies required: ${id}`);
-    const cellEnvironment = { ...env };
-    if (options.withoutModel && id === 'hela-mitosis') cellEnvironment.npm_config_ignore_scripts = 'true';
-    const glibc = process.report?.getReport().header.glibcVersionRuntime?.split('.').map(Number);
-    if (id === 'hela-genome' && glibc && (glibc[0] < 2 || glibc[0] === 2 && glibc[1] < 38)) {
-      log(`Building native dependencies from source for glibc ${glibc.join('.')}`);
-      cellEnvironment.npm_config_build_from_source = 'true';
-      const nodeRoot = path.resolve(path.dirname(process.execPath), '..');
-      if (fs.existsSync(path.join(nodeRoot, 'include/node/node.h'))) cellEnvironment.npm_config_nodedir = nodeRoot;
-    }
-    run('npm', ['ci', '--no-audit', '--no-fund'], { cwd: directory, env: cellEnvironment, stdio: ['ignore', 'inherit', 'inherit'] });
-    if (spec.build) {
-      if (!pkg.scripts?.[spec.build]) throw new Error(`Missing declared build script: ${id}`);
-      run('npm', ['run', spec.build], { cwd: directory, env: cellEnvironment, stdio: ['ignore', 'inherit', 'inherit'] });
+    const built = fs.existsSync(path.join(directory, spec.entry));
+    if (reuseBuilt && built) log(`Reusing verified build: ${id}`);
+    else {
+      const cellEnvironment = { ...env };
+      if (options.withoutModel && id === 'hela-mitosis') cellEnvironment.npm_config_ignore_scripts = 'true';
+      const glibc = process.report?.getReport().header.glibcVersionRuntime?.split('.').map(Number);
+      if (id === 'hela-genome' && glibc && (glibc[0] < 2 || glibc[0] === 2 && glibc[1] < 38)) {
+        log(`Building native dependencies from source for glibc ${glibc.join('.')}`);
+        cellEnvironment.npm_config_build_from_source = 'true';
+        const nodeRoot = path.resolve(path.dirname(process.execPath), '..');
+        if (fs.existsSync(path.join(nodeRoot, 'include/node/node.h'))) cellEnvironment.npm_config_nodedir = nodeRoot;
+      }
+      run('npm', ['ci', '--no-audit', '--no-fund'], { cwd: directory, env: cellEnvironment, stdio: ['ignore', 'inherit', 'inherit'] });
+      if (spec.build) {
+        if (!pkg.scripts?.[spec.build]) throw new Error(`Missing declared build script: ${id}`);
+        run('npm', ['run', spec.build], { cwd: directory, env: cellEnvironment, stdio: ['ignore', 'inherit', 'inherit'] });
+      }
     }
     verified.push({ id, revision, version: pkg.version, dir: spec.dir, entry: spec.entry, env: spec.env ?? [], digest: artifactDigest(directory, spec.entry) });
   }
@@ -181,9 +192,71 @@ async function generateFragment(options, manifest) {
   log(`Client fragment: ${out}. Review and merge it; live client files were not changed.`);
 }
 
+async function switchMode(options) {
+  if (!options.prefix || !fs.existsSync(path.join(options.prefix, '.hela-install.json'))) throw new Error('Mode switching requires an existing managed --prefix');
+  const existing = readInstallation(options.prefix);
+  if (fs.existsSync(path.join(options.prefix, '.hela-install.pending.json'))) throw new Error('An incomplete installation is pending; finish or remove it before switching modes');
+  if (existing.mode === options.mode) throw new Error(`Installation already uses mode ${existing.mode}; pass a different --mode`);
+  const transport = options.transportProvided ? options.transport : (existing.transport ?? 'stdio');
+  const port = options.portProvided ? options.port : (existing.port ?? 8080);
+  if (transport === 'http' && !['runtime', 'docker-runtime', 'nix'].includes(options.mode)) {
+    throw new Error('HTTP transport requires runtime, docker-runtime, or nix; switch transport separately after choosing a runtime mode');
+  }
+  if (options.mode === 'nix' && !process.env.IN_NIX_SHELL) {
+    const args = [path.join(sourceRoot, 'scripts/install.mjs'), 'mode', '--mode', 'nix', '--root', options.root, '--prefix', options.prefix,
+      '--client', options.client, '--transport', transport, '--port', String(port), '--non-interactive'];
+    if (options.out) args.push('--out', options.out);
+    if (options.image) args.push('--image', options.image);
+    if (options.withoutModel) args.push('--without-model');
+    run('nix', ['develop', sourceRoot, '--command', 'node', ...args], { stdio: 'inherit', timeout: 3600000 });
+    return;
+  }
+  if (Number(process.versions.node.split('.')[0]) < 22) throw new Error('Node 22+ is required; use nix for a pinned toolchain');
+  const installedRoot = path.join(options.prefix, 'hela-mcp-ecosystem');
+  if (!fs.existsSync(path.join(installedRoot, 'config/inventory.json'))) throw new Error('Installation metadata is missing; rerun the installer');
+  const plan = installationPlan({ ...options, root: installedRoot, profile: existing.profile, snapshot: 'latest-stable',
+    workspace: existing.workspace, transport, port });
+  if (options.out && fs.existsSync(path.resolve(options.out))) throw new Error('Refusing to overwrite an existing configuration fragment');
+  const lock = path.join(options.prefix, '.hela-install.lock');
+  const descriptor = fs.openSync(lock, 'wx', 0o600);
+  const pending = path.join(options.prefix, '.hela-install.pending.json');
+  try {
+    atomicJson(pending, { managedBy: 'hela-installer', format: 1, profile: existing.profile, mode: options.mode, switchingFrom: existing.mode });
+    copyMetadata(plan.ecosystemRoot, plan);
+    const family = modeFamily(options.mode);
+    const installed = family === 'docker'
+      ? await installDocker({ ...options, profile: existing.profile, transport, port }, plan)
+      : await installSources({ ...options, profile: existing.profile, transport, port }, plan, { reuseBuilt: true });
+    for (const server of installed.servers) fs.mkdirSync(path.join(options.prefix, 'data', server.id), { recursive: true, mode: 0o700 });
+    const manifest = { managedBy: 'hela-installer', format: 1, mode: options.mode, profile: existing.profile,
+      snapshot: plan.snapshot.snapshot_version, dev: existing.dev ?? false, ecosystemRoot: plan.ecosystemRoot, prefix: options.prefix,
+      workspace: existing.workspace ?? options.workspace, transport, port, createdAt: existing.createdAt,
+      updatedAt: new Date().toISOString(), node: process.execPath, ...installed };
+    if (family !== 'docker') { delete manifest.image; delete manifest.imageId; }
+    if (options.mode !== 'nix') delete manifest.runtimeExecutable;
+    const manifestPath = path.join(options.prefix, '.hela-install.json');
+    const previousManifest = fs.readFileSync(manifestPath);
+    atomicJson(manifestPath, manifest);
+    if (family !== 'docker' && fs.existsSync(path.join(options.prefix, 'compose.json'))) fs.unlinkSync(path.join(options.prefix, 'compose.json'));
+    fs.unlinkSync(pending);
+    const { checkInstallation } = await import('./doctor-installation.mjs');
+    const report = await checkInstallation(options.prefix);
+    if (report.status !== 'READY') {
+      fs.writeFileSync(manifestPath, previousManifest, { mode: 0o600 });
+      atomicJson(pending, { managedBy: 'hela-installer', format: 1, profile: existing.profile, mode: existing.mode, failedSwitchTo: options.mode });
+      const failed = report.servers.filter(server => server.status !== 'READY').map(server => `${server.id}: ${server.error}`).join('; ');
+      throw new Error(`Mode switch verification failed: ${report.error ?? failed ?? 'unknown error'}. The previous manifest was restored; run doctor.`);
+    }
+    await generateFragment({ ...options, mode: options.mode, profile: existing.profile, transport, port }, manifest);
+    log(`READY ${options.mode}/${existing.profile} from ${existing.mode}. Data directories were preserved. Doctor: ./setup.sh doctor --prefix ${JSON.stringify(options.prefix)}`);
+    if (transport === 'http') log(`HTTP listener is not auto-started. Start: ${JSON.stringify(process.execPath)} ${JSON.stringify(path.join(plan.ecosystemRoot, 'scripts/launch.mjs'))} hela-runtime`);
+  } finally { fs.closeSync(descriptor); fs.unlinkSync(lock); }
+}
+
 async function main() {
   const options = parseOptions(process.argv.slice(2), sourceRoot);
   if (options.help) { console.log(help); return; }
+  if (options.command === 'mode') { await switchMode(options); return; }
   if (options.url) throw new Error('--url is for doctor; use --transport http to install an HTTP runtime');
   if (!options.nonInteractive && process.stdin.isTTY && process.argv.length === 2) {
     const input = createInterface({ input: process.stdin, output: process.stdout });

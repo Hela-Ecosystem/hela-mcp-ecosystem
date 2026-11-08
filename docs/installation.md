@@ -94,6 +94,20 @@ Snapshots must declare exact commits and server versions. Incomplete historical 
 
 Reconfiguration infers the existing mode/profile/transport from an explicit prefix and only generates another fragment. To change transport or port, rerun installation with the new settings; a stdio fragment must not point at an HTTP-only launcher.
 
+## Switch modes in place
+
+`setup.sh mode` converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:
+
+```bash
+./setup.sh mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
+./setup.sh doctor --prefix /path/to/existing/prefix --json
+./setup.sh mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
+```
+
+Every mode is a valid target: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. The profile, snapshot, workspace, and `data/` directories are preserved; only the artifacts the target mode needs are built. Host-mode switches reuse cells that already sit at the pinned revision with a clean worktree, so repeated conversions take seconds rather than rebuilding every package. Moving into a Docker mode builds the profile image; moving out deletes `compose.json`. Transport and port carry over unless `--transport` or `--port` is passed, and HTTP targets require a runtime mode. Switching to `--mode nix` must run inside Nix, exactly like a fresh Nix install.
+
+The command verifies the converted installation with the same doctor checks used after installation and generates a new client fragment when `--client` is supplied; it never edits live client settings. If verification fails, the previous manifest is restored, a pending marker is written, and the command exits nonzero so doctor reports the degraded state. A pending or unmanaged prefix is refused, and re-selecting the current mode is an error rather than a silent no-op.
+
 Doctor exits nonzero for missing or incomplete installations, modified builds, wrong revisions/versions, missing images, failed MCP replies, and runtime catalog/HTTP failures. A remote `--url` check verifies MCP initialize/discovery and the runtime version, not remote filesystem pins or hardware. Existing standalone sibling/nested checkouts remain diagnosable when no managed installation is selected.
 
 Never overwrite live SQLite files or force vault conflicts to resolve installation warnings. Use validated backups and a deliberate migration if you intend to move existing memory into a new managed prefix.
