@@ -276,6 +276,25 @@ flowchart TB
 * **Git**: `>= 2.30.0`
 * **SQLite**: Genome uses Node bindings; the SQLite CLI is optional for inspection.
 
+### 🤖 Install via AI Agent (One-Click Copy)
+
+If you are using an AI coding assistant (Cursor, Claude Code, OpenCode, Codex, Antigravity, Windsurf), you can copy and paste this prompt directly into your agent's chat:
+
+```text
+Please install and configure the HeLa MCP Ecosystem for my workspace:
+
+1. Verify Node.js (>= 22.x LTS), Git (>= 2.30.0), and build tools.
+2. Clone repository:
+   git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
+   cd hela-mcp-ecosystem && chmod +x setup.sh update.sh
+3. Detect my AI harness/client (e.g., cursor, claude, opencode, antigravity, zed, codex) and run:
+   ./setup.sh --profile dev-workspace --client <detected_client> --non-interactive
+4. Verify health:
+   ./setup.sh doctor --profile dev-workspace
+5. Safely merge the generated configuration fragment into my client's active MCP settings file without overwriting existing servers.
+6. Report active HeLa cells and ready tools.
+```
+
 ### 2. Run Diagnostics (`setup.sh doctor`)
 Clone the source, then select an installation mode:
 

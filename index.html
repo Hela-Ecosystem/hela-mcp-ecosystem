@@ -121,6 +121,21 @@
 cd hela-mcp-ecosystem
 ./setup.sh --profile dev-workspace --client opencode</code></pre>
         </div>
+        <div class="code-dossier" style="margin-top: 1rem;">
+          <div class="code-dossier-header"><span>AGENT // ONE_CLICK_INSTALL_PROMPT</span><button class="copy-btn" type="button">Copy Prompt</button></div>
+          <pre><code>Please install and configure the HeLa MCP Ecosystem for my workspace:
+
+1. Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools.
+2. Clone repository:
+   git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
+   cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
+3. Detect my AI harness/client (e.g., cursor, claude, opencode, antigravity, zed, codex) and run:
+   ./setup.sh --profile dev-workspace --client &lt;detected_client&gt; --non-interactive
+4. Verify health:
+   ./setup.sh doctor --profile dev-workspace
+5. Safely merge the generated configuration fragment into my client's active MCP settings file without overwriting existing servers.
+6. Report active HeLa cells and ready tools.</code></pre>
+        </div>
         <p><code>setup.sh</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
         <p>All eight profiles support <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker needs a working daemon and Compose v2; native builds need Python, make, and a C/C++ compiler, or the pinned Nix toolchain. See the <a href="library/docs/installation.html">installation guide</a> for prerequisites, Compose, Nix GC roots, and failure recovery.</p>
         <p>Runtime modes also support <code>--transport http --port 8080</code>. HTTP stays loopback-only and is started explicitly; use <code>doctor --url http://127.0.0.1:8080/mcp</code> to check the running endpoint. Browser engines, provider keys, Android/Blender bridges, and GUI authentication remain separate requirements.</p>
@@ -164,8 +179,8 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
     </div>
   </div>
   <script src="release-data.js?v=1.6.2"></script>
-  <script src="library-data.js?v=1.6.2&amp;rev=10d8d9d62770"></script>
+  <script src="library-data.js?v=1.6.2&amp;rev=7a402de4bb77"></script>
   <script src="library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.6.2&amp;rev=a305ef54f01d"></script>
+  <script src="app.js?v=1.6.2&amp;rev=c6a6b8b9f811"></script>
 </body>
 </html>

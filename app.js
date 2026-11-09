@@ -50,6 +50,33 @@ function renderConfig(profileKey, clientKey) {
   return "// Select a profile and client.";
 }
 
+function renderAgentPrompt(profileKey, clientKey) {
+  const prof = profileKey || "dev-workspace";
+  const client = clientKey || "cursor";
+  return `Please install and configure the HeLa MCP Ecosystem for my current environment:
+
+1. Verify system prerequisites:
+   - Node.js (>= 22.x LTS recommended, min 20.18.1)
+   - Git (>= 2.30.0)
+   - Python 3.11+ / build tools (if native builds needed, or use Nix)
+
+2. Clone repository & make scripts executable:
+   git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
+   cd hela-mcp-ecosystem
+   chmod +x setup.sh update.sh
+
+3. Run non-interactive installation:
+   ./setup.sh --profile ${prof} --client ${client} --non-interactive
+
+4. Verify health with doctor:
+   ./setup.sh doctor --profile ${prof}
+
+5. Safely merge configuration:
+   Merge the generated ${client} configuration fragment from ~/.local/share/hela/installations/ into my active ${client} MCP settings without overwriting existing servers.
+
+6. Confirm active cells and verify tool readiness.`;
+}
+
 const isIdPage = (typeof document !== "undefined" && (document.documentElement.lang === "id" || window.location.pathname.includes("/id/")));
 const pagePrefix = typeof document !== "undefined" ? document.body?.dataset?.pagePrefix || "" : "";
 
@@ -232,9 +259,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileSelect = document.getElementById("profileSelect");
   const clientSelect = document.getElementById("clientSelect");
   const codeOutput = document.getElementById("configCode");
+  const promptCodeOutput = document.getElementById("promptCode");
   function updateOutput() {
-    if (!profileSelect || !clientSelect || !codeOutput) return;
-    codeOutput.textContent = renderConfig(profileSelect.value, clientSelect.value);
+    if (!profileSelect || !clientSelect) return;
+    if (codeOutput) codeOutput.textContent = renderConfig(profileSelect.value, clientSelect.value);
+    if (promptCodeOutput) promptCodeOutput.textContent = renderAgentPrompt(profileSelect.value, clientSelect.value);
   }
   if (profileSelect && clientSelect) {
     profileSelect.addEventListener("change", updateOutput);
