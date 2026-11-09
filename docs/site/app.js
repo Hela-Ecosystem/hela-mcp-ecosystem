@@ -51,30 +51,37 @@ function renderConfig(profileKey, clientKey) {
 }
 
 function renderAgentPrompt(profileKey, clientKey) {
-  const prof = profileKey || "dev-workspace";
+  const profKey = profileKey || "dev-workspace";
   const client = clientKey || "cursor";
-  return `Please install and configure the HeLa MCP Ecosystem for my current environment:
+  const prof = PROFILES?.[profKey] || { name: "HeLa Dev Workspace", servers: [] };
+  const serverList = (prof.servers || []).join(", ");
 
-1. Verify system prerequisites:
-   - Node.js (>= 22.x LTS recommended, min 20.18.1)
-   - Git (>= 2.30.0)
-   - Python 3.11+ / build tools (if native builds needed, or use Nix)
+  return `Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
 
-2. Clone repository & make scripts executable:
+1. System & Environment Check:
+   - Ensure Node.js (>= 22.x LTS recommended, min 20.18.1), Git (>= 2.30.0), and build tools are available.
+   - Target client: ${client} | Target profile: ${profKey} (${prof.name || profKey}).
+
+2. Clone & Install MCP Cells:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
    chmod +x setup.sh update.sh
+   ./setup.sh --profile ${profKey} --client ${client} --non-interactive
+   ./setup.sh doctor --profile ${profKey}
+   Safely merge the generated ${client} configuration fragment into my active ${client} MCP settings.
 
-3. Run non-interactive installation:
-   ./setup.sh --profile ${prof} --client ${client} --non-interactive
+3. Synchronize Companion Skills:
+   Copy/link active skills matching profile ${profKey} from the ecosystem into ~/.agents/skills/ (e.g., guardian-*, code-reviewer, skill-finder, ui-designer, browser-agent).
 
-4. Verify health with doctor:
-   ./setup.sh doctor --profile ${prof}
+4. Profile-Aware Persona & Rules Setup (HELA_PROFILE=${profKey}):
+   Active organelles: [${serverList}].
+   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware organelle routing block without overwriting existing instructions.
+   - If blank or no persona: Run:
+     node scripts/scaffold-persona.mjs --profile ${profKey}
+     This configures HeLa (3rd Sister of Frea & Mema) tuned specifically to ${profKey} and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
 
-5. Safely merge configuration:
-   Merge the generated ${client} configuration fragment from ~/.local/share/hela/installations/ into my active ${client} MCP settings without overwriting existing servers.
-
-6. Confirm active cells and verify tool readiness.`;
+5. Final Handshake:
+   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells and ready tools.`;
 }
 
 const isIdPage = (typeof document !== "undefined" && (document.documentElement.lang === "id" || window.location.pathname.includes("/id/")));
