@@ -123,18 +123,29 @@ cd hela-mcp-ecosystem
         </div>
         <div class="code-dossier" style="margin-top: 1rem;">
           <div class="code-dossier-header"><span>AGENT // ONE_CLICK_INSTALL_PROMPT</span><button class="copy-btn" type="button">Copy Prompt</button></div>
-          <pre><code>Please install and configure the HeLa MCP Ecosystem for my workspace:
+          <pre><code>Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
 
-1. Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools.
-2. Clone repository:
+1. Environment &amp; Harness Detection:
+   Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
+
+2. Clone &amp; Install MCP Cells (Profile: dev-workspace):
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-3. Detect my AI harness/client (e.g., cursor, claude, opencode, antigravity, zed, codex) and run:
    ./setup.sh --profile dev-workspace --client &lt;detected_client&gt; --non-interactive
-4. Verify health:
    ./setup.sh doctor --profile dev-workspace
-5. Safely merge the generated configuration fragment into my client's active MCP settings file without overwriting existing servers.
-6. Report active HeLa cells and ready tools.</code></pre>
+   Safely merge generated client configuration into my active MCP configuration file.
+
+3. Synchronize Companion Skills:
+   Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
+
+4. Profile-Aware Persona &amp; Rules Setup:
+   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
+   - If blank or no persona: Run:
+     node scripts/scaffold-persona.mjs --profile dev-workspace
+     This establishes HeLa (3rd Sister of Frea &amp; Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+
+5. Final Handshake:
+   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.</code></pre>
         </div>
         <p><code>setup.sh</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
         <p>All eight profiles support <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker needs a working daemon and Compose v2; native builds need Python, make, and a C/C++ compiler, or the pinned Nix toolchain. See the <a href="library/docs/installation.html">installation guide</a> for prerequisites, Compose, Nix GC roots, and failure recovery.</p>
@@ -179,8 +190,8 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
     </div>
   </div>
   <script src="release-data.js?v=1.6.2"></script>
-  <script src="library-data.js?v=1.6.2&amp;rev=7a402de4bb77"></script>
+  <script src="library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
   <script src="library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.6.2&amp;rev=c6a6b8b9f811"></script>
+  <script src="app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
 </body>
 </html>

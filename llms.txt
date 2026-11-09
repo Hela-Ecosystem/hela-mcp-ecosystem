@@ -7,7 +7,7 @@
 - Site: https://hela.my.id/
 - Source: https://github.com/Hela-Ecosystem/hela-mcp-ecosystem
 - Install: `curl -fsSL https://raw.githubusercontent.com/Hela-Ecosystem/hela-mcp-ecosystem/master/setup.sh | bash`
-- Agent Install Prompt: "Please install the HeLa MCP Ecosystem for my current workspace: clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git, run `./setup.sh --profile dev-workspace --client <detected_client> --non-interactive`, verify with `./setup.sh doctor --profile dev-workspace`, and merge the generated configuration fragment into my active MCP configuration."
+- Agent Install Prompt: "Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace: clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git, run `./setup.sh --profile dev-workspace --client <detected_client> --non-interactive`, run `node scripts/scaffold-persona.mjs --profile dev-workspace` (to establish HeLa, 3rd Sister of Frea & Mema), verify with `./setup.sh doctor --profile dev-workspace`, and merge the generated configuration fragment into my active MCP configuration."
 - License: see repository LICENSE.
 
 ## Pages

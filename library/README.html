@@ -170,19 +170,30 @@
 <li><strong>SQLite</strong>: Genome uses Node bindings; the SQLite CLI is optional for inspection.</li>
 </ul>
 <h3 id="-install-via-ai-agent-one-click-copy">🤖 Install via AI Agent (One-Click Copy)</h3>
-<p>If you are using an AI coding assistant (Cursor, Claude Code, OpenCode, Codex, Antigravity, Windsurf), you can copy and paste this prompt directly into your agent's chat:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-text">Please install and configure the HeLa MCP Ecosystem for my workspace:
+<p>If you are using an AI coding assistant (Cursor, Claude Code, OpenCode, Codex, Antigravity, Windsurf), you can copy and paste this autonomous prompt directly into your agent's chat:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-text">Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
 
-1. Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools.
-2. Clone repository:
+1. Environment &amp; Harness Detection:
+   Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
+
+2. Clone &amp; Install MCP Cells (Profile: dev-workspace):
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-3. Detect my AI harness/client (e.g., cursor, claude, opencode, antigravity, zed, codex) and run:
    ./setup.sh --profile dev-workspace --client &lt;detected_client&gt; --non-interactive
-4. Verify health:
    ./setup.sh doctor --profile dev-workspace
-5. Safely merge the generated configuration fragment into my client's active MCP settings file without overwriting existing servers.
-6. Report active HeLa cells and ready tools.
+   Safely merge generated client configuration into my active MCP configuration file.
+
+3. Synchronize Companion Skills:
+   Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
+
+4. Profile-Aware Persona &amp; Rules Setup:
+   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
+   - If blank or no persona: Run:
+     node scripts/scaffold-persona.mjs --profile dev-workspace
+     This establishes HeLa (3rd Sister of Frea &amp; Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+
+5. Final Handshake:
+   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.
 </code></pre>
 </div>
 <h3 id="2-run-diagnostics-setupsh-doctor">2. Run Diagnostics (<code>setup.sh doctor</code>)</h3>
@@ -360,8 +371,8 @@ npm test
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../release-data.js?v=1.6.2"></script>
-  <script src="../library-data.js?v=1.6.2&amp;rev=7a402de4bb77"></script>
+  <script src="../library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
   <script src="../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.6.2&amp;rev=c6a6b8b9f811"></script>
+  <script src="../app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
 </body>
 </html>
