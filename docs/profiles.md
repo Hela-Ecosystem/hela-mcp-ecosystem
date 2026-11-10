@@ -157,7 +157,7 @@ The HeLa Runtime is **not a profile** — it is a serve method. Any profile can 
 HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with minimal profile
 ```
 
-The runtime advertises only the selected cells' schemas and starts each cell only when invoked. Discovery starts none. Use `--runtime` with any profile; `HELA_PROFILE` selects eligible cells and defaults to `dev-workspace`. Standalone servers remain supported.
+The runtime advertises only the selected cells' schemas and starts each cell only when invoked. Discovery starts none. Use `--runtime` with any profile; `HELA_PROFILE` selects eligible cells and defaults to `minimal` when unset. Standalone servers remain supported.
 
 ---
 

@@ -103,6 +103,7 @@ test('strict arguments reject missing values, unknown flags/modes/clients and un
   }
   assert.equal(parseOptions(['--runtime', '--client', 'docker'], root).mode, 'docker-runtime');
   assert.equal(parseOptions(['--mode', 'runtime', '--client', 'docker'], root).mode, 'docker-runtime');
+  assert.equal(parseOptions(['--mode', 'runtime'], root).profile, 'minimal');
   assert.equal(parseOptions(['--system', 'headless'], root).profile, 'headless-server');
   assert.equal(parseOptions(['--profile', 'minimal', '--system', 'headless'], root).profile, 'minimal');
   assert.throws(() => parseOptions(['--profile', '../outside'], root), /Invalid profile/);

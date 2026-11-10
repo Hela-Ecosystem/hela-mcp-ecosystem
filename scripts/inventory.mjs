@@ -24,7 +24,7 @@ export function loadInventory(root) {
   return { ...data, profiles };
 }
 
-export function selectProfile(data, id = 'dev-workspace') {
+export function selectProfile(data, id = 'minimal') {
   const profile = data.profiles.find(candidate => candidate.id === id);
   if (!profile) throw new Error(`Unknown profile: ${id}`);
   return profile;

@@ -148,7 +148,7 @@ function buildServerEnv(s, root, options = {}) {
     } else if (key === 'WIKIPEDIA_DEFAULT_LANGUAGE') {
       env[key] = 'en';
     } else if (key === 'HELA_PROFILE') {
-      env[key] = options.profile && options.profile !== 'runtime' ? options.profile : 'dev-workspace';
+      env[key] = options.profile && options.profile !== 'runtime' ? options.profile : 'minimal';
     } else if (key.startsWith('HELA_GENOME_OBSIDIAN_')) {
       // Optional Obsidian vault mirror; set manually by the user (see project-mcp README).
       // Skip auto-fill so generated configs don't contain placeholder secrets.
@@ -263,6 +263,7 @@ function renderPrint(servers, root) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
+  if (!args.profile) args.profile = process.env.HELA_PROFILE || 'minimal';
   if (!args.profile || !args.backend) {
     console.error('Usage: node scripts/generate-config.mjs <profileId> --backend <cursor|claude|gemini|antigravity|opencode|kilo|zed|codex|docker|print|skip> [--root <path>] [--out <file>]');
     process.exit(1);
@@ -289,7 +290,7 @@ function main() {
     if (!rt) { console.error('hela-runtime not in inventory'); process.exit(1); }
     servers = [{ id: rt.id || 'hela-runtime', ...rt }];
     // pass the chosen profile through as HELA_PROFILE (not 'runtime')
-    if (!args.profile || args.profile === 'runtime') args.profile = 'dev-workspace';
+    if (!args.profile || args.profile === 'runtime') args.profile = 'minimal';
   }
   const root = path.resolve(args.root);
   if (args.installation && servers.some(server => !args.installation.servers.some(installed => installed.id === server.id))) throw new Error('Selected server is not installed in this prefix');

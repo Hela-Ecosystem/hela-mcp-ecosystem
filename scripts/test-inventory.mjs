@@ -8,7 +8,7 @@ import { featureVariants, loadInventory, selectProfile } from './inventory.mjs';
 test('canonical inventory resolves profiles and feature variants without machine-specific branches', () => {
   const root = path.resolve(import.meta.dirname, '..');
   const data = loadInventory(root);
-  assert.equal(selectProfile(data).id, 'dev-workspace');
+  assert.equal(selectProfile(data).id, 'minimal');
   assert.equal(selectProfile(data, 'all').servers.length, 10);
   assert.equal(selectProfile(data, 'dev-workspace').servers.length, 8);
   assert.throws(() => selectProfile(data, 'dev-workflow'), /Unknown profile/);

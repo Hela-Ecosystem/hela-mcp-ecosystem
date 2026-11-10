@@ -12,7 +12,7 @@ import { modes, clients, parseOptions, installationPlan, readInstallation, run, 
 const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const help = `Usage: ./setup.sh [doctor|mode] [OPTIONS]
   --mode individual|runtime|docker|docker-runtime|nix
-  --profile ID          Any of the eight canonical profiles (default dev-workspace)
+  --profile ID          Any of the eight canonical profiles (default minimal)
   --prefix PATH         Managed installation directory; existing unmanaged directories are refused
   --snapshot TAG|FILE   Exact snapshot (default latest-stable)
   --client NAME         Generate a client fragment, never overwrite live client settings (default skip)
@@ -261,7 +261,7 @@ async function main() {
   if (!options.nonInteractive && process.stdin.isTTY && process.argv.length === 2) {
     const input = createInterface({ input: process.stdin, output: process.stdout });
     try {
-      options.profile = (await input.question('Profile [dev-workspace]: ')).trim() || options.profile;
+      options.profile = (await input.question('Profile [minimal]: ')).trim() || options.profile;
       options.mode = (await input.question(`Mode (${modes.join(', ')}) [individual]: `)).trim() || options.mode;
       options.client = (await input.question(`Client (${clients.join(', ')}) [skip]: `)).trim() || options.client;
     } finally { input.close(); }

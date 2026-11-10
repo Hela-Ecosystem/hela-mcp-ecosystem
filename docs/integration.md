@@ -11,7 +11,7 @@ The installer now creates a managed prefix and private client fragment instead o
 Use Node 22 LTS and build the selected cells first:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --non-interactive
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
 To inspect a generated file without installing it into a client:
@@ -44,7 +44,7 @@ Keep the selected profile and add the serve-mode flag:
 ./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
-There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `dev-workspace`. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
+There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `minimal` when unset. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
 
 The installer generates the selected-profile schema catalog. After rebuilding a cell:
 

@@ -9,79 +9,67 @@ const { inventory: INVENTORY, profiles: PROFILES } = globalThis.HELA_DOCS_DATA;
 // hela:inventory:end
 
 function renderConfig(profileKey, clientKey) {
-  const prof = PROFILES[profileKey] || PROFILES["dev-workspace"];
+  const selectedProfile = profileKey || "minimal";
   const root = "/absolute/path/to/MCPservers";
-  const servers = prof.servers.map((k) => ({ id: k, dir: INVENTORY[k].dir, entry: INVENTORY[k].entry }));
+  const runtimePath = root + "/hela-runtime/dist/index.js";
+  const runtimeEnv = { HELA_PROFILE: selectedProfile, HELA_ECOSYSTEM_ROOT: root + "/hela-mcp-ecosystem" };
 
   if (["cursor", "claude", "gemini", "antigravity"].includes(clientKey)) {
-    const mcpServers = {};
-    for (const s of servers) mcpServers[s.id] = { command: "node", args: [root + "/" + s.dir + "/" + s.entry] };
-    return JSON.stringify({ mcpServers }, null, 2);
+    return JSON.stringify({ mcpServers: { "hela-runtime": { command: "node", args: [runtimePath], env: runtimeEnv } } }, null, 2);
   }
   if (clientKey === "opencode" || clientKey === "kilo") {
-    const mcp = {};
-    for (const s of servers) mcp[s.id] = { type: "local", enabled: true, command: ["node", root + "/" + s.dir + "/" + s.entry] };
-    return JSON.stringify({ mcp }, null, 2);
+    return JSON.stringify({ mcp: { "hela-runtime": { type: "local", enabled: true, command: ["node", runtimePath], environment: runtimeEnv } } }, null, 2);
   }
   if (clientKey === "zed") {
-    const context_servers = {};
-    for (const s of servers) context_servers[s.id] = { command: "node", args: [root + "/" + s.dir + "/" + s.entry] };
-    return JSON.stringify({ context_servers }, null, 2);
+    return JSON.stringify({ context_servers: { "hela-runtime": { command: "node", args: [runtimePath], env: runtimeEnv } } }, null, 2);
   }
   if (clientKey === "codex") {
-    const lines = ["# Generated Codex / ChatGPT MCP Server Configuration"];
-    for (const s of servers) lines.push("\n[mcp_servers." + s.id + ']\ncommand = "node"\nargs = [' + JSON.stringify(root + "/" + s.dir + "/" + s.entry) + ']');
-    return lines.join("\n");
+    return `# Generated Codex / ChatGPT MCP Server Configuration\n\n[mcp_servers.hela-runtime]\ncommand = "node"\nargs = [${JSON.stringify(runtimePath)}]\n\n[mcp_servers.hela-runtime.env]\nHELA_PROFILE = ${JSON.stringify(selectedProfile)}\nHELA_ECOSYSTEM_ROOT = ${JSON.stringify(runtimeEnv.HELA_ECOSYSTEM_ROOT)}\n`;
   }
   if (clientKey === "docker") {
-    const services = {};
-    const volumes = { workspace: {} };
-    servers.forEach((s) => {
-      const data = s.id + "-data";
-      volumes[data] = {};
-      services[s.id] = { image: "hela-ecosystem:" + profileKey + "-" + globalThis.HELA_DOCS_DATA.release.ecosystem,
-        init: true, stdin_open: true, tty: false, working_dir: "/workspace",
-        command: ["node", "/opt/hela/" + s.dir + "/" + s.entry],
-        environment: { HELA_PROFILE: profileKey, HELA_ECOSYSTEM_ROOT: "/opt/hela/hela-mcp-ecosystem" },
-        volumes: [data + ":/data", "workspace:/workspace"] };
-    });
-    return JSON.stringify({ services, volumes }, null, 2);
+    return JSON.stringify({ services: { "hela-runtime": {
+      image: "hela-ecosystem:" + selectedProfile + "-" + globalThis.HELA_DOCS_DATA.release.ecosystem,
+      init: true, stdin_open: true, tty: false, working_dir: "/workspace",
+      command: ["node", "/opt/hela/hela-runtime/dist/index.js"],
+      environment: { HELA_PROFILE: selectedProfile, HELA_ECOSYSTEM_ROOT: "/opt/hela/hela-mcp-ecosystem" },
+      volumes: ["hela-runtime-data:/data", "workspace:/workspace"],
+    } }, volumes: { "hela-runtime-data": {}, workspace: {} } }, null, 2);
   }
   return "// Select a profile and client.";
 }
 
 function renderAgentPrompt(profileKey, clientKey) {
-  const profKey = profileKey || "dev-workspace";
+  const profKey = profileKey || "minimal";
   const client = clientKey || "cursor";
-  const prof = PROFILES?.[profKey] || { name: "HeLa Dev Workspace", servers: [] };
+  const prof = PROFILES?.[profKey] || { name: "HeLa Minimal", servers: [] };
   const serverList = (prof.servers || []).join(", ");
 
-  return `Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
+  return `Please autonomously install and configure the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. System & Environment Check:
    - Ensure Node.js (>= 22.x LTS recommended, min 20.18.1), Git (>= 2.30.0), and build tools are available.
    - Target client: ${client} | Target profile: ${profKey} (${prof.name || profKey}).
 
-2. Clone & Install MCP Cells:
+2. Clone & Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
    chmod +x setup.sh update.sh
-   ./setup.sh --profile ${profKey} --client ${client} --non-interactive
-   ./setup.sh doctor --profile ${profKey}
+   ./setup.sh --profile ${profKey} --client ${client} --mode runtime --non-interactive
+   ./setup.sh doctor --profile ${profKey} --mode runtime
    Safely merge the generated ${client} configuration fragment into my active ${client} MCP settings.
+   Do not deploy or configure each hela-* cell as a separate client server.
 
 3. Synchronize Companion Skills:
    Copy/link active skills matching profile ${profKey} from the ecosystem into ~/.agents/skills/ (e.g., guardian-*, code-reviewer, skill-finder, ui-designer, browser-agent).
 
-4. Profile-Aware Persona & Rules Setup (HELA_PROFILE=${profKey}):
+4. Load the Runtime Profile Context (HELA_PROFILE=${profKey}):
    Active organelles: [${serverList}].
-   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware organelle routing block without overwriting existing instructions.
-   - If blank or no persona: Run:
-     node scripts/scaffold-persona.mjs --profile ${profKey}
-     This configures HeLa (3rd Sister of Frea & Mema) tuned specifically to ${profKey} and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+   - Do not create or copy a static persona prompt into the workspace.
+   - After connecting, read the runtime resource hela://profile/context or request the hela-profile-bootstrap MCP prompt.
+   - Use only the organelles and tools exposed by that selected profile; the runtime is the authority.
 
 5. Final Handshake:
-   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells and ready tools.`;
+   Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile plus ready runtime tools.`;
 }
 
 const isIdPage = (typeof document !== "undefined" && (document.documentElement.lang === "id" || window.location.pathname.includes("/id/")));

@@ -106,16 +106,22 @@ for (const profile of data.profiles) for (const client of ['cursor', 'claude', '
     const output = vm.runInContext(`renderConfig(${JSON.stringify(profile.id)},${JSON.stringify(client)})`, context);
     if (client === 'codex') {
       assert.ok(!output.includes('[mcpServers.'));
-      assert.equal((output.match(/^\[mcp_servers\./gm) ?? []).length, profile.servers.length);
+      assert.equal((output.match(/^\[mcp_servers\./gm) ?? []).length, 2);
     } else {
       const parsed = JSON.parse(output);
       const servers = parsed.mcpServers ?? parsed.context_servers ?? parsed.mcp ?? parsed.services;
-      assert.deepEqual(Object.keys(servers), profile.servers);
+      assert.deepEqual(Object.keys(servers), ['hela-runtime']);
     }
-    for (const id of profile.servers) {
-      const spec = data.inventory[id];
-      assert.ok(output.includes(spec.dir), `${id} repository path`);
-      if (client !== 'docker') assert.ok(output.includes(spec.dir + '/' + spec.entry), `${id} entrypoint`);
-    }
+    assert.ok(output.includes('hela-runtime'));
+    assert.ok(output.includes('HELA_PROFILE'));
+    assert.ok(output.includes('HELA_ECOSYSTEM_ROOT'));
   });
 }
+
+test('browser configuration and install prompt default to minimal without a selection', () => {
+  const config = vm.runInContext('renderConfig(undefined, "cursor")', context);
+  assert.match(config, /"HELA_PROFILE": "minimal"/);
+  const prompt = vm.runInContext('renderAgentPrompt(undefined, "cursor")', context);
+  assert.match(prompt, /Target profile: minimal/);
+  assert.match(prompt, /--profile minimal/);
+});

@@ -106,7 +106,7 @@ async function runDoctor(options = {}) {
   }
   if (parsed.mode.startsWith('docker') || parsed.mode === 'nix') throw new Error('No managed installation found; specify --prefix or install this mode first');
   const isJson = options.json || process.argv.includes('--json');
-  let targetProfileId = options.profile || process.env.HELA_PROFILE || 'dev-workspace';
+  let targetProfileId = options.profile || process.env.HELA_PROFILE || 'minimal';
   const pIndex = process.argv.indexOf('--profile');
   if (pIndex !== -1) {
     targetProfileId = process.argv[pIndex + 1];

@@ -31,7 +31,7 @@ export function resolveSkillsForProfile(servers) {
   return [...new Set(skills)];
 }
 
-export function generatePersonaFiles(profileId = 'dev-workspace', root = ECOSYSTEM_ROOT) {
+export function generatePersonaFiles(profileId = 'minimal', root = ECOSYSTEM_ROOT) {
   const data = loadInventory(root);
   const profile = selectProfile(data, profileId);
   const allServers = Object.keys(data.inventory).filter(k => k !== 'hela-runtime');
@@ -146,7 +146,7 @@ HeLa Profile-Aware Cellular Agent Bootstrap (\`HELA_PROFILE=${profile.id}\`).
 }
 
 export function scaffoldPersona({
-  profile = 'dev-workspace',
+  profile = 'minimal',
   targetDir = './agent_persona',
   workspaceDir = '.',
   symlink = true,
@@ -208,7 +208,7 @@ export function scaffoldPersona({
 
 function parseCliArgs(argv) {
   const args = {
-    profile: 'dev-workspace',
+    profile: 'minimal',
     targetDir: './agent_persona',
     workspaceDir: process.cwd(),
     symlink: true,

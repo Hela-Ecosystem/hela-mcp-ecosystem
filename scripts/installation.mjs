@@ -27,7 +27,7 @@ export function atomicJson(file, value) {
 }
 
 export function parseOptions(argv, sourceRoot) {
-  const options = { command: 'install', profile: process.env.HELA_PROFILE || 'dev-workspace', mode: 'individual', client: 'skip', root: sourceRoot,
+  const options = { command: 'install', profile: process.env.HELA_PROFILE || 'minimal', mode: 'individual', client: 'skip', root: sourceRoot,
     nonInteractive: false, runtime: false, withRuntime: false, dev: false, reconfigure: false, snapshot: 'latest-stable', transport: 'stdio', port: 8080 };
   const start = argv[0] === 'mode' ? 1 : 0;
   if (start) options.command = 'mode';
