@@ -1,6 +1,6 @@
 # Security status and verification scope
 
-![Blotcat security reference](../assets/blotcat-security.jpg)
+![Blotcat placing an API key into a local vault while untrusted inputs stay outside](../assets/blotcat-security-v2.png)
 
 This is an operational status document, **not a completed security certification**. Earlier architecture descriptions overstated guarantees about sandboxing, credential isolation, offline operation, and test coverage. A process boundary, a profile, or a passing health endpoint does not establish those guarantees.
 

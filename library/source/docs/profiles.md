@@ -13,11 +13,15 @@ Every profile in the ecosystem includes the core dual backbone:
 * **HeLa Mitosis (`hela-mitosis` / `chaining-mcp`)**: Intelligent tool discovery, Needle-planned routing, Needle-backed sequential thinking, task decomposition, skills catalog, and workflow orchestration.
 * **HeLa Genome (`hela-genome` / `project-mcp`)**: Living SQLite knowledge graph (`memory.db`), task tracking, architectural decisions, and cross-session context restoration.
 
+![Blotcat carrying runtime memory between context nodes](../assets/blotcat-illustrations/03-project-guardian-memory.jpg)
+
 ---
 
 ## Profile Catalog
 
 There are eight profiles. The canonical membership is `config/profiles.json`; current versions and generated tool counts are in [current versions](current-versions.md) and [profile counts](generated-profile-counts.md).
+
+![Blotcat sorting profile choices between GUI and headless work](../assets/blotcat-illustrations/01-profile-selection.jpg)
 
 ### `minimal` — HeLa Minimal
 
