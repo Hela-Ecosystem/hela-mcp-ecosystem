@@ -101,6 +101,15 @@ test('all EN/ID pages display current versions and load generated data before th
   }
 });
 
+test('index install prompts require profile confirmation and link the profile catalog', () => {
+  for (const file of [path.join(site, 'index.html'), path.join(site, 'id', 'index.html')]) {
+    const text = fs.readFileSync(file, 'utf8');
+    assert.ok(text.includes('https://hela.my.id/profiles.html'), `${file}: profile catalog link`);
+    assert.ok(/confirmed_profile|profil.*dikonfirmasi/i.test(text), `${file}: profile confirmation instruction`);
+    assert.ok(text.includes('minimal'), `${file}: minimal fallback`);
+  }
+});
+
 for (const profile of data.profiles) for (const client of ['cursor', 'claude', 'gemini', 'antigravity', 'opencode', 'kilo', 'zed', 'codex', 'docker']) {
   test(`browser configuration: ${profile.id}/${client}`, () => {
     const output = vm.runInContext(`renderConfig(${JSON.stringify(profile.id)},${JSON.stringify(client)})`, context);
@@ -122,6 +131,8 @@ test('browser configuration and install prompt default to minimal without a sele
   const config = vm.runInContext('renderConfig(undefined, "cursor")', context);
   assert.match(config, /"HELA_PROFILE": "minimal"/);
   const prompt = vm.runInContext('renderAgentPrompt(undefined, "cursor")', context);
-  assert.match(prompt, /Target profile: minimal/);
-  assert.match(prompt, /--profile minimal/);
+  assert.match(prompt, /https:\/\/hela\.my\.id\/profiles\.html/);
+  assert.match(prompt, /Ask which profile best fits/);
+  assert.match(prompt, /--profile <confirmed_profile>/);
+  assert.match(prompt, /If the user does not choose, use minimal/);
 });

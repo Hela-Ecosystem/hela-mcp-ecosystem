@@ -140,14 +140,18 @@ cd hela-mcp-ecosystem
           <pre><code>Please autonomously install the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), build tools, and the active client.
-2. Clone the repository and run:
+2. Ask the user which profile best fits their work before installing:
+   - Show the profile catalog: https://hela.my.id/profiles.html
+   - Offer: minimal (lightweight research/memory), dev-workspace (full development/browser/design), headless-server (headless core), research, web-devops, android-testing, 3d-modeling, or all.
+   - Wait for the user's choice and call it &lt;confirmed_profile&gt;. If they do not choose, use minimal. Do not run setup until the profile is confirmed.
+3. Clone the repository and run:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile minimal --client &lt;detected_client&gt; --mode runtime --non-interactive
-   ./setup.sh doctor --profile minimal --mode runtime
-3. Safely merge the generated single hela-runtime client fragment. Do not deploy each hela-* cell as a separate client server.
-4. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt. Do not create or copy a static persona prompt.
-5. Initialize the workspace memory graph through the exposed Genome tool when that organelle is active and confirm the selected profile plus ready runtime tools.</code></pre>
+   ./setup.sh --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   ./setup.sh doctor --profile &lt;confirmed_profile&gt; --mode runtime
+4. Safely merge the generated single hela-runtime client fragment. Do not deploy each hela-* cell as a separate client server.
+5. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt. Do not create or copy a static persona prompt.
+6. Initialize the workspace memory graph through the exposed Genome tool when that organelle is active and confirm the selected profile plus ready runtime tools.</code></pre>
         </div>
         <p><code>setup.sh</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
         <p>All eight profiles support <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker needs a working daemon and Compose v2; native builds need Python, make, and a C/C++ compiler, or the pinned Nix toolchain. See the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">installation guide</a> for prerequisites, Compose, Nix GC roots, and failure recovery.</p>
