@@ -287,7 +287,7 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
    Verify Node.js (>= 22.x LTS), Git (>= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
 2. Confirm the profile with the user before installing:
-   Show https://hela.my.id/profiles.html and ask which profile best fits the user's work: minimal, dev-workspace, headless-server, research, web-devops, android-testing, 3d-modeling, or all.
+   Show https://hela.my.id/profiles.html for the quick comparison, and https://hela.my.id/library/docs/profiles.html for detailed persona, workflow, server membership, and prerequisite explanations. Ask which profile best fits the user's work: minimal, dev-workspace, headless-server, research, web-devops, android-testing, 3d-modeling, or all.
    Wait for the user's choice and call it <confirmed_profile>. If they do not choose, use minimal. Do not run setup until the profile is confirmed.
 
 3. Clone & Install the Managed Runtime:

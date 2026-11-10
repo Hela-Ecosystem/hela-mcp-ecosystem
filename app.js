@@ -53,7 +53,8 @@ function renderAgentPrompt(profileKey, clientKey) {
    - Target client: ${client}.
 
 2. Confirm the profile with the user before installing:
-   - Show the profile catalog: https://hela.my.id/profiles.html
+   - Show the quick profile catalog: https://hela.my.id/profiles.html
+   - For detailed persona, workflow, server membership, and prerequisite explanations, show: https://hela.my.id/library/docs/profiles.html
    - Ask which profile best fits the user's work, and present these choices:
 ${profileChoices}
    - The configurator suggestion is ${profKey} (${prof.name || profKey}); treat it as a suggestion only and accept a different profile.
