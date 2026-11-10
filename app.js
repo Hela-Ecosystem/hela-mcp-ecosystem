@@ -42,28 +42,36 @@ function renderAgentPrompt(profileKey, clientKey) {
   const profKey = profileKey || "minimal";
   const client = clientKey || "cursor";
   const prof = PROFILES?.[profKey] || { name: "HeLa Minimal", servers: [] };
-  const serverList = (prof.servers || []).join(", ");
+  const profileChoices = Object.entries(PROFILES || {})
+    .map(([id, profile]) => `   - ${id}: ${profile.name || id}`)
+    .join("\n");
 
   return `Please autonomously install and configure the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. System & Environment Check:
    - Ensure Node.js (>= 22.x LTS recommended, min 20.18.1), Git (>= 2.30.0), and build tools are available.
-   - Target client: ${client} | Target profile: ${profKey} (${prof.name || profKey}).
+   - Target client: ${client}.
 
-2. Clone & Install the Managed Runtime:
+2. Confirm the profile with the user before installing:
+   - Show the profile catalog: https://hela.my.id/profiles.html
+   - Ask which profile best fits the user's work, and present these choices:
+${profileChoices}
+   - The configurator suggestion is ${profKey} (${prof.name || profKey}); treat it as a suggestion only and accept a different profile.
+   - If the user does not choose, use minimal. Do not run setup until the profile is confirmed; call the confirmed id <confirmed_profile>.
+
+3. Clone & Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
    chmod +x setup.sh update.sh
-   ./setup.sh --profile ${profKey} --client ${client} --mode runtime --non-interactive
-   ./setup.sh doctor --profile ${profKey} --mode runtime
+   ./setup.sh --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
+   ./setup.sh doctor --profile <confirmed_profile> --mode runtime
    Safely merge the generated ${client} configuration fragment into my active ${client} MCP settings.
    Do not deploy or configure each hela-* cell as a separate client server.
 
-3. Synchronize Companion Skills:
-   Copy/link active skills matching profile ${profKey} from the ecosystem into ~/.agents/skills/ (e.g., guardian-*, code-reviewer, skill-finder, ui-designer, browser-agent).
+4. Synchronize Companion Skills:
+   Copy/link active skills matching <confirmed_profile> from the ecosystem into ~/.agents/skills/ (e.g., guardian-*, code-reviewer, skill-finder, ui-designer, browser-agent).
 
-4. Load the Runtime Profile Context (HELA_PROFILE=${profKey}):
-   Active organelles: [${serverList}].
+5. Load the Runtime Profile Context (HELA_PROFILE=<confirmed_profile>):
    - Do not create or copy a static persona prompt into the workspace.
    - After connecting, read the runtime resource hela://profile/context or request the hela-profile-bootstrap MCP prompt.
    - Use only the organelles and tools exposed by that selected profile; the runtime is the authority.

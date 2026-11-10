@@ -103,23 +103,28 @@ cd hela-mcp-ecosystem
 1. Environment &amp; Harness Detection:
    Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
-2. Clone &amp; Install the Managed Runtime (Profile: minimal unless another profile is selected):
+2. Tanyakan profil yang paling sesuai kepada pengguna sebelum instalasi:
+   - Tampilkan katalog profil: https://hela.my.id/profiles.html
+   - Tawarkan: minimal (riset/memori ringan), dev-workspace (pengembangan/browser/desain lengkap), headless-server (core headless), research, web-devops, android-testing, 3d-modeling, atau all.
+   - Tunggu pilihan pengguna dan simpan sebagai &lt;confirmed_profile&gt;. Jika tidak memilih, gunakan minimal. Jangan menjalankan setup sebelum profil dikonfirmasi.
+
+3. Clone &amp; Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile minimal --client &lt;detected_client&gt; --mode runtime --non-interactive
-   ./setup.sh doctor --profile minimal --mode runtime
+   ./setup.sh --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   ./setup.sh doctor --profile &lt;confirmed_profile&gt; --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
    Do not deploy each hela-* cell as a separate client server.
 
-3. Synchronize Companion Skills:
-   Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
+4. Synchronize Companion Skills:
+   Link or copy ecosystem companion skills matching &lt;confirmed_profile&gt; from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
 
-4. Load the Runtime Profile Context:
+5. Load the Runtime Profile Context:
    - Do not create or copy a static persona prompt into the workspace.
    - After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 
-5. Final Handshake:
+6. Final Handshake:
    Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.</code></pre>
         </div>
         <p><code>setup.sh</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>, memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
@@ -164,8 +169,8 @@ npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
     </div>
   </div>
   <script src="../release-data.js?v=1.6.2"></script>
-  <script src="../library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
+  <script src="../library-data.js?v=1.6.2&amp;rev=bc5233ad04a4"></script>
   <script src="../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
+  <script src="../app.js?v=1.6.2&amp;rev=042edcb3789a"></script>
 </body>
 </html>

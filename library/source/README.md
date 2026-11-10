@@ -85,23 +85,27 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
 1. Environment & Harness Detection:
    Verify Node.js (>= 22.x LTS), Git (>= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
-2. Clone & Install the Managed Runtime (Profile: minimal unless another profile is selected):
+2. Confirm the profile with the user before installing:
+   Show https://hela.my.id/profiles.html and ask which profile best fits the user's work: minimal, dev-workspace, headless-server, research, web-devops, android-testing, 3d-modeling, or all.
+   Wait for the user's choice and call it <confirmed_profile>. If they do not choose, use minimal. Do not run setup until the profile is confirmed.
+
+3. Clone & Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem && chmod +x setup.sh update.sh
-   ./setup.sh --profile minimal --client <detected_client> --mode runtime --non-interactive
-   ./setup.sh doctor --profile minimal --mode runtime
+   ./setup.sh --profile <confirmed_profile> --client <detected_client> --mode runtime --non-interactive
+   ./setup.sh doctor --profile <confirmed_profile> --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
    Do not deploy or configure each hela-* cell as a separate client server.
 
-3. Synchronize Companion Skills:
-   Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
+4. Synchronize Companion Skills:
+   Link or copy ecosystem companion skills matching <confirmed_profile> from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
 
-4. Load the Runtime Profile Context:
+5. Load the Runtime Profile Context:
    - Do not create or copy a static persona prompt into the workspace.
    - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 
-5. Final Handshake:
+6. Final Handshake:
    Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.
 ```
 
