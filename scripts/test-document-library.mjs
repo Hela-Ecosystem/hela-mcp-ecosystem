@@ -34,6 +34,15 @@ test('every public source document has English and Indonesian navigation pages',
   }
 });
 
+test('every active guide has a Blotcat illustration while generated and historical records may stay text-only', () => {
+  const illustrated = [
+    'docs/architecture.md', 'docs/beginner-guide.md', 'docs/installation.md', 'docs/integration.md',
+    'docs/keys-and-secrets.md', 'docs/on-demand-runtime.md', 'docs/profiles.md',
+    'docs/security-audit.md', 'docs/troubleshooting.md', 'docs/workflows.md',
+  ];
+  for (const source of illustrated) assert.match(documents.get(source)?.text ?? '', /^!\[[^\]]*\]\([^)]*assets\/blotcat-/m, `${source}: missing Blotcat illustration`);
+});
+
 test('every generated HTML link, image, script and local heading resolves', () => {
   const pages = result.files.filter(file => file.endsWith('.html'));
   for (const page of pages) {
