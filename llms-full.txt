@@ -281,29 +281,29 @@ flowchart TB
 If you are using an AI coding assistant (Cursor, Claude Code, OpenCode, Codex, Antigravity, Windsurf), you can copy and paste this autonomous prompt directly into your agent's chat:
 
 ```text
-Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
+Please autonomously install and configure the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. Environment & Harness Detection:
    Verify Node.js (>= 22.x LTS), Git (>= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
-2. Clone & Install MCP Cells (Profile: dev-workspace):
+2. Clone & Install the Managed Runtime (Profile: minimal unless another profile is selected):
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem && chmod +x setup.sh update.sh
-   ./setup.sh --profile dev-workspace --client <detected_client> --non-interactive
-   ./setup.sh doctor --profile dev-workspace
+   ./setup.sh --profile minimal --client <detected_client> --mode runtime --non-interactive
+   ./setup.sh doctor --profile minimal --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
+   Do not deploy or configure each hela-* cell as a separate client server.
 
 3. Synchronize Companion Skills:
    Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
 
-4. Profile-Aware Persona & Rules Setup:
-   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
-   - If blank or no persona: Run:
-     node scripts/scaffold-persona.mjs --profile dev-workspace
-     This establishes HeLa (3rd Sister of Frea & Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+4. Load the Runtime Profile Context:
+   - Do not create or copy a static persona prompt into the workspace.
+   - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
+   - Treat the selected runtime profile as the authority for active organelles and available tools.
 
 5. Final Handshake:
-   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.
+   Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.
 ```
 
 ### 2. Run Diagnostics (`setup.sh doctor`)
@@ -312,8 +312,8 @@ Clone the source, then select an installation mode:
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode individual --profile dev-workspace
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode runtime --profile dev-workspace
 ```
 
 ### 3. Interactive Installation & Profile Selection
@@ -386,7 +386,7 @@ The installer writes private fragments inside its prefix, never directly into li
 | `3d-modeling` | GUI (Blender installed) | Mitosis + Genome | Plastid, Membrane, Nucleus | 3D procedural modeling, materials, rendering |
 | `all` | Full workstation | Mitosis + Genome | All 10 HeLa MCP servers | Complete full-spectrum AI agent capabilities |
 
-> **Single-endpoint serve mode:** add `--runtime` to a profile command. The default profile remains `dev-workspace`, not `all`.
+> **Single-endpoint serve mode:** add `--runtime` to a profile command. If no profile is selected, the runtime and installer default to `minimal`; choose `dev-workspace` or another profile explicitly.
 
 Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (**16 checks**), including exact tool/schema parity and safe read-only routing. Lappy's ten-server `all` roster and servy's eight-cell `dev-workspace` setup remain different by design. See [all-profile verification](docs/profile-verification-2026-11-06.md); run `npm run test:profiles`, or append `-- --profile <id>` on a partial installation.
 
@@ -763,7 +763,7 @@ The optional runtime supervises child MCP processes behind one stdio or Streamab
 
 - **Source:** https://github.com/Hela-Ecosystem/hela-runtime
 - **Entry:** `hela-runtime/dist/index.js`
-- **Serve mode:** add `--runtime` to any profile, for example `./setup.sh --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; the default profile remains `dev-workspace`.
+- **Serve mode:** add `--runtime` to any profile, for example `./setup.sh --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; an omitted profile defaults to `minimal`.
 - **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, `HELA_NAMESPACE_TOOLS`.
 - **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, opt-in namespacing, runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
 - **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
@@ -824,7 +824,7 @@ Current software versions are listed in [current versions](current-versions.md).
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client opencode --non-interactive
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
 Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run `./setup.sh` without flags for interactive profile/mode/client selection.
@@ -832,7 +832,7 @@ Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`,
 All eight profiles are supported:
 
 - `minimal`: three research/memory cells.
-- `dev-workspace`: eight development/browser/design cells; runtime default.
+- `dev-workspace`: eight development/browser/design cells; select it explicitly when you need the broader workstation stack.
 - `headless-server`: seven cells without browser/device dependencies.
 - `research`: five research/browser/workspace cells.
 - `web-devops`: six frontend/browser/design cells.
@@ -1134,8 +1134,8 @@ The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked
 ## Individual servers
 
 ```bash
-./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode individual --profile dev-workspace
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode runtime --profile dev-workspace
 ```
 
 Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.
@@ -1240,7 +1240,7 @@ The installer now creates a managed prefix and private client fragment instead o
 Use Node 22 LTS and build the selected cells first:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --non-interactive
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
 To inspect a generated file without installing it into a client:
@@ -1273,7 +1273,7 @@ Keep the selected profile and add the serve-mode flag:
 ./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
-There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `dev-workspace`. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
+There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `minimal` when unset. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
 
 The installer generates the selected-profile schema catalog. After rebuilding a cell:
 
@@ -1434,7 +1434,9 @@ URL: https://hela.my.id/library/docs/on-demand-runtime.html
 
 # On-demand runtime and canonical discovery
 
-Runtime **1.2.0** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime default stays `dev-workspace`.
+Runtime **1.2.0** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
+
+The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. Clients should consume that runtime context instead of copying a static persona prompt or deploying each cell as a separate MCP server.
 
 ## One inventory, generated schemas and counts
 
@@ -1709,7 +1711,7 @@ The HeLa Runtime is **not a profile** — it is a serve method. Any profile can 
 HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with minimal profile
 ```
 
-The runtime advertises only the selected cells' schemas and starts each cell only when invoked. Discovery starts none. Use `--runtime` with any profile; `HELA_PROFILE` selects eligible cells and defaults to `dev-workspace`. Standalone servers remain supported.
+The runtime advertises only the selected cells' schemas and starts each cell only when invoked. Discovery starts none. Use `--runtime` with any profile; `HELA_PROFILE` selects eligible cells and defaults to `minimal` when unset. Standalone servers remain supported.
 
 ---
 

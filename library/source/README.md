@@ -80,29 +80,29 @@ flowchart TB
 If you are using an AI coding assistant (Cursor, Claude Code, OpenCode, Codex, Antigravity, Windsurf), you can copy and paste this autonomous prompt directly into your agent's chat:
 
 ```text
-Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
+Please autonomously install and configure the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. Environment & Harness Detection:
    Verify Node.js (>= 22.x LTS), Git (>= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
-2. Clone & Install MCP Cells (Profile: dev-workspace):
+2. Clone & Install the Managed Runtime (Profile: minimal unless another profile is selected):
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem && chmod +x setup.sh update.sh
-   ./setup.sh --profile dev-workspace --client <detected_client> --non-interactive
-   ./setup.sh doctor --profile dev-workspace
+   ./setup.sh --profile minimal --client <detected_client> --mode runtime --non-interactive
+   ./setup.sh doctor --profile minimal --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
+   Do not deploy or configure each hela-* cell as a separate client server.
 
 3. Synchronize Companion Skills:
    Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
 
-4. Profile-Aware Persona & Rules Setup:
-   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
-   - If blank or no persona: Run:
-     node scripts/scaffold-persona.mjs --profile dev-workspace
-     This establishes HeLa (3rd Sister of Frea & Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+4. Load the Runtime Profile Context:
+   - Do not create or copy a static persona prompt into the workspace.
+   - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
+   - Treat the selected runtime profile as the authority for active organelles and available tools.
 
 5. Final Handshake:
-   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.
+   Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.
 ```
 
 ### 2. Run Diagnostics (`setup.sh doctor`)
@@ -111,8 +111,8 @@ Clone the source, then select an installation mode:
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode individual --profile dev-workspace
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode runtime --profile dev-workspace
 ```
 
 ### 3. Interactive Installation & Profile Selection
@@ -185,7 +185,7 @@ The installer writes private fragments inside its prefix, never directly into li
 | `3d-modeling` | GUI (Blender installed) | Mitosis + Genome | Plastid, Membrane, Nucleus | 3D procedural modeling, materials, rendering |
 | `all` | Full workstation | Mitosis + Genome | All 10 HeLa MCP servers | Complete full-spectrum AI agent capabilities |
 
-> **Single-endpoint serve mode:** add `--runtime` to a profile command. The default profile remains `dev-workspace`, not `all`.
+> **Single-endpoint serve mode:** add `--runtime` to a profile command. If no profile is selected, the runtime and installer default to `minimal`; choose `dev-workspace` or another profile explicitly.
 
 Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (**16 checks**), including exact tool/schema parity and safe read-only routing. Lappy's ten-server `all` roster and servy's eight-cell `dev-workspace` setup remain different by design. See [all-profile verification](docs/profile-verification-2026-11-06.md); run `npm run test:profiles`, or append `-- --profile <id>` on a partial installation.
 

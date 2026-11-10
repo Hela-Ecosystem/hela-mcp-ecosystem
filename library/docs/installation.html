@@ -51,8 +51,8 @@
 <p>Each prefix contains its own ecosystem metadata, sibling source repositories, verified installation manifest, workspace, private data directories, and generated client fragments. Plastid is cloned at the repository root and built from <code>ll3m-mcp/brain</code>.</p>
 <p>The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked repositories, origin/pin/version mismatches, failed installs/builds, and existing explicit output files. A failed install retains a pending marker; doctor and launchers will not treat it as ready. Re-running the same installation performs locked dependency installation, rebuilds, and verifies it again. Existing data is not restored, reset, or deleted.</p>
 <h2 id="individual-servers">Individual servers</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode individual --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode runtime --profile dev-workspace
 </code></pre>
 </div>
 <p>Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.</p>
@@ -115,8 +115,8 @@ node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
+  <script src="../../app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
 </body>
 </html>

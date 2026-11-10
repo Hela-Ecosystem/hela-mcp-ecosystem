@@ -85,11 +85,11 @@
         </div>
         <div class="admonition">
           <div class="admonition-title">ATURAN HEADLESS</div>
-          <div><code>headless-server</code> mengecualikan cytosol, receptor, dan plastid sehingga dependensi browser/perangkatnya tidak diperlukan. Tambahkan <code>--runtime</code> pada profil apa pun untuk satu endpoint; discovery tidak menjalankan sel. Profil bawaan runtime tetap <code>dev-workspace</code>, bukan <code>minimal</code>.</div>
+          <div><code>headless-server</code> mengecualikan cytosol, receptor, dan plastid sehingga dependensi browser/perangkatnya tidak diperlukan. Tambahkan <code>--runtime</code> pada profil apa pun untuk satu endpoint; discovery tidak menjalankan sel. Jika profil tidak dipilih, runtime memakai <code>minimal</code>.</div>
         </div>
 
         <h2 id="configurator">Meja Kerja Konfigurasi</h2>
-        <p>Pilih profil dan klien untuk pratinjau path/format tanpa kunci. Ganti <code>/absolute/path/to/MCPservers</code> dengan direktori induk repositori yang dikelola manual. Pratinjau ini bukan fragmen instalasi terkelola. Gunakan <code>./setup.sh --mode individual|runtime|docker|docker-runtime|nix --profile &lt;profil&gt; --client &lt;klien&gt;</code>, lalu gabungkan hasil privatnya. Pratinjau Docker memakai tag contoh; installer membangun dan mengunci ID image nyata. Stdio tidak memerlukan pemetaan port.</p>
+        <p>Pilih profil dan klien untuk pratinjau satu runtime tanpa kunci. Ganti <code>/absolute/path/to/MCPservers</code> dengan direktori instalasi terkelola. Pratinjau ini bukan fragmen instalasi terkelola. Untuk instalasi terkelola, utamakan <code>./setup.sh --mode runtime --profile &lt;profil&gt; --client &lt;klien&gt;</code>; mode sel individual tetap tersedia demi kompatibilitas. Pratinjau Docker memakai tag contoh; installer membangun dan mengunci ID image nyata. Stdio tidak memerlukan pemetaan port.</p>
         <div class="field-row">
           <div class="field">
             <label for="profileSelect">Profil target</label>
@@ -157,8 +157,8 @@
     </div>
   </div>
   <script src="../release-data.js?v=1.6.2"></script>
-  <script src="../library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
+  <script src="../library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
   <script src="../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
+  <script src="../app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
 </body>
 </html>

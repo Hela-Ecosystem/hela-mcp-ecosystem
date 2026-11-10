@@ -119,38 +119,26 @@
           <div class="code-dossier-header"><span>SHELL // CLONE_AND_INSTALL</span><button class="copy-btn" type="button">Copy</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client opencode</code></pre>
+./setup.sh --profile dev-workspace --client opencode --mode runtime</code></pre>
         </div>
         <div class="code-dossier" style="margin-top: 1rem;">
           <div class="code-dossier-header"><span>AGENT // ONE_CLICK_INSTALL_PROMPT</span><button class="copy-btn" type="button">Copy Prompt</button></div>
-          <pre><code>Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
+          <pre><code>Please autonomously install the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
-1. Environment &amp; Harness Detection:
-   Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
-
-2. Clone &amp; Install MCP Cells (Profile: dev-workspace):
+1. Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), build tools, and the active client.
+2. Clone the repository and run:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile dev-workspace --client &lt;detected_client&gt; --non-interactive
-   ./setup.sh doctor --profile dev-workspace
-   Safely merge generated client configuration into my active MCP configuration file.
-
-3. Synchronize Companion Skills:
-   Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
-
-4. Profile-Aware Persona &amp; Rules Setup:
-   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
-   - If blank or no persona: Run:
-     node scripts/scaffold-persona.mjs --profile dev-workspace
-     This establishes HeLa (3rd Sister of Frea &amp; Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
-
-5. Final Handshake:
-   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.</code></pre>
+   ./setup.sh --profile minimal --client &lt;detected_client&gt; --mode runtime --non-interactive
+   ./setup.sh doctor --profile minimal --mode runtime
+3. Safely merge the generated single hela-runtime client fragment. Do not deploy each hela-* cell as a separate client server.
+4. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt. Do not create or copy a static persona prompt.
+5. Initialize the workspace memory graph through the exposed Genome tool when that organelle is active and confirm the selected profile plus ready runtime tools.</code></pre>
         </div>
         <p><code>setup.sh</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
         <p>All eight profiles support <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker needs a working daemon and Compose v2; native builds need Python, make, and a C/C++ compiler, or the pinned Nix toolchain. See the <a href="library/docs/installation.html">installation guide</a> for prerequisites, Compose, Nix GC roots, and failure recovery.</p>
         <p>Runtime modes also support <code>--transport http --port 8080</code>. HTTP stays loopback-only and is started explicitly; use <code>doctor --url http://127.0.0.1:8080/mcp</code> to check the running endpoint. Browser engines, provider keys, Android/Blender bridges, and GUI authentication remain separate requirements.</p>
-        <p><strong>Single-endpoint alternative:</strong> <code>./setup.sh --profile dev-workspace --client opencode --runtime</code> keeps the selected eight-cell profile behind the <a href="https://github.com/Hela-Ecosystem/hela-runtime">HeLa Runtime</a>. Runtime is not a profile. Discovery starts no cells; the first call starts only its target. Other installations can select any of the eight profiles.</p>
+        <p><strong>Single-endpoint alternative:</strong> <code>./setup.sh --profile minimal --client opencode --runtime</code> keeps the selected profile behind the <a href="https://github.com/Hela-Ecosystem/hela-runtime">HeLa Runtime</a>. Runtime is not a profile. Discovery starts no cells; the first call starts only its target. Other installations can select any of the eight profiles.</p>
 
         <h2 id="verify" data-i18n="index.verify_title">Verify</h2>
         <p data-i18n="index.verify_desc">Three gates, all expected green before use:</p>
@@ -190,8 +178,8 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
     </div>
   </div>
   <script src="release-data.js?v=1.6.2"></script>
-  <script src="library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
+  <script src="library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
   <script src="library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
+  <script src="app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
 </body>
 </html>

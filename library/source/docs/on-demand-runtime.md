@@ -1,6 +1,8 @@
 # On-demand runtime and canonical discovery
 
-Runtime **1.2.0** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime default stays `dev-workspace`.
+Runtime **1.2.0** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
+
+The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. Clients should consume that runtime context instead of copying a static persona prompt or deploying each cell as a separate MCP server.
 
 ## One inventory, generated schemas and counts
 

@@ -40,7 +40,7 @@
 <p>The installer now creates a managed prefix and private client fragment instead of replacing live client files. Use <code>--mode individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, or <code>nix</code>; see <a href="installation.html">installation modes</a>. Review and merge the generated fragment. Its launcher supplies the installed executable, workspace, data location, and selected profile.</p>
 <h2 id="generate-configuration">Generate configuration</h2>
 <p>Use Node 22 LTS and build the selected cells first:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
 </code></pre>
 </div>
 <p>To inspect a generated file without installing it into a client:</p>
@@ -65,7 +65,7 @@
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
 </code></pre>
 </div>
-<p>There is no <code>runtime</code> profile. <code>HELA_PROFILE</code> selects eligible cells and defaults to <code>dev-workspace</code>. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.</p>
+<p>There is no <code>runtime</code> profile. <code>HELA_PROFILE</code> selects eligible cells and defaults to <code>minimal</code> when unset. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.</p>
 <p>The installer generates the selected-profile schema catalog. After rebuilding a cell:</p>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">npm run catalog:generate -- --profile dev-workspace
 ./setup.sh doctor --profile dev-workspace --runtime
@@ -98,8 +98,8 @@ npm run docs:check
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../../release-data.js?v=1.6.2"></script>
-  <script src="../../../library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
+  <script src="../../../library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
   <script src="../../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../../app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
+  <script src="../../../app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
 </body>
 </html>

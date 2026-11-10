@@ -171,37 +171,37 @@
 </ul>
 <h3 id="-install-via-ai-agent-one-click-copy">🤖 Install via AI Agent (One-Click Copy)</h3>
 <p>If you are using an AI coding assistant (Cursor, Claude Code, OpenCode, Codex, Antigravity, Windsurf), you can copy and paste this autonomous prompt directly into your agent's chat:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-text">Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-text">Please autonomously install and configure the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. Environment &amp; Harness Detection:
    Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
-2. Clone &amp; Install MCP Cells (Profile: dev-workspace):
+2. Clone &amp; Install the Managed Runtime (Profile: minimal unless another profile is selected):
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile dev-workspace --client &lt;detected_client&gt; --non-interactive
-   ./setup.sh doctor --profile dev-workspace
+   ./setup.sh --profile minimal --client &lt;detected_client&gt; --mode runtime --non-interactive
+   ./setup.sh doctor --profile minimal --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
+   Do not deploy or configure each hela-* cell as a separate client server.
 
 3. Synchronize Companion Skills:
    Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
 
-4. Profile-Aware Persona &amp; Rules Setup:
-   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
-   - If blank or no persona: Run:
-     node scripts/scaffold-persona.mjs --profile dev-workspace
-     This establishes HeLa (3rd Sister of Frea &amp; Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+4. Load the Runtime Profile Context:
+   - Do not create or copy a static persona prompt into the workspace.
+   - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
+   - Treat the selected runtime profile as the authority for active organelles and available tools.
 
 5. Final Handshake:
-   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.
+   Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.
 </code></pre>
 </div>
 <h3 id="2-run-diagnostics-setupsh-doctor">2. Run Diagnostics (<code>setup.sh doctor</code>)</h3>
 <p>Clone the source, then select an installation mode:</p>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --mode individual --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode individual --profile dev-workspace
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+./setup.sh doctor --mode runtime --profile dev-workspace
 </code></pre>
 </div>
 <h3 id="3-interactive-installation--profile-selection">3. Interactive Installation &amp; Profile Selection</h3>
@@ -319,7 +319,7 @@ cd hela-mcp-ecosystem
 </tbody>
 </table></div>
 <blockquote>
-<p><strong>Single-endpoint serve mode:</strong> add <code>--runtime</code> to a profile command. The default profile remains <code>dev-workspace</code>, not <code>all</code>.</p>
+<p><strong>Single-endpoint serve mode:</strong> add <code>--runtime</code> to a profile command. If no profile is selected, the runtime and installer default to <code>minimal</code>; choose <code>dev-workspace</code> or another profile explicitly.</p>
 </blockquote>
 <p>Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (<strong>16 checks</strong>), including exact tool/schema parity and safe read-only routing. Lappy's ten-server <code>all</code> roster and servy's eight-cell <code>dev-workspace</code> setup remain different by design. See <a href="docs/profile-verification-2026-11-06.html">all-profile verification</a>; run <code>npm run test:profiles</code>, or append <code>-- --profile &lt;id&gt;</code> on a partial installation.</p>
 <p>Runtime discovery now starts <strong>zero cells</strong>; only invoked cells are started. <a href="docs/generated-profile-counts.html">Generated profile counts</a> come from the inventory/catalog rather than static client-specific totals. <code>./setup.sh doctor --profile &lt;id&gt; --runtime</code> checks cold catalog parity as well as versions, paths, and revisions.</p>
@@ -371,8 +371,8 @@ npm test
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
+  <script src="../../app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
 </body>
 </html>

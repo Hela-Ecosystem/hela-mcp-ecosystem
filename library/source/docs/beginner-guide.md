@@ -17,7 +17,7 @@ Current software versions are listed in [current versions](current-versions.md).
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client opencode --non-interactive
+./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
 Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run `./setup.sh` without flags for interactive profile/mode/client selection.
@@ -25,7 +25,7 @@ Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`,
 All eight profiles are supported:
 
 - `minimal`: three research/memory cells.
-- `dev-workspace`: eight development/browser/design cells; runtime default.
+- `dev-workspace`: eight development/browser/design cells; select it explicitly when you need the broader workstation stack.
 - `headless-server`: seven cells without browser/device dependencies.
 - `research`: five research/browser/workspace cells.
 - `web-devops`: six frontend/browser/design cells.

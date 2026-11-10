@@ -94,38 +94,38 @@
           <div class="code-dossier-header"><span>SHELL // KLONING_DAN_INSTAL</span><button class="copy-btn" type="button">Salin</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client opencode</code></pre>
+./setup.sh --profile dev-workspace --client opencode --mode runtime</code></pre>
         </div>
         <div class="code-dossier" style="margin-top: 1rem;">
           <div class="code-dossier-header"><span>AGENT // PROMPT_INSTALASI_OTOMATIS</span><button class="copy-btn" type="button">Salin Prompt</button></div>
-          <pre><code>Please autonomously install and configure the HeLa Cellular MCP Ecosystem, its companion skills, and its profile-aware behavioral persona for this workspace:
+          <pre><code>Please autonomously install the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint:
 
 1. Environment &amp; Harness Detection:
    Verify Node.js (&gt;= 22.x LTS), Git (&gt;= 2.30.0), and build tools. Identify current client (Cursor, Claude, OpenCode, Antigravity, Zed, Codex).
 
-2. Clone &amp; Install MCP Cells (Profile: dev-workspace):
+2. Clone &amp; Install the Managed Runtime (Profile: minimal unless another profile is selected):
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile dev-workspace --client &lt;detected_client&gt; --non-interactive
-   ./setup.sh doctor --profile dev-workspace
+   ./setup.sh --profile minimal --client &lt;detected_client&gt; --mode runtime --non-interactive
+   ./setup.sh doctor --profile minimal --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
+   Do not deploy each hela-* cell as a separate client server.
 
 3. Synchronize Companion Skills:
    Link or copy ecosystem companion skills from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
 
-4. Profile-Aware Persona &amp; Rules Setup:
-   - If root agent guidelines exist (AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules): Append the profile-aware tool routing block for dev-workspace without overwriting existing preferences.
-   - If blank or no persona: Run:
-     node scripts/scaffold-persona.mjs --profile dev-workspace
-     This establishes HeLa (3rd Sister of Frea &amp; Mema) tuned specifically to dev-workspace and symlinks root AGENTS.md, CLAUDE.md, and GEMINI.md.
+4. Load the Runtime Profile Context:
+   - Do not create or copy a static persona prompt into the workspace.
+   - After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt.
+   - Treat the selected runtime profile as the authority for active organelles and available tools.
 
 5. Final Handshake:
-   Initialize the workspace memory graph (memory.db) via hela-genome and confirm active cells, companion skills, and persona readiness.</code></pre>
+   Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.</code></pre>
         </div>
         <p><code>setup.sh</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>, memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
         <p>Delapan profil mendukung <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker membutuhkan daemon aktif dan Compose v2; build native membutuhkan Python, make, dan compiler C/C++, atau toolchain Nix terkunci. Lihat <a href="library/docs/installation.html">panduan instalasi</a> untuk persyaratan, Compose, GC root Nix, dan pemulihan kegagalan.</p>
         <p>Mode runtime mendukung <code>--transport http --port 8080</code>. Listener hanya di loopback dan harus dijalankan secara eksplisit; gunakan <code>doctor --url http://127.0.0.1:8080/mcp</code> untuk memeriksa endpoint aktif. Engine browser, kunci provider, bridge Android/Blender, dan autentikasi GUI tetap kebutuhan terpisah.</p>
-        <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Profil bawaan tetap <code>dev-workspace</code>, sedangkan instalasi lain bebas memilih salah satu dari delapan profil.</p>
+        <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Jika profil tidak dipilih, runtime dan installer memakai <code>minimal</code>; profil lain tetap bisa dipilih secara eksplisit.</p>
 
         <h2 id="verify">Verifikasi</h2>
         <p>Tiga gerbang verifikasi, semuanya diharapkan berstatus hijau sebelum digunakan:</p>
@@ -164,8 +164,8 @@ npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
     </div>
   </div>
   <script src="../release-data.js?v=1.6.2"></script>
-  <script src="../library-data.js?v=1.6.2&amp;rev=a755c4eb367b"></script>
+  <script src="../library-data.js?v=1.6.2&amp;rev=1f45b2511816"></script>
   <script src="../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.6.2&amp;rev=30fd73e5def9"></script>
+  <script src="../app.js?v=1.6.2&amp;rev=9d4c23cc3cdc"></script>
 </body>
 </html>
