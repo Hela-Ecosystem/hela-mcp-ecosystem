@@ -1,5 +1,7 @@
 # Installation modes and doctor
 
+![Blotcat assembling a selected profile into a managed runtime](../assets/blotcat-installation.png)
+
 The installer supports eight profiles through five modes: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.
 
 See [local acceptance evidence](installation-acceptance.md) for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.

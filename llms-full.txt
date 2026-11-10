@@ -1113,6 +1113,8 @@ URL: https://hela.my.id/library/docs/installation.html
 
 # Installation modes and doctor
 
+![Blotcat assembling a selected profile into a managed runtime](../assets/blotcat-installation.png)
+
 The installer supports eight profiles through five modes: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.
 
 See [local acceptance evidence](installation-acceptance.md) for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.
@@ -1437,6 +1439,8 @@ To verify your environment and check which fallbacks are active without exposing
 URL: https://hela.my.id/library/docs/on-demand-runtime.html
 
 # On-demand runtime and canonical discovery
+
+![Blotcat waking one selected cell while the other runtime cells sleep](../assets/blotcat-on-demand-runtime.png)
 
 Runtime **1.2.0** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
 

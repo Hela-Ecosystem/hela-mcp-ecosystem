@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>On-demand runtime and canonical discovery — HeLa MCP Ecosystem</title>
-  <meta name="description" content="Runtime 1.2.0 implements §10.3: no cell starts during runtime startup or tools/list. The first call starts only its target; concurrent calls share that startup. Cells already…">
+  <meta name="description" content="Blotcat waking one selected cell while the other runtime cells sleep">
   <link rel="canonical" href="https://hela.my.id/library/docs/on-demand-runtime.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/on-demand-runtime.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/on-demand-runtime.html">
@@ -35,7 +35,8 @@
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="on-demand-runtime.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/on-demand-runtime.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
       <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="on-demand-runtime-and-canonical-discovery" class="doc-title">On-demand runtime and canonical discovery</h1>
-<header class="library-document-meta" lang="en"><p class="library-kicker">Reference</p><p class="library-source">docs/on-demand-runtime.md</p><p>Original source language. <a href="../source/docs/on-demand-runtime.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>Runtime <strong>1.2.0</strong> implements §10.3: no cell starts during runtime startup or <code>tools/list</code>. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is <code>minimal</code> when no profile is selected.</p>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Reference</p><p class="library-source">docs/on-demand-runtime.md</p><p>Original source language. <a href="../source/docs/on-demand-runtime.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p><img src="../../assets/blotcat-on-demand-runtime.png" alt="Blotcat waking one selected cell while the other runtime cells sleep" loading="lazy"></p>
+<p>Runtime <strong>1.2.0</strong> implements §10.3: no cell starts during runtime startup or <code>tools/list</code>. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is <code>minimal</code> when no profile is selected.</p>
 <p>The same endpoint owns profile-aware agent instructions. <code>prompts/list</code> exposes <code>hela-profile-bootstrap</code>, <code>prompts/get</code> renders it from the selected profile, and <code>resources/read</code> serves <code>hela://profile/context</code>. Clients should consume that runtime context instead of copying a static persona prompt or deploying each cell as a separate MCP server.</p>
 <h2 id="one-inventory-generated-schemas-and-counts">One inventory, generated schemas and counts</h2>
 <p><code>config/inventory.json</code> remains the source of cell paths, revisions, versions, environment declarations, and conditional tool features. <code>config/profiles.json</code> selects membership. Config generation, doctor, version verification, integration, and profile tests use the same inventory loader/path resolution.</p>
@@ -79,7 +80,7 @@ npm run test:profiles -- --profile dev-workspace
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=b1c2c7ab96ee"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=4e9969316a09"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
 </body>
