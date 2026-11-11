@@ -226,6 +226,12 @@ npm run test:matrix
 
 # Run master integration test suite (295 tools across all 10 servers)
 npm test
+
+# Sync bundled agent skills (SKILL.md catalogs) into the harness skills dir
+npm run skills:sync
+
+# Report skill drift only (exits 1 when out of sync)
+npm run skills:check
 ```
 
 ---

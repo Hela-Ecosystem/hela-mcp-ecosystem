@@ -10,6 +10,7 @@ source "$SCRIPT_DIR/scripts/lib.sh"
 
 RUN_TESTS=false
 CLIENT_TARGET=""
+SYNC_SKILLS=false
 
 usage() {
     cat <<EOF
@@ -21,6 +22,7 @@ Options:
   --all                Update all servers in the inventory
   --profile ID         Update only servers in the specified profile
   --client CLIENT      Regenerate client configuration after update
+  --skills             Sync bundled agent skills (SKILL.md catalog) after update
   --test               Run smoke test suite after updating
   -h, --help           Show this help
 EOF
@@ -31,6 +33,7 @@ ARGS=()
 while [[ $# -gt 0 ]]; do
     case $1 in
         --test) RUN_TESTS=true; shift ;;
+        --skills) SYNC_SKILLS=true; shift ;;
         --client) CLIENT_TARGET="$2"; shift 2 ;;
         *) ARGS+=("$1"); shift ;;
     esac
@@ -75,6 +78,14 @@ done
 
 echo
 print_success "Update complete: $ok succeeded, $failed failed."
+
+if [ "$SYNC_SKILLS" = true ]; then
+    echo
+    print_status "Syncing bundled agent skills..."
+    if ! node "$SCRIPT_DIR/scripts/sync-skills.mjs" "${ARGS[@]}"; then
+        print_warning "Skill sync reported drift or errors. Review the output above."
+    fi
+fi
 
 if [ "$RUN_TESTS" = true ]; then
     echo
