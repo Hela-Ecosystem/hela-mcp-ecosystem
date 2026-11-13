@@ -49,7 +49,7 @@ jobs:
               for (const s of p.servers) {
                 const resolved = inv[s] || inv[aliases[s]];
                 if (!resolved) {
-                  console.error(`Unknown server "${s}" referenced in profile "${p.id}".`);
+                  console.error("Unknown server \\\"" + s + "\\\" referenced in profile \\\"" + p.id + "\\\".");
                   process.exit(1);
                 }
               }
