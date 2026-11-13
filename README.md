@@ -98,7 +98,7 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
    Do not deploy or configure each hela-* cell as a separate client server.
 
 4. Synchronize Companion Skills:
-   Link or copy ecosystem companion skills matching <confirmed_profile> from project-mcp/skills, designer-mcp/skills, browser-mcp/skill, and chaining-mcp/skills into ~/.agents/skills/.
+   Run `npm run skills:sync -- --profile <confirmed_profile>` from the ecosystem checkout. This reads the manifest from `config/inventory.json` and mirrors the selected organelles' bundled skills into the harness skill directory.
 
 5. Load the Runtime Profile Context:
    - Do not create or copy a static persona prompt into the workspace.
@@ -226,6 +226,12 @@ npm run test:matrix
 
 # Run master integration test suite (295 tools across all 10 servers)
 npm test
+
+# Sync bundled agent skills into the harness skills directory
+npm run skills:sync
+
+# Report skill drift without changing the target
+npm run skills:check
 ```
 
 ---

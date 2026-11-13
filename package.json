@@ -21,7 +21,9 @@
     "test:install": "node --test scripts/test-installation.mjs",
     "test:install:modes": "node scripts/test-install-modes.mjs",
     "build:all": "./scripts/build-all.sh --all",
-    "clean:all": "./scripts/clean-all.sh --all"
+    "clean:all": "./scripts/clean-all.sh --all",
+    "skills:sync": "node scripts/sync-skills.mjs",
+    "skills:check": "node scripts/sync-skills.mjs --check"
   },
   "devDependencies": {
     "markdown-it": "15.0.3"
