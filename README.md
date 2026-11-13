@@ -37,7 +37,7 @@ flowchart TB
     Nucleus["HeLa Nucleus<br/>Command Exec"]
     Ribosome["HeLa Ribosome<br/>PTY Harness"]
     Enzyme["HeLa Enzyme<br/>Research / Wiki"]
-    Cytosol["HeLa Cytosol<br/>Browser DOM"]
+    Cytosol["HeLa Cytosol<br/>Browser + Vision"]
 
     Agent -- "stdio JSON-RPC" --> Mitosis
     Agent -- "stdio JSON-RPC" --> Genome
@@ -61,7 +61,7 @@ flowchart TB
 | **HeLa Nucleus** | `hela-nucleus` | [`terminal-mcp`](https://github.com/Hela-Ecosystem/terminal-mcp) | Core | **Execution**: Command execution, subshell isolation, RTK token-optimized execution |
 | **HeLa Ribosome** | `hela-ribosome` | [`menager-mcp`](https://github.com/Hela-Ecosystem/menager-mcp) | Core | **Process Harness**: Interactive PTY multiplexing, Regex hooks, lifecycle management |
 | **HeLa Enzyme** | `hela-enzyme` | [`researcher-mcp`](https://github.com/Hela-Ecosystem/researcher-mcp) | Core | **Knowledge**: Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia synthesis and fact-checking |
-| **HeLa Cytosol** | `hela-cytosol` | [`browser-mcp`](https://github.com/Hela-Ecosystem/browser-mcp) | Core | **Interaction**: Playwright browser automation, accessibility trees, DOM perception |
+| **HeLa Cytosol** | `hela-cytosol` | [`browser-mcp`](https://github.com/Hela-Ecosystem/browser-mcp) | Core | **Interaction & vision**: Playwright automation, accessibility/DOM perception, OCR, visual analysis, detection, segmentation, and standalone image analysis |
 | **HeLa Phenotype** | `hela-phenotype` | [`designer-mcp`](https://github.com/Hela-Ecosystem/designer-mcp) | Specialized | **Design**: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis |
 | **HeLa Receptor** | `hela-receptor` | [`scrcpy-mcp`](https://github.com/Hela-Ecosystem/scrcpy-mcp) | Specialized | **Mobile**: Android device automation, ADB bridge, XML view hierarchy inspection |
 | **HeLa Plastid** | `hela-plastid` | [`ll3m-mcp`](https://github.com/Hela-Ecosystem/ll3m-mcp) | Specialized | **3D Modeling**: Autonomous Blender procedural modeling, materials, and render pipeline |

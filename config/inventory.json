@@ -204,9 +204,13 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "908067dd3e12c2db96d10dcdf7bc92442274935b",
+      "revision": "401190023b8772ab7f3e4a93d41bc8b67d4faa51",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
+      "siteDescription": {
+        "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
+        "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
+      },
       "version": "3.2.0",
       "skills": [
         { "name": "browser-agent", "path": "skill/browser-agent" }

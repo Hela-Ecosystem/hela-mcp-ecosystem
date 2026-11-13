@@ -55,6 +55,11 @@ for (const directory of [site, path.join(site, 'id')]) {
         text = text.replace(pattern, (_, header, ending) => header.replace(/(?: · v\d+\.\d+\.\d+)? · [^<>]+$/, ` · v${info.version} · ${count} ${id ? 'alat' : 'tools'}`) + ending);
         const section = new RegExp('(<section class="server-card" aria-labelledby="srv-' + cell.slice(5) + '">[\\s\\S]*?<p class="tool-list">)[^<]*(</p>)');
         text = text.replace(section, (_, start, end) => start + info.tools.join(', ') + end);
+        const siteDescription = data.inventory[cell].siteDescription?.[id ? 'id' : 'en'];
+        if (siteDescription) {
+          const description = new RegExp('(<section class="server-card" aria-labelledby="srv-' + cell.slice(5) + '">[\\s\\S]*?<div class="server-card-body">\\s*<p>)[\\s\\S]*?(</p>)');
+          text = text.replace(description, (_, start, end) => start + siteDescription + end);
+        }
       }
     }
     const prefix = id ? '../' : '';

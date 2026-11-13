@@ -18,7 +18,7 @@
       "name": "HeLa Dev Workspace",
       "system": "gui",
       "persona": "Full-Stack Software Engineer & Desktop Workstation Agent",
-      "description": "Full desktop development workstation: orchestration (Mitosis), memory (Genome), filesystem (Membrane), terminal (Nucleus), PTY (Ribosome), research (Enzyme), design (Phenotype), and browser automation (Cytosol).",
+      "description": "Full desktop development workstation: orchestration (Mitosis), memory (Genome), filesystem (Membrane), terminal (Nucleus), PTY (Ribosome), research (Enzyme), design (Phenotype), and browser/image perception (Cytosol).",
       "servers": [
         "hela-mitosis",
         "hela-genome",
@@ -62,10 +62,10 @@
     },
     {
       "id": "web-devops",
-      "name": "HeLa Web Dev + Browser Automation",
+      "name": "HeLa Web Dev + Browser and Visual QA",
       "system": "gui",
       "persona": "Frontend Engineer & Web Verification Specialist",
-      "description": "Web engineering and browser automation with design tokens (Phenotype), headless testing (Cytosol), workspace interaction (Membrane/Nucleus), and state memory (Genome).",
+      "description": "Web engineering and browser/visual QA with design tokens (Phenotype), headless testing and image perception (Cytosol), workspace interaction (Membrane/Nucleus), and state memory (Genome).",
       "servers": [
         "hela-mitosis",
         "hela-genome",

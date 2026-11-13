@@ -495,7 +495,7 @@ globalThis.HELA_DOCS_DATA = {
       ]
     },
     "web-devops": {
-      "name": "HeLa Web Dev + Browser Automation",
+      "name": "HeLa Web Dev + Browser and Visual QA",
       "servers": [
         "hela-mitosis",
         "hela-genome",

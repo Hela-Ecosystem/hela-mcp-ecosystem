@@ -101,6 +101,17 @@ test('all EN/ID pages display current versions and load generated data before th
   }
 });
 
+test('current Cytosol site copy describes browser and image perception', () => {
+  for (const file of [path.join(site, 'architecture.html'), path.join(site, 'id', 'architecture.html')]) {
+    const text = fs.readFileSync(file, 'utf8');
+    assert.match(text, /browser_image_analyze/);
+    assert.match(text, /Mirage/);
+    assert.match(text, /75 (?:tools|alat)/);
+  }
+  const machineGuide = fs.readFileSync(path.join(site, 'llms.txt'), 'utf8');
+  assert.match(machineGuide, /HeLa Cytosol \(browser automation, DOM\/accessibility perception, OCR, visual analysis, detection, segmentation, standalone-image analysis, 75 tools\)/);
+});
+
 test('workflow pages keep the canonical E/F capability order in both languages', () => {
   for (const file of [path.join(site, 'workflows.html'), path.join(site, 'id', 'workflows.html')]) {
     const text = fs.readFileSync(file, 'utf8');
