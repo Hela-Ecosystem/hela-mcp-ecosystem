@@ -2,6 +2,11 @@
 
 All notable changes to this project.
 
+## [1.6.4] - 2026-11-13
+
+### Fixed
+- Updated the `latest-stable` snapshot alias to the coordinated 1.6.3 cell and runtime release pins.
+
 ## [1.6.3] - 2026-11-13
 
 - Add Node-first and PowerShell/CMD installer, updater, build, test, and clean entrypoints; retain Bash files as compatibility shims.

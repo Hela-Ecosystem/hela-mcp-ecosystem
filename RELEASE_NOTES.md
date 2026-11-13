@@ -1,5 +1,10 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.6.4 — stable snapshot alias correction
+
+The `latest-stable` snapshot now resolves to the coordinated release pins and
+versions published in the 1.6.3 cell/runtime release set.
+
 ## v1.6.3 — cross-platform maintenance entrypoints
 
 The installer and maintenance workflow is now Node-first. Use `node setup.mjs`,

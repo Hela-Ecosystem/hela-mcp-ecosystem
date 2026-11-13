@@ -154,7 +154,7 @@ test('clean all-cell individual install, nested package, private fragment and re
     assert.ok(config.context_servers['hela-plastid'].args[0].endsWith('scripts/launch.mjs'));
     const launcher = config.context_servers['hela-plastid'];
     const result = await probeMcp('unused', { launch: { command: launcher.command, args: launcher.args } });
-    assert.equal(result.serverInfo.version, '3.0.0');
+    assert.equal(result.serverInfo.version, inventory.inventory['hela-plastid'].version);
   }
   const absentRuntime = spawnSync(process.execPath, [path.join(root, 'scripts/generate-config.mjs'), 'all', '--client', 'cursor', '--prefix', prefix, '--runtime'], { encoding: 'utf8' });
   assert.equal(absentRuntime.status, 1);assert.match(absentRuntime.stderr, /not installed/);
