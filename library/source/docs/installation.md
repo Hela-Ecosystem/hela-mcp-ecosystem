@@ -4,6 +4,8 @@
 
 The installer supports eight profiles through five modes: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.
 
+Capability setup follows the selected profile. Every canonical profile includes Mitosis, so Needle 3 is provisioned unless `--without-model` is explicitly passed. Profiles containing Cytosol (`dev-workspace`, `research`, `web-devops`, and `all`) also provision the managed Mirage Python bridge and its `cactus-compute[vision]` dependency. Other profiles do not install Mirage. A profile containing Cytosol therefore installs both capabilities automatically.
+
 See [local acceptance evidence](installation-acceptance.md) for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.
 
 ## Requirements and boundaries
@@ -12,7 +14,8 @@ See [local acceptance evidence](installation-acceptance.md) for the tested mecha
 - Docker modes require a working Docker daemon and Compose v2. Their images build the selected cells from pinned source; they do not require host npm dependencies or per-cell Dockerfiles.
 - The installer and maintenance commands are Node-first and run on Linux, macOS, and native Windows. Use `node setup.mjs` on Unix-like systems, `.\setup.ps1` in PowerShell, or `setup.cmd` in Command Prompt. The Bash files remain compatibility shims; Nix mode still requires a Unix-compatible Nix environment such as WSL.
 - The repository build, test, clean, and update runners use Node scripts, including the Windows `npm.cmd` executable where required. Native Windows cold-install acceptance is still a separate verification boundary; optional browser, Android, Blender, provider, and client integrations remain platform-specific.
-- The pinned local Needle engine/model is installed by default on Linux x86_64/ARM64 and macOS ARM64. `--without-model` explicitly selects core MCP without that integration; it is needed on platforms without a pinned engine. Assets are fetched from an immutable upstream revision, checksum-verified, and accompanied by their license.
+- The pinned local Needle engine/model is installed by default on Linux x86_64/ARM64, macOS ARM64, and Windows x64/ARM64. `--without-model` explicitly selects core MCP without that integration; it remains available for platforms without a pinned engine. Assets are fetched from an immutable upstream revision, checksum-verified, and accompanied by their license.
+- Mirage profiles require Python 3.9+ and network access during installation so the installer can create `browser-mcp/user_data/mirage/.venv` and install `cactus-compute[vision]`. The generated launcher passes the managed Mirage Python path to Cytosol and to the runtime when Cytosol is part of the selected profile. Mirage weights are downloaded and cached by Cactus on first image analysis.
 - Chromium/browser services, Android devices/ADB, Blender/its bridge, provider credentials, and GUI client authentication remain separate integration requirements. `READY` does not certify those operations or provide an OS sandbox.
 
 Installation does not start a persistent service, change system packages, replace existing repositories, or rewrite live client settings. Endpoint security and credential rotation are not changed by this installer.

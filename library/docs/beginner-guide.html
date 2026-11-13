@@ -44,6 +44,7 @@
 <li>Git and a terminal. Use Node directly on Linux/macOS, or <code>setup.ps1</code> in Windows PowerShell / <code>setup.cmd</code> in Command Prompt. <code>setup.sh</code> remains available as a Unix compatibility shim.</li>
 <li>Optional capabilities: Chromium/Playwright for browser work; the local Mirage model for Cytosol visual analysis, OCR, detection, segmentation, and standalone-image inspection; ADB and a device for Android; and the Blender bridge for 3D.</li>
 </ul>
+<p>Needle and Mirage are profile capabilities rather than separate client deployments. Needle is installed with every canonical profile through Mitosis. Mirage is installed only by profiles that include Cytosol: <code>dev-workspace</code>, <code>research</code>, <code>web-devops</code>, and <code>all</code>. Selecting one of those profiles installs both automatically; selecting <code>minimal</code>, <code>headless-server</code>, <code>android-testing</code>, or <code>3d-modeling</code> does not install Mirage.</p>
 <h2 id="install-a-profile">Install a profile</h2>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
@@ -90,7 +91,7 @@ npm run test:matrix
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.8.0"></script>
-  <script src="../../library-data.js?v=1.8.0&amp;rev=6e30488df357"></script>
+  <script src="../../library-data.js?v=1.8.0&amp;rev=15d35a5264b4"></script>
   <script src="../../library.js?v=1.8.0&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.8.0&amp;rev=fa590baa9385"></script>
 </body>

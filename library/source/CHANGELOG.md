@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [Unreleased]
+
+### Added
+- Make Needle and Mirage installer capabilities profile-aware: every canonical profile provisions Needle through Mitosis, while profiles containing Cytosol provision the managed Mirage Python bridge automatically.
+- Add checksum-verified Windows x64/ARM64 Needle assets so native Windows profiles receive the same local agent capability without manual path configuration.
+- Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
+
 ## [1.8.0] - 2026-11-13
 
 ### Added

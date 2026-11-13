@@ -12,6 +12,8 @@ Current software versions are listed in [current versions](current-versions.md).
 - Git and a terminal. Use Node directly on Linux/macOS, or `setup.ps1` in Windows PowerShell / `setup.cmd` in Command Prompt. `setup.sh` remains available as a Unix compatibility shim.
 - Optional capabilities: Chromium/Playwright for browser work; the local Mirage model for Cytosol visual analysis, OCR, detection, segmentation, and standalone-image inspection; ADB and a device for Android; and the Blender bridge for 3D.
 
+Needle and Mirage are profile capabilities rather than separate client deployments. Needle is installed with every canonical profile through Mitosis. Mirage is installed only by profiles that include Cytosol: `dev-workspace`, `research`, `web-devops`, and `all`. Selecting one of those profiles installs both automatically; selecting `minimal`, `headless-server`, `android-testing`, or `3d-modeling` does not install Mirage.
+
 ## Install a profile
 
 ```bash

@@ -98,13 +98,13 @@
         </div>
 
         <h2 id="recordings">Rekaman Terminal (Asciinema)</h2>
-        <p>Tangkapan sesi terminal asli dari gerbang verifikasi. Putar ulang dengan perintah <code>asciinema play &lt;file&gt;</code> atau buka di pemutar kompatibel <code>.cast</code>.</p>
+        <p><code>setup.cast</code> adalah rekaman baru installer yang sadar profil: setiap profil mendapat Needle, sedangkan profil dengan Cytosol juga mendapat Mirage. Rekaman lain yang ditautkan tetap merupakan catatan verifikasi historis. Putar ulang dengan perintah <code>asciinema play &lt;file&gt;</code> atau buka di pemutar kompatibel <code>.cast</code>.</p>
         <div class="doc-table-wrap">
           <table class="doc-table">
             <caption>TABEL 5.2 — BUKU CATATAN REKAMAN (casts/)</caption>
             <thead><tr><th scope="col">Rekaman</th><th scope="col">Perintah</th><th scope="col">Cakupan Pengujian</th></tr></thead>
             <tbody>
-              <tr><td><a href="https://asciinema.org/a/vhYxgExIp5UV3WCg" target="_blank" rel="noopener noreferrer">setup.cast</a></td><td><code>./setup.sh</code></td><td>Proses instalasi dan build</td></tr>
+              <tr><td><a href="https://asciinema.org/a/1272312" target="_blank" rel="noopener noreferrer">setup.cast</a></td><td><code>node setup.mjs --help</code> + matriks kapabilitas</td><td>Pemilihan Needle/Mirage berdasarkan profil saat ini</td></tr>
               <tr><td><a href="https://asciinema.org/a/uJ2E76GydNNgGdhI" target="_blank" rel="noopener noreferrer">doctor.cast</a></td><td><code>./setup.sh doctor</code></td><td>Diagnostik kesehatan 10 organel sel</td></tr>
               <tr><td><a href="https://asciinema.org/a/FSPKc53pFfHdFA7S" target="_blank" rel="noopener noreferrer">matrix.cast</a></td><td><code>npm run test:matrix</code></td><td>80 kombinasi profil × klien agen</td></tr>
               <tr><td><a href="https://asciinema.org/a/2uUsoWWED5HsiWJy" target="_blank" rel="noopener noreferrer">integration.cast</a></td><td><code>npm test</code></td><td>Suite tes integrasi 13 pipeline</td></tr>
@@ -136,7 +136,7 @@
     </div>
   </div>
   <script src="../release-data.js?v=1.8.0"></script>
-  <script src="../library-data.js?v=1.8.0&amp;rev=6e30488df357"></script>
+  <script src="../library-data.js?v=1.8.0&amp;rev=15d35a5264b4"></script>
   <script src="../library.js?v=1.8.0&amp;rev=e4e7b2f0ebad"></script>
   <script src="../app.js?v=1.8.0&amp;rev=fa590baa9385"></script>
 </body>
