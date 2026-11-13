@@ -2,7 +2,7 @@
 
 All notable changes to this project.
 
-## Unreleased
+## [1.6.3] - 2026-11-13
 
 - Add Node-first and PowerShell/CMD installer, updater, build, test, and clean entrypoints; retain Bash files as compatibility shims.
 - Allow unsupported pinned Needle platforms to complete installation with an explicit runtime fallback instead of aborting the whole ecosystem install.

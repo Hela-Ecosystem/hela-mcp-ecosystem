@@ -1,6 +1,6 @@
 # HeLa MCP Ecosystem Release Notes
 
-## Unreleased — cross-platform maintenance entrypoints
+## v1.6.3 — cross-platform maintenance entrypoints
 
 The installer and maintenance workflow is now Node-first. Use `node setup.mjs`,
 `setup.ps1`, or `setup.cmd` for installation and doctor checks; `update.ps1` and

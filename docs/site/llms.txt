@@ -35,7 +35,7 @@
 - HeLa Plastid (Blender 3D, 15 tools)
 - HeLa Runtime (optional daemon, selected-profile tools plus hela.pipe and an optional agent alias) — https://github.com/Hela-Ecosystem/hela-runtime
 
-Runtime 1.2.0 discovers validated generated schemas without spawning cells and
+Runtime 1.2.1 discovers validated generated schemas without spawning cells and
 starts only an invoked cell. Caches separate profile/root/namespace, revision,
 build, declared environment and feature configuration. inventory.json remains
 canonical; tool-catalog.json and profile-count docs are generated artifacts.
