@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.8.0] - 2026-11-13
+
+### Added
+- Upgraded HeLa Cytosol to `3.2.0` with dedicated image analysis through local paths, safe HTTP(S) URLs, and base64 image input.
+- Added the full Mirage VLM pipeline to the catalog: scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions.
+- Published the reproducible `v1.8.0` snapshot and moved `latest-stable` to the dedicated-image release.
+
 ## [1.7.0] - 2026-11-13
 
 ### Added

@@ -1,5 +1,9 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.8.0 — dedicated Cytosol image analysis
+
+HeLa Cytosol now accepts a dedicated local image path, HTTP(S) image URL, or base64 image directly through `browser_image_analyze`. The tool returns Mirage VLM scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions without launching a browser page. Image inputs are bounded and protected by workspace, content-type, redirect, and SSRF checks.
+
 ## v1.7.0 — Cytosol Mirage visual intelligence
 
 HeLa Cytosol now includes first-class local visual intelligence through Cactus Mirage. The `browser_visual_analyze` tool can describe browser screenshots, detect objects, read text, return segmentation data and relations, and extract values against a schema. The Cactus runtime is managed per Cytosol installation while Mirage model weights remain lazy and are cached on first use.

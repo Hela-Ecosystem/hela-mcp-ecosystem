@@ -6521,10 +6521,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "5b5b659d215b4236eeaf83e194975832b440bef7",
-      "version": "3.1.0",
+      "revision": "908067dd3e12c2db96d10dcdf7bc92442274935b",
+      "version": "3.2.0",
       "digests": [
-        "6fa8727731379cde00f3111759d6db0a7352c6bbdd7dd5a64dde6cc1d2889c5d"
+        "049c58b8627799272837db7f101780cc9c02f4effbfa9bf0d067dad234a46eb4"
       ],
       "variants": [
         {
@@ -7477,6 +7477,95 @@
                   "selector": {
                     "type": "string",
                     "description": "Optional CSS selector to analyze only that element. Without it, analyze the current viewport."
+                  },
+                  "sections": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Describe sections to return, such as scene, objects, text, relations, or reasoning."
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Object fields to return, such as bbox, score, mask, or description."
+                  },
+                  "schema": {
+                    "type": "object",
+                    "description": "Non-empty extraction schema used when operation=extract."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "Optional output language code."
+                  },
+                  "maskFormat": {
+                    "type": "string",
+                    "description": "Optional mask output format, such as polygons or bitmap."
+                  },
+                  "conf": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Minimum object confidence."
+                  },
+                  "textConf": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Minimum OCR confidence."
+                  },
+                  "maxObjects": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Maximum detected objects."
+                  },
+                  "maxTextLines": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Maximum OCR text regions."
+                  },
+                  "maxTokens": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4096,
+                    "description": "Maximum generated output tokens."
+                  }
+                }
+              }
+            },
+            {
+              "name": "browser_image_analyze",
+              "description": "Analyze a dedicated image with HeLa Cytosol visual intelligence. Provide exactly one imagePath, imageUrl, or imageBase64. Mirage returns VLM scene understanding, OCR, object detection, segmentation, relations, or schema-based decisions without requiring an active browser page.",
+              "annotations": {
+                "readOnlyHint": true
+              },
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "imagePath": {
+                    "type": "string",
+                    "description": "Local image path inside the configured workspace roots."
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "description": "HTTP(S) image URL. Private hosts, credentials, unsafe schemes, and excessive redirects are rejected."
+                  },
+                  "imageBase64": {
+                    "type": "string",
+                    "description": "Base64 image bytes, optionally prefixed with a data:image/...;base64, header."
+                  },
+                  "operation": {
+                    "type": "string",
+                    "enum": [
+                      "describe",
+                      "extract"
+                    ],
+                    "default": "describe",
+                    "description": "Describe the image or extract values matching schema."
                   },
                   "sections": {
                     "type": "array",

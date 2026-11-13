@@ -5,6 +5,13 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
+## [1.8.0] - 2026-11-13
+
+### Added
+- Upgraded HeLa Cytosol to `3.2.0` with dedicated image analysis through local paths, safe HTTP(S) URLs, and base64 image input.
+- Added the full Mirage VLM pipeline to the catalog: scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions.
+- Published the reproducible `v1.8.0` snapshot and moved `latest-stable` to the dedicated-image release.
+
 ## [1.7.0] - 2026-11-13
 
 ### Added
@@ -224,7 +231,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.7.0**, with runtime **1.2.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.8.0**, with runtime **1.2.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -358,7 +365,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.7.0 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.8.0 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -483,6 +490,10 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.8.0 — dedicated Cytosol image analysis
+
+HeLa Cytosol now accepts a dedicated local image path, HTTP(S) image URL, or base64 image directly through `browser_image_analyze`. The tool returns Mirage VLM scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions without launching a browser page. Image inputs are bounded and protected by workspace, content-type, redirect, and SSRF checks.
 
 ## v1.7.0 — Cytosol Mirage visual intelligence
 
@@ -937,7 +948,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.7.0**; runtime **1.2.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.8.0**; runtime **1.2.1**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.3**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -945,7 +956,7 @@ Generated from package metadata, inventory, and the schema catalog. Ecosystem **
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.1**, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
 - **HeLa Ribosome** (`hela-ribosome`): server **3.0.1**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
 - **HeLa Enzyme** (`hela-enzyme`): server **4.0.1**, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
-- **HeLa Cytosol** (`hela-cytosol`): server **3.1.0**, 74 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
+- **HeLa Cytosol** (`hela-cytosol`): server **3.2.0**, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.0.1**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.1**, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
 - **HeLa Plastid** (`hela-plastid`): server **3.0.1**, 15 canonical tools; [source](https://github.com/Hela-Ecosystem/ll3m-mcp).
@@ -1084,13 +1095,13 @@ URL: https://hela.my.id/library/docs/generated-profile-counts.html
 Regenerate with `npm run catalog:generate`; includes `hela.pipe` and the agent alias where enabled.
 
 - `minimal`: 3 cells, 78–84 runtime tools.
-- `dev-workspace`: 8 cells, 231–237 runtime tools.
+- `dev-workspace`: 8 cells, 232–238 runtime tools.
 - `headless-server`: 7 cells, 157–163 runtime tools.
-- `research`: 5 cells, 168–174 runtime tools.
-- `web-devops`: 6 cells, 179–185 runtime tools.
+- `research`: 5 cells, 169–175 runtime tools.
+- `web-devops`: 6 cells, 180–186 runtime tools.
 - `android-testing`: 5 cells, 131–137 runtime tools.
 - `3d-modeling`: 5 cells, 92–98 runtime tools.
-- `all`: 10 cells, 292–298 runtime tools.
+- `all`: 10 cells, 293–299 runtime tools.
 
 
 ---
