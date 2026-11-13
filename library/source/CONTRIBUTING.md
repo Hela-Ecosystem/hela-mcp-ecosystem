@@ -24,7 +24,7 @@ Thank you for your interest in contributing to the **HeLa MCP Ecosystem**! This 
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client skip --non-interactive
+node setup.mjs --profile dev-workspace --client skip --non-interactive
 ```
 
 ### 2.2 Running Diagnostics & Tests

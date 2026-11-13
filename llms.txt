@@ -6,8 +6,8 @@
 
 - Site: https://hela.my.id/
 - Source: https://github.com/Hela-Ecosystem/hela-mcp-ecosystem
-- Install: `curl -fsSL https://raw.githubusercontent.com/Hela-Ecosystem/hela-mcp-ecosystem/master/setup.sh | bash`
-- Agent Install Prompt: "Please autonomously install the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint: first show the quick profile comparison at https://hela.my.id/profiles.html and the detailed explanations at https://hela.my.id/library/docs/profiles.html; ask the user which profile fits their work (minimal, dev-workspace, headless-server, research, web-devops, android-testing, 3d-modeling, or all); wait for confirmation, use `minimal` if they do not choose, then clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git, run `./setup.sh --profile <confirmed_profile> --client <detected_client> --mode runtime --non-interactive`, verify with `./setup.sh doctor --profile <confirmed_profile> --mode runtime`, merge the generated client fragment, then read the runtime resource `hela://profile/context` or request the `hela-profile-bootstrap` MCP prompt. Do not deploy individual hela-* servers or copy a static persona prompt."
+- Install: clone the repository, then run `node setup.mjs` on Linux/macOS, `./setup.ps1` in Windows PowerShell, or `setup.cmd` in Windows Command Prompt. `setup.sh` remains a Unix compatibility shim.
+- Agent Install Prompt: "Please autonomously install the HeLa Cellular MCP Ecosystem through one profile-aware hela-runtime MCP endpoint: first show the quick profile comparison at https://hela.my.id/profiles.html and the detailed explanations at https://hela.my.id/library/docs/profiles.html; ask the user which profile fits their work (minimal, dev-workspace, headless-server, research, web-devops, android-testing, 3d-modeling, or all); wait for confirmation, use `minimal` if they do not choose, then clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git, run the platform entrypoint (`node setup.mjs`, `./setup.ps1`, or `setup.cmd`) with `--profile <confirmed_profile> --client <detected_client> --mode runtime --non-interactive`, verify with the matching `doctor` command, merge the generated client fragment, then read the runtime resource `hela://profile/context` or request the `hela-profile-bootstrap` MCP prompt. Do not deploy individual hela-* servers or copy a static persona prompt."
 - License: see repository LICENSE.
 
 ## Pages
@@ -68,7 +68,7 @@ checks; discovery or a generated configuration does not prove either.
 - [Servy deployment verification — 2026-11-06](https://hela.my.id/library/docs/deployment-2026-11-06.html): docs/deployment-2026-11-06.md
 - [Documentation refresh — 2026-11-06](https://hela.my.id/library/docs/documentation-refresh-2026-11-06.html): docs/documentation-refresh-2026-11-06.md
 - [Generated profile counts](https://hela.my.id/library/docs/generated-profile-counts.html): docs/generated-profile-counts.md
-- [Installer acceptance — 2026-11-07](https://hela.my.id/library/docs/installation-acceptance.html): docs/installation-acceptance.md
+- [Installer acceptance — 2026-11-07 (historical record)](https://hela.my.id/library/docs/installation-acceptance.html): docs/installation-acceptance.md
 - [Installation modes and doctor](https://hela.my.id/library/docs/installation.html): docs/installation.md
 - [MCP client integration](https://hela.my.id/library/docs/integration.html): docs/integration.md
 - [HeLa MCP Ecosystem: Keys & Secrets Guide](https://hela.my.id/library/docs/keys-and-secrets.html): docs/keys-and-secrets.md

@@ -19,7 +19,7 @@ Run from the ecosystem checkout after building the selected cells and runtime:
 ```bash
 npm run catalog:generate -- --profile dev-workspace
 npm run catalog:check -- --profile dev-workspace
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:profiles -- --profile dev-workspace
 ```
 

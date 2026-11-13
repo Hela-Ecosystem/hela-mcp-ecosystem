@@ -38,24 +38,24 @@
 <header class="library-document-meta" lang="id"><p class="library-kicker">Operasional & verifikasi</p><p class="library-source">docs/troubleshooting.md</p><p>Isi dalam bahasa sumber. <a href="../../../library/source/docs/troubleshooting.md" download>Unduh sumber</a> · <a href="../../library.html">Semua dokumen</a></p></header><p>This guide provides systematic diagnostic procedures, error code explanations, and recovery workflows for the <strong>HeLa MCP Ecosystem</strong>.</p>
 <p><img src="../../../assets/blotcat-troubleshooting.jpg" alt="Blotcat wearing a hard hat, looking at a smoking server block while consulting a thick manual" loading="lazy"></p>
 <hr>
-<h2 id="1-fast-diagnostic-workflow-setupsh-doctor">1. Fast Diagnostic Workflow: <code>setup.sh doctor</code></h2>
+<h2 id="1-fast-diagnostic-workflow-node-setupmjs-doctor">1. Fast Diagnostic Workflow: <code>node setup.mjs doctor</code></h2>
 <p>Before manual debugging, always run the automated diagnostic health check:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh doctor
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs doctor
 # or
 npm run doctor
 </code></pre>
 </div>
 <p>To run diagnostics against a specific profile:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh doctor --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs doctor --profile dev-workspace
 </code></pre>
 </div>
 <p>To output machine-readable JSON:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh doctor --json
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs doctor --json
 </code></pre>
 </div>
 <p>For managed installations, select the installed <code>--mode</code> and profile, or use an explicit prefix:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh doctor --prefix /path/to/prefix --json
-./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs doctor --prefix /path/to/prefix --json
+node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 </code></pre>
 </div>
 <p>The URL form checks an already-running HTTP endpoint, not its remote filesystem. See <a href="installation.html">installation modes</a> for Docker, Nix, listener startup, and private client fragments.</p>
@@ -103,7 +103,7 @@ npm run build
 <p><strong>Root Cause</strong>: Configuration file was written to the wrong path, contains relative paths, or the client was not restarted.</p>
 <p><strong>Fix</strong>:</p>
 <ol>
-<li><strong>Regenerate configuration with absolute paths</strong>:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
+<li><strong>Regenerate configuration with absolute paths</strong>:<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
 </code></pre>
 </div>
 </li>
@@ -135,7 +135,7 @@ npm run build
 <p><strong>Root Cause</strong>: Moving <code>main</code>/<code>master</code> branch contains unreleased or breaking changes.</p>
 <p><strong>Fix</strong>:
 Restore known-good, audited release snapshot:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --snapshot v1.5.1 --profile dev-workspace --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --snapshot v1.5.1 --profile dev-workspace --non-interactive
 </code></pre>
 </div>
 <hr>
@@ -181,16 +181,16 @@ Restore known-good, audited release snapshot:</p>
 <ul>
 <li><strong>Run Integration Tests</strong>: <code>npm test</code> discovers the installed cells; use <code>-- --profile &lt;id&gt;</code> for a selected subset. Tool counts depend on enabled features.</li>
 <li><strong>Run Matrix Tests</strong>: <code>npm run test:matrix</code> verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.</li>
-<li><strong>File an Issue</strong>: Open an issue at <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues"><code>Hela-Ecosystem/hela-mcp-ecosystem/issues</code></a> with reviewed/redacted output from <code>./setup.sh doctor --json</code> and the failed check. Do not attach private configs or environments.</li>
+<li><strong>File an Issue</strong>: Open an issue at <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues"><code>Hela-Ecosystem/hela-mcp-ecosystem/issues</code></a> with reviewed/redacted output from <code>node setup.mjs doctor --json</code> and the failed check. Do not attach private configs or environments.</li>
 </ul>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
-      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#1-fast-diagnostic-workflow-setupsh-doctor">1. Fast Diagnostic Workflow: setup.sh doctor</a></li><li><a href="#2-common-issues--recovery-procedures">2. Common Issues &amp; Recovery Procedures</a></li><li><a href="#3-getting-further-support">3. Getting Further Support</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#1-fast-diagnostic-workflow-node-setupmjs-doctor">1. Fast Diagnostic Workflow: node setup.mjs doctor</a></li><li><a href="#2-common-issues--recovery-procedures">2. Common Issues &amp; Recovery Procedures</a></li><li><a href="#3-getting-further-support">3. Getting Further Support</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../../release-data.js?v=1.6.2"></script>
-  <script src="../../../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../../../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../../../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

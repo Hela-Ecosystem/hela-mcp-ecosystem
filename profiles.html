@@ -115,7 +115,7 @@
         </div>
 
         <h2 id="configurator" data-i18n="profiles.configurator_title">Configuration workbench</h2>
-        <p>Select a profile and client for a key-free single-runtime preview. Replace <code>/absolute/path/to/MCPservers</code> with your managed installation parent. This preview is not an installed client fragment. For managed installs, prefer <code>./setup.sh --mode runtime --profile &lt;profile&gt; --client &lt;client&gt;</code>; individual cell mode remains available for compatibility. Docker preview commands use an example tag; the installer builds and pins the actual image ID. Stdio does not need published ports.</p>
+        <p>Select a profile and client for a key-free single-runtime preview. Replace <code>/absolute/path/to/MCPservers</code> with your managed installation parent. This preview is not an installed client fragment. For managed installs, prefer <code>node setup.mjs --mode runtime --profile &lt;profile&gt; --client &lt;client&gt;</code>; on Windows use <code>.\setup.ps1</code> or <code>setup.cmd</code>. Individual cell mode remains available for compatibility. Docker preview commands use an example tag; the installer builds and pins the actual image ID. Stdio does not need published ports.</p>
         <div class="field-row">
           <div class="field">
             <label for="profileSelect" data-i18n="profiles.label_profile">Target profile</label>
@@ -183,8 +183,8 @@
     </div>
   </div>
   <script src="release-data.js?v=1.6.2"></script>
-  <script src="library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

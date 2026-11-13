@@ -42,7 +42,8 @@
 <ul>
 <li>Use Node 22+ and Git. Native modules need Python, make, a C/C++ compiler, and platform headers. <code>--mode nix</code> supplies a pinned development toolchain and packages the runtime with Nix.</li>
 <li>Docker modes require a working Docker daemon and Compose v2. Their images build the selected cells from pinned source; they do not require host npm dependencies or per-cell Dockerfiles.</li>
-<li>Supported shell entry points are Linux, macOS, and Windows through WSL. Native Windows installation is not acceptance-tested; several upstream build scripts require POSIX tools.</li>
+<li>The installer and maintenance commands are Node-first and run on Linux, macOS, and native Windows. Use <code>node setup.mjs</code> on Unix-like systems, <code>.\setup.ps1</code> in PowerShell, or <code>setup.cmd</code> in Command Prompt. The Bash files remain compatibility shims; Nix mode still requires a Unix-compatible Nix environment such as WSL.</li>
+<li>The repository build, test, clean, and update runners use Node scripts, including the Windows <code>npm.cmd</code> executable where required. Native Windows cold-install acceptance is still a separate verification boundary; optional browser, Android, Blender, provider, and client integrations remain platform-specific.</li>
 <li>The pinned local Needle engine/model is installed by default on Linux x86_64/ARM64 and macOS ARM64. <code>--without-model</code> explicitly selects core MCP without that integration; it is needed on platforms without a pinned engine. Assets are fetched from an immutable upstream revision, checksum-verified, and accompanied by their license.</li>
 <li>Chromium/browser services, Android devices/ADB, Blender/its bridge, provider credentials, and GUI client authentication remain separate integration requirements. <code>READY</code> does not certify those operations or provide an OS sandbox.</li>
 </ul>
@@ -52,24 +53,24 @@
 <p>Each prefix contains its own ecosystem metadata, sibling source repositories, verified installation manifest, workspace, private data directories, and generated client fragments. Plastid is cloned at the repository root and built from <code>ll3m-mcp/brain</code>.</p>
 <p>The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked repositories, origin/pin/version mismatches, failed installs/builds, and existing explicit output files. A failed install retains a pending marker; doctor and launchers will not treat it as ready. Re-running the same installation performs locked dependency installation, rebuilds, and verifies it again. Existing data is not restored, reset, or deleted.</p>
 <h2 id="individual-servers">Individual servers</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 </code></pre>
 </div>
 <p>Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.</p>
 <h2 id="single-stdio-runtime">Single stdio runtime</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --client codex --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode runtime --profile dev-workspace --client codex --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 </code></pre>
 </div>
 <p><code>--runtime</code> is an alias for <code>--mode runtime</code>. <code>--with-runtime</code> additionally builds the daemon for an individual installation without switching its client fragment to one connection.</p>
 <p>The selected-profile catalog is generated from fresh probes. Runtime verification checks exact cold catalog parity and zero cell startup, including its HTTP transport. The first actual cell call starts only its target.</p>
 <h2 id="docker-separate-cells-or-runtime">Docker: separate cells or runtime</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
-./setup.sh doctor --mode docker --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode docker --profile dev-workspace --client cursor --non-interactive
+node setup.mjs doctor --mode docker --profile dev-workspace
 
-./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode docker-runtime --profile dev-workspace
+node setup.mjs --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode docker-runtime --profile dev-workspace
 </code></pre>
 </div>
 <p><code>--client docker</code> remains a shortcut for a Docker installation with Compose output. Use <code>--runtime</code> with it for the aggregated daemon. Both Docker modes build one profile image; client entries call Docker directly with the immutable image ID, launching separate cell containers or one runtime container. Those stdio clients do not need a host Node runtime after installation. <code>compose.json</code> provides the equivalent Compose services.</p>
@@ -77,33 +78,33 @@
 <p>Stdio needs attached stdin, not published ports. Compose services have <code>stdin_open: true</code>, no TTY, and persistent named volumes. Use <code>docker compose -f /path/to/compose.json run --rm --no-deps -T &lt;service&gt;</code> for an attached stdio connection; <code>up -d</code> alone does not connect an MCP client to stdio.</p>
 <p>Doctor starts uniquely named temporary containers with no host data/vault mounts or inherited provider keys, verifies actual MCP replies and image source provenance, and removes those containers. It does not stop existing containers or clean global images/volumes.</p>
 <h2 id="nix-runtime">Nix runtime</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode nix --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode nix --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode nix --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode nix --profile dev-workspace
 </code></pre>
 </div>
 <p>Nix supplies the pinned Node/native-build toolchain for cell builds and builds the runtime package. The installation's <code>nix-runtime</code> output link is retained as a GC root. This is a packaged runtime plus locked cell builds, not a claim that all ten cells are independent Nix derivations. Keep private files untracked; Git-backed flake references exclude ignored credentials and data from Nix source copies.</p>
 <h2 id="http-runtime">HTTP runtime</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
 # Start the installed launcher explicitly; its path is printed by setup:
 node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
-./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 </code></pre>
 </div>
 <p>The same transport flags work with <code>--mode nix</code> and <code>--mode docker-runtime</code>. HTTP listeners bind to loopback on the host. Docker publishes only <code>127.0.0.1:&lt;port&gt;</code>; <code>compose.json</code> includes the HTTP command and port mapping. Explicitly start it with Compose <code>up -d</code> if desired.</p>
 <p>HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client backends fail clearly rather than emit unverified HTTP syntax; use <code>--client skip</code> and configure their MCP URL manually. No listener is auto-started during installation. Doctor's private HTTP probe does not substitute for checking the running URL.</p>
 <h2 id="snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
-./setup.sh --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
-./setup.sh doctor --prefix /path/to/existing/prefix --json
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
+node setup.mjs --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
+node setup.mjs doctor --prefix /path/to/existing/prefix --json
 </code></pre>
 </div>
 <p>Snapshots must declare exact commits and server versions. Incomplete historical metadata is rejected, not silently ignored. <code>--dev</code> follows recorded branches for host modes and records the resolved revisions/versions; Docker requires pinned snapshots. Optional provider keys are read from environment, not command-line secret flags. Generated fragments can contain those supplied credentials and are written with private permissions.</p>
 <p>Reconfiguration infers the existing mode/profile/transport from an explicit prefix and only generates another fragment. To change transport or port, rerun installation with the new settings; a stdio fragment must not point at an HTTP-only launcher.</p>
 <h2 id="switch-modes-in-place">Switch modes in place</h2>
-<p><code>setup.sh mode</code> converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
-./setup.sh doctor --prefix /path/to/existing/prefix --json
-./setup.sh mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
+<p><code>node setup.mjs mode</code> converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
+node setup.mjs doctor --prefix /path/to/existing/prefix --json
+node setup.mjs mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
 </code></pre>
 </div>
 <p>Every mode is a valid target: <code>individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, and <code>nix</code>. The profile, snapshot, workspace, and <code>data/</code> directories are preserved; only the artifacts the target mode needs are built. Host-mode switches reuse cells that already sit at the pinned revision with a clean worktree, so repeated conversions take seconds rather than rebuilding every package. Moving into a Docker mode builds the profile image; moving out deletes <code>compose.json</code>. Transport and port carry over unless <code>--transport</code> or <code>--port</code> is passed, and HTTP targets require a runtime mode. Switching to <code>--mode nix</code> must run inside Nix, exactly like a fresh Nix install.</p>
@@ -116,8 +117,8 @@ node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

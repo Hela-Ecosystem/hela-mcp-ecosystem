@@ -234,4 +234,4 @@ sequenceDiagram
 
 1. **Structured Memory Over Raw History**: Always record key findings and milestones to `hela-genome` so subsequent agent turns do not need to re-read thousands of lines of raw logs.
 2. **Hierarchy Inspection Over Full Screenshots**: For web (`hela-cytosol`) and mobile (`hela-receptor`), prefer accessibility trees and XML dumps for element location, reserving bitmap screenshots for final visual verification.
-3. **Fail-Fast Pre-Validation**: Always verify prerequisite binary availability via `./setup.sh doctor` before launching complex cross-MCP pipelines.
+3. **Fail-Fast Pre-Validation**: Always verify prerequisite binary availability via `node setup.mjs doctor` before launching complex cross-MCP pipelines.

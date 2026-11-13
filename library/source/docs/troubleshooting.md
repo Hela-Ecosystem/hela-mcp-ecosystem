@@ -6,31 +6,31 @@ This guide provides systematic diagnostic procedures, error code explanations, a
 
 ---
 
-## 1. Fast Diagnostic Workflow: `setup.sh doctor`
+## 1. Fast Diagnostic Workflow: `node setup.mjs doctor`
 
 Before manual debugging, always run the automated diagnostic health check:
 
 ```bash
-./setup.sh doctor
+node setup.mjs doctor
 # or
 npm run doctor
 ```
 
 To run diagnostics against a specific profile:
 ```bash
-./setup.sh doctor --profile dev-workspace
+node setup.mjs doctor --profile dev-workspace
 ```
 
 To output machine-readable JSON:
 ```bash
-./setup.sh doctor --json
+node setup.mjs doctor --json
 ```
 
 For managed installations, select the installed `--mode` and profile, or use an explicit prefix:
 
 ```bash
-./setup.sh doctor --prefix /path/to/prefix --json
-./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+node setup.mjs doctor --prefix /path/to/prefix --json
+node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 ```
 
 The URL form checks an already-running HTTP endpoint, not its remote filesystem. See [installation modes](installation.md) for Docker, Nix, listener startup, and private client fragments.
@@ -97,7 +97,7 @@ node <entrypoint-file>
 **Fix**:
 1. **Regenerate configuration with absolute paths**:
    ```bash
-   ./setup.sh --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
+   node setup.mjs --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
    ```
 2. **Review and merge the printed private fragment into the correct client file**. Setup does not write these live files:
    * **Cursor IDE**: `cat ~/.cursor/mcp.json`
@@ -136,7 +136,7 @@ Source references: [Zed forwarding](https://github.com/zed-industries/zed/blob/c
 **Fix**:
 Restore known-good, audited release snapshot:
 ```bash
-./setup.sh --snapshot v1.5.1 --profile dev-workspace --non-interactive
+node setup.mjs --snapshot v1.5.1 --profile dev-workspace --non-interactive
 ```
 
 ---
@@ -185,4 +185,4 @@ Restore known-good, audited release snapshot:
 
 * **Run Integration Tests**: `npm test` discovers the installed cells; use `-- --profile <id>` for a selected subset. Tool counts depend on enabled features.
 * **Run Matrix Tests**: `npm run test:matrix` verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.
-* **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `./setup.sh doctor --json` and the failed check. Do not attach private configs or environments.
+* **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `node setup.mjs doctor --json` and the failed check. Do not attach private configs or environments.

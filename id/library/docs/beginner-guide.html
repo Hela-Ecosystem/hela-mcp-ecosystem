@@ -41,16 +41,16 @@
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Node.js <strong>22 LTS</strong> is the tested full-stack environment. Enzyme requires at least 20.18.1; Receptor requires 22. Individual packages can declare different standalone engine ranges.</li>
-<li>Git and a terminal. Use a POSIX shell on Linux/macOS or WSL on Windows for <code>setup.sh</code>.</li>
+<li>Git and a terminal. Use Node directly on Linux/macOS, or <code>setup.ps1</code> in Windows PowerShell / <code>setup.cmd</code> in Command Prompt. <code>setup.sh</code> remains available as a Unix compatibility shim.</li>
 <li>Optional capabilities: Chromium/Playwright for browser work, ADB and a device for Android, and the Blender bridge for 3D.</li>
 </ul>
 <h2 id="install-a-profile">Install a profile</h2>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
 </code></pre>
 </div>
-<p>Change the client to <code>cursor</code>, <code>claude</code>, <code>gemini</code>, <code>antigravity</code>, <code>kilo</code>, <code>zed</code>, or <code>codex</code> as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run <code>./setup.sh</code> without flags for interactive profile/mode/client selection.</p>
+<p>On Windows PowerShell, run <code>.\setup.ps1 --mode runtime --profile dev-workspace --client opencode --non-interactive</code>; in Command Prompt, use <code>setup.cmd</code> with the same arguments. Change the client to <code>cursor</code>, <code>claude</code>, <code>gemini</code>, <code>antigravity</code>, <code>kilo</code>, <code>zed</code>, or <code>codex</code> as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run <code>node setup.mjs</code> without flags for interactive profile/mode/client selection.</p>
 <p>All eight profiles are supported:</p>
 <ul>
 <li><code>minimal</code>: three research/memory cells.</li>
@@ -65,7 +65,7 @@ cd hela-mcp-ecosystem
 <p>See <a href="profiles.html">profiles</a> for membership. Your selection is independent of other machines: lappy's ten-cell roster and servy's eight-cell roster are examples, not required configurations for everyone.</p>
 <h2 id="one-connection-or-separate-servers">One connection or separate servers</h2>
 <p>The installer normally configures separate MCP servers. Add <code>--runtime</code> to keep the same profile behind one endpoint:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --profile dev-workspace --client opencode --runtime --non-interactive
 </code></pre>
 </div>
 <p>Runtime is a serve mode, not a profile named <code>runtime</code>. Its catalog advertises schemas without starting cells; a first call starts only its target. <a href="on-demand-runtime.html">Runtime details</a> explain catalog generation, missing metadata, and recovery.</p>
@@ -74,14 +74,14 @@ cd hela-mcp-ecosystem
 <p>OpenRouter, GitHub, and Google keys are optional for discovery and keyless capabilities. Keyless does <strong>not</strong> mean every operation is offline: web research and external design services still need network access, and generative-model features require their configured provider or local engine. See <a href="keys-and-secrets.html">keys and services</a>.</p>
 <p>Generated configuration can contain credentials you explicitly provide. Keep it private, and do not paste the complete file into a chat or issue.</p>
 <h2 id="verify-the-selected-installation">Verify the selected installation</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh doctor --profile dev-workspace
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs doctor --profile dev-workspace
 # If installed through the runtime:
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:matrix
 </code></pre>
 </div>
 <p>Doctor checks selected paths, versions, revisions, and actual isolated MCP replies. Runtime checking also verifies catalog parity and zero discovery startups. The configuration matrix checks 80 profile/client combinations; it does not log in to GUI agents or exercise hardware.</p>
-<p>For an explicit prefix, use <code>./setup.sh doctor --prefix /path/to/prefix</code>. For Docker or Nix defaults, select the same <code>--mode</code> and profile as installation. <code>doctor --url http://127.0.0.1:8080/mcp</code> checks a running HTTP endpoint; it does not inspect remote source revisions.</p>
+<p>For an explicit prefix, use <code>node setup.mjs doctor --prefix /path/to/prefix</code>. For Docker or Nix defaults, select the same <code>--mode</code> and profile as installation. <code>doctor --url http://127.0.0.1:8080/mcp</code> checks a running HTTP endpoint; it does not inspect remote source revisions.</p>
 <p>On a full ten-cell checkout you can also run <code>npm test</code> and <code>npm run test:profiles</code>. On a partial checkout use <code>npm run test:profiles -- --profile &lt;id&gt;</code>. Missing unselected hardware repositories are not a reason to change your machine's profile.</p>
 <p>Reload the relevant client deliberately after reviewing configuration changes. Some clients, including Zed, can auto-reload servers when settings are saved. Do not change live vault hooks or restart unrelated clients merely to silence a warning. See <a href="integration.html">integration</a> and <a href="troubleshooting.html">troubleshooting</a>.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
@@ -90,8 +90,8 @@ npm run test:matrix
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../../release-data.js?v=1.6.2"></script>
-  <script src="../../../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../../../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../../../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

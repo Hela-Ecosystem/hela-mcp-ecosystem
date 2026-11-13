@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HeLa MCP Ecosystem Release Notes — HeLa MCP Ecosystem</title>
-  <meta name="description" content="Plastid moves to aa43877 and Receptor to 1b21cb7, adopting the lockfile updates that had accumulated on their default branches. Both carried open advisories against…">
+  <meta name="description" content="The installer and maintenance workflow is now Node-first. Use node setup.mjs, setup.ps1, or setup.cmd for installation and doctor checks; update.ps1 and update.cmd provide the…">
   <link rel="canonical" href="https://hela.my.id/library/RELEASE_NOTES.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/RELEASE_NOTES.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/RELEASE_NOTES.html">
@@ -35,7 +35,16 @@
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="RELEASE_NOTES.html">EN</a><a class="lang-btn" data-lang="id" href="../id/library/RELEASE_NOTES.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
       <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="hela-mcp-ecosystem-release-notes" class="doc-title">HeLa MCP Ecosystem Release Notes</h1>
-<header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">RELEASE_NOTES.md</p><p>Original source language. <a href="source/RELEASE_NOTES.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="v162--plastid-and-receptor-dependency-refresh">v1.6.2 — Plastid and Receptor dependency refresh</h2>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">RELEASE_NOTES.md</p><p>Original source language. <a href="source/RELEASE_NOTES.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="unreleased--cross-platform-maintenance-entrypoints">Unreleased — cross-platform maintenance entrypoints</h2>
+<p>The installer and maintenance workflow is now Node-first. Use <code>node setup.mjs</code>,
+<code>setup.ps1</code>, or <code>setup.cmd</code> for installation and doctor checks; <code>update.ps1</code> and
+<code>update.cmd</code> provide the corresponding Windows update path. The Bash entrypoints
+remain compatibility shims.</p>
+<p>Profile-scoped build, test, clean, and update operations now run through portable
+Node scripts. Runtime Needle discovery also recognizes <code>needle3.exe</code> and
+<code>needle.exe</code> automatically. Native Windows cold-install acceptance is still
+tracked separately from this source-level portability work.</p>
+<h2 id="v162--plastid-and-receptor-dependency-refresh">v1.6.2 — Plastid and Receptor dependency refresh</h2>
 <p>Plastid moves to <code>aa43877</code> and Receptor to <code>1b21cb7</code>, adopting the lockfile updates that had accumulated on their default branches. Both carried open advisories against <code>@modelcontextprotocol/sdk</code>; the refreshed locks resolve them, and <code>npm audit</code> is clean for Plastid's runtime dependencies while Receptor reports none.</p>
 <p>Plastid's manifest also declared <code>&quot;@modelcontextprotocol/sdk&quot;: &quot;latest&quot;</code>. That is why its lockfile drifted without a reviewable diff; it is now <code>^1.32.2</code>. Builds and the existing suites pass — 12 Plastid regressions and 123 Receptor tests — and no cell version changed.</p>
 <p>Exposure was limited: the SDK advisories concern HTTP transports, body-size limits, and OAuth flows, while Plastid and Receptor run over stdio. Updating still removes the drift and the noise. Hardware, the Blender bridge, GUI clients, and providers remain separate checks.</p>
@@ -140,13 +149,13 @@ cd hela-mcp-ecosystem
 <p>Distributed under the MIT License. Developed by Azzar.</p>
 <p>The HeLa project respectfully recognizes <strong>Henrietta Lacks</strong> and the enduring scientific legacy of HeLa cells.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#v162--plastid-and-receptor-dependency-refresh">v1.6.2 — Plastid and Receptor dependency refresh</a></li><li><a href="#v161--switch-deployment-modes-in-place">v1.6.1 — switch deployment modes in place</a></li><li><a href="#v160--consistent-enzyme-search-input">v1.6.0 — consistent Enzyme search input</a></li><li><a href="#v153--canonical-relation-ordering">v1.5.3 — canonical relation ordering</a></li><li><a href="#v152--replicated-vault-convergence">v1.5.2 — replicated vault convergence</a></li><li><a href="#v151--current-documentation-and-bilingual-website">v1.5.1 — current documentation and bilingual website</a></li><li><a href="#v150--on-demand-runtime-and-canonical-discovery">v1.5.0 — on-demand runtime and canonical discovery</a></li><li><a href="#v140--memory-safety-and-runtime-verification">v1.4.0 — memory safety and runtime verification</a></li><li><a href="#historical-v100-notes">Historical v1.0.0 notes</a></li><li><a href="#architectural-vision--metaphor">Architectural Vision &amp; Metaphor</a></li><li><a href="#key-highlights--milestones-delivered">Key Highlights &amp; Milestones Delivered</a></li><li><a href="#quick-start">Quick Start</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license--attribution">License &amp; Attribution</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#unreleased--cross-platform-maintenance-entrypoints">Unreleased — cross-platform maintenance entrypoints</a></li><li><a href="#v162--plastid-and-receptor-dependency-refresh">v1.6.2 — Plastid and Receptor dependency refresh</a></li><li><a href="#v161--switch-deployment-modes-in-place">v1.6.1 — switch deployment modes in place</a></li><li><a href="#v160--consistent-enzyme-search-input">v1.6.0 — consistent Enzyme search input</a></li><li><a href="#v153--canonical-relation-ordering">v1.5.3 — canonical relation ordering</a></li><li><a href="#v152--replicated-vault-convergence">v1.5.2 — replicated vault convergence</a></li><li><a href="#v151--current-documentation-and-bilingual-website">v1.5.1 — current documentation and bilingual website</a></li><li><a href="#v150--on-demand-runtime-and-canonical-discovery">v1.5.0 — on-demand runtime and canonical discovery</a></li><li><a href="#v140--memory-safety-and-runtime-verification">v1.4.0 — memory safety and runtime verification</a></li><li><a href="#historical-v100-notes">Historical v1.0.0 notes</a></li><li><a href="#architectural-vision--metaphor">Architectural Vision &amp; Metaphor</a></li><li><a href="#key-highlights--milestones-delivered">Key Highlights &amp; Milestones Delivered</a></li><li><a href="#quick-start">Quick Start</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license--attribution">License &amp; Attribution</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../release-data.js?v=1.6.2"></script>
-  <script src="../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

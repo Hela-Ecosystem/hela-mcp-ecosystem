@@ -40,7 +40,7 @@
 <p>The installer now creates a managed prefix and private client fragment instead of replacing live client files. Use <code>--mode individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, or <code>nix</code>; see <a href="installation.html">installation modes</a>. Review and merge the generated fragment. Its launcher supplies the installed executable, workspace, data location, and selected profile.</p>
 <h2 id="generate-configuration">Generate configuration</h2>
 <p>Use Node 22 LTS and build the selected cells first:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
 </code></pre>
 </div>
 <p>To inspect a generated file without installing it into a client:</p>
@@ -62,13 +62,13 @@
 <p>Generate a private output file with <code>--out &lt;path&gt;</code> and review/merge it instead of replacing an existing client configuration blindly. Eight profiles and ten generator backends, including Docker and skip, are checked by the CLI matrix. Browser previews use placeholder paths; the CLI is the installation/configuration source.</p>
 <h2 id="single-endpoint-runtime">Single-endpoint runtime</h2>
 <p>Keep the selected profile and add the serve-mode flag:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --profile dev-workspace --client opencode --runtime --non-interactive
 </code></pre>
 </div>
 <p>There is no <code>runtime</code> profile. <code>HELA_PROFILE</code> selects eligible cells and defaults to <code>minimal</code> when unset. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.</p>
 <p>The installer generates the selected-profile schema catalog. After rebuilding a cell:</p>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">npm run catalog:generate -- --profile dev-workspace
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 </code></pre>
 </div>
 <p>See <a href="on-demand-runtime.html">on-demand runtime</a> for stale-cache refusal and explicit <code>hela.pipe</code> bootstrap. A healthy HTTP liveness endpoint alone is not full MCP or external-integration acceptance evidence.</p>
@@ -79,13 +79,13 @@
 <p>GitHub tokens are optional for live remote prompt/catalog operations. Enzyme can use keyless network fallbacks when Google CSE credentials are absent; configured CSE uses <code>GOOGLE_API_KEY</code> and <strong><code>GOOGLE_CSE_ID</code></strong>. Model-backed tools require their configured engine/provider. SQLite remains Genome's base engine; Obsidian and Redis are optional. Read <a href="keys-and-secrets.html">keys and services</a> and the selected server's generated canonical tool reference.</p>
 <h2 id="docker-installations">Docker installations</h2>
 <p>Use the installer to build and verify a selected-profile image before generating/using its client fragment:</p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh --mode docker --profile headless-server --client docker --non-interactive
-./setup.sh doctor --mode docker --profile headless-server
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs --mode docker --profile headless-server --client docker --non-interactive
+node setup.mjs doctor --mode docker --profile headless-server
 </code></pre>
 </div>
 <p><code>compose.json</code> uses the built image ID, actual entrypoints, attached stdio without a TTY, and persistent volumes. <code>--mode docker-runtime</code> selects one runtime container. Add <code>--transport http</code> only for runtime-based modes; the installer generates loopback-only HTTP settings and leaves listener startup explicit. The older seven-cell <code>config/docker-compose.yml</code> is historical scaffolding, not the supported installer path. Hardware and provider integrations are still separate.</p>
 <h2 id="acceptance-and-reloads">Acceptance and reloads</h2>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">./setup.sh doctor --profile dev-workspace --runtime
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:matrix
 npm run docs:check
 </code></pre>
@@ -98,8 +98,8 @@ npm run docs:check
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

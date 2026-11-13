@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Installer acceptance — 2026-11-07 — HeLa MCP Ecosystem</title>
-  <meta name="description" content="Local acceptance of the managed installer on Linux x86_64 with Node 22. This records working-tree changes, not a published release or a live-service rollout. Ecosystem release…">
+  <title>Installer acceptance — 2026-11-07 (historical record) — HeLa MCP Ecosystem</title>
+  <meta name="description" content="This document records the 2026-11-07 Linux acceptance run. The current repository also provides Node-first, PowerShell, and CMD installer entrypoints; native Windows…">
   <link rel="canonical" href="https://hela.my.id/library/docs/installation-acceptance.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/installation-acceptance.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/installation-acceptance.html">
@@ -34,8 +34,12 @@
     </aside>
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="installation-acceptance.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/installation-acceptance.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
-      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="installer-acceptance--2026-11-07" class="doc-title">Installer acceptance — 2026-11-07</h1>
-<header class="library-document-meta" lang="en"><p class="library-kicker">Operations & verification</p><p class="library-source">docs/installation-acceptance.md</p><p>Original source language. <a href="../source/docs/installation-acceptance.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>Local acceptance of the managed installer on Linux x86_64 with Node 22. This records working-tree changes, not a published release or a live-service rollout. Ecosystem release metadata remains 1.5.1; cells remain 3.0.0 and runtime 1.2.0.</p>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="installer-acceptance--2026-11-07-historical-record" class="doc-title">Installer acceptance — 2026-11-07 (historical record)</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Operations & verification</p><p class="library-source">docs/installation-acceptance.md</p><p>Original source language. <a href="../source/docs/installation-acceptance.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>This document records the 2026-11-07 Linux acceptance run. The current repository
+also provides Node-first, PowerShell, and CMD installer entrypoints; native Windows
+cold-install acceptance remains a separate verification task and is not implied by
+the historical results below.</p>
+<p>Local acceptance of the managed installer on Linux x86_64 with Node 22. This records working-tree changes, not a published release or a live-service rollout. Ecosystem release metadata remains 1.5.1; cells remain 3.0.0 and runtime 1.2.0.</p>
 <h2 id="real-execution">Real execution</h2>
 <ul>
 <li>All eight profiles passed all five modes: <code>individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, and <code>nix</code> — 40 mode/profile checks.</li>
@@ -73,7 +77,7 @@ npm run test:install:modes -- \
 </div>
 <p>The matrix uses temporary private workspaces/data directories and deletes only its own temporary fixtures. It does not reuse production databases, vaults, or provider credentials. Generated client defaults may advertise more optional tools than doctor's deliberately provider-disabled baseline.</p>
 <h2 id="boundaries">Boundaries</h2>
-<p>Real installation acceptance here is Linux x86_64 only. The added CI jobs cover clean Docker/Nix installs and fixture regressions, but remote CI has not yet run for these working-tree changes. macOS, ARM64, and WSL cold installs were not repeated in this acceptance pass; native Windows remains untested.</p>
+<p>Real installation acceptance in this historical record is Linux x86_64 only. The added CI jobs cover clean Docker/Nix installs and fixture regressions, but remote CI did not run for those working-tree changes. macOS, ARM64, WSL, and native Windows cold installs were not repeated in this acceptance pass.</p>
 <p>Browser executables, Android/Blender bridges, external providers, authenticated GUI/ACP clients, host device/SSH access from containers, and security hardening remain separate checks. <code>READY</code> certifies the stated MCP/install checks, not every tool's external integration. Existing services, databases, vault conflicts, and historical release snapshots were not migrated or replaced.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
       <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#real-execution">Real execution</a></li><li><a href="#regression-gates">Regression gates</a></li><li><a href="#reproduce">Reproduce</a></li><li><a href="#boundaries">Boundaries</a></li></ol></nav>
@@ -81,8 +85,8 @@ npm run test:install:modes -- \
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

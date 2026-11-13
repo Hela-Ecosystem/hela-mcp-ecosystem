@@ -104,7 +104,7 @@ Thank you for your interest in contributing to the **HeLa MCP Ecosystem**! This 
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client skip --non-interactive
+node setup.mjs --profile dev-workspace --client skip --non-interactive
 ```
 
 ### 2.2 Running Diagnostics & Tests
@@ -472,6 +472,18 @@ URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
 
+## Unreleased — cross-platform maintenance entrypoints
+
+The installer and maintenance workflow is now Node-first. Use `node setup.mjs`,
+`setup.ps1`, or `setup.cmd` for installation and doctor checks; `update.ps1` and
+`update.cmd` provide the corresponding Windows update path. The Bash entrypoints
+remain compatibility shims.
+
+Profile-scoped build, test, clean, and update operations now run through portable
+Node scripts. Runtime Needle discovery also recognizes `needle3.exe` and
+`needle.exe` automatically. Native Windows cold-install acceptance is still
+tracked separately from this source-level portability work.
+
 ## v1.6.2 — Plastid and Receptor dependency refresh
 
 Plastid moves to `aa43877` and Receptor to `1b21cb7`, adopting the lockfile updates that had accumulated on their default branches. Both carried open advisories against `@modelcontextprotocol/sdk`; the refreshed locks resolve them, and `npm audit` is clean for Plastid's runtime dependencies while Receptor reports none.
@@ -782,7 +794,7 @@ The optional runtime supervises child MCP processes behind one stdio or Streamab
 
 - **Source:** https://github.com/Hela-Ecosystem/hela-runtime
 - **Entry:** `hela-runtime/dist/index.js`
-- **Serve mode:** add `--runtime` to any profile, for example `./setup.sh --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; an omitted profile defaults to `minimal`.
+- **Serve mode:** add `--runtime` to any profile, for example `node setup.mjs --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; an omitted profile defaults to `minimal`.
 - **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, `HELA_NAMESPACE_TOOLS`.
 - **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, opt-in namespacing, runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
 - **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
@@ -835,7 +847,7 @@ Current software versions are listed in [current versions](current-versions.md).
 ## Requirements
 
 - Node.js **22 LTS** is the tested full-stack environment. Enzyme requires at least 20.18.1; Receptor requires 22. Individual packages can declare different standalone engine ranges.
-- Git and a terminal. Use a POSIX shell on Linux/macOS or WSL on Windows for `setup.sh`.
+- Git and a terminal. Use Node directly on Linux/macOS, or `setup.ps1` in Windows PowerShell / `setup.cmd` in Command Prompt. `setup.sh` remains available as a Unix compatibility shim.
 - Optional capabilities: Chromium/Playwright for browser work, ADB and a device for Android, and the Blender bridge for 3D.
 
 ## Install a profile
@@ -843,10 +855,10 @@ Current software versions are listed in [current versions](current-versions.md).
 ```bash
 git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
-Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run `./setup.sh` without flags for interactive profile/mode/client selection.
+On Windows PowerShell, run `.\setup.ps1 --mode runtime --profile dev-workspace --client opencode --non-interactive`; in Command Prompt, use `setup.cmd` with the same arguments. Change the client to `cursor`, `claude`, `gemini`, `antigravity`, `kilo`, `zed`, or `codex` as appropriate. The installer prints its managed prefix and a private client fragment: review and merge that fragment into your client settings. It does not overwrite existing client files or reuse your working repositories. Run `node setup.mjs` without flags for interactive profile/mode/client selection.
 
 All eight profiles are supported:
 
@@ -866,7 +878,7 @@ See [profiles](profiles.md) for membership. Your selection is independent of oth
 The installer normally configures separate MCP servers. Add `--runtime` to keep the same profile behind one endpoint:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+node setup.mjs --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
 Runtime is a serve mode, not a profile named `runtime`. Its catalog advertises schemas without starting cells; a first call starts only its target. [Runtime details](on-demand-runtime.md) explain catalog generation, missing metadata, and recovery.
@@ -882,15 +894,15 @@ Generated configuration can contain credentials you explicitly provide. Keep it 
 ## Verify the selected installation
 
 ```bash
-./setup.sh doctor --profile dev-workspace
+node setup.mjs doctor --profile dev-workspace
 # If installed through the runtime:
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:matrix
 ```
 
 Doctor checks selected paths, versions, revisions, and actual isolated MCP replies. Runtime checking also verifies catalog parity and zero discovery startups. The configuration matrix checks 80 profile/client combinations; it does not log in to GUI agents or exercise hardware.
 
-For an explicit prefix, use `./setup.sh doctor --prefix /path/to/prefix`. For Docker or Nix defaults, select the same `--mode` and profile as installation. `doctor --url http://127.0.0.1:8080/mcp` checks a running HTTP endpoint; it does not inspect remote source revisions.
+For an explicit prefix, use `node setup.mjs doctor --prefix /path/to/prefix`. For Docker or Nix defaults, select the same `--mode` and profile as installation. `doctor --url http://127.0.0.1:8080/mcp` checks a running HTTP endpoint; it does not inspect remote source revisions.
 
 On a full ten-cell checkout you can also run `npm test` and `npm run test:profiles`. On a partial checkout use `npm run test:profiles -- --profile <id>`. Missing unselected hardware repositories are not a reason to change your machine's profile.
 
@@ -1065,7 +1077,12 @@ Regenerate with `npm run catalog:generate`; includes `hela.pipe` and the agent a
 # Source: docs/installation-acceptance.md
 URL: https://hela.my.id/library/docs/installation-acceptance.html
 
-# Installer acceptance — 2026-11-07
+# Installer acceptance — 2026-11-07 (historical record)
+
+This document records the 2026-11-07 Linux acceptance run. The current repository
+also provides Node-first, PowerShell, and CMD installer entrypoints; native Windows
+cold-install acceptance remains a separate verification task and is not implied by
+the historical results below.
 
 Local acceptance of the managed installer on Linux x86_64 with Node 22. This records working-tree changes, not a published release or a live-service rollout. Ecosystem release metadata remains 1.5.1; cells remain 3.0.0 and runtime 1.2.0.
 
@@ -1116,7 +1133,7 @@ The matrix uses temporary private workspaces/data directories and deletes only i
 
 ## Boundaries
 
-Real installation acceptance here is Linux x86_64 only. The added CI jobs cover clean Docker/Nix installs and fixture regressions, but remote CI has not yet run for these working-tree changes. macOS, ARM64, and WSL cold installs were not repeated in this acceptance pass; native Windows remains untested.
+Real installation acceptance in this historical record is Linux x86_64 only. The added CI jobs cover clean Docker/Nix installs and fixture regressions, but remote CI did not run for those working-tree changes. macOS, ARM64, WSL, and native Windows cold installs were not repeated in this acceptance pass.
 
 Browser executables, Android/Blender bridges, external providers, authenticated GUI/ACP clients, host device/SSH access from containers, and security hardening remain separate checks. `READY` certifies the stated MCP/install checks, not every tool's external integration. Existing services, databases, vault conflicts, and historical release snapshots were not migrated or replaced.
 
@@ -1138,7 +1155,8 @@ See [local acceptance evidence](installation-acceptance.md) for the tested mecha
 
 - Use Node 22+ and Git. Native modules need Python, make, a C/C++ compiler, and platform headers. `--mode nix` supplies a pinned development toolchain and packages the runtime with Nix.
 - Docker modes require a working Docker daemon and Compose v2. Their images build the selected cells from pinned source; they do not require host npm dependencies or per-cell Dockerfiles.
-- Supported shell entry points are Linux, macOS, and Windows through WSL. Native Windows installation is not acceptance-tested; several upstream build scripts require POSIX tools.
+- The installer and maintenance commands are Node-first and run on Linux, macOS, and native Windows. Use `node setup.mjs` on Unix-like systems, `.\setup.ps1` in PowerShell, or `setup.cmd` in Command Prompt. The Bash files remain compatibility shims; Nix mode still requires a Unix-compatible Nix environment such as WSL.
+- The repository build, test, clean, and update runners use Node scripts, including the Windows `npm.cmd` executable where required. Native Windows cold-install acceptance is still a separate verification boundary; optional browser, Android, Blender, provider, and client integrations remain platform-specific.
 - The pinned local Needle engine/model is installed by default on Linux x86_64/ARM64 and macOS ARM64. `--without-model` explicitly selects core MCP without that integration; it is needed on platforms without a pinned engine. Assets are fetched from an immutable upstream revision, checksum-verified, and accompanied by their license.
 - Chromium/browser services, Android devices/ADB, Blender/its bridge, provider credentials, and GUI client authentication remain separate integration requirements. `READY` does not certify those operations or provide an OS sandbox.
 
@@ -1155,8 +1173,8 @@ The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked
 ## Individual servers
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 ```
 
 Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.
@@ -1164,8 +1182,8 @@ Merge the generated private fragment into the client file after review. Native c
 ## Single stdio runtime
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --client codex --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode runtime --profile dev-workspace --client codex --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 ```
 
 `--runtime` is an alias for `--mode runtime`. `--with-runtime` additionally builds the daemon for an individual installation without switching its client fragment to one connection.
@@ -1175,11 +1193,11 @@ The selected-profile catalog is generated from fresh probes. Runtime verificatio
 ## Docker: separate cells or runtime
 
 ```bash
-./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
-./setup.sh doctor --mode docker --profile dev-workspace
+node setup.mjs --mode docker --profile dev-workspace --client cursor --non-interactive
+node setup.mjs doctor --mode docker --profile dev-workspace
 
-./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode docker-runtime --profile dev-workspace
+node setup.mjs --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode docker-runtime --profile dev-workspace
 ```
 
 `--client docker` remains a shortcut for a Docker installation with Compose output. Use `--runtime` with it for the aggregated daemon. Both Docker modes build one profile image; client entries call Docker directly with the immutable image ID, launching separate cell containers or one runtime container. Those stdio clients do not need a host Node runtime after installation. `compose.json` provides the equivalent Compose services.
@@ -1193,8 +1211,8 @@ Doctor starts uniquely named temporary containers with no host data/vault mounts
 ## Nix runtime
 
 ```bash
-./setup.sh --mode nix --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode nix --profile dev-workspace
+node setup.mjs --mode nix --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode nix --profile dev-workspace
 ```
 
 Nix supplies the pinned Node/native-build toolchain for cell builds and builds the runtime package. The installation's `nix-runtime` output link is retained as a GC root. This is a packaged runtime plus locked cell builds, not a claim that all ten cells are independent Nix derivations. Keep private files untracked; Git-backed flake references exclude ignored credentials and data from Nix source copies.
@@ -1202,10 +1220,10 @@ Nix supplies the pinned Node/native-build toolchain for cell builds and builds t
 ## HTTP runtime
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
+node setup.mjs --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
 # Start the installed launcher explicitly; its path is printed by setup:
 node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
-./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 ```
 
 The same transport flags work with `--mode nix` and `--mode docker-runtime`. HTTP listeners bind to loopback on the host. Docker publishes only `127.0.0.1:<port>`; `compose.json` includes the HTTP command and port mapping. Explicitly start it with Compose `up -d` if desired.
@@ -1215,9 +1233,9 @@ HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client
 ## Snapshots, reconfiguration, and failures
 
 ```bash
-./setup.sh --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
-./setup.sh --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
-./setup.sh doctor --prefix /path/to/existing/prefix --json
+node setup.mjs --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
+node setup.mjs --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
+node setup.mjs doctor --prefix /path/to/existing/prefix --json
 ```
 
 Snapshots must declare exact commits and server versions. Incomplete historical metadata is rejected, not silently ignored. `--dev` follows recorded branches for host modes and records the resolved revisions/versions; Docker requires pinned snapshots. Optional provider keys are read from environment, not command-line secret flags. Generated fragments can contain those supplied credentials and are written with private permissions.
@@ -1226,12 +1244,12 @@ Reconfiguration infers the existing mode/profile/transport from an explicit pref
 
 ## Switch modes in place
 
-`setup.sh mode` converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:
+`node setup.mjs mode` converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:
 
 ```bash
-./setup.sh mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
-./setup.sh doctor --prefix /path/to/existing/prefix --json
-./setup.sh mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
+node setup.mjs mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
+node setup.mjs doctor --prefix /path/to/existing/prefix --json
+node setup.mjs mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
 ```
 
 Every mode is a valid target: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. The profile, snapshot, workspace, and `data/` directories are preserved; only the artifacts the target mode needs are built. Host-mode switches reuse cells that already sit at the pinned revision with a clean worktree, so repeated conversions take seconds rather than rebuilding every package. Moving into a Docker mode builds the profile image; moving out deletes `compose.json`. Transport and port carry over unless `--transport` or `--port` is passed, and HTTP targets require a runtime mode. Switching to `--mode nix` must run inside Nix, exactly like a fresh Nix install.
@@ -1261,7 +1279,7 @@ The installer now creates a managed prefix and private client fragment instead o
 Use Node 22 LTS and build the selected cells first:
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
 To inspect a generated file without installing it into a client:
@@ -1291,7 +1309,7 @@ Generate a private output file with `--out <path>` and review/merge it instead o
 Keep the selected profile and add the serve-mode flag:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+node setup.mjs --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
 There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `minimal` when unset. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
@@ -1300,7 +1318,7 @@ The installer generates the selected-profile schema catalog. After rebuilding a 
 
 ```bash
 npm run catalog:generate -- --profile dev-workspace
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 ```
 
 See [on-demand runtime](on-demand-runtime.md) for stale-cache refusal and explicit `hela.pipe` bootstrap. A healthy HTTP liveness endpoint alone is not full MCP or external-integration acceptance evidence.
@@ -1320,8 +1338,8 @@ GitHub tokens are optional for live remote prompt/catalog operations. Enzyme can
 Use the installer to build and verify a selected-profile image before generating/using its client fragment:
 
 ```bash
-./setup.sh --mode docker --profile headless-server --client docker --non-interactive
-./setup.sh doctor --mode docker --profile headless-server
+node setup.mjs --mode docker --profile headless-server --client docker --non-interactive
+node setup.mjs doctor --mode docker --profile headless-server
 ```
 
 `compose.json` uses the built image ID, actual entrypoints, attached stdio without a TTY, and persistent volumes. `--mode docker-runtime` selects one runtime container. Add `--transport http` only for runtime-based modes; the installer generates loopback-only HTTP settings and leaves listener startup explicit. The older seven-cell `config/docker-compose.yml` is historical scaffolding, not the supported installer path. Hardware and provider integrations are still separate.
@@ -1329,7 +1347,7 @@ Use the installer to build and verify a selected-profile image before generating
 ## Acceptance and reloads
 
 ```bash
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:matrix
 npm run docs:check
 ```
@@ -1431,20 +1449,20 @@ Provider credentials are optional for MCP discovery and keyless capabilities. A 
 ### Initial Setup
 Run the setup script:
 ```bash
-./setup.sh
+node setup.mjs
 ```
 The installer reads optional provider keys from environment and never prompts for or accepts secret values as CLI flags. Keyless defaults can still use the network. Generated private client fragments can contain supplied credentials; review them before sharing, and merge them into client settings deliberately.
 
 ### Reconfiguring Keys Anytime
 To update keys or change clients on an installed ecosystem:
 ```bash
-./setup.sh --reconfigure
+node setup.mjs --reconfigure
 ```
 
 ### Safe Diagnostic Health Check
 To verify your environment and check which fallbacks are active without exposing keys in logs:
 ```bash
-./setup.sh doctor
+node setup.mjs doctor
 ```
 
 
@@ -1474,7 +1492,7 @@ Run from the ecosystem checkout after building the selected cells and runtime:
 ```bash
 npm run catalog:generate -- --profile dev-workspace
 npm run catalog:check -- --profile dev-workspace
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:profiles -- --profile dev-workspace
 ```
 
@@ -1734,7 +1752,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
 The HeLa Runtime is **not a profile** — it is a serve method. Any profile can be served through the runtime:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --runtime   # builds dev-workspace cells + daemon
+node setup.mjs --profile dev-workspace --client opencode --runtime   # builds dev-workspace cells + daemon
 HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with minimal profile
 ```
 
@@ -1809,31 +1827,31 @@ This guide provides systematic diagnostic procedures, error code explanations, a
 
 ---
 
-## 1. Fast Diagnostic Workflow: `setup.sh doctor`
+## 1. Fast Diagnostic Workflow: `node setup.mjs doctor`
 
 Before manual debugging, always run the automated diagnostic health check:
 
 ```bash
-./setup.sh doctor
+node setup.mjs doctor
 # or
 npm run doctor
 ```
 
 To run diagnostics against a specific profile:
 ```bash
-./setup.sh doctor --profile dev-workspace
+node setup.mjs doctor --profile dev-workspace
 ```
 
 To output machine-readable JSON:
 ```bash
-./setup.sh doctor --json
+node setup.mjs doctor --json
 ```
 
 For managed installations, select the installed `--mode` and profile, or use an explicit prefix:
 
 ```bash
-./setup.sh doctor --prefix /path/to/prefix --json
-./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+node setup.mjs doctor --prefix /path/to/prefix --json
+node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 ```
 
 The URL form checks an already-running HTTP endpoint, not its remote filesystem. See [installation modes](installation.md) for Docker, Nix, listener startup, and private client fragments.
@@ -1900,7 +1918,7 @@ node <entrypoint-file>
 **Fix**:
 1. **Regenerate configuration with absolute paths**:
    ```bash
-   ./setup.sh --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
+   node setup.mjs --reconfigure --prefix /path/to/prefix --client cursor --non-interactive
    ```
 2. **Review and merge the printed private fragment into the correct client file**. Setup does not write these live files:
    * **Cursor IDE**: `cat ~/.cursor/mcp.json`
@@ -1939,7 +1957,7 @@ Source references: [Zed forwarding](https://github.com/zed-industries/zed/blob/c
 **Fix**:
 Restore known-good, audited release snapshot:
 ```bash
-./setup.sh --snapshot v1.5.1 --profile dev-workspace --non-interactive
+node setup.mjs --snapshot v1.5.1 --profile dev-workspace --non-interactive
 ```
 
 ---
@@ -1988,7 +2006,7 @@ Restore known-good, audited release snapshot:
 
 * **Run Integration Tests**: `npm test` discovers the installed cells; use `-- --profile <id>` for a selected subset. Tool counts depend on enabled features.
 * **Run Matrix Tests**: `npm run test:matrix` verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.
-* **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `./setup.sh doctor --json` and the failed check. Do not attach private configs or environments.
+* **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `node setup.mjs doctor --json` and the failed check. Do not attach private configs or environments.
 
 
 ---
@@ -2232,4 +2250,4 @@ sequenceDiagram
 
 1. **Structured Memory Over Raw History**: Always record key findings and milestones to `hela-genome` so subsequent agent turns do not need to re-read thousands of lines of raw logs.
 2. **Hierarchy Inspection Over Full Screenshots**: For web (`hela-cytosol`) and mobile (`hela-receptor`), prefer accessibility trees and XML dumps for element location, reserving bitmap screenshots for final visual verification.
-3. **Fail-Fast Pre-Validation**: Always verify prerequisite binary availability via `./setup.sh doctor` before launching complex cross-MCP pipelines.
+3. **Fail-Fast Pre-Validation**: Always verify prerequisite binary availability via `node setup.mjs doctor` before launching complex cross-MCP pipelines.

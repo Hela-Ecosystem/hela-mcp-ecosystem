@@ -58,7 +58,7 @@
         <header class="specimen-plate">
           <div class="specimen-ref"><span>SPEC_06 // Hela-Ecosystem-MCP</span><span>DOSIR: DOKTOR_DAN_KEGAGALAN</span></div>
           <h1 class="doc-title">Diagnostik</h1>
-          <p class="doc-lead">Jalankan <code>setup.sh doctor</code> terlebih dahulu — diagnostik akan mengklasifikasikan penyebab kegagalan secara otomatis. Skenario di bawah ini mencakup seluruh permasalahan yang ditandai oleh doctor.</p>
+          <p class="doc-lead">Jalankan <code>node setup.mjs doctor</code> terlebih dahulu — atau gunakan <code>setup.ps1</code>/<code>setup.cmd</code> di Windows native. Diagnostik akan mengklasifikasikan penyebab kegagalan secara otomatis. Skenario di bawah ini mencakup seluruh permasalahan yang ditandai oleh doctor.</p>
         </header>
 
         <figure class="figure-plate">
@@ -69,12 +69,12 @@
         <h2 id="doctor">Anatomi laporan doctor</h2>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // BAGIAN_DOKTOR</span><button class="copy-btn" type="button">Salin</button></div>
-          <pre><code>./setup.sh doctor --profile dev-workspace
+          <pre><code>node setup.mjs doctor --profile dev-workspace
 # Jika menggunakan runtime: periksa katalog tanpa startup sel
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 # Environment full-stack yang diuji: Node 22 LTS</code></pre>
         </div>
-        <p>Untuk instalasi terkelola, gunakan mode dan profil yang sama, atau <code>./setup.sh doctor --prefix /path/to/prefix --json</code>. Doctor memeriksa identitas sumber/build dan respons MCP nyata; mode runtime juga memeriksa discovery HTTP privat. Gunakan <code>--url http://127.0.0.1:8080/mcp</code> untuk listener yang dijalankan secara eksplisit. Respons health saja bukan bukti kesiapan MCP.</p>
+        <p>Untuk instalasi terkelola, gunakan mode dan profil yang sama, atau <code>node setup.mjs doctor --prefix /path/to/prefix --json</code>. Di Windows native, jalankan perintah <code>doctor</code> melalui entrypoint yang sama, yaitu <code>setup.ps1</code> atau <code>setup.cmd</code>. Doctor memeriksa identitas sumber/build dan respons MCP nyata; mode runtime juga memeriksa discovery HTTP privat. Gunakan <code>--url http://127.0.0.1:8080/mcp</code> untuk listener yang dijalankan secara eksplisit. Respons health saja bukan bukti kesiapan MCP.</p>
 
         <h2 id="scenarios">Skenario kegagalan &amp; perbaikan</h2>
 
@@ -140,8 +140,8 @@
     </div>
   </div>
   <script src="../release-data.js?v=1.6.2"></script>
-  <script src="../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="../library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="../app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>

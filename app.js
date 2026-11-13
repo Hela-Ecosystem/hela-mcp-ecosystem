@@ -63,9 +63,10 @@ ${profileChoices}
 3. Clone & Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
-   chmod +x setup.sh update.sh
-   ./setup.sh --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
-   ./setup.sh doctor --profile <confirmed_profile> --mode runtime
+   Linux/macOS: node setup.mjs --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
+   Windows PowerShell: .\\setup.ps1 --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
+   Windows Command Prompt: setup.cmd --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
+   Run the matching doctor command through the same entrypoint.
    Safely merge the generated ${client} configuration fragment into my active ${client} MCP settings.
    Do not deploy or configure each hela-* cell as a separate client server.
 

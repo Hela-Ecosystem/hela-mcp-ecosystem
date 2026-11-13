@@ -119,7 +119,7 @@
           <div class="code-dossier-header"><span>SHELL // CLONE_AND_INSTALL</span><button class="copy-btn" type="button">Copy</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client opencode --mode runtime</code></pre>
+node setup.mjs --profile dev-workspace --client opencode --mode runtime</code></pre>
         </div>
         <div class="code-dossier" style="margin-top: 1rem;">
           <div class="code-dossier-header"><span>AGENT // ONE_CLICK_INSTALL_PROMPT</span><button class="copy-btn" type="button">Copy Prompt</button></div>
@@ -133,23 +133,25 @@ cd hela-mcp-ecosystem
    - Wait for the user's choice and call it &lt;confirmed_profile&gt;. If they do not choose, use minimal. Do not run setup until the profile is confirmed.
 3. Clone the repository and run:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
-   cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   ./setup.sh doctor --profile &lt;confirmed_profile&gt; --mode runtime
+   cd hela-mcp-ecosystem
+   Linux/macOS: node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Windows PowerShell: .\setup.ps1 --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Windows Command Prompt: setup.cmd --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Run the matching `doctor` command through the same entrypoint.
 4. Safely merge the generated single hela-runtime client fragment. Do not deploy each hela-* cell as a separate client server.
 5. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt. Do not create or copy a static persona prompt.
 6. Initialize the workspace memory graph through the exposed Genome tool when that organelle is active and confirm the selected profile plus ready runtime tools.</code></pre>
         </div>
-        <p><code>setup.sh</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
+        <p><code>setup.mjs</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Use <code>setup.ps1</code> or <code>setup.cmd</code> on native Windows; <code>setup.sh</code> remains a Unix compatibility shim. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
         <p>All eight profiles support <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker needs a working daemon and Compose v2; native builds need Python, make, and a C/C++ compiler, or the pinned Nix toolchain. See the <a href="library/docs/installation.html">installation guide</a> for prerequisites, Compose, Nix GC roots, and failure recovery.</p>
         <p>Runtime modes also support <code>--transport http --port 8080</code>. HTTP stays loopback-only and is started explicitly; use <code>doctor --url http://127.0.0.1:8080/mcp</code> to check the running endpoint. Browser engines, provider keys, Android/Blender bridges, and GUI authentication remain separate requirements.</p>
-        <p><strong>Single-endpoint alternative:</strong> <code>./setup.sh --profile minimal --client opencode --runtime</code> keeps the selected profile behind the <a href="https://github.com/Hela-Ecosystem/hela-runtime">HeLa Runtime</a>. Runtime is not a profile. Discovery starts no cells; the first call starts only its target. Other installations can select any of the eight profiles.</p>
+        <p><strong>Single-endpoint alternative:</strong> <code>node setup.mjs --profile minimal --client opencode --runtime</code> keeps the selected profile behind the <a href="https://github.com/Hela-Ecosystem/hela-runtime">HeLa Runtime</a>. Runtime is not a profile. Discovery starts no cells; the first call starts only its target. Other installations can select any of the eight profiles.</p>
 
         <h2 id="verify" data-i18n="index.verify_title">Verify</h2>
         <p data-i18n="index.verify_desc">Three gates, all expected green before use:</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // VERIFICATION_GATES</span><button class="copy-btn" type="button">Copy</button></div>
-          <pre><code>./setup.sh doctor --profile dev-workspace
+          <pre><code>node setup.mjs doctor --profile dev-workspace
 npm run test:install  # Installer regression tests, not hardware acceptance
 npm run test:matrix   # 80 profile × client configurations</code></pre>
         </div>
@@ -183,8 +185,8 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
     </div>
   </div>
   <script src="release-data.js?v=1.6.2"></script>
-  <script src="library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
+  <script src="library-data.js?v=1.6.2&amp;rev=9f22006a0c9a"></script>
   <script src="library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
+  <script src="app.js?v=1.6.2&amp;rev=cbb2cca4e676"></script>
 </body>
 </html>
