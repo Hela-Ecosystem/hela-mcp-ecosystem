@@ -1,6 +1,6 @@
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.6.4**; runtime **1.2.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.7.0**; runtime **1.2.1**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.3**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -8,7 +8,7 @@ Generated from package metadata, inventory, and the schema catalog. Ecosystem **
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.1**, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
 - **HeLa Ribosome** (`hela-ribosome`): server **3.0.1**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
 - **HeLa Enzyme** (`hela-enzyme`): server **4.0.1**, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
-- **HeLa Cytosol** (`hela-cytosol`): server **3.0.1**, 73 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
+- **HeLa Cytosol** (`hela-cytosol`): server **3.1.0**, 74 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.0.1**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.1**, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
 - **HeLa Plastid** (`hela-plastid`): server **3.0.1**, 15 canonical tools; [source](https://github.com/Hela-Ecosystem/ll3m-mcp).

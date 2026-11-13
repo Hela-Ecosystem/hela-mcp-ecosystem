@@ -1,6 +1,6 @@
 {
   "name": "hela-mcp-ecosystem",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "description": "The modular, immortal cellular AI tooling ecosystem based on Model Context Protocol.",
   "type": "module",
   "scripts": {

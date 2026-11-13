@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.6.4",
+  "snapshot_version": "1.7.0",
   "created_at": "2026-11-13T00:00:00Z",
-  "description": "Corrects the latest-stable alias while retaining the coordinated cross-platform maintenance releases for all HeLa MCP cells and runtime.",
+  "description": "Adds first-class Cytosol Mirage visual intelligence while retaining the coordinated HeLa MCP cell and runtime release pins.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -54,10 +54,10 @@
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "ab0d4bb666ee5159839baee4ca476af2960203eb",
+      "commit": "5b5b659d215b4236eeaf83e194975832b440bef7",
       "branch": "master",
       "entry": "src/server.js",
-      "serverVersion": "3.0.1"
+      "serverVersion": "3.1.0"
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
