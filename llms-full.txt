@@ -262,7 +262,7 @@ flowchart TB
     Nucleus["HeLa Nucleus<br/>Command Exec"]
     Ribosome["HeLa Ribosome<br/>PTY Harness"]
     Enzyme["HeLa Enzyme<br/>Research / Wiki"]
-    Cytosol["HeLa Cytosol<br/>Browser DOM"]
+    Cytosol["HeLa Cytosol<br/>Browser + Vision"]
 
     Agent -- "stdio JSON-RPC" --> Mitosis
     Agent -- "stdio JSON-RPC" --> Genome
@@ -286,7 +286,7 @@ flowchart TB
 | **HeLa Nucleus** | `hela-nucleus` | [`terminal-mcp`](https://github.com/Hela-Ecosystem/terminal-mcp) | Core | **Execution**: Command execution, subshell isolation, RTK token-optimized execution |
 | **HeLa Ribosome** | `hela-ribosome` | [`menager-mcp`](https://github.com/Hela-Ecosystem/menager-mcp) | Core | **Process Harness**: Interactive PTY multiplexing, Regex hooks, lifecycle management |
 | **HeLa Enzyme** | `hela-enzyme` | [`researcher-mcp`](https://github.com/Hela-Ecosystem/researcher-mcp) | Core | **Knowledge**: Zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia synthesis and fact-checking |
-| **HeLa Cytosol** | `hela-cytosol` | [`browser-mcp`](https://github.com/Hela-Ecosystem/browser-mcp) | Core | **Interaction**: Playwright browser automation, accessibility trees, DOM perception |
+| **HeLa Cytosol** | `hela-cytosol` | [`browser-mcp`](https://github.com/Hela-Ecosystem/browser-mcp) | Core | **Interaction & vision**: Playwright automation, accessibility/DOM perception, OCR, visual analysis, detection, segmentation, and standalone image analysis |
 | **HeLa Phenotype** | `hela-phenotype` | [`designer-mcp`](https://github.com/Hela-Ecosystem/designer-mcp) | Specialized | **Design**: UI/UX design tokens, OKLCH color palettes, Tailwind and component synthesis |
 | **HeLa Receptor** | `hela-receptor` | [`scrcpy-mcp`](https://github.com/Hela-Ecosystem/scrcpy-mcp) | Specialized | **Mobile**: Android device automation, ADB bridge, XML view hierarchy inspection |
 | **HeLa Plastid** | `hela-plastid` | [`ll3m-mcp`](https://github.com/Hela-Ecosystem/ll3m-mcp) | Specialized | **3D Modeling**: Autonomous Blender procedural modeling, materials, and render pipeline |
@@ -780,9 +780,9 @@ flowchart TB
 * **Tools**: `google_search`, `wikipedia_search`, `wikipedia_get`, `content_summarizer`, `fact_checker`, `keyword_extraction`.
 
 #### 7. HeLa Cytosol (`hela-cytosol` / `browser-mcp`)
-* **Role**: Playwright-based browser automation and DOM accessibility perception.
+* **Role**: Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can analyze a standalone image without launching a browser page.
 * **Entrypoint**: `src/server.js`
-* **Tools**: `browser_navigate`, `browser_screenshot`, `browser_click`, `browser_type`, `browser_get_content`.
+* **Tools**: `browser_navigate`, `browser_screenshot`, `browser_click`, `browser_type`, `browser_get_content`, `browser_visual_analyze`, `browser_image_analyze`, `browser_ocr`, and `browser_extract_schema`.
 
 ---
 
@@ -880,7 +880,7 @@ Current software versions are listed in [current versions](current-versions.md).
 
 - Node.js **22 LTS** is the tested full-stack environment. Enzyme requires at least 20.18.1; Receptor requires 22. Individual packages can declare different standalone engine ranges.
 - Git and a terminal. Use Node directly on Linux/macOS, or `setup.ps1` in Windows PowerShell / `setup.cmd` in Command Prompt. `setup.sh` remains available as a Unix compatibility shim.
-- Optional capabilities: Chromium/Playwright for browser work, ADB and a device for Android, and the Blender bridge for 3D.
+- Optional capabilities: Chromium/Playwright for browser work; the local Mirage model for Cytosol visual analysis, OCR, detection, segmentation, and standalone-image inspection; ADB and a device for Android; and the Blender bridge for 3D.
 
 ## Install a profile
 
@@ -1669,7 +1669,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
   2. Mitosis decomposes feature requirements into steps.
   3. Membrane and Nucleus inspect code, run builds, and execute tests.
   4. Phenotype generates design tokens and Tailwind components.
-  5. Cytosol validates web UI visually via Playwright.
+  5. Cytosol validates web UI through Playwright, accessibility trees, screenshots, and local Mirage visual analysis.
   6. Genome records decisions, test results, and observations.
 
 ---
@@ -1708,7 +1708,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
   1. Genome restores research topic and prior facts.
   2. Mitosis constructs research query plan.
   3. Enzyme queries Google Search and Wikipedia.
-  4. Cytosol extracts full article content from web pages.
+  4. Cytosol extracts full article content from web pages and can inspect image content when needed.
   5. Membrane writes research synthesis to markdown files.
   6. Genome stores discovered facts into the knowledge graph.
 
@@ -1729,7 +1729,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
   2. Phenotype generates OKLCH tokens and Tailwind configuration.
   3. Membrane creates component files.
   4. Nucleus starts local development server.
-  5. Cytosol navigates, interacts, and captures screenshot verification.
+  5. Cytosol navigates, interacts, captures screenshots, and performs visual or standalone-image verification.
   6. Genome records UI validation results.
 
 ---
@@ -2069,7 +2069,7 @@ flowchart TB
     Nucleus["HeLa Nucleus<br/>Command Exec"]
     Ribosome["HeLa Ribosome<br/>PTY Harness"]
     Enzyme["HeLa Enzyme<br/>Research / Wiki"]
-    Cytosol["HeLa Cytosol<br/>Browser DOM"]
+    Cytosol["HeLa Cytosol<br/>Browser + Vision"]
 
     Agent --> Mitosis & Genome
     Mitosis <-->|"Shared Context"| Genome
@@ -2169,7 +2169,7 @@ sequenceDiagram
     Agent->>Nucleus: execute_command("npm run dev")
     Nucleus-->>Agent: Local dev server active on port 3000
     Agent->>Cytosol: browser_navigate("http://localhost:3000") -> browser_screenshot
-    Cytosol-->>Agent: Rendered visual screenshot & accessibility tree
+    Cytosol-->>Agent: Rendered screenshot, accessibility tree, and Mirage visual analysis
     Agent->>Genome: memory_edit(action="add_observations", observations=["Design verified on DOM & visual snapshot"])
 ```
 
@@ -2177,7 +2177,7 @@ sequenceDiagram
 1. **Design System Token Generation**: Call `design_tokens`, `palette`, or `logo_workflow` on `hela-phenotype`.
 2. **Component Implementation**: Write JSX/Tailwind files using `write_file` on `hela-membrane`.
 3. **Dev Server Launch**: Launch background local web server using `execute_command` on `hela-nucleus`.
-4. **Visual & Accessibility Verification**: Navigate to `http://localhost:3000` via `browser_navigate` on `hela-cytosol`, verify DOM via `browser_get_content(format=axtree)`, and take visual snapshot with `browser_screenshot`.
+4. **Visual & Accessibility Verification**: Navigate to `http://localhost:3000` via `browser_navigate` on `hela-cytosol`, verify DOM via `browser_get_content(format=axtree)`, take a visual snapshot with `browser_screenshot`, and use `browser_visual_analyze` when the rendered image needs scene, text, object, or layout interpretation. Use `browser_image_analyze` for a standalone image that does not come from an active browser page.
 5. **Milestone Recording**: Save verification screenshot path and milestone to `hela-genome`.
 
 > **Live Production References Generated by HeLa Phenotype (`the-designer`):**

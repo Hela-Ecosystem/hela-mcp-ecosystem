@@ -50,7 +50,7 @@
     Nucleus[&quot;HeLa Nucleus&lt;br/&gt;Command Exec&quot;]
     Ribosome[&quot;HeLa Ribosome&lt;br/&gt;PTY Harness&quot;]
     Enzyme[&quot;HeLa Enzyme&lt;br/&gt;Research / Wiki&quot;]
-    Cytosol[&quot;HeLa Cytosol&lt;br/&gt;Browser DOM&quot;]
+    Cytosol[&quot;HeLa Cytosol&lt;br/&gt;Browser + Vision&quot;]
 
     Agent --&gt; Mitosis &amp; Genome
     Mitosis &lt;--&gt;|&quot;Shared Context&quot;| Genome
@@ -140,7 +140,7 @@
     Agent-&gt;&gt;Nucleus: execute_command(&quot;npm run dev&quot;)
     Nucleus--&gt;&gt;Agent: Local dev server active on port 3000
     Agent-&gt;&gt;Cytosol: browser_navigate(&quot;http://localhost:3000&quot;) -&gt; browser_screenshot
-    Cytosol--&gt;&gt;Agent: Rendered visual screenshot &amp; accessibility tree
+    Cytosol--&gt;&gt;Agent: Rendered screenshot, accessibility tree, and Mirage visual analysis
     Agent-&gt;&gt;Genome: memory_edit(action=&quot;add_observations&quot;, observations=[&quot;Design verified on DOM &amp; visual snapshot&quot;])
 </code></pre>
 </div>
@@ -149,7 +149,7 @@
 <li><strong>Design System Token Generation</strong>: Call <code>design_tokens</code>, <code>palette</code>, or <code>logo_workflow</code> on <code>hela-phenotype</code>.</li>
 <li><strong>Component Implementation</strong>: Write JSX/Tailwind files using <code>write_file</code> on <code>hela-membrane</code>.</li>
 <li><strong>Dev Server Launch</strong>: Launch background local web server using <code>execute_command</code> on <code>hela-nucleus</code>.</li>
-<li><strong>Visual &amp; Accessibility Verification</strong>: Navigate to <code>http://localhost:3000</code> via <code>browser_navigate</code> on <code>hela-cytosol</code>, verify DOM via <code>browser_get_content(format=axtree)</code>, and take visual snapshot with <code>browser_screenshot</code>.</li>
+<li><strong>Visual &amp; Accessibility Verification</strong>: Navigate to <code>http://localhost:3000</code> via <code>browser_navigate</code> on <code>hela-cytosol</code>, verify DOM via <code>browser_get_content(format=axtree)</code>, take a visual snapshot with <code>browser_screenshot</code>, and use <code>browser_visual_analyze</code> when the rendered image needs scene, text, object, or layout interpretation. Use <code>browser_image_analyze</code> for a standalone image that does not come from an active browser page.</li>
 <li><strong>Milestone Recording</strong>: Save verification screenshot path and milestone to <code>hela-genome</code>.</li>
 </ol>
 <blockquote>
@@ -255,8 +255,8 @@
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.8.0"></script>
-  <script src="../../library-data.js?v=1.8.0&amp;rev=fefd670cd195"></script>
+  <script src="../../library-data.js?v=1.8.0&amp;rev=6e30488df357"></script>
   <script src="../../library.js?v=1.8.0&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.8.0&amp;rev=cbb2cca4e676"></script>
+  <script src="../../app.js?v=1.8.0&amp;rev=fa590baa9385"></script>
 </body>
 </html>

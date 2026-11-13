@@ -16,7 +16,7 @@
     "hela-nucleus": { "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git", "commit": "0ff0afd871f3fd1349f83fb6b20d477d776c489a", "branch": "main", "entry": "build/index.js", "serverVersion": "3.0.1" },
     "hela-ribosome": { "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git", "commit": "82512f49775ac4c1d1b6984c38914ff418684c1e", "branch": "master", "entry": "build/index.js", "serverVersion": "3.0.1" },
     "hela-enzyme": { "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git", "commit": "7644b0cdc44e2ba038f197ca759cb538cbef61eb", "branch": "master", "entry": "dist/index.js", "serverVersion": "4.0.1" },
-    "hela-cytosol": { "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git", "commit": "908067dd3e12c2db96d10dcdf7bc92442274935b", "branch": "master", "entry": "src/server.js", "serverVersion": "3.2.0" },
+    "hela-cytosol": { "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git", "commit": "401190023b8772ab7f3e4a93d41bc8b67d4faa51", "branch": "master", "entry": "src/server.js", "serverVersion": "3.2.0" },
     "hela-phenotype": { "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git", "commit": "d32479d4bd13824cbd4f7effb2b4a4b6c479ac2d", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
     "hela-receptor": { "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git", "commit": "67017f2ec324192e863b5fb65702cbda0b7f5217", "branch": "master", "entry": "dist/server.js", "serverVersion": "3.0.1" },
     "hela-plastid": { "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git", "commit": "b5c1a23d7e283211012cb882a41628a783b08146", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },

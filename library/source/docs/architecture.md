@@ -108,9 +108,9 @@ flowchart TB
 * **Tools**: `google_search`, `wikipedia_search`, `wikipedia_get`, `content_summarizer`, `fact_checker`, `keyword_extraction`.
 
 #### 7. HeLa Cytosol (`hela-cytosol` / `browser-mcp`)
-* **Role**: Playwright-based browser automation and DOM accessibility perception.
+* **Role**: Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can analyze a standalone image without launching a browser page.
 * **Entrypoint**: `src/server.js`
-* **Tools**: `browser_navigate`, `browser_screenshot`, `browser_click`, `browser_type`, `browser_get_content`.
+* **Tools**: `browser_navigate`, `browser_screenshot`, `browser_click`, `browser_type`, `browser_get_content`, `browser_visual_analyze`, `browser_image_analyze`, `browser_ocr`, and `browser_extract_schema`.
 
 ---
 

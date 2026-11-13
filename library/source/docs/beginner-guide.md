@@ -10,7 +10,7 @@ Current software versions are listed in [current versions](current-versions.md).
 
 - Node.js **22 LTS** is the tested full-stack environment. Enzyme requires at least 20.18.1; Receptor requires 22. Individual packages can declare different standalone engine ranges.
 - Git and a terminal. Use Node directly on Linux/macOS, or `setup.ps1` in Windows PowerShell / `setup.cmd` in Command Prompt. `setup.sh` remains available as a Unix compatibility shim.
-- Optional capabilities: Chromium/Playwright for browser work, ADB and a device for Android, and the Blender bridge for 3D.
+- Optional capabilities: Chromium/Playwright for browser work; the local Mirage model for Cytosol visual analysis, OCR, detection, segmentation, and standalone-image inspection; ADB and a device for Android; and the Blender bridge for 3D.
 
 ## Install a profile
 

@@ -42,7 +42,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
   2. Mitosis decomposes feature requirements into steps.
   3. Membrane and Nucleus inspect code, run builds, and execute tests.
   4. Phenotype generates design tokens and Tailwind components.
-  5. Cytosol validates web UI visually via Playwright.
+  5. Cytosol validates web UI through Playwright, accessibility trees, screenshots, and local Mirage visual analysis.
   6. Genome records decisions, test results, and observations.
 
 ---
@@ -81,7 +81,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
   1. Genome restores research topic and prior facts.
   2. Mitosis constructs research query plan.
   3. Enzyme queries Google Search and Wikipedia.
-  4. Cytosol extracts full article content from web pages.
+  4. Cytosol extracts full article content from web pages and can inspect image content when needed.
   5. Membrane writes research synthesis to markdown files.
   6. Genome stores discovered facts into the knowledge graph.
 
@@ -102,7 +102,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
   2. Phenotype generates OKLCH tokens and Tailwind configuration.
   3. Membrane creates component files.
   4. Nucleus starts local development server.
-  5. Cytosol navigates, interacts, and captures screenshot verification.
+  5. Cytosol navigates, interacts, captures screenshots, and performs visual or standalone-image verification.
   6. Genome records UI validation results.
 
 ---
