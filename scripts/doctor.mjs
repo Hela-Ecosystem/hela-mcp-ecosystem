@@ -77,7 +77,7 @@ function getGitCommit(dir) {
 async function runDoctor(options = {}) {
   const parsed = parseOptions(process.argv.slice(2), ECOSYSTEM_ROOT);
   if (parsed.help) {
-    console.log('Usage: ./setup.sh doctor [--prefix PATH] [--mode individual|runtime|docker|docker-runtime|nix] [--profile ID] [--runtime] [--json], or --url URL');
+    console.log('Usage: node setup.mjs doctor [--prefix PATH] [--mode individual|runtime|docker|docker-runtime|nix] [--profile ID] [--runtime] [--json], or --url URL');
     return;
   }
   if (parsed.url) {

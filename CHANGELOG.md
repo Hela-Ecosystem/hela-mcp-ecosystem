@@ -2,6 +2,11 @@
 
 All notable changes to this project.
 
+## Unreleased
+
+- Add Node-first and PowerShell/CMD installer, updater, build, test, and clean entrypoints; retain Bash files as compatibility shims.
+- Allow unsupported pinned Needle platforms to complete installation with an explicit runtime fallback instead of aborting the whole ecosystem install.
+
 ## [1.6.2] - 2026-11-08
 
 - Adopt the Dependabot-updated Plastid and Receptor lockfiles, clearing the open MCP SDK and `@hono/node-server` advisories.

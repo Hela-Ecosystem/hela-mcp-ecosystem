@@ -10,7 +10,7 @@ import { modes, clients, parseOptions, installationPlan, readInstallation, run, 
   artifactDigest, composeConfiguration, modeFamily } from './installation.mjs';
 
 const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const help = `Usage: ./setup.sh [doctor|mode] [OPTIONS]
+const help = `Usage: node setup.mjs [doctor|mode] [OPTIONS]
   --mode individual|runtime|docker|docker-runtime|nix
   --profile ID          Any of the eight canonical profiles (default minimal)
   --prefix PATH         Managed installation directory; existing unmanaged directories are refused
@@ -32,7 +32,7 @@ const help = `Usage: ./setup.sh [doctor|mode] [OPTIONS]
 
 Doctor accepts --prefix/--mode/--profile/--runtime/--json, or --url URL for a running HTTP endpoint.
 Mode switching reuses an existing managed prefix and preserves its data directories:
-  ./setup.sh mode --prefix PATH --mode individual|runtime|docker|docker-runtime|nix [--client NAME]
+  node setup.mjs mode --prefix PATH --mode individual|runtime|docker|docker-runtime|nix [--client NAME]
 Hardware/providers are separate checks.
 Node 22+ required; --mode nix bootstraps the pinned Nix development environment.
 Optional provider keys are read from environment, never CLI arguments. Client settings are merged manually.`;
@@ -248,7 +248,7 @@ async function switchMode(options) {
       throw new Error(`Mode switch verification failed: ${report.error ?? failed ?? 'unknown error'}. The previous manifest was restored; run doctor.`);
     }
     await generateFragment({ ...options, mode: options.mode, profile: existing.profile, transport, port }, manifest);
-    log(`READY ${options.mode}/${existing.profile} from ${existing.mode}. Data directories were preserved. Doctor: ./setup.sh doctor --prefix ${JSON.stringify(options.prefix)}`);
+    log(`READY ${options.mode}/${existing.profile} from ${existing.mode}. Data directories were preserved. Doctor: node setup.mjs doctor --prefix ${JSON.stringify(options.prefix)}`);
     if (transport === 'http') log(`HTTP listener is not auto-started. Start: ${JSON.stringify(process.execPath)} ${JSON.stringify(path.join(plan.ecosystemRoot, 'scripts/launch.mjs'))} hela-runtime`);
   } finally { fs.closeSync(descriptor); fs.unlinkSync(lock); }
 }
@@ -309,7 +309,7 @@ async function main() {
     atomicJson(path.join(options.prefix, '.hela-install.json'), manifest);
     await generateFragment(options, manifest);
     fs.unlinkSync(path.join(options.prefix, '.hela-install.pending.json'));
-    log(`READY ${options.mode}/${options.profile}. Doctor: ./setup.sh doctor --prefix ${JSON.stringify(options.prefix)}`);
+    log(`READY ${options.mode}/${options.profile}. Doctor: node setup.mjs doctor --prefix ${JSON.stringify(options.prefix)}`);
     if (options.transport === 'http') log(`HTTP listener is not auto-started. Start: ${JSON.stringify(process.execPath)} ${JSON.stringify(path.join(plan.ecosystemRoot, 'scripts/launch.mjs'))} hela-runtime`);
   } finally { fs.closeSync(descriptor); fs.unlinkSync(lock); }
 }

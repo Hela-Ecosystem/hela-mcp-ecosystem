@@ -37,7 +37,12 @@ export async function provisionNeedle(directory, withoutModel) {
   if (!fs.existsSync(path.join(directory, 'scripts/ensure-needle.mjs'))) return null;
   if (withoutModel) return { ready: false, note: 'Local model explicitly omitted with --without-model' };
   const engine = engines[`${process.platform}/${process.arch}`];
-  if (!engine) throw new Error('No pinned Needle binary for this platform; use --without-model for core MCP only');
+  if (!engine) {
+    return {
+      ready: false,
+      note: `No pinned Needle binary for ${process.platform}/${process.arch}; continuing with the package's non-fatal automatic fetch and runtime fallback`,
+    };
+  }
   const base = `https://huggingface.co/Cactus-Compute/needle3/resolve/${revision}/`;
   const enginePath = path.join(directory, 'assets/needle/needle3');
   const modelPath = path.join(directory, 'assets/needle/needle3.cact');
