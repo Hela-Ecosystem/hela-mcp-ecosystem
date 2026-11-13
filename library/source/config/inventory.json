@@ -46,7 +46,29 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "skills": [
+        {
+          "name": "skill-finder",
+          "path": "skills/skill-finder"
+        },
+        {
+          "name": "human-writing",
+          "path": "skills/human-writing"
+        },
+        {
+          "name": "caveman",
+          "path": "skills/caveman"
+        },
+        {
+          "name": "mema-vault",
+          "path": "skills/mema-vault"
+        },
+        {
+          "name": "blotcat-illustrations",
+          "path": "skills/blotcat-illustrations"
+        }
+      ]
     },
     "hela-genome": {
       "id": "hela-genome",
@@ -70,7 +92,16 @@
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "skills": [
+        { "name": "code-reviewer", "path": "skills/code-reviewer" },
+        { "name": "guardian-cache", "path": "skills/guardian-cache" },
+        { "name": "guardian-memory", "path": "skills/guardian-memory" },
+        { "name": "guardian-security", "path": "skills/guardian-security" },
+        { "name": "guardian-session", "path": "skills/guardian-session" },
+        { "name": "guardian-tracker", "path": "skills/guardian-tracker" },
+        { "name": "guardian-wall", "path": "skills/guardian-wall" }
+      ]
     },
     "hela-membrane": {
       "id": "hela-membrane",
@@ -176,7 +207,10 @@
       "revision": "0632f0ed84c0a85d5e3823932079fa159acd7602",
       "env": [],
       "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification.",
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "skills": [
+        { "name": "browser-agent", "path": "skill/browser-agent" }
+      ]
     },
     "hela-phenotype": {
       "id": "hela-phenotype",
@@ -196,7 +230,12 @@
       "revision": "3e3696b4282297843d593cc4b55323617292732b",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
-      "version": "3.0.0"
+      "version": "3.0.0",
+      "skills": [
+        { "name": "logo-design", "path": "skills/logo-design" },
+        { "name": "motion-designer", "path": "skills/motion-designer" },
+        { "name": "video", "path": "skills/video" }
+      ]
     },
     "hela-receptor": {
       "id": "hela-receptor",
