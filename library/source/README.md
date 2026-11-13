@@ -228,7 +228,7 @@ npm run test:matrix
 npm run build:all -- --profile <confirmed_profile>
 npm run test:all -- --profile <confirmed_profile>
 
-# Run master integration test suite (295 tools across all 10 servers)
+# Run master integration test suite across all 10 servers (tool counts are feature-dependent)
 npm test
 
 # Sync bundled agent skills into the harness skills directory

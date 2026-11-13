@@ -64,8 +64,8 @@ npm run test:profiles -- --profile dev-workspace
 <li>Reproducible Nix packages use Node 22.23.4 and pinned/fixed-output inputs on both Linux architectures. Runtime versions derive from package metadata.</li>
 </ul>
 <p>These checks do not authenticate GUI ACP sessions, reconcile live vault conflicts, exercise Android/Blender hardware, invoke model providers, or complete deferred endpoint security. Lappy retains its ten-server roster; servy retains its eight-cell <code>dev-workspace</code> selection.</p>
-<h2 id="verified-servy-rollout">Verified servy rollout</h2>
-<p>Runtime source <code>9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0</code> and ecosystem source release <code>1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf</code> are deployed. Final-source Nix outputs are:</p>
+<h2 id="historical-servy-rollout--runtime-120">Historical Servy rollout — runtime 1.2.0</h2>
+<p>This section records the deployed Servy HTTP service, which remains on runtime <code>1.2.0</code>. The current source checkout and direct stdio runtime are <code>1.2.1</code>; this evidence is retained because the systemd deployment has not been promoted to that source version. Runtime source <code>9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0</code> and ecosystem source release <code>1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf</code> are deployed. Final-source Nix outputs are:</p>
 <ul>
 <li>x86_64-linux: <code>/nix/store/r15rmywrswf01nj2xrvx753p1fh4f6rh-hela-runtime-1.2.0</code>.</li>
 <li>aarch64-linux: <code>/nix/store/bhm781bld50yi9brmy2mn74p1ybzdzcy-hela-runtime-1.2.0</code>.</li>
@@ -75,12 +75,12 @@ npm run test:profiles -- --profile dev-workspace
 <p>Deployed doctor reports READY, catalog parity is exact, revision checks pass, and the GC root is verified. All previous HTTP-service PIDs exited. All <strong>633</strong> pre-rollout conflict archive files retained their hashes. No database file was restored/replaced, and unrelated client-owned runtimes and the legacy PM2 gateway were not stopped.</p>
 <p>The rollout directory contains <code>manifest.json</code>, <code>http-verification.json</code>, <code>doctor.log</code>, <code>versions.log</code>, <code>catalog.log</code>, <code>backup/</code>, <code>rollback-dist/</code>, and the package GC root. Native committed-source staging/test evidence remains under <code>/home/ubuntu/.local/state/hela/staging/todo103-release-ah25pauz/</code>; local test/measurement logs are under <code>/var/tmp/scratch/opencode/todo103/</code>. Authenticated ACP, deliberate external-client reloads, gateway consumer review, vault reconciliation, and deferred security remain separate.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#one-inventory-generated-schemas-and-counts">One inventory, generated schemas and counts</a></li><li><a href="#cache-isolation-and-stale-metadata">Cache isolation and stale metadata</a></li><li><a href="#verification-scope">Verification scope</a></li><li><a href="#verified-servy-rollout">Verified servy rollout</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#one-inventory-generated-schemas-and-counts">One inventory, generated schemas and counts</a></li><li><a href="#cache-isolation-and-stale-metadata">Cache isolation and stale metadata</a></li><li><a href="#verification-scope">Verification scope</a></li><li><a href="#historical-servy-rollout--runtime-120">Historical Servy rollout — runtime 1.2.0</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.8.0"></script>
-  <script src="../../library-data.js?v=1.8.0&amp;rev=15d35a5264b4"></script>
+  <script src="../../library-data.js?v=1.8.0&amp;rev=85daae727375"></script>
   <script src="../../library.js?v=1.8.0&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.8.0&amp;rev=fa590baa9385"></script>
 </body>

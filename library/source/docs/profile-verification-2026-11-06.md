@@ -1,6 +1,6 @@
-# All-profile verification — 2026-11-06
+# All-profile verification — historical record (2026-11-06)
 
-HeLa changes apply to the shared servers/runtime, not a hardcoded lappy or servy configuration. Each installation keeps its selected profile. The runtime default remains `dev-workspace`; the distribution does not force everyone to `all`.
+This historical verification predates the current `minimal` default. At the time of this run, the runtime default was `dev-workspace`; current installations default to `minimal` unless a profile is selected. HeLa changes apply to the shared servers/runtime, not a hardcoded lappy or servy configuration. Each installation keeps its selected profile.
 
 Machine configurations were preserved:
 

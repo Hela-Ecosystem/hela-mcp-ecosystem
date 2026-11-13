@@ -76,7 +76,7 @@ tracked separately from this source-level portability work.</p>
 <p>Runtime <strong>1.2.0</strong> starts cells only when invoked, shares concurrent startup attempts, and discovers schemas without spawning cells. Revision/build/config-aware caches reject stale entries; legacy/corrupt caches fall back to a validated generated catalog. Unknown calls no longer start unrelated cells. Standalone servers, all eight profiles, and the <code>dev-workspace</code> default are preserved.</p>
 <p>The canonical inventory drives config generation, doctor/version/profile checks, schema catalogs, and generated documentation counts. Doctor can verify exact runtime discovery with no cell startup via <code>--runtime</code>. A new immutable v1.5.0 snapshot pins runtime <code>9c92dbf</code>; older versioned snapshots are unchanged.</p>
 <p>Verification: <strong>32</strong> runtime regressions on both Linux architectures, <strong>16</strong> all-profile namespace-mode checks, <strong>80</strong> client configurations, four probe regressions, and four inventory regressions. Cold/warm measurements are recorded, not treated as universal benchmarks. See <a href="docs/on-demand-runtime.html">implementation and verification scope</a>. ACP authentication, external client reloads, gateway retirement, vault conflict review, hardware/provider integrations, and deferred security remain separate work.</p>
-<p><strong>Servy rollout verified:</strong> public/local discovery exposes 236 tools without starting any cells; the first safe Nucleus call starts only Nucleus. Deployed doctor, catalog, and revision checks pass. Fresh backups and rollback material are retained, and all 633 existing conflict archive files are unchanged. See the <a href="docs/on-demand-runtime.html#verified-servy-rollout">rollout evidence</a>.</p>
+<p><strong>Servy rollout verified:</strong> public/local discovery exposes 236 tools without starting any cells; the first safe Nucleus call starts only Nucleus. Deployed doctor, catalog, and revision checks pass. Fresh backups and rollback material are retained, and all 633 existing conflict archive files are unchanged. See the <a href="docs/on-demand-runtime.html#historical-servy-rollout--runtime-120">rollout evidence</a>.</p>
 <h2 id="v140--memory-safety-and-runtime-verification">v1.4.0 — memory safety and runtime verification</h2>
 <p>The v1.4.0 source snapshot pins the published cell revisions and runtime 1.1.0. Older versioned snapshots are unchanged. <code>latest-stable.json</code> tracks this source snapshot, not a guarantee that every optional integration or GUI session has been exercised.</p>
 <ul>
@@ -161,7 +161,7 @@ cd hela-mcp-ecosystem
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../release-data.js?v=1.8.0"></script>
-  <script src="../library-data.js?v=1.8.0&amp;rev=15d35a5264b4"></script>
+  <script src="../library-data.js?v=1.8.0&amp;rev=85daae727375"></script>
   <script src="../library.js?v=1.8.0&amp;rev=e4e7b2f0ebad"></script>
   <script src="../app.js?v=1.8.0&amp;rev=fa590baa9385"></script>
 </body>

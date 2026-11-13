@@ -58,9 +58,7 @@ Generated configuration can contain credentials you explicitly provide. Keep it 
 ## Verify the selected installation
 
 ```bash
-node setup.mjs doctor --profile dev-workspace
-# If installed through the runtime:
-node setup.mjs doctor --profile dev-workspace --runtime
+node setup.mjs doctor --mode runtime --profile dev-workspace
 npm run test:matrix
 ```
 

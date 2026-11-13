@@ -11,6 +11,7 @@ All notable changes to this project.
 - Make Needle and Mirage installer capabilities profile-aware: every canonical profile provisions Needle through Mitosis, while profiles containing Cytosol provision the managed Mirage Python bridge automatically.
 - Add checksum-verified Windows x64/ARM64 Needle assets so native Windows profiles receive the same local agent capability without manual path configuration.
 - Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
+- Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
 
 ## [1.8.0] - 2026-11-13
 
@@ -460,7 +461,7 @@ npm run test:matrix
 npm run build:all -- --profile <confirmed_profile>
 npm run test:all -- --profile <confirmed_profile>
 
-# Run master integration test suite (295 tools across all 10 servers)
+# Run master integration test suite across all 10 servers (tool counts are feature-dependent)
 npm test
 
 # Sync bundled agent skills into the harness skills directory
@@ -573,7 +574,7 @@ The canonical inventory drives config generation, doctor/version/profile checks,
 
 Verification: **32** runtime regressions on both Linux architectures, **16** all-profile namespace-mode checks, **80** client configurations, four probe regressions, and four inventory regressions. Cold/warm measurements are recorded, not treated as universal benchmarks. See [implementation and verification scope](docs/on-demand-runtime.md). ACP authentication, external client reloads, gateway retirement, vault conflict review, hardware/provider integrations, and deferred security remain separate work.
 
-**Servy rollout verified:** public/local discovery exposes 236 tools without starting any cells; the first safe Nucleus call starts only Nucleus. Deployed doctor, catalog, and revision checks pass. Fresh backups and rollback material are retained, and all 633 existing conflict archive files are unchanged. See the [rollout evidence](docs/on-demand-runtime.md#verified-servy-rollout).
+**Servy rollout verified:** public/local discovery exposes 236 tools without starting any cells; the first safe Nucleus call starts only Nucleus. Deployed doctor, catalog, and revision checks pass. Fresh backups and rollback material are retained, and all 633 existing conflict archive files are unchanged. See the [rollout evidence](docs/on-demand-runtime.md#historical-servy-rollout--runtime-120).
 
 ## v1.4.0 — memory safety and runtime verification
 
@@ -935,9 +936,7 @@ Generated configuration can contain credentials you explicitly provide. Keep it 
 ## Verify the selected installation
 
 ```bash
-node setup.mjs doctor --profile dev-workspace
-# If installed through the runtime:
-node setup.mjs doctor --profile dev-workspace --runtime
+node setup.mjs doctor --mode runtime --profile dev-workspace
 npm run test:matrix
 ```
 
@@ -980,7 +979,7 @@ URL: https://hela.my.id/library/docs/deployment-2026-11-06.html
 
 # Servy deployment verification — 2026-11-06
 
-This records the earlier runtime 1.1.0 rollout. The subsequent [runtime 1.2.0 on-demand deployment](on-demand-runtime.md#verified-servy-rollout) supersedes its process/startup state; the evidence below remains historical.
+This records the earlier runtime 1.1.0 rollout. The subsequent [runtime 1.2.0 on-demand deployment](on-demand-runtime.md#historical-servy-rollout--runtime-120) supersedes its process/startup state; the evidence below remains historical.
 
 The v1.4.0 source release (`c9faa9b`) is deployed to servy's systemd-managed HTTP runtime. This record covers that deployment, not authenticated GUI sessions or live vault reconciliation.
 
@@ -1217,8 +1216,8 @@ The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked
 ## Individual servers
 
 ```bash
-node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
-node setup.mjs doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode individual --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode individual --profile dev-workspace
 ```
 
 Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.
@@ -1562,9 +1561,9 @@ Doctor validates selected paths/builds, real isolated MCP handshakes, package/in
 
 These checks do not authenticate GUI ACP sessions, reconcile live vault conflicts, exercise Android/Blender hardware, invoke model providers, or complete deferred endpoint security. Lappy retains its ten-server roster; servy retains its eight-cell `dev-workspace` selection.
 
-## Verified servy rollout
+## Historical Servy rollout — runtime 1.2.0
 
-Runtime source `9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0` and ecosystem source release `1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf` are deployed. Final-source Nix outputs are:
+This section records the deployed Servy HTTP service, which remains on runtime `1.2.0`. The current source checkout and direct stdio runtime are `1.2.1`; this evidence is retained because the systemd deployment has not been promoted to that source version. Runtime source `9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0` and ecosystem source release `1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf` are deployed. Final-source Nix outputs are:
 
 - x86_64-linux: `/nix/store/r15rmywrswf01nj2xrvx753p1fh4f6rh-hela-runtime-1.2.0`.
 - aarch64-linux: `/nix/store/bhm781bld50yi9brmy2mn74p1ybzdzcy-hela-runtime-1.2.0`.
@@ -1583,9 +1582,9 @@ The rollout directory contains `manifest.json`, `http-verification.json`, `docto
 # Source: docs/profile-verification-2026-11-06.md
 URL: https://hela.my.id/library/docs/profile-verification-2026-11-06.html
 
-# All-profile verification — 2026-11-06
+# All-profile verification — historical record (2026-11-06)
 
-HeLa changes apply to the shared servers/runtime, not a hardcoded lappy or servy configuration. Each installation keeps its selected profile. The runtime default remains `dev-workspace`; the distribution does not force everyone to `all`.
+This historical verification predates the current `minimal` default. At the time of this run, the runtime default was `dev-workspace`; current installations default to `minimal` unless a profile is selected. HeLa changes apply to the shared servers/runtime, not a hardcoded lappy or servy configuration. Each installation keeps its selected profile.
 
 Machine configurations were preserved:
 
