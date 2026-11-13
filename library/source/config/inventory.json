@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "project_name": "HeLa MCP Ecosystem",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "total_servers": 11,
   "core_headless_count": 7,
   "specialized_gui_count": 3,
@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "3c1d49532669196c0b34e842360e9d9b8d12b6cc",
+      "revision": "86dca7603be940661c4b974eda47c3525a58919a",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -46,7 +46,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.0.0",
+      "version": "3.0.3",
       "skills": [
         {
           "name": "skill-finder",
@@ -85,14 +85,14 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "9ba1d0e834b4e6d6485f3605d844245cf73bfd7a",
+      "revision": "7824e1d1fb889956ee390a481f9e17a2142df4dc",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "skills": [
         { "name": "code-reviewer", "path": "skills/code-reviewer" },
         { "name": "guardian-cache", "path": "skills/guardian-cache" },
@@ -118,10 +118,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "6160599d55d19565b8fabe5dd6b11855da7acd18",
+      "revision": "6986ad8366293ad9c544fa029637adc56ba30009",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
-      "version": "3.0.0"
+      "version": "3.0.1"
     },
     "hela-nucleus": {
       "id": "hela-nucleus",
@@ -138,10 +138,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "6f348fd5d42c26cffb251ec9f5bae673f274176f",
+      "revision": "0ff0afd871f3fd1349f83fb6b20d477d776c489a",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
-      "version": "3.0.0"
+      "version": "3.0.1"
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
@@ -158,10 +158,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "8580bbcf208ad48e276343b681cf3bb51d3766e2",
+      "revision": "82512f49775ac4c1d1b6984c38914ff418684c1e",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.0.0"
+      "version": "3.0.1"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -178,7 +178,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "eb98982ee72f809113292be630ebd6735376a886",
+      "revision": "7644b0cdc44e2ba038f197ca759cb538cbef61eb",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -187,7 +187,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.0"
+      "version": "4.0.1"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -204,10 +204,10 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "0632f0ed84c0a85d5e3823932079fa159acd7602",
+      "revision": "ab0d4bb666ee5159839baee4ca476af2960203eb",
       "env": [],
       "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "skills": [
         { "name": "browser-agent", "path": "skill/browser-agent" }
       ]
@@ -227,10 +227,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "3e3696b4282297843d593cc4b55323617292732b",
+      "revision": "d32479d4bd13824cbd4f7effb2b4a4b6c479ac2d",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "skills": [
         { "name": "logo-design", "path": "skills/logo-design" },
         { "name": "motion-designer", "path": "skills/motion-designer" },
@@ -252,10 +252,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "1b21cb7418ae634e66d67732c6b16b6e86e3520f",
+      "revision": "67017f2ec324192e863b5fb65702cbda0b7f5217",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "lazy": true
     },
     "hela-plastid": {
@@ -273,10 +273,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": false,
-      "revision": "aa438778aaf83ff7f467c83caecf88711a7afda1",
+      "revision": "b5c1a23d7e283211012cb882a41628a783b08146",
       "env": [],
       "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "lazy": true
     },
     "hela-runtime": {
@@ -294,8 +294,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0",
-      "version": "1.2.0",
+      "revision": "15baba8040e9375641daf40866998dd0a321a2b8",
+      "version": "1.2.1",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",

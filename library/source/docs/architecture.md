@@ -133,7 +133,7 @@ flowchart TB
 
 ---
 
-### 4.4 Canonical Tool Boundaries (v1.2.0)
+### 4.4 Canonical Tool Boundaries (v1.2.1)
 
 Several organelles expose overlapping capabilities. Descriptions and the Mitosis capability router now enforce a single canonical choice per intent, keeping a restricted alternative only for its niche:
 
