@@ -131,17 +131,7 @@
           <li><div><strong>Record.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — results in the memory graph.</div></li>
         </ol>
 
-        <h2 id="workflow-e">E — Interactive PTY Orchestration</h2>
-        <p>Profiles: <code>dev-workspace</code>, <code>headless-server</code>. Long builds, REPLs, and regex-driven automation.</p>
-        <ol class="steps">
-          <li><div><strong>Spawn.</strong> <span class="step-tool">hela-ribosome:agent_spawn</span> — routed opencode agent (or <span class="step-tool">session_spawn</span> for raw PTY).</div></li>
-          <li><div><strong>Stream.</strong> <span class="step-tool">hela-ribosome:session_read</span> — bounded stdout/stderr chunks.</div></li>
-          <li><div><strong>Hook.</strong> <span class="step-tool">hela-ribosome:session_hook</span> — regex triggers with auto-response.</div></li>
-          <li><div><strong>Close.</strong> <span class="step-tool">hela-ribosome:session_close</span> — graceful teardown.</div></li>
-          <li><div><strong>Record.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — logs and exit status.</div></li>
-        </ol>
-
-        <h2 id="workflow-f">F — Autonomous Blender 3D Modeling</h2>
+        <h2 id="workflow-e">E — Autonomous Blender 3D Modeling</h2>
         <p>Profiles: <code>3d-modeling</code>, <code>all</code>. Prompt → geometry → render → asset.</p>
         <ol class="steps">
           <li><div><strong>Plan.</strong> <span class="step-tool">hela-plastid:generate_modeling_plan</span> — phased procedural scripts.</div></li>
@@ -149,6 +139,16 @@
           <li><div><strong>Render.</strong> <span class="step-tool">hela-plastid:render_output</span> — camera snapshot.</div></li>
           <li><div><strong>Save.</strong> <span class="step-tool">hela-plastid:save_blend</span> — binary <code>.blend</code> under <code>assets/</code>.</div></li>
           <li><div><strong>Record.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — asset metadata and render path.</div></li>
+        </ol>
+
+        <h2 id="workflow-f">F — Interactive PTY Orchestration</h2>
+        <p>Profiles: <code>dev-workspace</code>, <code>headless-server</code>. Long builds, REPLs, and regex-driven automation.</p>
+        <ol class="steps">
+          <li><div><strong>Spawn.</strong> <span class="step-tool">hela-ribosome:agent_spawn</span> — routed opencode agent (or <span class="step-tool">session_spawn</span> for raw PTY).</div></li>
+          <li><div><strong>Stream.</strong> <span class="step-tool">hela-ribosome:session_read</span> — bounded stdout/stderr chunks.</div></li>
+          <li><div><strong>Hook.</strong> <span class="step-tool">hela-ribosome:session_hook</span> — regex triggers with auto-response.</div></li>
+          <li><div><strong>Close.</strong> <span class="step-tool">hela-ribosome:session_close</span> — graceful teardown.</div></li>
+          <li><div><strong>Record.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — logs and exit status.</div></li>
         </ol>
       </nav>
 

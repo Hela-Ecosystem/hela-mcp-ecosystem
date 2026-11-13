@@ -101,6 +101,19 @@ test('all EN/ID pages display current versions and load generated data before th
   }
 });
 
+test('workflow pages keep the canonical E/F capability order in both languages', () => {
+  for (const file of [path.join(site, 'workflows.html'), path.join(site, 'id', 'workflows.html')]) {
+    const text = fs.readFileSync(file, 'utf8');
+    const e = text.indexOf('id="workflow-e"');
+    const f = text.indexOf('id="workflow-f"');
+    assert.ok(e >= 0 && f > e, `${file}: workflow E must precede workflow F`);
+    const eSection = text.slice(e, f);
+    const fSection = text.slice(f);
+    assert.match(eSection, /hela-plastid:generate_modeling_plan/, `${file}: workflow E must describe Blender modeling`);
+    assert.match(fSection, /hela-ribosome:agent_spawn/, `${file}: workflow F must describe PTY orchestration`);
+  }
+});
+
 test('index install prompts require profile confirmation and link the profile catalog', () => {
   for (const file of [path.join(site, 'index.html'), path.join(site, 'id', 'index.html')]) {
     const text = fs.readFileSync(file, 'utf8');

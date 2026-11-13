@@ -121,17 +121,7 @@
           <li><div><strong>Catat laporan.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — hasil tes disimpan di grafik memori.</div></li>
         </ol>
 
-        <h2 id="workflow-e">E — Orkestrasi Proses PTY Interaktif</h2>
-        <p>Profil yang cocok: <code>dev-workspace</code>, <code>headless-server</code>. Proses build panjang, REPL, dan otomasi berbasis regex stream.</p>
-        <ol class="steps">
-          <li><div><strong>Spawn proses.</strong> <span class="step-tool">hela-ribosome:agent_spawn</span> — sesi agen opencode terarah (atau <span class="step-tool">session_spawn</span> untuk PTY mentah).</div></li>
-          <li><div><strong>Streaming log.</strong> <span class="step-tool">hela-ribosome:session_read</span> — chunk stdout/stderr terkontrol.</div></li>
-          <li><div><strong>Pasang trigger.</strong> <span class="step-tool">hela-ribosome:session_hook</span> — respon otomatis berbasis pola regex.</div></li>
-          <li><div><strong>Tutup proses.</strong> <span class="step-tool">hela-ribosome:session_close</span> — penutupan proses secara rapi.</div></li>
-          <li><div><strong>Simpan log.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — pencatatan status exit dan log.</div></li>
-        </ol>
-
-        <h2 id="workflow-f">F — Pemodelan 3D Prosedural Blender Otonom</h2>
+        <h2 id="workflow-e">E — Pemodelan 3D Prosedural Blender Otonom</h2>
         <p>Profil yang cocok: <code>3d-modeling</code>, <code>all</code>. Prompt bahasa alami → geometri prosedural → render visual → aset <code>.blend</code>.</p>
         <ol class="steps">
           <li><div><strong>Rencanakan.</strong> <span class="step-tool">hela-plastid:generate_modeling_plan</span> — rencana skrip prosedural bertahap.</div></li>
@@ -139,6 +129,16 @@
           <li><div><strong>Render.</strong> <span class="step-tool">hela-plastid:render_output</span> — tangkapan kamera viewport.</div></li>
           <li><div><strong>Simpan berkas.</strong> <span class="step-tool">hela-plastid:save_blend</span> — berkas biner <code>.blend</code> disimpan di <code>assets/</code>.</div></li>
           <li><div><strong>Catat aset.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — metadata aset dan jalur render.</div></li>
+        </ol>
+
+        <h2 id="workflow-f">F — Orkestrasi Proses PTY Interaktif</h2>
+        <p>Profil yang cocok: <code>dev-workspace</code>, <code>headless-server</code>. Proses build panjang, REPL, dan otomasi berbasis regex stream.</p>
+        <ol class="steps">
+          <li><div><strong>Spawn proses.</strong> <span class="step-tool">hela-ribosome:agent_spawn</span> — sesi agen opencode terarah (atau <span class="step-tool">session_spawn</span> untuk PTY mentah).</div></li>
+          <li><div><strong>Streaming log.</strong> <span class="step-tool">hela-ribosome:session_read</span> — chunk stdout/stderr terkontrol.</div></li>
+          <li><div><strong>Pasang trigger.</strong> <span class="step-tool">hela-ribosome:session_hook</span> — respon otomatis berbasis pola regex.</div></li>
+          <li><div><strong>Tutup proses.</strong> <span class="step-tool">hela-ribosome:session_close</span> — penutupan proses secara rapi.</div></li>
+          <li><div><strong>Simpan log.</strong> <span class="step-tool">hela-genome:memory_edit(add_observations)</span> — pencatatan status exit dan log.</div></li>
         </ol>
 
         <footer class="doc-footer"><span>LISENSI MIT · AZZAR</span><span>ARCHIVAL_RECORD_SEALED // HELA_MCP_ECOSYSTEM</span></footer>
