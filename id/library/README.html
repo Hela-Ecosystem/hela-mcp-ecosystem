@@ -182,9 +182,11 @@
 
 3. Clone &amp; Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
-   cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   ./setup.sh doctor --profile &lt;confirmed_profile&gt; --mode runtime
+   cd hela-mcp-ecosystem
+   # Windows PowerShell: .\setup.ps1 ... and .\setup.ps1 doctor ...
+   # macOS/Linux: node setup.mjs ... (setup.sh remains a compatibility shim)
+   node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   node setup.mjs doctor --profile &lt;confirmed_profile&gt; --mode runtime
    Safely merge generated client configuration into my active MCP configuration file.
    Do not deploy or configure each hela-* cell as a separate client server.
 
@@ -200,43 +202,43 @@
    Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.
 </code></pre>
 </div>
-<h3 id="2-run-diagnostics-setupsh-doctor">2. Run Diagnostics (<code>setup.sh doctor</code>)</h3>
+<h3 id="2-run-diagnostics-node-setupmjs-doctor">2. Run Diagnostics (<code>node setup.mjs doctor</code>)</h3>
 <p>Clone the source, then select an installation mode:</p>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 </code></pre>
 </div>
 <h3 id="3-interactive-installation--profile-selection">3. Interactive Installation &amp; Profile Selection</h3>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs
 </code></pre>
 </div>
 <h3 id="4-non-interactive-one-liners">4. Non-Interactive One-Liners</h3>
 <p><strong>Full Developer Desktop (Cursor IDE):</strong></p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client cursor --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --profile dev-workspace --client cursor --non-interactive
 </code></pre>
 </div>
 <p><strong>Headless Linux Server (Claude Desktop / CLI):</strong></p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile headless-server --client claude --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --profile headless-server --client claude --non-interactive
 </code></pre>
 </div>
 <p><strong>Pinned Immutable Release Snapshot:</strong></p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client cursor --snapshot v1.6.2 --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --profile dev-workspace --client cursor --snapshot v1.6.2 --non-interactive
 </code></pre>
 </div>
 <p><strong>Single-endpoint Runtime (one MCP connection for the selected profile):</strong></p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --profile dev-workspace --client opencode --runtime --non-interactive
 </code></pre>
 </div>
 <p><strong>Change an existing installation's mode in place:</strong></p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh mode --prefix /path/to/prefix --mode docker-runtime --client opencode --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs mode --prefix /path/to/prefix --mode docker-runtime --client opencode --non-interactive
 </code></pre>
 </div>
 <p><strong>Docker cells, Docker runtime, or Nix runtime:</strong></p>
-<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
-./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh --mode nix --profile dev-workspace --client codex --non-interactive
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">node setup.mjs --mode docker --profile dev-workspace --client cursor --non-interactive
+node setup.mjs --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs --mode nix --profile dev-workspace --client codex --non-interactive
 </code></pre>
 </div>
 <p>Installs use private managed prefixes under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Existing repositories and live client files are not overwritten. Review and merge the generated client fragment. Use <code>--prefix</code> for an explicit location and pass it to doctor. See <a href="docs/installation.html">installation modes and doctor</a> for HTTP transport, Compose, Nix GC roots, snapshots, optional model assets, prerequisites, and failure recovery.</p>
@@ -326,7 +328,7 @@ cd hela-mcp-ecosystem
 <p><strong>Single-endpoint serve mode:</strong> add <code>--runtime</code> to a profile command. If no profile is selected, the runtime and installer default to <code>minimal</code>; choose <code>dev-workspace</code> or another profile explicitly.</p>
 </blockquote>
 <p>Profiles are installation choices, not machine-specific code paths. All eight pass isolated runtime verification with namespacing off/on (<strong>16 checks</strong>), including exact tool/schema parity and safe read-only routing. Lappy's ten-server <code>all</code> roster and servy's eight-cell <code>dev-workspace</code> setup remain different by design. See <a href="docs/profile-verification-2026-11-06.html">all-profile verification</a>; run <code>npm run test:profiles</code>, or append <code>-- --profile &lt;id&gt;</code> on a partial installation.</p>
-<p>Runtime discovery now starts <strong>zero cells</strong>; only invoked cells are started. <a href="docs/generated-profile-counts.html">Generated profile counts</a> come from the inventory/catalog rather than static client-specific totals. <code>./setup.sh doctor --profile &lt;id&gt; --runtime</code> checks cold catalog parity as well as versions, paths, and revisions.</p>
+<p>Runtime discovery now starts <strong>zero cells</strong>; only invoked cells are started. <a href="docs/generated-profile-counts.html">Generated profile counts</a> come from the inventory/catalog rather than static client-specific totals. <code>node setup.mjs doctor --profile &lt;id&gt; --runtime</code> checks cold catalog parity as well as versions, paths, and revisions.</p>
 <p>For complete persona guides and pipeline specifications, see <strong><a href="docs/profiles.html">Profiles Catalog</a></strong>.</p>
 <hr>
 <h2 id="operational-workflows-workflows-af">Operational Workflows (Workflows A–F)</h2>
@@ -345,10 +347,12 @@ cd hela-mcp-ecosystem
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash"># Run system and server diagnostic health check
 npm run doctor
 # or
-./setup.sh doctor
+node setup.mjs doctor
 
 # Run 80-combination client configuration checks (not GUI integration)
 npm run test:matrix
+npm run build:all -- --profile &lt;confirmed_profile&gt;
+npm run test:all -- --profile &lt;confirmed_profile&gt;
 
 # Run master integration test suite (295 tools across all 10 servers)
 npm test
@@ -381,7 +385,7 @@ npm run skills:check
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.6.2"></script>
-  <script src="../../library-data.js?v=1.6.2&amp;rev=8a2c24641331"></script>
+  <script src="../../library-data.js?v=1.6.2&amp;rev=d210d7ad4a54"></script>
   <script src="../../library.js?v=1.6.2&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.6.2&amp;rev=e6672a153a87"></script>
 </body>
