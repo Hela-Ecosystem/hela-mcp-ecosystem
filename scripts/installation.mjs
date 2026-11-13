@@ -10,6 +10,13 @@ export const clients = ['cursor', 'claude', 'gemini', 'antigravity', 'opencode',
 
 export function modeNeedsRuntime(mode) { return mode !== 'individual'; }
 export function modeFamily(mode) { return mode.startsWith('docker') ? 'docker' : mode === 'nix' ? 'nix' : 'host'; }
+export function profileCapabilities(profile) {
+  const servers = new Set(profile?.servers ?? []);
+  return {
+    needle: servers.has('hela-mitosis'),
+    mirage: servers.has('hela-cytosol'),
+  };
+}
 
 export function run(command, args, options = {}) {
   const result = spawnSync(command, args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, timeout: 600000, ...options });

@@ -10,6 +10,8 @@ const engines = {
   'linux/x64': ['linux-x86_64/needle', '77cd35ee75c53df8532b397e11ed7cf94a45d89a9f14f50881fd9c68ba54a2d0'],
   'linux/arm64': ['linux-arm64/needle', 'a7dd07f740763507edbca760dc7e7065b6da6b6bd6c3a05288ca974f14ce0fcb'],
   'darwin/arm64': ['macos-arm64/needle', '0a480f7e01d1fcf9df2e6dbc29af29411406720a5c5cb73024fcd6d16aa25b60'],
+  'win32/x64': ['windows-x86_64/needle.exe', '0d4bc1da8c51f5600f5c4f4bb4a92e0abe142fae7b69e695ccab93e6745c883d'],
+  'win32/arm64': ['windows-arm64/needle.exe', '64a0e0d269fbc87e839551a5396575b604e77706e9ad18dd2969c30e97f752df'],
 };
 const modelHash = 'c9d915eca282ed42d1a09b143b592adb4cc6744ffe2d294adf5cfc5548170c38';
 
@@ -44,11 +46,12 @@ export async function provisionNeedle(directory, withoutModel) {
     };
   }
   const base = `https://huggingface.co/Cactus-Compute/needle3/resolve/${revision}/`;
-  const enginePath = path.join(directory, 'assets/needle/needle3');
+  const executableName = process.platform === 'win32' ? 'needle3.exe' : 'needle3';
+  const enginePath = path.join(directory, 'assets/needle', executableName);
   const modelPath = path.join(directory, 'assets/needle/needle3.cact');
   await downloadVerified(base + engine[0], enginePath, engine[1]);
   await downloadVerified(base + 'needle3.cact', modelPath, modelHash);
   await downloadVerified(base + 'LICENSE', path.join(directory, 'assets/needle/LICENSE'), 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30', 65536);
-  fs.chmodSync(enginePath, 0o755);
+  if (process.platform !== 'win32') fs.chmodSync(enginePath, 0o755);
   return { ready: true, revision, enginePath, modelPath, engineHash: engine[1], modelHash };
 }

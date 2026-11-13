@@ -25,11 +25,22 @@ try {
     HELA_PROFILE: manifest.profile, HELA_ECOSYSTEM_ROOT: manifest.ecosystemRoot };
   env.PATH = path.dirname(manifest.node) + path.delimiter + (process.env.PATH || '');
   const needleRoot = path.join(prefix, 'chaining-mcp/assets/needle');
-  if (fs.existsSync(path.join(needleRoot, 'needle3'))) {
-    env.NEEDLE_ENGINE_PATH ||= path.join(needleRoot, 'needle3');
+  const needleNames = process.platform === 'win32' ? ['needle3.exe', 'needle.exe', 'needle3', 'needle'] : ['needle3', 'needle'];
+  const needleEngine = needleNames.map(name => path.join(needleRoot, name)).find(file => fs.existsSync(file));
+  if (needleEngine) {
+    env.HELA_NATIVE_AGENT ||= 'true';
+    env.NEEDLE_ENGINE_PATH ||= needleEngine;
     env.NEEDLE_MODEL_PATH ||= path.join(needleRoot, 'needle3.cact');
     env.NEEDLE_TOOL_INDEX_PATH ||= path.join(data, 'needle-tools.idx');
-    env.NEEDLE_SYSTEM_PATH ||= path.join(needleRoot, 'profiles', `${manifest.profile}.txt`);
+    const systemPath = path.join(needleRoot, 'profiles', `${manifest.profile}.txt`);
+    if (fs.existsSync(systemPath)) env.NEEDLE_SYSTEM_PATH ||= systemPath;
+  }
+  const mirage = manifest.mirage?.ready ? manifest.mirage : null;
+  if (mirage?.venvPath && mirage?.pythonPath && fs.existsSync(mirage.pythonPath)) {
+    env.HELA_CYTOSOL_MIRAGE_VENV ||= mirage.venvPath;
+    env.HELA_CYTOSOL_MIRAGE_PYTHON ||= mirage.pythonPath;
+    env.CACTUS_TELEMETRY ||= '0';
+    env.DO_NOT_TRACK ||= '1';
   }
   let command = manifest.node, args = [path.join(prefix, server.dir, server.entry)];
   if (manifest.mode.startsWith('docker')) {

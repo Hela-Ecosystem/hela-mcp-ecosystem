@@ -18,5 +18,6 @@ USER node
 ENV HOME=/data XDG_DATA_HOME=/data XDG_CACHE_HOME=/data/cache XDG_CONFIG_HOME=/data/config GUARDIAN_CENTRAL_DB=/data/memory.db GUARDIAN_PROJECT_ROOT=/workspace HELA_ECOSYSTEM_ROOT=/opt/hela/hela-mcp-ecosystem
 ENV HELA_PROFILE=$HELA_PROFILE
 ENV NEEDLE_ENGINE_PATH=/opt/hela/chaining-mcp/assets/needle/needle3 NEEDLE_MODEL_PATH=/opt/hela/chaining-mcp/assets/needle/needle3.cact NEEDLE_TOOL_INDEX_PATH=/data/needle-tools.idx
+ENV HELA_CYTOSOL_MIRAGE_VENV=/opt/hela/browser-mcp/user_data/mirage/.venv HELA_CYTOSOL_MIRAGE_PYTHON=/opt/hela/browser-mcp/user_data/mirage/.venv/bin/python CACTUS_TELEMETRY=0 DO_NOT_TRACK=1
 WORKDIR /workspace
 CMD ["node", "/opt/hela/hela-runtime/dist/index.js"]

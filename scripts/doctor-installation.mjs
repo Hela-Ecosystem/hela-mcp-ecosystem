@@ -67,7 +67,7 @@ export async function checkInstallation(prefix) {
   if (fs.existsSync(path.join(prefix, '.hela-install.pending.json'))) return {
     mode: manifest.mode, profile: manifest.profile, status: 'DEGRADED', servers: [], error: 'An incomplete installation is pending; rerun installer.' };
   if (manifest.mode.startsWith('docker')) return checkContainerInstallation(manifest);
-  const report = { mode: manifest.mode, profile: manifest.profile, status: 'READY', isolated: true, servers: [], needle: manifest.needle,
+  const report = { mode: manifest.mode, profile: manifest.profile, status: 'READY', isolated: true, servers: [], needle: manifest.needle, mirage: manifest.mirage,
     integrations: 'MCP readiness only. Browser executables, devices/Blender bridges and providers require separate checks.' };
   if (manifest.needle?.ready) {
     for (const kind of ['engine', 'model']) {
@@ -75,6 +75,16 @@ export async function checkInstallation(prefix) {
         const digest = createHash('sha256').update(fs.readFileSync(manifest.needle[`${kind}Path`])).digest('hex');
         if (digest !== manifest.needle[`${kind}Hash`]) throw new Error('Checksum mismatch');
       } catch { report.status = 'DEGRADED'; report.needle = { ready: false, error: `Needle ${kind} missing or changed` }; }
+    }
+  }
+  if (manifest.mirage?.ready) {
+    try {
+      if (!fs.existsSync(manifest.mirage.pythonPath) || !fs.existsSync(manifest.mirage.workerPath)) throw new Error('Mirage Python worker is missing');
+      const imported = spawnSync(manifest.mirage.pythonPath, ['-c', 'import cactus'], { stdio: 'ignore', timeout: 30000 });
+      if (imported.error || imported.status !== 0) throw new Error('cactus-compute[vision] is not importable');
+    } catch (error) {
+      report.status = 'DEGRADED';
+      report.mirage = { ready: false, error: error.message };
     }
   }
   const discoveries = new Map();

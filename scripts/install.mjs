@@ -6,8 +6,9 @@ import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline/promises';
 import { probeMcp } from './mcp-probe.mjs';
 import { provisionNeedle } from './provision-needle.mjs';
+import { provisionMirage } from './provision-mirage.mjs';
 import { modes, clients, parseOptions, installationPlan, readInstallation, run, atomicJson, isolatedBuildEnvironment,
-  artifactDigest, composeConfiguration, modeFamily } from './installation.mjs';
+  artifactDigest, composeConfiguration, modeFamily, profileCapabilities } from './installation.mjs';
 
 const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const help = `Usage: node setup.mjs [doctor|mode] [OPTIONS]
@@ -34,6 +35,7 @@ Doctor accepts --prefix/--mode/--profile/--runtime/--json, or --url URL for a ru
 Mode switching reuses an existing managed prefix and preserves its data directories:
   node setup.mjs mode --prefix PATH --mode individual|runtime|docker|docker-runtime|nix [--client NAME]
 Hardware/providers are separate checks.
+Profile capabilities are automatic: every canonical profile includes Needle through Mitosis; profiles containing Cytosol (dev-workspace, research, web-devops, all) also install the managed Mirage Python bridge.
 Node 22+ required; --mode nix bootstraps the pinned Nix development environment.
 Optional provider keys are read from environment, never CLI arguments. Client settings are merged manually.`;
 
@@ -69,6 +71,10 @@ async function installSources(options, plan, { reuseBuilt = false } = {}) {
   fs.mkdirSync(home, { recursive: true, mode: 0o700 });
   const env = isolatedBuildEnvironment(home), verified = [];
   let needle;
+  let mirage;
+  const capabilities = profileCapabilities(plan.profile);
+  if (capabilities.needle) log(`Capability Needle: selected by profile ${plan.profile.id}`);
+  if (capabilities.mirage) log(`Capability Mirage: selected by profile ${plan.profile.id}`);
   for (const id of plan.keys) {
     const spec = plan.data.inventory[id], repository = path.join(options.prefix, spec.dir.split('/')[0]);
     const directory = path.join(options.prefix, spec.dir), pin = plan.snapshot.servers[id];
@@ -99,6 +105,7 @@ async function installSources(options, plan, { reuseBuilt = false } = {}) {
       needle = await provisionNeedle(directory, options.withoutModel);
       if (needle?.ready) Object.assign(env, { NEEDLE_ENGINE_PATH: needle.enginePath, NEEDLE_MODEL_PATH: needle.modelPath });
     }
+    if (id === 'hela-cytosol') mirage = provisionMirage(directory);
     if (!fs.existsSync(path.join(directory, 'package-lock.json'))) throw new Error(`Locked dependencies required: ${id}`);
     const built = fs.existsSync(path.join(directory, spec.entry));
     if (reuseBuilt && built) log(`Reusing verified build: ${id}`);
@@ -150,7 +157,7 @@ async function installSources(options, plan, { reuseBuilt = false } = {}) {
     server.tools = result.tools.length;
     log(`Verified ${server.id}: ${server.tools} tools`);
   }
-  return { servers: verified, runtimeExecutable, needle };
+  return { servers: verified, runtimeExecutable, needle, mirage };
 }
 
 async function installDocker(options, plan) {

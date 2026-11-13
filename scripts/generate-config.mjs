@@ -163,6 +163,31 @@ function buildServerEnv(s, root, options = {}) {
       env[key] = 'true';
     }
   }
+  const installRoot = options.installation?.prefix || path.resolve(root, '..');
+  if (s.id === 'hela-mitosis' || s.id === 'hela-runtime') {
+    const needleRoot = path.join(installRoot, 'chaining-mcp', 'assets', 'needle');
+    const candidates = process.platform === 'win32' ? ['needle3.exe', 'needle.exe', 'needle3', 'needle'] : ['needle3', 'needle'];
+    const engine = candidates.map(name => path.join(needleRoot, name)).find(file => fs.existsSync(file));
+    const model = path.join(needleRoot, 'needle3.cact');
+    const system = path.join(needleRoot, 'profiles', `${options.profile}.txt`);
+    if (engine && fs.existsSync(model)) {
+      env.HELA_NATIVE_AGENT = 'true';
+      env.NEEDLE_ENGINE_PATH = engine;
+      env.NEEDLE_MODEL_PATH = model;
+      if (fs.existsSync(system)) env.NEEDLE_SYSTEM_PATH = system;
+    }
+  }
+  if (s.id === 'hela-cytosol' || s.id === 'hela-runtime') {
+    const mirage = options.installation?.mirage;
+    const venv = mirage?.venvPath || path.join(installRoot, 'browser-mcp', 'user_data', 'mirage', '.venv');
+    const python = mirage?.pythonPath || path.join(venv, process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+    if (fs.existsSync(python)) {
+      env.HELA_CYTOSOL_MIRAGE_VENV = venv;
+      env.HELA_CYTOSOL_MIRAGE_PYTHON = python;
+      env.CACTUS_TELEMETRY = '0';
+      env.DO_NOT_TRACK = '1';
+    }
+  }
   return env;
 }
 

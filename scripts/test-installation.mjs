@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { test, after } from 'node:test';
-import { parseOptions, installationPlan, readInstallation, modes, run } from './installation.mjs';
+import { parseOptions, installationPlan, readInstallation, modes, run, profileCapabilities } from './installation.mjs';
 import { checkInstallation, checkContainerInstallation } from './doctor-installation.mjs';
 import { probeMcp } from './mcp-probe.mjs';
 import { downloadVerified } from './provision-needle.mjs';
@@ -112,6 +112,16 @@ test('strict arguments reject missing values, unknown flags/modes/clients and un
     process.env.XDG_DATA_HOME = path.join(scratch, 'xdg');
     assert.equal(parseOptions(['--profile', 'minimal', '--mode', 'runtime'], root).prefix, path.join(scratch, 'xdg/hela/installations/minimal-runtime'));
   } finally { if (xdg === undefined) delete process.env.XDG_DATA_HOME; else process.env.XDG_DATA_HOME = xdg; }
+});
+
+test('profile capability plan installs Needle and Mirage only when selected', () => {
+  const byId = Object.fromEntries(profiles.profiles.map(profile => [profile.id, profileCapabilities(profile)]));
+  for (const capabilities of Object.values(byId)) assert.equal(capabilities.needle, true);
+  assert.equal(byId.minimal.mirage, false);
+  assert.equal(byId['headless-server'].mirage, false);
+  assert.equal(byId['android-testing'].mirage, false);
+  assert.equal(byId['3d-modeling'].mirage, false);
+  for (const id of ['dev-workspace', 'research', 'web-devops', 'all']) assert.equal(byId[id].mirage, true);
 });
 
 test('reconfigure infers existing mode/profile before validating transport and client', () => {
