@@ -109,7 +109,7 @@
           <div class="code-dossier-header"><span>SHELL // KLONING_DAN_INSTAL</span><button class="copy-btn" type="button">Salin</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
 cd hela-mcp-ecosystem
-./setup.sh --profile dev-workspace --client opencode --mode runtime</code></pre>
+node setup.mjs --profile dev-workspace --client opencode --mode runtime</code></pre>
         </div>
         <div class="code-dossier" style="margin-top: 1rem;">
           <div class="code-dossier-header"><span>AGENT // PROMPT_INSTALASI_OTOMATIS</span><button class="copy-btn" type="button">Salin Prompt</button></div>
@@ -126,9 +126,11 @@ cd hela-mcp-ecosystem
 
 3. Clone &amp; Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
-   cd hela-mcp-ecosystem &amp;&amp; chmod +x setup.sh update.sh
-   ./setup.sh --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   ./setup.sh doctor --profile &lt;confirmed_profile&gt; --mode runtime
+   cd hela-mcp-ecosystem
+   Linux/macOS: node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Windows PowerShell: .\setup.ps1 --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Windows Command Prompt: setup.cmd --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Jalankan perintah `doctor` melalui entrypoint yang sama.
    Safely merge generated client configuration into my active MCP configuration file.
    Do not deploy each hela-* cell as a separate client server.
 
@@ -143,7 +145,7 @@ cd hela-mcp-ecosystem
 6. Final Handshake:
    Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.</code></pre>
         </div>
-        <p><code>setup.sh</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>, memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
+        <p><code>setup.mjs</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Gunakan <code>setup.ps1</code> atau <code>setup.cmd</code> di Windows native; <code>setup.sh</code> tetap tersedia sebagai shim kompatibilitas Unix. Installer memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
         <p>Delapan profil mendukung <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker membutuhkan daemon aktif dan Compose v2; build native membutuhkan Python, make, dan compiler C/C++, atau toolchain Nix terkunci. Lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a> untuk persyaratan, Compose, GC root Nix, dan pemulihan kegagalan.</p>
         <p>Mode runtime mendukung <code>--transport http --port 8080</code>. Listener hanya di loopback dan harus dijalankan secara eksplisit; gunakan <code>doctor --url http://127.0.0.1:8080/mcp</code> untuk memeriksa endpoint aktif. Engine browser, kunci provider, bridge Android/Blender, dan autentikasi GUI tetap kebutuhan terpisah.</p>
         <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Jika profil tidak dipilih, runtime dan installer memakai <code>minimal</code>; profil lain tetap bisa dipilih secara eksplisit.</p>
@@ -152,7 +154,7 @@ cd hela-mcp-ecosystem
         <p>Tiga gerbang verifikasi, semuanya diharapkan berstatus hijau sebelum digunakan:</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // GERBANG_VERIFIKASI</span><button class="copy-btn" type="button">Salin</button></div>
-          <pre><code>./setup.sh doctor --profile dev-workspace
+          <pre><code>node setup.mjs doctor --profile dev-workspace
 npm run test:install  # Regresi installer, bukan pengujian hardware
 npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
         </div>

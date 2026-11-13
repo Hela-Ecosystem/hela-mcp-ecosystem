@@ -95,12 +95,12 @@
         <h2 id="doctor">Doctor report anatomy</h2>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // DOCTOR_SECTIONS</span><button class="copy-btn" type="button">Copy</button></div>
-          <pre><code>./setup.sh doctor --profile dev-workspace
+          <pre><code>node setup.mjs doctor --profile dev-workspace
 # If using the runtime: verify cold catalog parity too
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 # Tested full-stack environment: Node 22 LTS</code></pre>
         </div>
-        <p>For a managed installation, pass the same <code>--mode</code> and profile, or <code>./setup.sh doctor --prefix /path/to/prefix --json</code>. Doctor verifies source/build identity and actual MCP replies; runtime modes also verify private HTTP discovery. Use <code>--url http://127.0.0.1:8080/mcp</code> to check an explicitly started listener. A health response alone is not MCP readiness.</p>
+        <p>For a managed installation, pass the same <code>--mode</code> and profile, or <code>node setup.mjs doctor --prefix /path/to/prefix --json</code>. On native Windows, run the matching <code>doctor</code> command through <code>setup.ps1</code> or <code>setup.cmd</code>. Doctor verifies source/build identity and actual MCP replies; runtime modes also verify private HTTP discovery. Use <code>--url http://127.0.0.1:8080/mcp</code> to check an explicitly started listener. A health response alone is not MCP readiness.</p>
 
         <h2 id="scenarios">Scenarios &amp; fixes</h2>
 

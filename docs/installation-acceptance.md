@@ -1,4 +1,9 @@
-# Installer acceptance — 2026-11-07
+# Installer acceptance — 2026-11-07 (historical record)
+
+This document records the 2026-11-07 Linux acceptance run. The current repository
+also provides Node-first, PowerShell, and CMD installer entrypoints; native Windows
+cold-install acceptance remains a separate verification task and is not implied by
+the historical results below.
 
 Local acceptance of the managed installer on Linux x86_64 with Node 22. This records working-tree changes, not a published release or a live-service rollout. Ecosystem release metadata remains 1.5.1; cells remain 3.0.0 and runtime 1.2.0.
 
@@ -49,6 +54,6 @@ The matrix uses temporary private workspaces/data directories and deletes only i
 
 ## Boundaries
 
-Real installation acceptance here is Linux x86_64 only. The added CI jobs cover clean Docker/Nix installs and fixture regressions, but remote CI has not yet run for these working-tree changes. macOS, ARM64, and WSL cold installs were not repeated in this acceptance pass; native Windows remains untested.
+Real installation acceptance in this historical record is Linux x86_64 only. The added CI jobs cover clean Docker/Nix installs and fixture regressions, but remote CI did not run for those working-tree changes. macOS, ARM64, WSL, and native Windows cold installs were not repeated in this acceptance pass.
 
 Browser executables, Android/Blender bridges, external providers, authenticated GUI/ACP clients, host device/SSH access from containers, and security hardening remain separate checks. `READY` certifies the stated MCP/install checks, not every tool's external integration. Existing services, databases, vault conflicts, and historical release snapshots were not migrated or replaced.

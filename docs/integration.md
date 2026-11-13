@@ -11,7 +11,7 @@ The installer now creates a managed prefix and private client fragment instead o
 Use Node 22 LTS and build the selected cells first:
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
 ```
 
 To inspect a generated file without installing it into a client:
@@ -41,7 +41,7 @@ Generate a private output file with `--out <path>` and review/merge it instead o
 Keep the selected profile and add the serve-mode flag:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --runtime --non-interactive
+node setup.mjs --profile dev-workspace --client opencode --runtime --non-interactive
 ```
 
 There is no `runtime` profile. `HELA_PROFILE` selects eligible cells and defaults to `minimal` when unset. Runtime startup and discovery spawn no cells; a call starts only its target. Standalone server definitions remain supported for installations that do not use the runtime.
@@ -50,7 +50,7 @@ The installer generates the selected-profile schema catalog. After rebuilding a 
 
 ```bash
 npm run catalog:generate -- --profile dev-workspace
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 ```
 
 See [on-demand runtime](on-demand-runtime.md) for stale-cache refusal and explicit `hela.pipe` bootstrap. A healthy HTTP liveness endpoint alone is not full MCP or external-integration acceptance evidence.
@@ -70,8 +70,8 @@ GitHub tokens are optional for live remote prompt/catalog operations. Enzyme can
 Use the installer to build and verify a selected-profile image before generating/using its client fragment:
 
 ```bash
-./setup.sh --mode docker --profile headless-server --client docker --non-interactive
-./setup.sh doctor --mode docker --profile headless-server
+node setup.mjs --mode docker --profile headless-server --client docker --non-interactive
+node setup.mjs doctor --mode docker --profile headless-server
 ```
 
 `compose.json` uses the built image ID, actual entrypoints, attached stdio without a TTY, and persistent volumes. `--mode docker-runtime` selects one runtime container. Add `--transport http` only for runtime-based modes; the installer generates loopback-only HTTP settings and leaves listener startup explicit. The older seven-cell `config/docker-compose.yml` is historical scaffolding, not the supported installer path. Hardware and provider integrations are still separate.
@@ -79,7 +79,7 @@ Use the installer to build and verify a selected-profile image before generating
 ## Acceptance and reloads
 
 ```bash
-./setup.sh doctor --profile dev-workspace --runtime
+node setup.mjs doctor --profile dev-workspace --runtime
 npm run test:matrix
 npm run docs:check
 ```

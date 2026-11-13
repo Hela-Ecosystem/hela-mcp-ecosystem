@@ -85,18 +85,18 @@ Provider credentials are optional for MCP discovery and keyless capabilities. A 
 ### Initial Setup
 Run the setup script:
 ```bash
-./setup.sh
+node setup.mjs
 ```
 The installer reads optional provider keys from environment and never prompts for or accepts secret values as CLI flags. Keyless defaults can still use the network. Generated private client fragments can contain supplied credentials; review them before sharing, and merge them into client settings deliberately.
 
 ### Reconfiguring Keys Anytime
 To update keys or change clients on an installed ecosystem:
 ```bash
-./setup.sh --reconfigure
+node setup.mjs --reconfigure
 ```
 
 ### Safe Diagnostic Health Check
 To verify your environment and check which fallbacks are active without exposing keys in logs:
 ```bash
-./setup.sh doctor
+node setup.mjs doctor
 ```

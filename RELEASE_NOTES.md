@@ -1,5 +1,17 @@
 # HeLa MCP Ecosystem Release Notes
 
+## Unreleased — cross-platform maintenance entrypoints
+
+The installer and maintenance workflow is now Node-first. Use `node setup.mjs`,
+`setup.ps1`, or `setup.cmd` for installation and doctor checks; `update.ps1` and
+`update.cmd` provide the corresponding Windows update path. The Bash entrypoints
+remain compatibility shims.
+
+Profile-scoped build, test, clean, and update operations now run through portable
+Node scripts. Runtime Needle discovery also recognizes `needle3.exe` and
+`needle.exe` automatically. Native Windows cold-install acceptance is still
+tracked separately from this source-level portability work.
+
 ## v1.6.2 — Plastid and Receptor dependency refresh
 
 Plastid moves to `aa43877` and Receptor to `1b21cb7`, adopting the lockfile updates that had accumulated on their default branches. Both carried open advisories against `@modelcontextprotocol/sdk`; the refreshed locks resolve them, and `npm audit` is clean for Plastid's runtime dependencies while Receptor reports none.

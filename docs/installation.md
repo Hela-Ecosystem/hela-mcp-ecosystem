@@ -10,7 +10,8 @@ See [local acceptance evidence](installation-acceptance.md) for the tested mecha
 
 - Use Node 22+ and Git. Native modules need Python, make, a C/C++ compiler, and platform headers. `--mode nix` supplies a pinned development toolchain and packages the runtime with Nix.
 - Docker modes require a working Docker daemon and Compose v2. Their images build the selected cells from pinned source; they do not require host npm dependencies or per-cell Dockerfiles.
-- Supported shell entry points are Linux, macOS, and Windows through WSL. Native Windows installation is not acceptance-tested; several upstream build scripts require POSIX tools.
+- The installer and maintenance commands are Node-first and run on Linux, macOS, and native Windows. Use `node setup.mjs` on Unix-like systems, `.\setup.ps1` in PowerShell, or `setup.cmd` in Command Prompt. The Bash files remain compatibility shims; Nix mode still requires a Unix-compatible Nix environment such as WSL.
+- The repository build, test, clean, and update runners use Node scripts, including the Windows `npm.cmd` executable where required. Native Windows cold-install acceptance is still a separate verification boundary; optional browser, Android, Blender, provider, and client integrations remain platform-specific.
 - The pinned local Needle engine/model is installed by default on Linux x86_64/ARM64 and macOS ARM64. `--without-model` explicitly selects core MCP without that integration; it is needed on platforms without a pinned engine. Assets are fetched from an immutable upstream revision, checksum-verified, and accompanied by their license.
 - Chromium/browser services, Android devices/ADB, Blender/its bridge, provider credentials, and GUI client authentication remain separate integration requirements. `READY` does not certify those operations or provide an OS sandbox.
 
@@ -27,8 +28,8 @@ The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked
 ## Individual servers
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 ```
 
 Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.
@@ -36,8 +37,8 @@ Merge the generated private fragment into the client file after review. Native c
 ## Single stdio runtime
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --client codex --non-interactive
-./setup.sh doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode runtime --profile dev-workspace --client codex --non-interactive
+node setup.mjs doctor --mode runtime --profile dev-workspace
 ```
 
 `--runtime` is an alias for `--mode runtime`. `--with-runtime` additionally builds the daemon for an individual installation without switching its client fragment to one connection.
@@ -47,11 +48,11 @@ The selected-profile catalog is generated from fresh probes. Runtime verificatio
 ## Docker: separate cells or runtime
 
 ```bash
-./setup.sh --mode docker --profile dev-workspace --client cursor --non-interactive
-./setup.sh doctor --mode docker --profile dev-workspace
+node setup.mjs --mode docker --profile dev-workspace --client cursor --non-interactive
+node setup.mjs doctor --mode docker --profile dev-workspace
 
-./setup.sh --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode docker-runtime --profile dev-workspace
+node setup.mjs --mode docker-runtime --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode docker-runtime --profile dev-workspace
 ```
 
 `--client docker` remains a shortcut for a Docker installation with Compose output. Use `--runtime` with it for the aggregated daemon. Both Docker modes build one profile image; client entries call Docker directly with the immutable image ID, launching separate cell containers or one runtime container. Those stdio clients do not need a host Node runtime after installation. `compose.json` provides the equivalent Compose services.
@@ -65,8 +66,8 @@ Doctor starts uniquely named temporary containers with no host data/vault mounts
 ## Nix runtime
 
 ```bash
-./setup.sh --mode nix --profile dev-workspace --client opencode --non-interactive
-./setup.sh doctor --mode nix --profile dev-workspace
+node setup.mjs --mode nix --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode nix --profile dev-workspace
 ```
 
 Nix supplies the pinned Node/native-build toolchain for cell builds and builds the runtime package. The installation's `nix-runtime` output link is retained as a GC root. This is a packaged runtime plus locked cell builds, not a claim that all ten cells are independent Nix derivations. Keep private files untracked; Git-backed flake references exclude ignored credentials and data from Nix source copies.
@@ -74,10 +75,10 @@ Nix supplies the pinned Node/native-build toolchain for cell builds and builds t
 ## HTTP runtime
 
 ```bash
-./setup.sh --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
+node setup.mjs --mode runtime --profile dev-workspace --transport http --port 8080 --client codex --non-interactive
 # Start the installed launcher explicitly; its path is printed by setup:
 node /path/to/prefix/hela-mcp-ecosystem/scripts/launch.mjs hela-runtime
-./setup.sh doctor --url http://127.0.0.1:8080/mcp --json
+node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 ```
 
 The same transport flags work with `--mode nix` and `--mode docker-runtime`. HTTP listeners bind to loopback on the host. Docker publishes only `127.0.0.1:<port>`; `compose.json` includes the HTTP command and port mapping. Explicitly start it with Compose `up -d` if desired.
@@ -87,9 +88,9 @@ HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client
 ## Snapshots, reconfiguration, and failures
 
 ```bash
-./setup.sh --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
-./setup.sh --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
-./setup.sh doctor --prefix /path/to/existing/prefix --json
+node setup.mjs --mode runtime --profile minimal --snapshot v1.5.1 --client skip --non-interactive
+node setup.mjs --reconfigure --prefix /path/to/existing/prefix --client zed --non-interactive
+node setup.mjs doctor --prefix /path/to/existing/prefix --json
 ```
 
 Snapshots must declare exact commits and server versions. Incomplete historical metadata is rejected, not silently ignored. `--dev` follows recorded branches for host modes and records the resolved revisions/versions; Docker requires pinned snapshots. Optional provider keys are read from environment, not command-line secret flags. Generated fragments can contain those supplied credentials and are written with private permissions.
@@ -98,12 +99,12 @@ Reconfiguration infers the existing mode/profile/transport from an explicit pref
 
 ## Switch modes in place
 
-`setup.sh mode` converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:
+`node setup.mjs mode` converts an existing managed installation to another execution mechanism without creating a second prefix or discarding data:
 
 ```bash
-./setup.sh mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
-./setup.sh doctor --prefix /path/to/existing/prefix --json
-./setup.sh mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
+node setup.mjs mode --prefix /path/to/existing/prefix --mode runtime --non-interactive
+node setup.mjs doctor --prefix /path/to/existing/prefix --json
+node setup.mjs mode --prefix /path/to/existing/prefix --mode docker-runtime --client opencode --non-interactive
 ```
 
 Every mode is a valid target: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. The profile, snapshot, workspace, and `data/` directories are preserved; only the artifacts the target mode needs are built. Host-mode switches reuse cells that already sit at the pinned revision with a clean worktree, so repeated conversions take seconds rather than rebuilding every package. Moving into a Docker mode builds the profile image; moving out deletes `compose.json`. Transport and port carry over unless `--transport` or `--port` is passed, and HTTP targets require a runtime mode. Switching to `--mode nix` must run inside Nix, exactly like a fresh Nix install.

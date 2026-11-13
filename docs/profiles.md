@@ -157,7 +157,7 @@ Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the sma
 The HeLa Runtime is **not a profile** — it is a serve method. Any profile can be served through the runtime:
 
 ```bash
-./setup.sh --profile dev-workspace --client opencode --runtime   # builds dev-workspace cells + daemon
+node setup.mjs --profile dev-workspace --client opencode --runtime   # builds dev-workspace cells + daemon
 HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with minimal profile
 ```
 
