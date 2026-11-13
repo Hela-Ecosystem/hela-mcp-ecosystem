@@ -6521,10 +6521,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "ab0d4bb666ee5159839baee4ca476af2960203eb",
-      "version": "3.0.1",
+      "revision": "5b5b659d215b4236eeaf83e194975832b440bef7",
+      "version": "3.1.0",
       "digests": [
-        "3a1f3ba5825a2af2e609eab8c69039a284fd2e232cdd5e5bdb18f12737631990"
+        "6fa8727731379cde00f3111759d6db0a7352c6bbdd7dd5a64dde6cc1d2889c5d"
       ],
       "variants": [
         {
@@ -7452,6 +7452,87 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Also return the preprocessed image as base64."
+                  }
+                }
+              }
+            },
+            {
+              "name": "browser_visual_analyze",
+              "description": "Analyze the current page or a selected element with HeLa Cytosol visual intelligence. Mirage downloads and caches its local model on first use, then returns scene, object, text, relation, mask, or structured extraction results.",
+              "annotations": {
+                "readOnlyHint": true
+              },
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "operation": {
+                    "type": "string",
+                    "enum": [
+                      "describe",
+                      "extract"
+                    ],
+                    "default": "describe",
+                    "description": "Describe the image or extract values matching schema."
+                  },
+                  "selector": {
+                    "type": "string",
+                    "description": "Optional CSS selector to analyze only that element. Without it, analyze the current viewport."
+                  },
+                  "sections": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Describe sections to return, such as scene, objects, text, relations, or reasoning."
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Object fields to return, such as bbox, score, mask, or description."
+                  },
+                  "schema": {
+                    "type": "object",
+                    "description": "Non-empty extraction schema used when operation=extract."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "Optional output language code."
+                  },
+                  "maskFormat": {
+                    "type": "string",
+                    "description": "Optional mask output format, such as polygons or bitmap."
+                  },
+                  "conf": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Minimum object confidence."
+                  },
+                  "textConf": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Minimum OCR confidence."
+                  },
+                  "maxObjects": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Maximum detected objects."
+                  },
+                  "maxTextLines": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "description": "Maximum OCR text regions."
+                  },
+                  "maxTokens": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4096,
+                    "description": "Maximum generated output tokens."
                   }
                 }
               }

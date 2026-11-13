@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "project_name": "HeLa MCP Ecosystem",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "total_servers": 11,
   "core_headless_count": 7,
   "specialized_gui_count": 3,
@@ -204,10 +204,10 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "ab0d4bb666ee5159839baee4ca476af2960203eb",
+      "revision": "5b5b659d215b4236eeaf83e194975832b440bef7",
       "env": [],
-      "description": "Playwright-based browser automation environment for navigation, DOM interaction, scraping, and visual screenshot verification.",
-      "version": "3.0.1",
+      "description": "Playwright-based browser automation and visual perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage scene analysis.",
+      "version": "3.1.0",
       "skills": [
         { "name": "browser-agent", "path": "skill/browser-agent" }
       ]

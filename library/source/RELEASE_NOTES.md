@@ -1,5 +1,9 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.7.0 — Cytosol Mirage visual intelligence
+
+HeLa Cytosol now includes first-class local visual intelligence through Cactus Mirage. The `browser_visual_analyze` tool can describe browser screenshots, detect objects, read text, return segmentation data and relations, and extract values against a schema. The Cactus runtime is managed per Cytosol installation while Mirage model weights remain lazy and are cached on first use.
+
 ## v1.6.4 — stable snapshot alias correction
 
 The `latest-stable` snapshot now resolves to the coordinated release pins and

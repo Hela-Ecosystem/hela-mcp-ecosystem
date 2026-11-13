@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.7.0] - 2026-11-13
+
+### Added
+- Upgraded HeLa Cytosol to `3.1.0` with first-class Mirage visual intelligence.
+- Added lazy local model acquisition, managed Cactus runtime setup, and the `browser_visual_analyze` capability to the canonical catalog.
+- Published the reproducible `v1.7.0` snapshot and moved `latest-stable` to the new Cytosol release.
+
 ## [1.6.4] - 2026-11-13
 
 ### Fixed
