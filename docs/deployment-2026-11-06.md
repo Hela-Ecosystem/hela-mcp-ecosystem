@@ -1,6 +1,6 @@
 # Servy deployment verification — 2026-11-06
 
-This records the earlier runtime 1.1.0 rollout. The subsequent [runtime 1.2.0 on-demand deployment](on-demand-runtime.md#verified-servy-rollout) supersedes its process/startup state; the evidence below remains historical.
+This records the earlier runtime 1.1.0 rollout. The subsequent [runtime 1.2.0 on-demand deployment](on-demand-runtime.md#historical-servy-rollout--runtime-120) supersedes its process/startup state; the evidence below remains historical.
 
 The v1.4.0 source release (`c9faa9b`) is deployed to servy's systemd-managed HTTP runtime. This record covers that deployment, not authenticated GUI sessions or live vault reconciliation.
 

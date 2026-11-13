@@ -31,8 +31,8 @@ The installer refuses unmanaged nonempty prefixes, dirty repositories, symlinked
 ## Individual servers
 
 ```bash
-node setup.mjs --mode runtime --profile dev-workspace --client opencode --non-interactive
-node setup.mjs doctor --mode runtime --profile dev-workspace
+node setup.mjs --mode individual --profile dev-workspace --client opencode --non-interactive
+node setup.mjs doctor --mode individual --profile dev-workspace
 ```
 
 Merge the generated private fragment into the client file after review. Native client entries start an installed launcher, which selects the correct executable, workspace, and persistent data directory. Unrelated client/provider settings are preserved because the installer never overwrites them.

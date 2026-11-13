@@ -75,7 +75,7 @@ The canonical inventory drives config generation, doctor/version/profile checks,
 
 Verification: **32** runtime regressions on both Linux architectures, **16** all-profile namespace-mode checks, **80** client configurations, four probe regressions, and four inventory regressions. Cold/warm measurements are recorded, not treated as universal benchmarks. See [implementation and verification scope](docs/on-demand-runtime.md). ACP authentication, external client reloads, gateway retirement, vault conflict review, hardware/provider integrations, and deferred security remain separate work.
 
-**Servy rollout verified:** public/local discovery exposes 236 tools without starting any cells; the first safe Nucleus call starts only Nucleus. Deployed doctor, catalog, and revision checks pass. Fresh backups and rollback material are retained, and all 633 existing conflict archive files are unchanged. See the [rollout evidence](docs/on-demand-runtime.md#verified-servy-rollout).
+**Servy rollout verified:** public/local discovery exposes 236 tools without starting any cells; the first safe Nucleus call starts only Nucleus. Deployed doctor, catalog, and revision checks pass. Fresh backups and rollback material are retained, and all 633 existing conflict archive files are unchanged. See the [rollout evidence](docs/on-demand-runtime.md#historical-servy-rollout--runtime-120).
 
 ## v1.4.0 — memory safety and runtime verification
 
