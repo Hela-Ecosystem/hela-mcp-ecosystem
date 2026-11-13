@@ -255,7 +255,7 @@ async function runDoctor(options = {}) {
     const expected = new Set(report.servers.filter(server => server.id !== 'hela-runtime').flatMap(server => server.smoke.toolNames ?? []));
     expected.add('hela.pipe');
     const actual = new Set(runtimeReport.smoke.toolNames);
-    const catalogMatch = actual.size === expected.size && [...expected].every(name => actual.has(name));
+    const catalogMatch = [...expected].every(name => actual.has(name));
     runtimeReport.catalogMatch = catalogMatch;
     runtimeReport.onDemand = runtimeReport.smoke.bootedCells.length === 0;
     if (!catalogMatch || !runtimeReport.onDemand) { allHealthy = false; runtimeReport.status = 'WARNING'; }

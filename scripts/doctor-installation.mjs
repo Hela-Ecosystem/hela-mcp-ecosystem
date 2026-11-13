@@ -56,7 +56,9 @@ export async function checkContainerInstallation(manifest) {
     const expected = new Set(manifest.servers.filter(s => s.id !== 'hela-runtime').flatMap(s => discoveries.get(s.id) ?? []));
     expected.add('hela.pipe');
     const actual = new Set(discoveries.get('hela-runtime'));
-    report.catalogMatch = actual.size === expected.size && [...expected].every(name => actual.has(name));
+    // Runtime may expose native capabilities (for example Needle agent and
+    // catalog tools) in addition to the delegated cell catalog.
+    report.catalogMatch = [...expected].every(name => actual.has(name));
     if (!report.catalogMatch) report.status = 'DEGRADED';
   }
   return report;
@@ -119,7 +121,7 @@ export async function checkInstallation(prefix) {
     const expected = new Set(manifest.servers.filter(s => s.id !== 'hela-runtime').flatMap(s => discoveries.get(s.id) ?? []));
     expected.add('hela.pipe');
     const actual = new Set(discoveries.get('hela-runtime'));
-    report.catalogMatch = actual.size === expected.size && [...expected].every(name => actual.has(name));
+    report.catalogMatch = [...expected].every(name => actual.has(name));
     if (!report.catalogMatch) report.status = 'DEGRADED';
   }
   return report;
