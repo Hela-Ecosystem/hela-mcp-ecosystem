@@ -10,6 +10,12 @@ All notable changes to this project.
 - Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
 - Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
 
+## [1.9.1] - 2026-11-14
+
+### Fixed
+- Refresh every canonical cell and runtime revision to the latest validated default-branch commit.
+- Publish the coordinated `v1.9.1` snapshot while retaining the immutable `v1.9.0` release.
+
 ## [1.9.0] - 2026-11-14
 
 ### Added
