@@ -10,6 +10,12 @@ All notable changes to this project.
 - Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
 - Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
 
+## [1.9.2] - 2026-11-14
+
+### Added
+- Publish Terminal/Nucleus `3.0.2` with checksum-verified user-local RTK bootstrap on Linux, macOS, Windows, and Windows ARM64.
+- Move `latest-stable` to the coordinated `v1.9.2` snapshot while retaining `v1.9.1` unchanged.
+
 ## [1.9.1] - 2026-11-14
 
 ### Fixed

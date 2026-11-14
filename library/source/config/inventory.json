@@ -138,10 +138,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "9fa8315e656692e4e69efc08972bd27db1f08e78",
+      "revision": "5f6449121d68668db424a8ead4c28c1d707f2355",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
-      "version": "3.0.1"
+      "version": "3.0.2"
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
