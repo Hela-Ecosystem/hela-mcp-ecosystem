@@ -67,6 +67,10 @@
         {
           "name": "blotcat-illustrations",
           "path": "skills/blotcat-illustrations"
+        },
+        {
+          "name": "pcb",
+          "path": "skills/pcb"
         }
       ]
     },
@@ -238,6 +242,7 @@
       "skills": [
         { "name": "logo-design", "path": "skills/logo-design" },
         { "name": "motion-designer", "path": "skills/motion-designer" },
+        { "name": "brand-architecture", "path": "skills/brand-architecture" },
         { "name": "video", "path": "skills/video" }
       ]
     },
