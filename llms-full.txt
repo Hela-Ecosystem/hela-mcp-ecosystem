@@ -5,6 +5,11 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
+## [Unreleased]
+
+- Install a complete profile-aware HeLa persona on a clean workspace, blending Frea's autonomous execution with Mema's security and operational discipline.
+- Preserve existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` files instead of overwriting a user's persona.
+
 ## [1.9.3] - 2026-11-15
 
 - Bundle the registry `pcb` skill through HeLa Mitosis so selected profiles receive KiCad schematic, layout, routing, independent verification, and fabrication-preparation guidance through the normal skill-sync path.
@@ -360,7 +365,8 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
    Run `npm run skills:sync -- --profile <confirmed_profile>` from the ecosystem checkout. This reads the manifest from `config/inventory.json` and mirrors the selected organelles' bundled skills into the harness skill directory.
 
 5. Load the Runtime Profile Context:
-   - Do not create or copy a static persona prompt into the workspace.
+   - If the selected workspace has no `agent_persona/` and no existing `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`, the installer creates the profile-aware HeLa persona there and links the harness entrypoints to it.
+   - If a persona already exists, preserve it; do not overwrite the user's instructions. The runtime profile context remains authoritative for active organelles and tools.
    - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 
@@ -1213,6 +1219,8 @@ URL: https://hela.my.id/library/docs/installation.html
 
 The installer supports eight profiles through five modes: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.
 
+On a clean selected workspace, installation creates a profile-aware HeLa persona under `agent_persona/` and links `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to its session entrypoint. HeLa combines Frea's autonomous execution style with Mema's security and operational discipline. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved and never overwritten automatically.
+
 Capability setup follows the selected profile. Every canonical profile includes Mitosis, so Needle 3 is provisioned unless `--without-model` is explicitly passed. Profiles containing Cytosol (`dev-workspace`, `research`, `web-devops`, and `all`) also provision the managed Mirage Python bridge and its `cactus-compute[vision]` dependency. Other profiles do not install Mirage. A profile containing Cytosol therefore installs both capabilities automatically.
 
 See [local acceptance evidence](installation-acceptance.md) for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.
@@ -1574,7 +1582,7 @@ URL: https://hela.my.id/library/docs/on-demand-runtime.html
 
 Runtime **1.2.1** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
 
-The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. Clients should consume that runtime context instead of copying a static persona prompt or deploying each cell as a separate MCP server.
+The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. On a clean workspace, installation also creates a private profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.
 
 ## One inventory, generated schemas and counts
 

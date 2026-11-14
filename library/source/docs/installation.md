@@ -4,6 +4,8 @@
 
 The installer supports eight profiles through five modes: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.
 
+On a clean selected workspace, installation creates a profile-aware HeLa persona under `agent_persona/` and links `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to its session entrypoint. HeLa combines Frea's autonomous execution style with Mema's security and operational discipline. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved and never overwritten automatically.
+
 Capability setup follows the selected profile. Every canonical profile includes Mitosis, so Needle 3 is provisioned unless `--without-model` is explicitly passed. Profiles containing Cytosol (`dev-workspace`, `research`, `web-devops`, and `all`) also provision the managed Mirage Python bridge and its `cactus-compute[vision]` dependency. Other profiles do not install Mirage. A profile containing Cytosol therefore installs both capabilities automatically.
 
 See [local acceptance evidence](installation-acceptance.md) for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.

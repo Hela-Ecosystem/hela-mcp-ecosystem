@@ -74,7 +74,7 @@ ${profileChoices}
    Copy/link active skills matching <confirmed_profile> from the ecosystem into ~/.agents/skills/ (e.g., guardian-*, code-reviewer, skill-finder, ui-designer, browser-agent).
 
 5. Load the Runtime Profile Context (HELA_PROFILE=<confirmed_profile>):
-   - Do not create or copy a static persona prompt into the workspace.
+   - Let the installer create the profile-aware HeLa persona only when the workspace has no existing persona entrypoint; preserve existing persona files.
    - After connecting, read the runtime resource hela://profile/context or request the hela-profile-bootstrap MCP prompt.
    - Use only the organelles and tools exposed by that selected profile; the runtime is the authority.
 

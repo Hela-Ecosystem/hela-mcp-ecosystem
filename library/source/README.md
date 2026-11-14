@@ -103,7 +103,8 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
    Run `npm run skills:sync -- --profile <confirmed_profile>` from the ecosystem checkout. This reads the manifest from `config/inventory.json` and mirrors the selected organelles' bundled skills into the harness skill directory.
 
 5. Load the Runtime Profile Context:
-   - Do not create or copy a static persona prompt into the workspace.
+   - If the selected workspace has no `agent_persona/` and no existing `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`, the installer creates the profile-aware HeLa persona there and links the harness entrypoints to it.
+   - If a persona already exists, preserve it; do not overwrite the user's instructions. The runtime profile context remains authoritative for active organelles and tools.
    - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 

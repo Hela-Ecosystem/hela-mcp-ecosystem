@@ -139,7 +139,7 @@ node setup.mjs --profile dev-workspace --client opencode --mode runtime</code></
    Windows Command Prompt: setup.cmd --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
    Run the matching `doctor` command through the same entrypoint.
 4. Safely merge the generated single hela-runtime client fragment. Do not deploy each hela-* cell as a separate client server.
-5. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt. Do not create or copy a static persona prompt.
+5. Let the installer create the profile-aware HeLa persona only when the workspace has no existing persona entrypoint; preserve existing persona files. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt.
 6. Initialize the workspace memory graph through the exposed Genome tool when that organelle is active and confirm the selected profile plus ready runtime tools.</code></pre>
         </div>
         <p><code>setup.mjs</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Use <code>setup.ps1</code> or <code>setup.cmd</code> on native Windows; <code>setup.sh</code> remains a Unix compatibility shim. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Needle is provisioned with every profile; profiles containing Cytosol (<code>dev-workspace</code>, <code>research</code>, <code>web-devops</code>, and <code>all</code>) also provision the managed Mirage Python bridge automatically. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
@@ -185,8 +185,8 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
     </div>
   </div>
   <script src="release-data.js?v=1.9.3"></script>
-  <script src="library-data.js?v=1.9.3&amp;rev=38158507aa3d"></script>
+  <script src="library-data.js?v=1.9.3&amp;rev=39a584822ef9"></script>
   <script src="library.js?v=1.9.3&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.9.3&amp;rev=fa590baa9385"></script>
+  <script src="app.js?v=1.9.3&amp;rev=2d0233b9cb8f"></script>
 </body>
 </html>

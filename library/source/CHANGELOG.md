@@ -2,6 +2,11 @@
 
 All notable changes to this project.
 
+## [Unreleased]
+
+- Install a complete profile-aware HeLa persona on a clean workspace, blending Frea's autonomous execution with Mema's security and operational discipline.
+- Preserve existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` files instead of overwriting a user's persona.
+
 ## [1.9.3] - 2026-11-15
 
 - Bundle the registry `pcb` skill through HeLa Mitosis so selected profiles receive KiCad schematic, layout, routing, independent verification, and fabrication-preparation guidance through the normal skill-sync path.

@@ -194,7 +194,8 @@
    Run `npm run skills:sync -- --profile &lt;confirmed_profile&gt;` from the ecosystem checkout. This reads the manifest from `config/inventory.json` and mirrors the selected organelles' bundled skills into the harness skill directory.
 
 5. Load the Runtime Profile Context:
-   - Do not create or copy a static persona prompt into the workspace.
+   - If the selected workspace has no `agent_persona/` and no existing `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`, the installer creates the profile-aware HeLa persona there and links the harness entrypoints to it.
+   - If a persona already exists, preserve it; do not overwrite the user's instructions. The runtime profile context remains authoritative for active organelles and tools.
    - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 
@@ -385,8 +386,8 @@ npm run skills:check
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../release-data.js?v=1.9.3"></script>
-  <script src="../library-data.js?v=1.9.3&amp;rev=38158507aa3d"></script>
+  <script src="../library-data.js?v=1.9.3&amp;rev=39a584822ef9"></script>
   <script src="../library.js?v=1.9.3&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.9.3&amp;rev=fa590baa9385"></script>
+  <script src="../app.js?v=1.9.3&amp;rev=2d0233b9cb8f"></script>
 </body>
 </html>
