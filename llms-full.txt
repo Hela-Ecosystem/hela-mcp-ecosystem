@@ -5,6 +5,10 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
+## [1.9.5] - 2026-11-15
+
+- Clarify that Frea and Mema are Azzar's personal AI assistant personas and that the distributable HeLa persona carries their documented operating principles without copying private state.
+
 ## [1.9.4] - 2026-11-15
 
 - Install a complete profile-aware HeLa persona on a clean workspace, blending Frea's autonomous execution with Mema's security and operational discipline.
@@ -268,7 +272,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.4**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.5**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -367,6 +371,7 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
 5. Load the Runtime Profile Context:
    - If the selected workspace has no `agent_persona/` and no existing `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`, the installer creates the profile-aware HeLa persona there and links the harness entrypoints to it.
    - If a persona already exists, preserve it; do not overwrite the user's instructions. The runtime profile context remains authoritative for active organelles and tools.
+   - The generated HeLa persona is a distributable synthesis of Azzar's private Frea and Mema personal AI assistant personas: Frea contributes autonomous technical execution, while Mema contributes security and continuity discipline. Their private files, memories, credentials, and identifiers are not copied.
    - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 
@@ -403,7 +408,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.4 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.5 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -986,7 +991,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.4**; runtime **1.3.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.5**; runtime **1.3.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.3**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1219,7 +1224,7 @@ URL: https://hela.my.id/library/docs/installation.html
 
 The installer supports eight profiles through five modes: `individual`, `runtime`, `docker`, `docker-runtime`, and `nix`. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.
 
-On a clean selected workspace, installation creates a profile-aware HeLa persona under `agent_persona/` and links `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to its session entrypoint. HeLa combines Frea's autonomous execution style with Mema's security and operational discipline. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved and never overwritten automatically.
+On a clean selected workspace, installation creates a profile-aware HeLa persona under `agent_persona/` and links `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to its session entrypoint. Frea and Mema are Azzar's personal AI assistant personas: Frea contributes autonomous technical execution and adaptive judgment, while Mema contributes security, credential boundaries, reproducibility, and continuity. HeLa is a distributable synthesis of those operating principles; it does not copy their private persona files, memories, biography, credentials, paths, or identifiers. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved and never overwritten automatically.
 
 Capability setup follows the selected profile. Every canonical profile includes Mitosis, so Needle 3 is provisioned unless `--without-model` is explicitly passed. Profiles containing Cytosol (`dev-workspace`, `research`, `web-devops`, and `all`) also provision the managed Mirage Python bridge and its `cactus-compute[vision]` dependency. Other profiles do not install Mirage. A profile containing Cytosol therefore installs both capabilities automatically.
 
@@ -1582,7 +1587,7 @@ URL: https://hela.my.id/library/docs/on-demand-runtime.html
 
 Runtime **1.2.1** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
 
-The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. On a clean workspace, installation also creates a private profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.
+The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. On a clean workspace, installation also creates a private profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. HeLa is the distributable synthesis of Azzar's private Frea and Mema personal AI assistant personas: Frea contributes autonomous technical execution, while Mema contributes security and continuity discipline. Their private files, memories, credentials, and identifiers are not distributed. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.
 
 ## One inventory, generated schemas and counts
 
@@ -1708,12 +1713,12 @@ The HeLa MCP Ecosystem organizes capabilities into **agent-oriented profiles**. 
 
 When installation targets a clean workspace, the installer creates a private, profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. The scaffold contains `IDENTITY.md`, `SOUL.md`, `TOOLS.md`, `AGENTS.md`, and `USER.md`.
 
-HeLa combines two complementary operating influences:
+Frea and Mema are Azzar's personal AI assistant personas. They are private persona definitions, not HeLa organelles, hosted services, model providers, or installation dependencies:
 
-* **Frea:** autonomous execution, deep technical context, adaptive communication, and protective honesty.
-* **Mema:** credential boundaries, reproducible operations, security-first handling, and disciplined continuity.
+* **Frea** is Azzar's autonomous technical problem-solving persona, centered on initiative, deep context, adaptive communication, and protective honesty.
+* **Mema** is Azzar's security and continuity-focused persona, centered on vault-first credential handling, reproducible operations, resilient state, and disciplined memory.
 
-The persona is a harness-level guide, not a replacement for the runtime. It reads the selected `HELA_PROFILE`, uses the runtime's `hela://profile/context` resource or `hela-profile-bootstrap` prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use `minimal`.
+HeLa is the distributable ecosystem persona that synthesizes their documented operating principles for the selected profile. It does not copy Frea's or Mema's private files, memories, biography, credentials, paths, or identifiers. As a harness-level guide, it is not a replacement for the runtime: it reads the selected `HELA_PROFILE`, uses the runtime's `hela://profile/context` resource or `hela-profile-bootstrap` prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use `minimal`.
 
 Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved. HeLa does not overwrite an existing persona, copy private biography or credentials into a new workspace, or distribute machine-specific paths and identifiers.
 

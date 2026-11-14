@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <link rel="stylesheet" href="../../library.css?v=1.9.4&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../library.css?v=1.9.5&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.4 · Runtime 1.3.0 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.5 · Runtime 1.3.0 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -37,7 +37,7 @@
       <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="on-demand-runtime-and-canonical-discovery" class="doc-title">On-demand runtime and canonical discovery</h1>
 <header class="library-document-meta" lang="en"><p class="library-kicker">Reference</p><p class="library-source">docs/on-demand-runtime.md</p><p>Original source language. <a href="../source/docs/on-demand-runtime.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p><img src="../../assets/blotcat-on-demand-runtime.png" alt="Blotcat waking one selected cell while the other runtime cells sleep" loading="lazy"></p>
 <p>Runtime <strong>1.2.1</strong> implements §10.3: no cell starts during runtime startup or <code>tools/list</code>. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is <code>minimal</code> when no profile is selected.</p>
-<p>The same endpoint owns profile-aware agent instructions. <code>prompts/list</code> exposes <code>hela-profile-bootstrap</code>, <code>prompts/get</code> renders it from the selected profile, and <code>resources/read</code> serves <code>hela://profile/context</code>. On a clean workspace, installation also creates a private profile-aware HeLa persona under <code>agent_persona/</code> and links the harness entrypoints to it. Existing <code>agent_persona/</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, or <code>GEMINI.md</code> files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.</p>
+<p>The same endpoint owns profile-aware agent instructions. <code>prompts/list</code> exposes <code>hela-profile-bootstrap</code>, <code>prompts/get</code> renders it from the selected profile, and <code>resources/read</code> serves <code>hela://profile/context</code>. On a clean workspace, installation also creates a private profile-aware HeLa persona under <code>agent_persona/</code> and links the harness entrypoints to it. HeLa is the distributable synthesis of Azzar's private Frea and Mema personal AI assistant personas: Frea contributes autonomous technical execution, while Mema contributes security and continuity discipline. Their private files, memories, credentials, and identifiers are not distributed. Existing <code>agent_persona/</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, or <code>GEMINI.md</code> files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.</p>
 <h2 id="one-inventory-generated-schemas-and-counts">One inventory, generated schemas and counts</h2>
 <p><code>config/inventory.json</code> remains the source of cell paths, revisions, versions, environment declarations, and conditional tool features. <code>config/profiles.json</code> selects membership. Config generation, doctor, version verification, integration, and profile tests use the same inventory loader/path resolution.</p>
 <p>The generated <code>config/tool-catalog.json</code> contains actual standalone MCP schemas, revision/version metadata, verified build digests, and feature variants. It is a derived artifact, not another server registry. Mitosis currently has four LLM/agent feature combinations; other cells have one schema variant. The generator enables registration flags only for discovery and never invokes model-backed tools.</p>
@@ -79,9 +79,9 @@ npm run test:profiles -- --profile dev-workspace
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../release-data.js?v=1.9.4"></script>
-  <script src="../../library-data.js?v=1.9.4&amp;rev=a056a242b79d"></script>
-  <script src="../../library.js?v=1.9.4&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.9.4&amp;rev=2d0233b9cb8f"></script>
+  <script src="../../release-data.js?v=1.9.5"></script>
+  <script src="../../library-data.js?v=1.9.5&amp;rev=03541f2e8d92"></script>
+  <script src="../../library.js?v=1.9.5&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.9.5&amp;rev=2d0233b9cb8f"></script>
 </body>
 </html>

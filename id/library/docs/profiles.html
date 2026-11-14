@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../style.css">
-  <link rel="stylesheet" href="../../../library.css?v=1.9.4&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../../library.css?v=1.9.5&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../../">
   <a href="#main-content" class="skip-link">Langsung ke isi</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
-      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.9.4 · Runtime 1.3.0 · 10 SEL</div></div>
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.9.5 · Runtime 1.3.0 · 10 SEL</div></div>
       <nav aria-label="Dokumentasi"><details class="doc-mobile-nav" open><summary>Jelajahi dokumentasi</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Pustaka dokumentasi</span></a></li></ol>
 <div class="doc-nav-section">MEMULAI</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Ikhtisar</span></a></li>
 <li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Instalasi</span></a></li>
@@ -39,12 +39,12 @@
 <p>The HeLa MCP Ecosystem organizes capabilities into <strong>agent-oriented profiles</strong>. Each profile pairs the two foundational backbone servers (<strong>HeLa Mitosis</strong> for orchestration and <strong>HeLa Genome</strong> for persistent state) with a tailored set of specialized capability servers.</p>
 <h2 id="hela-persona">HeLa Persona</h2>
 <p>When installation targets a clean workspace, the installer creates a private, profile-aware HeLa persona under <code>agent_persona/</code> and links the harness entrypoints to it. The scaffold contains <code>IDENTITY.md</code>, <code>SOUL.md</code>, <code>TOOLS.md</code>, <code>AGENTS.md</code>, and <code>USER.md</code>.</p>
-<p>HeLa combines two complementary operating influences:</p>
+<p>Frea and Mema are Azzar's personal AI assistant personas. They are private persona definitions, not HeLa organelles, hosted services, model providers, or installation dependencies:</p>
 <ul>
-<li><strong>Frea:</strong> autonomous execution, deep technical context, adaptive communication, and protective honesty.</li>
-<li><strong>Mema:</strong> credential boundaries, reproducible operations, security-first handling, and disciplined continuity.</li>
+<li><strong>Frea</strong> is Azzar's autonomous technical problem-solving persona, centered on initiative, deep context, adaptive communication, and protective honesty.</li>
+<li><strong>Mema</strong> is Azzar's security and continuity-focused persona, centered on vault-first credential handling, reproducible operations, resilient state, and disciplined memory.</li>
 </ul>
-<p>The persona is a harness-level guide, not a replacement for the runtime. It reads the selected <code>HELA_PROFILE</code>, uses the runtime's <code>hela://profile/context</code> resource or <code>hela-profile-bootstrap</code> prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use <code>minimal</code>.</p>
+<p>HeLa is the distributable ecosystem persona that synthesizes their documented operating principles for the selected profile. It does not copy Frea's or Mema's private files, memories, biography, credentials, paths, or identifiers. As a harness-level guide, it is not a replacement for the runtime: it reads the selected <code>HELA_PROFILE</code>, uses the runtime's <code>hela://profile/context</code> resource or <code>hela-profile-bootstrap</code> prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use <code>minimal</code>.</p>
 <p>Existing <code>agent_persona/</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, or <code>GEMINI.md</code> files are preserved. HeLa does not overwrite an existing persona, copy private biography or credentials into a new workspace, or distribute machine-specific paths and identifiers.</p>
 <hr>
 <h2 id="the-backbone-foundation">The Backbone Foundation</h2>
@@ -310,9 +310,9 @@ HELA_PROFILE=minimal node hela-runtime/dist/index.js             # run with mini
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../../release-data.js?v=1.9.4"></script>
-  <script src="../../../library-data.js?v=1.9.4&amp;rev=a056a242b79d"></script>
-  <script src="../../../library.js?v=1.9.4&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../../app.js?v=1.9.4&amp;rev=2d0233b9cb8f"></script>
+  <script src="../../../release-data.js?v=1.9.5"></script>
+  <script src="../../../library-data.js?v=1.9.5&amp;rev=03541f2e8d92"></script>
+  <script src="../../../library.js?v=1.9.5&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../../app.js?v=1.9.5&amp;rev=2d0233b9cb8f"></script>
 </body>
 </html>
