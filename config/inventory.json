@@ -298,7 +298,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "a98c1339ee5ea78bf944b109308ae4ce45a0aedb",
+      "revision": "a77584e3c21e87038981665490a99eacfb80e3c3",
       "version": "1.3.0",
       "env": [
         "HELA_ECOSYSTEM_ROOT",

@@ -20,7 +20,7 @@
     "hela-phenotype": { "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git", "commit": "d32479d4bd13824cbd4f7effb2b4a4b6c479ac2d", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
     "hela-receptor": { "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git", "commit": "67017f2ec324192e863b5fb65702cbda0b7f5217", "branch": "master", "entry": "dist/server.js", "serverVersion": "3.0.1" },
     "hela-plastid": { "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git", "commit": "b5c1a23d7e283211012cb882a41628a783b08146", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
-    "hela-runtime": { "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git", "commit": "a98c1339ee5ea78bf944b109308ae4ce45a0aedb", "branch": "master", "entry": "dist/index.js", "serverVersion": "1.3.0" }
+    "hela-runtime": { "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git", "commit": "a77584e3c21e87038981665490a99eacfb80e3c3", "branch": "master", "entry": "dist/index.js", "serverVersion": "1.3.0" }
   },
   "verified_profiles": ["dev-workspace"],
   "verified_clients": [],
