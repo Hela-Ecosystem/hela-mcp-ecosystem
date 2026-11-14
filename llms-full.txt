@@ -13,6 +13,14 @@ All notable changes to this project.
 - Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
 - Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
 
+## [1.9.0] - 2026-11-14
+
+### Added
+- Add a cross-platform Node update controller with read-only snapshot checks, explicit confirmation for apply, rollback records, and doctor verification.
+- Add opt-in check-only schedules for systemd user timers, launchd agents, and Windows Task Scheduler; automatic checks never apply updates.
+- Expose `hela.update.check` and confirmation-gated `hela.update.apply` through the profile-aware runtime agent catalog.
+- Publish the immutable `v1.9.0` snapshot with runtime `1.3.0`.
+
 ## [1.8.0] - 2026-11-13
 
 ### Added
@@ -239,7 +247,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.8.0**, with runtime **1.2.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, and all-profile checks are implemented; see [on-demand runtime](docs/on-demand-runtime.md). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.0**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -373,7 +381,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.8.0 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.0 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -956,7 +964,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.8.0**; runtime **1.2.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.0**; runtime **1.3.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.3**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1272,6 +1280,36 @@ node setup.mjs doctor --url http://127.0.0.1:8080/mcp --json
 The same transport flags work with `--mode nix` and `--mode docker-runtime`. HTTP listeners bind to loopback on the host. Docker publishes only `127.0.0.1:<port>`; `compose.json` includes the HTTP command and port mapping. Explicitly start it with Compose `up -d` if desired.
 
 HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client backends fail clearly rather than emit unverified HTTP syntax; use `--client skip` and configure their MCP URL manually. No listener is auto-started during installation. Doctor's private HTTP probe does not substitute for checking the running URL.
+
+## Updates and automatic checks
+
+Managed installations use the immutable `latest-stable` snapshot as their update contract. The controller compares exact cell revisions and declared package versions before changing anything; it does not follow moving cell branches and it never edits live client configuration.
+
+Check an installation without changing it:
+
+```bash
+node setup.mjs update check --prefix /path/to/prefix
+```
+
+Apply a reviewed update explicitly:
+
+```bash
+node setup.mjs update check --prefix /path/to/prefix
+node setup.mjs update apply --prefix /path/to/prefix --confirm
+node setup.mjs doctor --prefix /path/to/prefix --json
+```
+
+An apply stages the release through the same pinned installer used for a clean install, records the previous manifest and release in `<prefix>/.hela-update/rollback-<timestamp>/`, and restores the previous source revisions if verification fails. A successful result includes `restartRequired: true`; restart the runtime and MCP client before using the new build. `--confirm` is mandatory for both the CLI and the runtime agent's `hela.update.apply` tool.
+
+Automatic checks are opt-in and check-only. They do not apply releases, restart services, or alter client files:
+
+```bash
+node setup.mjs update auto-check enable --prefix /path/to/prefix --interval-hours 24
+node setup.mjs update auto-check status --prefix /path/to/prefix
+node setup.mjs update auto-check disable --prefix /path/to/prefix
+```
+
+The controller installs a systemd user timer on Linux, a launchd agent on macOS, or a Windows Task Scheduler job on native Windows. The scheduled command only writes the private `.hela-update-check.json` result cache. Network failures are reported as `unknown` and never trigger a mutation. Use `--json` for an agent or monitoring integration; remote metadata must use HTTPS and repository pins remain commit-validated.
 
 ## Snapshots, reconfiguration, and failures
 
