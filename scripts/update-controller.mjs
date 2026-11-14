@@ -346,7 +346,9 @@ async function applyUpdate(options) {
 }
 
 function output(result, options) {
-  if (options.json) process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
+  // The runtime update tools read the last non-empty stdout line as JSON.
+  // Emit one compact document so extra installer output cannot hide it.
+  if (options.json) process.stdout.write(`${JSON.stringify(result)}\n`);
   else if (!options.quiet || result.status === 'update-available' || result.status === 'updated' || result.status === 'rolled-back') {
     if (result.status === 'update-available') console.log(`Update available: ${result.installedSnapshot} -> ${result.latestSnapshot} (${result.changes.length} cell change(s))`);
     else if (result.status === 'current') console.log(`HeLa is current at snapshot ${result.installedSnapshot}`);
