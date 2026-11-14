@@ -87,9 +87,22 @@ function walk(dir, base = dir, out = []) {
   return out;
 }
 
-function snapshot(dir) {
+// Skill packages are source snapshots, but some installed skills own runtime
+// state. Never mirror or delete that state while refreshing the source files.
+const PRESERVED_RUNTIME_PATHS = new Map([
+  ['mema-vault', ['data', 'data/']],
+]);
+
+function isPreservedRuntimePath(skillName, relativePath) {
+  return (PRESERVED_RUNTIME_PATHS.get(skillName) || []).some((prefix) =>
+    relativePath === prefix || relativePath.startsWith(prefix),
+  );
+}
+
+function snapshot(dir, skillName = '') {
   const files = new Map();
   for (const rel of walk(dir)) {
+    if (isPreservedRuntimePath(skillName, rel)) continue;
     const buf = fs.readFileSync(path.join(dir, rel));
     files.set(rel, { hash: sha256(buf), size: buf.length });
   }
@@ -237,9 +250,9 @@ function main() {
   let drifted = 0;
 
   for (const entry of manifest) {
-    const sourceFiles = snapshot(entry.source);
+    const sourceFiles = snapshot(entry.source, entry.name);
     const destDir = path.join(opts.target, entry.name);
-    const destFiles = snapshot(destDir);
+    const destFiles = snapshot(destDir, entry.name);
     const result = {
       name: entry.name,
       server: entry.key,

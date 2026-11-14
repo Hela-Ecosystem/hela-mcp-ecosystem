@@ -4,6 +4,9 @@ All notable changes to this project.
 
 ## [Unreleased]
 
+- Bundle the registry `pcb` skill through HeLa Mitosis so selected profiles receive KiCad schematic, layout, routing, independent verification, and fabrication-preparation guidance through the normal skill-sync path.
+- Document the recommended PCB workflow across Mitosis, Genome, Membrane, Nucleus, Cytosol, and Enzyme; no PCB project files, credentials, browser state, or personal paths are distributed.
+
 ## [1.9.2] - 2026-11-14
 
 ### Added

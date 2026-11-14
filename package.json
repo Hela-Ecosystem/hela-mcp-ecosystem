@@ -14,6 +14,7 @@
     "test:matrix": "node scripts/test-client-matrix.mjs",
     "test:probe": "node --test scripts/test-mcp-probe.mjs",
     "test:inventory": "node --test scripts/test-inventory.mjs scripts/test-scaffold-persona.mjs",
+    "test:skills": "node --test scripts/test-sync-skills.mjs",
     "persona:scaffold": "node scripts/scaffold-persona.mjs",
     "test:profiles": "node scripts/test-profile-matrix.mjs",
     "catalog:generate": "node scripts/generate-tool-catalog.mjs",
