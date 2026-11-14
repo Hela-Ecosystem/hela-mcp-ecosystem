@@ -19,6 +19,7 @@ test('scaffold-persona generates valid content for all 8 canonical profiles', ()
     assert.ok(files['AGENTS.md'], 'has AGENTS.md');
 
     // Persona blend
+    assert.ok(files['IDENTITY.md'].includes("Frea and Mema are Azzar's personal AI assistant personas"), 'HeLa identifies Frea and Mema as Azzar personal personas');
     assert.ok(files['IDENTITY.md'].includes("Frea's contribution") && files['IDENTITY.md'].includes("Mema's contribution"), 'HeLa blends Frea and Mema');
     assert.ok(files['SOUL.md'].includes('Frea') && files['SOUL.md'].includes('Mema'), 'SOUL mentions both influences');
     assert.ok(files['USER.md'].includes('without private user biography'), 'distributed persona has no private biography');

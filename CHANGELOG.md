@@ -2,6 +2,10 @@
 
 All notable changes to this project.
 
+## [1.9.5] - 2026-11-15
+
+- Clarify that Frea and Mema are Azzar's personal AI assistant personas and that the distributable HeLa persona carries their documented operating principles without copying private state.
+
 ## [1.9.4] - 2026-11-15
 
 - Install a complete profile-aware HeLa persona on a clean workspace, blending Frea's autonomous execution with Mema's security and operational discipline.

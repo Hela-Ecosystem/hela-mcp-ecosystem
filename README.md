@@ -6,7 +6,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.4**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.5**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -105,6 +105,7 @@ Please autonomously install and configure the HeLa Cellular MCP Ecosystem throug
 5. Load the Runtime Profile Context:
    - If the selected workspace has no `agent_persona/` and no existing `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`, the installer creates the profile-aware HeLa persona there and links the harness entrypoints to it.
    - If a persona already exists, preserve it; do not overwrite the user's instructions. The runtime profile context remains authoritative for active organelles and tools.
+   - The generated HeLa persona is a distributable synthesis of Azzar's private Frea and Mema personal AI assistant personas: Frea contributes autonomous technical execution, while Mema contributes security and continuity discipline. Their private files, memories, credentials, and identifiers are not copied.
    - After connecting, read the `hela://profile/context` resource or request the `hela-profile-bootstrap` MCP prompt.
    - Treat the selected runtime profile as the authority for active organelles and available tools.
 
@@ -141,7 +142,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.4 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.5 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**

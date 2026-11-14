@@ -8,12 +8,12 @@ The HeLa MCP Ecosystem organizes capabilities into **agent-oriented profiles**. 
 
 When installation targets a clean workspace, the installer creates a private, profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. The scaffold contains `IDENTITY.md`, `SOUL.md`, `TOOLS.md`, `AGENTS.md`, and `USER.md`.
 
-HeLa combines two complementary operating influences:
+Frea and Mema are Azzar's personal AI assistant personas. They are private persona definitions, not HeLa organelles, hosted services, model providers, or installation dependencies:
 
-* **Frea:** autonomous execution, deep technical context, adaptive communication, and protective honesty.
-* **Mema:** credential boundaries, reproducible operations, security-first handling, and disciplined continuity.
+* **Frea** is Azzar's autonomous technical problem-solving persona, centered on initiative, deep context, adaptive communication, and protective honesty.
+* **Mema** is Azzar's security and continuity-focused persona, centered on vault-first credential handling, reproducible operations, resilient state, and disciplined memory.
 
-The persona is a harness-level guide, not a replacement for the runtime. It reads the selected `HELA_PROFILE`, uses the runtime's `hela://profile/context` resource or `hela-profile-bootstrap` prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use `minimal`.
+HeLa is the distributable ecosystem persona that synthesizes their documented operating principles for the selected profile. It does not copy Frea's or Mema's private files, memories, biography, credentials, paths, or identifiers. As a harness-level guide, it is not a replacement for the runtime: it reads the selected `HELA_PROFILE`, uses the runtime's `hela://profile/context` resource or `hela-profile-bootstrap` prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use `minimal`.
 
 Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved. HeLa does not overwrite an existing persona, copy private biography or credentials into a new workspace, or distribute machine-specific paths and identifiers.
 
