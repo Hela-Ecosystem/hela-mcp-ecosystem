@@ -150,7 +150,11 @@ test('clean all-cell individual install, nested package, private fragment and re
   for (let attempt = 0; attempt < 2; attempt++) {
     const result = install(prefix, ['--client', 'zed'], { HOME: home });
     assert.equal(result.status, 0, result.stdout + result.stderr);
-    assert.equal(readInstallation(prefix).servers.length, 10);
+    const manifest = readInstallation(prefix);
+    assert.equal(manifest.servers.length, 10);
+    assert.equal(manifest.persona.created, attempt === 0);
+    assert.equal(fs.existsSync(path.join(prefix, 'workspace', 'agent_persona', 'SOUL.md')), true);
+    assert.equal(fs.existsSync(path.join(prefix, 'workspace', 'AGENTS.md')), true);
     const report = await checkInstallation(prefix);
     assert.equal(report.status, 'READY', JSON.stringify(report));
   }

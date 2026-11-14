@@ -7,6 +7,7 @@ import { createInterface } from 'node:readline/promises';
 import { probeMcp } from './mcp-probe.mjs';
 import { provisionNeedle } from './provision-needle.mjs';
 import { provisionMirage } from './provision-mirage.mjs';
+import { scaffoldPersonaIfMissing } from './scaffold-persona.mjs';
 import { modes, clients, parseOptions, installationPlan, readInstallation, run, atomicJson, isolatedBuildEnvironment,
   artifactDigest, composeConfiguration, modeFamily, profileCapabilities } from './installation.mjs';
 
@@ -40,6 +41,12 @@ Node 22+ required; --mode nix bootstraps the pinned Nix development environment.
 Optional provider keys are read from environment, never CLI arguments. Client settings are merged manually.`;
 
 function log(message) { console.error(`[hela-install] ${message}`); }
+
+function logPersona(persona) {
+  log(persona.created
+    ? `Profile-aware HeLa persona created for ${persona.profile}: ${persona.targetDir}`
+    : `Existing persona preserved: ${persona.targetDir}`);
+}
 
 function copyMetadata(destination, plan) {
   fs.mkdirSync(path.join(destination, 'config/snapshots'), { recursive: true });
@@ -234,10 +241,12 @@ async function switchMode(options) {
     const installed = family === 'docker'
       ? await installDocker({ ...options, profile: existing.profile, transport, port }, plan)
       : await installSources({ ...options, profile: existing.profile, transport, port }, plan, { reuseBuilt: true });
+    const persona = scaffoldPersonaIfMissing({ profile: existing.profile, workspaceDir: existing.workspace ?? options.workspace, root: plan.metadataRoot });
+    logPersona(persona);
     for (const server of installed.servers) fs.mkdirSync(path.join(options.prefix, 'data', server.id), { recursive: true, mode: 0o700 });
     const manifest = { managedBy: 'hela-installer', format: 1, mode: options.mode, profile: existing.profile,
       snapshot: plan.snapshot.snapshot_version, dev: existing.dev ?? false, ecosystemRoot: plan.ecosystemRoot, prefix: options.prefix,
-      workspace: existing.workspace ?? options.workspace, transport, port, withoutModel: Boolean(options.withoutModel), createdAt: existing.createdAt,
+      workspace: existing.workspace ?? options.workspace, transport, port, withoutModel: Boolean(options.withoutModel), persona, createdAt: existing.createdAt,
       updatedAt: new Date().toISOString(), node: process.execPath, ...installed };
     if (family !== 'docker') { delete manifest.image; delete manifest.imageId; }
     if (options.mode !== 'nix') delete manifest.runtimeExecutable;
@@ -309,10 +318,12 @@ async function main() {
     fs.mkdirSync(options.workspace, { recursive: true });
     copyMetadata(plan.ecosystemRoot, plan);
     const installed = options.mode.startsWith('docker') ? await installDocker(options, plan) : await installSources(options, plan);
+    const persona = scaffoldPersonaIfMissing({ profile: options.profile, workspaceDir: options.workspace, root: plan.metadataRoot });
+    logPersona(persona);
     for (const server of installed.servers) fs.mkdirSync(path.join(options.prefix, 'data', server.id), { recursive: true, mode: 0o700 });
     const manifest = { managedBy: 'hela-installer', format: 1, mode: options.mode, profile: options.profile,
       snapshot: plan.snapshot.snapshot_version, dev: options.dev, ecosystemRoot: plan.ecosystemRoot, prefix: options.prefix,
-      workspace: options.workspace, transport: options.transport, port: options.port, withoutModel: Boolean(options.withoutModel), createdAt: new Date().toISOString(), node: process.execPath, ...installed };
+      workspace: options.workspace, transport: options.transport, port: options.port, withoutModel: Boolean(options.withoutModel), persona, createdAt: new Date().toISOString(), node: process.execPath, ...installed };
     atomicJson(path.join(options.prefix, '.hela-install.json'), manifest);
     await generateFragment(options, manifest);
     fs.unlinkSync(path.join(options.prefix, '.hela-install.pending.json'));
