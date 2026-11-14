@@ -235,7 +235,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "4752ffc0e25b8c370a13b1f1cc2bfecd1e144aa",
+      "revision": "bbde7d7973231564a364c3e7b71b113cb8a9030f",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
       "version": "3.0.2",
