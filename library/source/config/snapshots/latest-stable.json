@@ -61,7 +61,7 @@
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "4752ffc0e25b8c370a13b1f1cc2bfecd1e144aa",
+      "commit": "bbde7d7973231564a364c3e7b71b113cb8a9030f",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.2"
