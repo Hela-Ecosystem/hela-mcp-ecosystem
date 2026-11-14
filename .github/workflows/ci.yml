@@ -75,6 +75,9 @@ jobs:
           ./setup.sh --help
           node --check scripts/doctor.mjs
 
+      - name: Test snapshot update controller
+        run: npm run test:update
+
       - name: Test installer failure handling and isolated fixture installs
         if: ${{ matrix.node-version == 22 }}
         run: npm run test:install

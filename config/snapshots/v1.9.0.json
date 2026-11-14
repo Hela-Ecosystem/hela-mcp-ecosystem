@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "snapshot_version": "1.9.0",
+  "created_at": "2026-11-14T00:00:00Z",
+  "description": "Adds managed snapshot updates, opt-in automatic checks, rollback records, and runtime update controls.",
+  "environment": {
+    "node_minimum": ">=22.0.0",
+    "recommended_node": "22 LTS",
+    "git_minimum": ">=2.30.0",
+    "sqlite_minimum": ">=3.35.0"
+  },
+  "servers": {
+    "hela-mitosis": { "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git", "commit": "86dca7603be940661c4b974eda47c3525a58919a", "branch": "main", "entry": "dist/index.js", "serverVersion": "3.0.3" },
+    "hela-genome": { "repo": "https://github.com/Hela-Ecosystem/project-mcp.git", "commit": "7824e1d1fb889956ee390a481f9e17a2142df4dc", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-membrane": { "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git", "commit": "6986ad8366293ad9c544fa029637adc56ba30009", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-nucleus": { "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git", "commit": "0ff0afd871f3fd1349f83fb6b20d477d776c489a", "branch": "main", "entry": "build/index.js", "serverVersion": "3.0.1" },
+    "hela-ribosome": { "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git", "commit": "82512f49775ac4c1d1b6984c38914ff418684c1e", "branch": "master", "entry": "build/index.js", "serverVersion": "3.0.1" },
+    "hela-enzyme": { "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git", "commit": "7644b0cdc44e2ba038f197ca759cb538cbef61eb", "branch": "master", "entry": "dist/index.js", "serverVersion": "4.0.1" },
+    "hela-cytosol": { "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git", "commit": "401190023b8772ab7f3e4a93d41bc8b67d4faa51", "branch": "master", "entry": "src/server.js", "serverVersion": "3.2.0" },
+    "hela-phenotype": { "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git", "commit": "d32479d4bd13824cbd4f7effb2b4a4b6c479ac2d", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-receptor": { "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git", "commit": "67017f2ec324192e863b5fb65702cbda0b7f5217", "branch": "master", "entry": "dist/server.js", "serverVersion": "3.0.1" },
+    "hela-plastid": { "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git", "commit": "b5c1a23d7e283211012cb882a41628a783b08146", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-runtime": { "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git", "commit": "a98c1339ee5ea78bf944b109308ae4ce45a0aedb", "branch": "master", "entry": "dist/index.js", "serverVersion": "1.3.0" }
+  },
+  "verified_profiles": ["dev-workspace"],
+  "verified_clients": [],
+  "verification": {
+    "scope": "Managed update controller, rollback metadata, runtime update controls, and existing ecosystem checks; hardware, Blender bridge, GUI clients, and providers remain separate integration boundaries."
+  }
+}

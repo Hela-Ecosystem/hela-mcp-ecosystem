@@ -10,6 +10,14 @@ All notable changes to this project.
 - Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
 - Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
 
+## [1.9.0] - 2026-11-14
+
+### Added
+- Add a cross-platform Node update controller with read-only snapshot checks, explicit confirmation for apply, rollback records, and doctor verification.
+- Add opt-in check-only schedules for systemd user timers, launchd agents, and Windows Task Scheduler; automatic checks never apply updates.
+- Expose `hela.update.check` and confirmation-gated `hela.update.apply` through the profile-aware runtime agent catalog.
+- Publish the immutable `v1.9.0` snapshot with runtime `1.3.0`.
+
 ## [1.8.0] - 2026-11-13
 
 ### Added

@@ -11,7 +11,7 @@ import { modes, clients, parseOptions, installationPlan, readInstallation, run, 
   artifactDigest, composeConfiguration, modeFamily, profileCapabilities } from './installation.mjs';
 
 const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const help = `Usage: node setup.mjs [doctor|mode] [OPTIONS]
+const help = `Usage: node setup.mjs [doctor|mode|update] [OPTIONS]
   --mode individual|runtime|docker|docker-runtime|nix
   --profile ID          Any of the eight canonical profiles (default minimal)
   --prefix PATH         Managed installation directory; existing unmanaged directories are refused
@@ -237,7 +237,7 @@ async function switchMode(options) {
     for (const server of installed.servers) fs.mkdirSync(path.join(options.prefix, 'data', server.id), { recursive: true, mode: 0o700 });
     const manifest = { managedBy: 'hela-installer', format: 1, mode: options.mode, profile: existing.profile,
       snapshot: plan.snapshot.snapshot_version, dev: existing.dev ?? false, ecosystemRoot: plan.ecosystemRoot, prefix: options.prefix,
-      workspace: existing.workspace ?? options.workspace, transport, port, createdAt: existing.createdAt,
+      workspace: existing.workspace ?? options.workspace, transport, port, withoutModel: Boolean(options.withoutModel), createdAt: existing.createdAt,
       updatedAt: new Date().toISOString(), node: process.execPath, ...installed };
     if (family !== 'docker') { delete manifest.image; delete manifest.imageId; }
     if (options.mode !== 'nix') delete manifest.runtimeExecutable;
@@ -312,7 +312,7 @@ async function main() {
     for (const server of installed.servers) fs.mkdirSync(path.join(options.prefix, 'data', server.id), { recursive: true, mode: 0o700 });
     const manifest = { managedBy: 'hela-installer', format: 1, mode: options.mode, profile: options.profile,
       snapshot: plan.snapshot.snapshot_version, dev: options.dev, ecosystemRoot: plan.ecosystemRoot, prefix: options.prefix,
-      workspace: options.workspace, transport: options.transport, port: options.port, createdAt: new Date().toISOString(), node: process.execPath, ...installed };
+      workspace: options.workspace, transport: options.transport, port: options.port, withoutModel: Boolean(options.withoutModel), createdAt: new Date().toISOString(), node: process.execPath, ...installed };
     atomicJson(path.join(options.prefix, '.hela-install.json'), manifest);
     await generateFragment(options, manifest);
     fs.unlinkSync(path.join(options.prefix, '.hela-install.pending.json'));

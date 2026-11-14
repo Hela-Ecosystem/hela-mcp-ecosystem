@@ -88,6 +88,36 @@ The same transport flags work with `--mode nix` and `--mode docker-runtime`. HTT
 
 HTTP fragments are supported for OpenCode, Kilo, Codex, and Cursor. Other client backends fail clearly rather than emit unverified HTTP syntax; use `--client skip` and configure their MCP URL manually. No listener is auto-started during installation. Doctor's private HTTP probe does not substitute for checking the running URL.
 
+## Updates and automatic checks
+
+Managed installations use the immutable `latest-stable` snapshot as their update contract. The controller compares exact cell revisions and declared package versions before changing anything; it does not follow moving cell branches and it never edits live client configuration.
+
+Check an installation without changing it:
+
+```bash
+node setup.mjs update check --prefix /path/to/prefix
+```
+
+Apply a reviewed update explicitly:
+
+```bash
+node setup.mjs update check --prefix /path/to/prefix
+node setup.mjs update apply --prefix /path/to/prefix --confirm
+node setup.mjs doctor --prefix /path/to/prefix --json
+```
+
+An apply stages the release through the same pinned installer used for a clean install, records the previous manifest and release in `<prefix>/.hela-update/rollback-<timestamp>/`, and restores the previous source revisions if verification fails. A successful result includes `restartRequired: true`; restart the runtime and MCP client before using the new build. `--confirm` is mandatory for both the CLI and the runtime agent's `hela.update.apply` tool.
+
+Automatic checks are opt-in and check-only. They do not apply releases, restart services, or alter client files:
+
+```bash
+node setup.mjs update auto-check enable --prefix /path/to/prefix --interval-hours 24
+node setup.mjs update auto-check status --prefix /path/to/prefix
+node setup.mjs update auto-check disable --prefix /path/to/prefix
+```
+
+The controller installs a systemd user timer on Linux, a launchd agent on macOS, or a Windows Task Scheduler job on native Windows. The scheduled command only writes the private `.hela-update-check.json` result cache. Network failures are reported as `unknown` and never trigger a mutation. Use `--json` for an agent or monitoring integration; remote metadata must use HTTPS and repository pins remain commit-validated.
+
 ## Snapshots, reconfiguration, and failures
 
 ```bash
