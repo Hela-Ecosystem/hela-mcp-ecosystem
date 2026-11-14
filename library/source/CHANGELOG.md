@@ -2,10 +2,11 @@
 
 All notable changes to this project.
 
-## [Unreleased]
+## [1.9.3] - 2026-11-15
 
 - Bundle the registry `pcb` skill through HeLa Mitosis so selected profiles receive KiCad schematic, layout, routing, independent verification, and fabrication-preparation guidance through the normal skill-sync path.
 - Document the recommended PCB workflow across Mitosis, Genome, Membrane, Nucleus, Cytosol, and Enzyme; no PCB project files, credentials, browser state, or personal paths are distributed.
+- Publish Phenotype `3.0.2` with the research-backed `brand-architecture` skill and refresh the reproducible `latest-stable` pin to its new commit.
 
 ## [1.9.2] - 2026-11-14
 

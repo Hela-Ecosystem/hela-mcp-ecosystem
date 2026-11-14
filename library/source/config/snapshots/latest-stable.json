@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.2",
-  "created_at": "2026-11-14T05:05:33Z",
+  "snapshot_version": "1.9.3",
+  "created_at": "2026-11-14T17:38:00Z",
   "description": "Adds checksum-verified user-local RTK bootstrap to the terminal cell while retaining managed update controls.",
   "environment": {
     "node_minimum": ">=22.0.0",
@@ -61,10 +61,10 @@
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "09fef8047629970492387492e276fa3bda513f90",
+      "commit": "4752ffc0e25b8c370a13b1f1cc2bfecd1e144aa",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.1"
+      "serverVersion": "3.0.2"
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",

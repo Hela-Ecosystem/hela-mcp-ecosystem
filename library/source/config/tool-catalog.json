@@ -8308,10 +8308,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "09fef8047629970492387492e276fa3bda513f90",
-      "version": "3.0.1",
+      "revision": "4752ffc0e25b8c370a13b1f1cc2bfecd1e144aa",
+      "version": "3.0.2",
       "digests": [
-        "c2154b0512b28161575c12c1411c7aa1a2e8d972a6c15f9534f53f1cf58ca9ac"
+        "eac3301d38c4fa65c88f6807171c09bbc2d7ccaf8cd10e0981b41b4c9f246228"
       ],
       "variants": [
         {
