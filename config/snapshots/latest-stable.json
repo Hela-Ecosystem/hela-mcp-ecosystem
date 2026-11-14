@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.3",
-  "created_at": "2026-11-14T17:38:00Z",
-  "description": "Adds checksum-verified user-local RTK bootstrap to the terminal cell while retaining managed update controls.",
+  "snapshot_version": "1.9.4",
+  "created_at": "2026-11-14T18:11:14Z",
+  "description": "Publishes the profile-aware HeLa persona scaffold and preserves existing user personas during installation.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -95,8 +95,8 @@
   "verification": {
     "plastid_regressions": 12,
     "receptor_tests": 123,
-    "installation_tests": 54,
-    "documentation_regressions": 89,
+    "installation_tests": 55,
+    "documentation_regressions": 94,
     "client_configuration_combinations": 80,
     "inventory_tests": 4,
     "scope": "Dependency refreshes for Plastid and Receptor verified by their own suites and this repository checks. Hardware, Blender bridge, GUI clients and providers remain separate."
