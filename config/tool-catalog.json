@@ -4808,10 +4808,10 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "9fa8315e656692e4e69efc08972bd27db1f08e78",
-      "version": "3.0.1",
+      "revision": "5f6449121d68668db424a8ead4c28c1d707f2355",
+      "version": "3.0.2",
       "digests": [
-        "e1375b0c0f4b83015078887fa0173cb06450f808743cdddcad99109c565aa798"
+        "01a430707477051267c9bb79f8eadcd499b5e2cdb0f3e0af647a3ca3d6beaaa4"
       ],
       "variants": [
         {
