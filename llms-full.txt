@@ -7,17 +7,17 @@ All notable changes to this project.
 
 ## [Unreleased]
 
+## [1.9.2] - 2026-11-14
+
 ### Added
 - Make Needle and Mirage installer capabilities profile-aware: every canonical profile provisions Needle through Mitosis, while profiles containing Cytosol provision the managed Mirage Python bridge automatically.
 - Add checksum-verified Windows x64/ARM64 Needle assets so native Windows profiles receive the same local agent capability without manual path configuration.
 - Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in `doctor`.
-- Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
-
-## [1.9.2] - 2026-11-14
-
-### Added
 - Publish Terminal/Nucleus `3.0.2` with checksum-verified user-local RTK bootstrap on Linux, macOS, Windows, and Windows ARM64.
 - Move `latest-stable` to the coordinated `v1.9.2` snapshot while retaining `v1.9.1` unchanged.
+
+### Fixed
+- Align the mutable `latest-stable` metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable `v1.8.0` snapshot.
 
 ## [1.9.1] - 2026-11-14
 

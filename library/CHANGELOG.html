@@ -37,27 +37,27 @@
       <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="changelog" class="doc-title">Changelog</h1>
 <header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">CHANGELOG.md</p><p>Original source language. <a href="source/CHANGELOG.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><p>All notable changes to this project.</p>
 <h2 id="unreleased">[Unreleased]</h2>
+<h2 id="192---2026-11-14">[1.9.2] - 2026-11-14</h2>
 <h3 id="added">Added</h3>
 <ul>
 <li>Make Needle and Mirage installer capabilities profile-aware: every canonical profile provisions Needle through Mitosis, while profiles containing Cytosol provision the managed Mirage Python bridge automatically.</li>
 <li>Add checksum-verified Windows x64/ARM64 Needle assets so native Windows profiles receive the same local agent capability without manual path configuration.</li>
 <li>Pass the managed Mirage and Windows-compatible Needle paths through launchers and generated configurations, and validate Mirage readiness in <code>doctor</code>.</li>
-<li>Align the mutable <code>latest-stable</code> metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable <code>v1.8.0</code> snapshot.</li>
-</ul>
-<h2 id="192---2026-11-14">[1.9.2] - 2026-11-14</h2>
-<h3 id="added-1">Added</h3>
-<ul>
 <li>Publish Terminal/Nucleus <code>3.0.2</code> with checksum-verified user-local RTK bootstrap on Linux, macOS, Windows, and Windows ARM64.</li>
 <li>Move <code>latest-stable</code> to the coordinated <code>v1.9.2</code> snapshot while retaining <code>v1.9.1</code> unchanged.</li>
 </ul>
-<h2 id="191---2026-11-14">[1.9.1] - 2026-11-14</h2>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li>Align the mutable <code>latest-stable</code> metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable <code>v1.8.0</code> snapshot.</li>
+</ul>
+<h2 id="191---2026-11-14">[1.9.1] - 2026-11-14</h2>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Refresh every canonical cell and runtime revision to the latest validated default-branch commit.</li>
 <li>Publish the coordinated <code>v1.9.1</code> snapshot while retaining the immutable <code>v1.9.0</code> release.</li>
 </ul>
 <h2 id="190---2026-11-14">[1.9.0] - 2026-11-14</h2>
-<h3 id="added-2">Added</h3>
+<h3 id="added-1">Added</h3>
 <ul>
 <li>Add a cross-platform Node update controller with read-only snapshot checks, explicit confirmation for apply, rollback records, and doctor verification.</li>
 <li>Add opt-in check-only schedules for systemd user timers, launchd agents, and Windows Task Scheduler; automatic checks never apply updates.</li>
@@ -65,21 +65,21 @@
 <li>Publish the immutable <code>v1.9.0</code> snapshot with runtime <code>1.3.0</code>.</li>
 </ul>
 <h2 id="180---2026-11-13">[1.8.0] - 2026-11-13</h2>
-<h3 id="added-3">Added</h3>
+<h3 id="added-2">Added</h3>
 <ul>
 <li>Upgraded HeLa Cytosol to <code>3.2.0</code> with dedicated image analysis through local paths, safe HTTP(S) URLs, and base64 image input.</li>
 <li>Added the full Mirage VLM pipeline to the catalog: scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions.</li>
 <li>Published the reproducible <code>v1.8.0</code> snapshot and moved <code>latest-stable</code> to the dedicated-image release.</li>
 </ul>
 <h2 id="170---2026-11-13">[1.7.0] - 2026-11-13</h2>
-<h3 id="added-4">Added</h3>
+<h3 id="added-3">Added</h3>
 <ul>
 <li>Upgraded HeLa Cytosol to <code>3.1.0</code> with first-class Mirage visual intelligence.</li>
 <li>Added lazy local model acquisition, managed Cactus runtime setup, and the <code>browser_visual_analyze</code> capability to the canonical catalog.</li>
 <li>Published the reproducible <code>v1.7.0</code> snapshot and moved <code>latest-stable</code> to the new Cytosol release.</li>
 </ul>
 <h2 id="164---2026-11-13">[1.6.4] - 2026-11-13</h2>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>Updated the <code>latest-stable</code> snapshot alias to the coordinated 1.6.3 cell and runtime release pins.</li>
 </ul>
@@ -156,7 +156,7 @@
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../release-data.js?v=1.9.2"></script>
-  <script src="../library-data.js?v=1.9.2&amp;rev=2f3f7e43a658"></script>
+  <script src="../library-data.js?v=1.9.2&amp;rev=d87f6010feeb"></script>
   <script src="../library.js?v=1.9.2&amp;rev=e4e7b2f0ebad"></script>
   <script src="../app.js?v=1.9.2&amp;rev=fa590baa9385"></script>
 </body>
