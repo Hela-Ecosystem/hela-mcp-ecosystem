@@ -49,6 +49,13 @@ async function main() {
           expected.set(name, tool.inputSchema);
         }
       }
+      expected.set('hela.update.check', { type: 'object', properties: {} });
+      expected.set('hela.update.apply', {
+        type: 'object',
+        properties: { confirm: { type: 'boolean', description: 'Explicitly authorize changing the managed installation.' } },
+        required: ['confirm'],
+        additionalProperties: false,
+      });
       const calls = [{ name: expose('hela-genome', 'get_session_context'), arguments: { limit: 1 } }];
       calls.push({ ...calls[0] });
       if (profile.servers.includes('hela-nucleus')) {
@@ -62,7 +69,7 @@ async function main() {
       const invoked = ['hela-genome', ...(profile.servers.includes('hela-nucleus') ? ['hela-nucleus'] : [])].sort();
       assert.deepEqual(runtime.bootedCells, invoked, `${profile.id} booted cells that were not invoked`);
       assert.deepEqual(runtime.tools.map(tool => tool.name).sort(), [...expected.keys(), 'hela.pipe'].sort(),
-        `${profile.id} tool surface must exactly match selected cells plus hela.pipe`);
+        `${profile.id} tool surface must exactly match selected cells plus runtime update controls and hela.pipe`);
       for (const tool of runtime.tools) {
         if (tool.name !== 'hela.pipe') assert.deepEqual(tool.inputSchema, expected.get(tool.name), `${profile.id}:${tool.name} schema differs`);
       }

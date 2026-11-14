@@ -2,7 +2,7 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "86dca7603be940661c4b974eda47c3525a58919a",
+      "revision": "55ca1d45f0dacb0bd34358b272c11f2d9b7cc06e",
       "version": "3.0.3",
       "digests": [
         "fd02cb6f46788799b72c68d5593b204d06edfad8bef7046acfd5ea9d8d30183e"
@@ -3213,7 +3213,7 @@
       ]
     },
     "hela-genome": {
-      "revision": "7824e1d1fb889956ee390a481f9e17a2142df4dc",
+      "revision": "849f8b1857ba60d1ec64a469a4bc2ee4dcc0e05f",
       "version": "3.0.1",
       "digests": [
         "cdb9be6b6784e9eecaf806098e6c6d0e84269ca99401ac4f426530260ff8bbe1"
@@ -4276,10 +4276,10 @@
       ]
     },
     "hela-membrane": {
-      "revision": "6986ad8366293ad9c544fa029637adc56ba30009",
+      "revision": "b80aafe08e9309549875fa8c431ee11081977e82",
       "version": "3.0.1",
       "digests": [
-        "35544e4878561310e20495eff3e803b13ab764538d58dbef21132dcf0669b52d"
+        "eb9d4ed005c2dd6836454b40b949f8dbd188875f1d8dd946e999c5a5739f5150"
       ],
       "variants": [
         {
@@ -4808,7 +4808,7 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "0ff0afd871f3fd1349f83fb6b20d477d776c489a",
+      "revision": "9fa8315e656692e4e69efc08972bd27db1f08e78",
       "version": "3.0.1",
       "digests": [
         "e1375b0c0f4b83015078887fa0173cb06450f808743cdddcad99109c565aa798"
@@ -5087,7 +5087,7 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "82512f49775ac4c1d1b6984c38914ff418684c1e",
+      "revision": "2ded6b8baffcf45e2bf725633cb1e6b78422d099",
       "version": "3.0.1",
       "digests": [
         "be3f781ab5f1217bcf1bf5135ce862ac7e332032d2e16b6dd457154e4cffe2fd"
@@ -5745,7 +5745,7 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "7644b0cdc44e2ba038f197ca759cb538cbef61eb",
+      "revision": "a3aa21be67dfa045d41f521d1e31e061f98bfdc0",
       "version": "4.0.1",
       "digests": [
         "96e2d59f674dabbccec4e93c674894ff7f513c8b41dbebc62c57f12896347631"
@@ -6521,11 +6521,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "7726f216579de616b8ff9992edf51a7f25e1035d",
+      "revision": "83ae95609b007c04da82fd25060819d477d1b2d7",
       "version": "3.2.0",
       "digests": [
-        "517072f69fe3e7600c44634bf0530c0e05d3d5aa0550d497b05085f2fe7d14b5",
-        "f3cd8d86588f04a5ee86c3144d85d14fb235a9f23fa6f41a4ba663b4056e2f6e"
+        "517072f69fe3e7600c44634bf0530c0e05d3d5aa0550d497b05085f2fe7d14b5"
       ],
       "variants": [
         {
@@ -8309,7 +8308,7 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "d32479d4bd13824cbd4f7effb2b4a4b6c479ac2d",
+      "revision": "09fef8047629970492387492e276fa3bda513f90",
       "version": "3.0.1",
       "digests": [
         "c2154b0512b28161575c12c1411c7aa1a2e8d972a6c15f9534f53f1cf58ca9ac"
@@ -9459,10 +9458,10 @@
       ]
     },
     "hela-receptor": {
-      "revision": "67017f2ec324192e863b5fb65702cbda0b7f5217",
+      "revision": "4bf7a0d9f5dcc72479c17714166bd7a0e858eb6f",
       "version": "3.0.1",
       "digests": [
-        "ae2c99bfc65414869175efa9407c5962d75c34f3c664db6eeb531ad9901c842a"
+        "1b4548e0a75e85b57c949fe8144a38d736ddfc32d8ac94a783ca294e264f7b72"
       ],
       "variants": [
         {
@@ -12207,7 +12206,7 @@
       ]
     },
     "hela-plastid": {
-      "revision": "b5c1a23d7e283211012cb882a41628a783b08146",
+      "revision": "ee3e12bfe6c2ba797760a53f6459d2d44932dd66",
       "version": "3.0.1",
       "digests": [
         "8254eb95baf3ea60603c496a6b732ad669faaf719a043b2217f1ce5b864e799f"
