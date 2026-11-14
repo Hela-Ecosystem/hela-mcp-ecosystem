@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "snapshot_version": "1.9.4",
+  "created_at": "2026-11-14T18:11:14Z",
+  "description": "Publishes the profile-aware HeLa persona scaffold and preserves existing user personas during installation.",
+  "environment": {
+    "node_minimum": ">=22.0.0",
+    "recommended_node": "22 LTS (validated 22.23.4)",
+    "git_minimum": ">=2.30.0",
+    "sqlite_minimum": ">=3.35.0"
+  },
+  "servers": {
+    "hela-mitosis": { "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git", "commit": "55ca1d45f0dacb0bd34358b272c11f2d9b7cc06e", "branch": "main", "entry": "dist/index.js", "serverVersion": "3.0.3" },
+    "hela-genome": { "repo": "https://github.com/Hela-Ecosystem/project-mcp.git", "commit": "849f8b1857ba60d1ec64a469a4bc2ee4dcc0e05f", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-membrane": { "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git", "commit": "b80aafe08e9309549875fa8c431ee11081977e82", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-nucleus": { "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git", "commit": "5f6449121d68668db424a8ead4c28c1d707f2355", "branch": "main", "entry": "build/index.js", "serverVersion": "3.0.2" },
+    "hela-ribosome": { "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git", "commit": "2ded6b8baffcf45e2bf725633cb1e6b78422d099", "branch": "master", "entry": "build/index.js", "serverVersion": "3.0.1" },
+    "hela-enzyme": { "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git", "commit": "a3aa21be67dfa045d41f521d1e31e061f98bfdc0", "branch": "master", "entry": "dist/index.js", "serverVersion": "4.0.1" },
+    "hela-cytosol": { "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git", "commit": "83ae95609b007c04da82fd25060819d477d1b2d7", "branch": "master", "entry": "src/server.js", "serverVersion": "3.2.0" },
+    "hela-phenotype": { "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git", "commit": "bbde7d7973231564a364c3e7b71b113cb8a9030f", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.2" },
+    "hela-receptor": { "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git", "commit": "4bf7a0d9f5dcc72479c17714166bd7a0e858eb6f", "branch": "master", "entry": "dist/server.js", "serverVersion": "3.0.1" },
+    "hela-plastid": { "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git", "commit": "ee3e12bfe6c2ba797760a53f6459d2d44932dd66", "branch": "master", "entry": "dist/index.js", "serverVersion": "3.0.1" },
+    "hela-runtime": { "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git", "commit": "a77584e3c21e87038981665490a99eacfb80e3c3", "branch": "master", "entry": "dist/index.js", "serverVersion": "1.3.0" }
+  },
+  "verified_profiles": ["dev-workspace"],
+  "verified_clients": [],
+  "verification": {
+    "installation_tests": 55,
+    "documentation_regressions": 94,
+    "inventory_tests": 4,
+    "scope": "Latest validated source pins, profile-aware HeLa persona provisioning, managed update controls, and ecosystem checks; hardware, Blender bridge, GUI clients, and providers remain separate integration boundaries."
+  }
+}

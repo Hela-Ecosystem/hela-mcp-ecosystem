@@ -2,7 +2,7 @@
 
 All notable changes to this project.
 
-## [Unreleased]
+## [1.9.4] - 2026-11-15
 
 - Install a complete profile-aware HeLa persona on a clean workspace, blending Frea's autonomous execution with Mema's security and operational discipline.
 - Preserve existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` files instead of overwriting a user's persona.

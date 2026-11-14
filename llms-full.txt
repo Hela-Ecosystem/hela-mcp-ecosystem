@@ -5,7 +5,7 @@ URL: https://hela.my.id/library/CHANGELOG.html
 
 All notable changes to this project.
 
-## [Unreleased]
+## [1.9.4] - 2026-11-15
 
 - Install a complete profile-aware HeLa persona on a clean workspace, blending Frea's autonomous execution with Mema's security and operational discipline.
 - Preserve existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` files instead of overwriting a user's persona.
@@ -268,7 +268,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.3**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.4**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -403,7 +403,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.3 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.4 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -986,7 +986,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.3**; runtime **1.3.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.4**; runtime **1.3.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.3**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1703,6 +1703,19 @@ URL: https://hela.my.id/library/docs/profiles.html
 ![Blotcat Profile Selection & Specialization](../assets/blotcat-profiles.jpg)
 
 The HeLa MCP Ecosystem organizes capabilities into **agent-oriented profiles**. Each profile pairs the two foundational backbone servers (**HeLa Mitosis** for orchestration and **HeLa Genome** for persistent state) with a tailored set of specialized capability servers.
+
+## HeLa Persona
+
+When installation targets a clean workspace, the installer creates a private, profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. The scaffold contains `IDENTITY.md`, `SOUL.md`, `TOOLS.md`, `AGENTS.md`, and `USER.md`.
+
+HeLa combines two complementary operating influences:
+
+* **Frea:** autonomous execution, deep technical context, adaptive communication, and protective honesty.
+* **Mema:** credential boundaries, reproducible operations, security-first handling, and disciplined continuity.
+
+The persona is a harness-level guide, not a replacement for the runtime. It reads the selected `HELA_PROFILE`, uses the runtime's `hela://profile/context` resource or `hela-profile-bootstrap` prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use `minimal`.
+
+Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved. HeLa does not overwrite an existing persona, copy private biography or credentials into a new workspace, or distribute machine-specific paths and identifiers.
 
 ---
 

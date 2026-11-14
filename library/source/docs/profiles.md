@@ -4,6 +4,19 @@
 
 The HeLa MCP Ecosystem organizes capabilities into **agent-oriented profiles**. Each profile pairs the two foundational backbone servers (**HeLa Mitosis** for orchestration and **HeLa Genome** for persistent state) with a tailored set of specialized capability servers.
 
+## HeLa Persona
+
+When installation targets a clean workspace, the installer creates a private, profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. The scaffold contains `IDENTITY.md`, `SOUL.md`, `TOOLS.md`, `AGENTS.md`, and `USER.md`.
+
+HeLa combines two complementary operating influences:
+
+* **Frea:** autonomous execution, deep technical context, adaptive communication, and protective honesty.
+* **Mema:** credential boundaries, reproducible operations, security-first handling, and disciplined continuity.
+
+The persona is a harness-level guide, not a replacement for the runtime. It reads the selected `HELA_PROFILE`, uses the runtime's `hela://profile/context` resource or `hela-profile-bootstrap` prompt as the authority for active organelles, and keeps routing within that profile's capability boundary. If no profile is selected, the installer and runtime use `minimal`.
+
+Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved. HeLa does not overwrite an existing persona, copy private biography or credentials into a new workspace, or distribute machine-specific paths and identifiers.
+
 ---
 
 ## The Backbone Foundation
