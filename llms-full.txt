@@ -735,6 +735,21 @@ Current package versions and feature-dependent tool counts are generated in [cur
 
 ![Blotcat acting as a conductor in front of a modular system of interconnected server blocks](../assets/blotcat-architecture.jpg)
 
+## Organelle video explainers
+
+Short video introductions to all ten organelles are embedded in the [Architecture reference page](site/architecture.html#organelle-videos). The [complete ecosystem explainer](https://youtu.be/1qv5kD3qApQ) covers their roles and collaboration.
+
+* [Mitosis — Orchestration & Routing](https://youtu.be/SV9HRh5iFWY)
+* [Genome — Memory & Context](https://youtu.be/3w39n0Dtuy8)
+* [Membrane — Filesystem Access](https://youtu.be/SIO7em0XLA8)
+* [Nucleus — Command Execution](https://youtu.be/Msy-_oR_y68)
+* [Ribosome — Persistent Workers](https://youtu.be/0pScB7HlMtc)
+* [Enzyme — Research & Retrieval](https://youtu.be/fnIy0RzaevM)
+* [Cytosol — Browser Automation](https://youtu.be/BvW25O6v-8U)
+* [Phenotype — Design Tokens & UI Systems](https://youtu.be/8k6fpEBT3cY)
+* [Receptor — Android Device Automation](https://youtu.be/5cy9ZjyLic8)
+* [Plastid — Procedural 3D Modeling](https://youtu.be/7TMHqKB2DR8)
+
 ---
 
 ## 1. Architectural Philosophy: The Cellular Metaphor
@@ -1807,6 +1822,19 @@ There are eight profiles. The canonical membership is `config/profiles.json`; cu
 Agent skills bundled by MCP server are selected with the same profile. See the [prebuilt skills catalog](prebuilt-skills.md) for the complete server-to-skill mapping, profile availability, and sync behavior.
 
 ![Blotcat sorting profile choices between GUI and headless work](../assets/blotcat-illustrations/01-profile-selection.jpg)
+
+### Profile video explainers
+
+These short walkthroughs introduce each profile's server roster, typical workflow, host requirements, and trade-offs:
+
+* [`minimal` — Research & Memory](https://youtu.be/Ruq-Gm0hmcg)
+* [`dev-workspace` — Full Desktop Engineering](https://youtu.be/sdRqv7JhPjM)
+* [`headless-server` — Operations Without a Desktop](https://youtu.be/wHRFYXymeeE)
+* [`research` — From Sources to Synthesis](https://youtu.be/5Lis8z24tks)
+* [`web-devops` — Frontend & Browser QA](https://youtu.be/StGeqfP7Cyg)
+* [`android-testing` — Real Device QA](https://youtu.be/nPCrcBSEUeA)
+* [`3d-modeling` — Blender Asset Creation](https://youtu.be/f92PId5t5ek)
+* [`all` — Every Capability in One Profile](https://youtu.be/oqIucJ8OYCI)
 
 ### `minimal` — HeLa Minimal
 

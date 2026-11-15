@@ -38,6 +38,20 @@
 <header class="library-document-meta" lang="en"><p class="library-kicker">Reference</p><p class="library-source">docs/architecture.md</p><p>Original source language. <a href="../source/docs/architecture.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>This document provides a comprehensive architectural reference for the <strong>HeLa MCP Ecosystem</strong>, detailing its cellular design principles, dual-backbone topology, component taxonomies, and cross-MCP communication mechanisms.</p>
 <p>Current package versions and feature-dependent tool counts are generated in <a href="current-versions.html">current versions</a>. Each of the ten MCP cells has its own version; the ecosystem snapshot and optional runtime have independent versions.</p>
 <p><img src="../../assets/blotcat-architecture.jpg" alt="Blotcat acting as a conductor in front of a modular system of interconnected server blocks" loading="lazy"></p>
+<h2 id="organelle-video-explainers">Organelle video explainers</h2>
+<p>Short video introductions to all ten organelles are embedded in the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/site/architecture.html#organelle-videos">Architecture reference page</a>. The <a href="https://youtu.be/1qv5kD3qApQ">complete ecosystem explainer</a> covers their roles and collaboration.</p>
+<ul>
+<li><a href="https://youtu.be/SV9HRh5iFWY">Mitosis — Orchestration &amp; Routing</a></li>
+<li><a href="https://youtu.be/3w39n0Dtuy8">Genome — Memory &amp; Context</a></li>
+<li><a href="https://youtu.be/SIO7em0XLA8">Membrane — Filesystem Access</a></li>
+<li><a href="https://youtu.be/Msy-_oR_y68">Nucleus — Command Execution</a></li>
+<li><a href="https://youtu.be/0pScB7HlMtc">Ribosome — Persistent Workers</a></li>
+<li><a href="https://youtu.be/fnIy0RzaevM">Enzyme — Research &amp; Retrieval</a></li>
+<li><a href="https://youtu.be/BvW25O6v-8U">Cytosol — Browser Automation</a></li>
+<li><a href="https://youtu.be/8k6fpEBT3cY">Phenotype — Design Tokens &amp; UI Systems</a></li>
+<li><a href="https://youtu.be/5cy9ZjyLic8">Receptor — Android Device Automation</a></li>
+<li><a href="https://youtu.be/7TMHqKB2DR8">Plastid — Procedural 3D Modeling</a></li>
+</ul>
 <hr>
 <h2 id="1-architectural-philosophy-the-cellular-metaphor">1. Architectural Philosophy: The Cellular Metaphor</h2>
 <p>The <strong>HeLa MCP Ecosystem</strong> is architected around a cellular biology metaphor, respectfully recognizing <strong>Henrietta Lacks</strong> (1920–1951) and the immortal legacy of HeLa cells in biomedical research:</p>
@@ -238,12 +252,12 @@
 </ol>
 <p>The installer matches the selected profile against the inventory and chosen snapshot, then renders client syntax: <code>mcpServers</code> JSON, OpenCode/Kilo <code>mcp</code>, Zed <code>context_servers</code>, or Codex <code>[mcp_servers.*]</code> TOML. Runtime installation also refreshes selected-profile schema catalogs. All eight profiles are supported; lappy's full ten-cell roster and servy's eight-cell roster are installation choices, not code forks.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1-architectural-philosophy-the-cellular-metaphor">1. Architectural Philosophy: The Cellular Metaphor</a></li><li><a href="#2-the-4-tier-naming-architecture">2. The 4-Tier Naming Architecture</a></li><li><a href="#3-dual-backbone-coordination-topology">3. Dual-Backbone Coordination Topology</a></li><li><a href="#4-component-taxonomy">4. Component Taxonomy</a></li><li><a href="#5-security--isolation-model">5. Security &amp; Isolation Model</a></li><li><a href="#6-profile-system--lifecycle-management">6. Profile System &amp; Lifecycle Management</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#organelle-video-explainers">Organelle video explainers</a></li><li><a href="#1-architectural-philosophy-the-cellular-metaphor">1. Architectural Philosophy: The Cellular Metaphor</a></li><li><a href="#2-the-4-tier-naming-architecture">2. The 4-Tier Naming Architecture</a></li><li><a href="#3-dual-backbone-coordination-topology">3. Dual-Backbone Coordination Topology</a></li><li><a href="#4-component-taxonomy">4. Component Taxonomy</a></li><li><a href="#5-security--isolation-model">5. Security &amp; Isolation Model</a></li><li><a href="#6-profile-system--lifecycle-management">6. Profile System &amp; Lifecycle Management</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.9.6"></script>
-  <script src="../../library-data.js?v=1.9.6&amp;rev=8dfdd2de6c13"></script>
+  <script src="../../library-data.js?v=1.9.6&amp;rev=253aa5e0fcfd"></script>
   <script src="../../library.js?v=1.9.6&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.9.6&amp;rev=2d0233b9cb8f"></script>
 </body>

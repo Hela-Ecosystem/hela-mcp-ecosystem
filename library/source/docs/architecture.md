@@ -6,6 +6,21 @@ Current package versions and feature-dependent tool counts are generated in [cur
 
 ![Blotcat acting as a conductor in front of a modular system of interconnected server blocks](../assets/blotcat-architecture.jpg)
 
+## Organelle video explainers
+
+Short video introductions to all ten organelles are embedded in the [Architecture reference page](site/architecture.html#organelle-videos). The [complete ecosystem explainer](https://youtu.be/1qv5kD3qApQ) covers their roles and collaboration.
+
+* [Mitosis — Orchestration & Routing](https://youtu.be/SV9HRh5iFWY)
+* [Genome — Memory & Context](https://youtu.be/3w39n0Dtuy8)
+* [Membrane — Filesystem Access](https://youtu.be/SIO7em0XLA8)
+* [Nucleus — Command Execution](https://youtu.be/Msy-_oR_y68)
+* [Ribosome — Persistent Workers](https://youtu.be/0pScB7HlMtc)
+* [Enzyme — Research & Retrieval](https://youtu.be/fnIy0RzaevM)
+* [Cytosol — Browser Automation](https://youtu.be/BvW25O6v-8U)
+* [Phenotype — Design Tokens & UI Systems](https://youtu.be/8k6fpEBT3cY)
+* [Receptor — Android Device Automation](https://youtu.be/5cy9ZjyLic8)
+* [Plastid — Procedural 3D Modeling](https://youtu.be/7TMHqKB2DR8)
+
 ---
 
 ## 1. Architectural Philosophy: The Cellular Metaphor
