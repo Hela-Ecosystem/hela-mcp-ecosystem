@@ -38,6 +38,19 @@ Agent skills bundled by MCP server are selected with the same profile. See the [
 
 ![Blotcat sorting profile choices between GUI and headless work](../assets/blotcat-illustrations/01-profile-selection.jpg)
 
+### Profile video explainers
+
+These short walkthroughs introduce each profile's server roster, typical workflow, host requirements, and trade-offs:
+
+* [`minimal` — Research & Memory](https://youtu.be/Ruq-Gm0hmcg)
+* [`dev-workspace` — Full Desktop Engineering](https://youtu.be/sdRqv7JhPjM)
+* [`headless-server` — Operations Without a Desktop](https://youtu.be/wHRFYXymeeE)
+* [`research` — From Sources to Synthesis](https://youtu.be/5Lis8z24tks)
+* [`web-devops` — Frontend & Browser QA](https://youtu.be/StGeqfP7Cyg)
+* [`android-testing` — Real Device QA](https://youtu.be/nPCrcBSEUeA)
+* [`3d-modeling` — Blender Asset Creation](https://youtu.be/f92PId5t5ek)
+* [`all` — Every Capability in One Profile](https://youtu.be/oqIucJ8OYCI)
+
 ### `minimal` — HeLa Minimal
 
 Three servers: `hela-mitosis`, `hela-genome`, and `hela-enzyme`. This is the smallest research/memory stack; it does not require browser, Android, or Blender dependencies. Keyless research still uses the network.
