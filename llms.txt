@@ -75,6 +75,7 @@ configuration checks remain separate from authenticated GUI and hardware checks.
 - [MCP client integration](https://hela.my.id/library/docs/integration.html): docs/integration.md
 - [HeLa MCP Ecosystem: Keys & Secrets Guide](https://hela.my.id/library/docs/keys-and-secrets.html): docs/keys-and-secrets.md
 - [On-demand runtime and canonical discovery](https://hela.my.id/library/docs/on-demand-runtime.html): docs/on-demand-runtime.md
+- [Prebuilt agent skills](https://hela.my.id/library/docs/prebuilt-skills.html): docs/prebuilt-skills.md
 - [All-profile verification — historical record (2026-11-06)](https://hela.my.id/library/docs/profile-verification-2026-11-06.html): docs/profile-verification-2026-11-06.md
 - [HeLa MCP Ecosystem — Profile & Agent Persona Catalog](https://hela.my.id/library/docs/profiles.html): docs/profiles.md
 - [Security status and verification scope](https://hela.my.id/library/docs/security-audit.html): docs/security-audit.md

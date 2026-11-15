@@ -2,6 +2,13 @@
 
 All notable changes to this project.
 
+## [1.9.6] - 2026-11-15
+
+### Added
+- Bundle Google Chrome's Modern Web Guidance skill in Phenotype 3.0.3, pinned to upstream release `v1.0.0`, CLI package `1.0.0`, and corpus `2026_11_09-5bcc021b`.
+- Add a dedicated prebuilt-skills catalog showing server ownership, availability in all eight profiles, and the install/sync lifecycle.
+- Publish the coordinated `v1.9.6` snapshot and advance `latest-stable` to the new Phenotype revision.
+
 ## [1.9.5] - 2026-11-15
 
 - Clarify that Frea and Mema are Azzar's personal AI assistant personas and that the distributable HeLa persona carries their documented operating principles without copying private state.

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prebuilt agent skills — HeLa MCP Ecosystem</title>
+  <meta name="description" content="HeLa MCP servers can ship companion agent skills alongside their MCP tools. Skills provide task workflows and reference material to compatible agent harnesses; they do not add…">
+  <link rel="canonical" href="https://hela.my.id/library/docs/prebuilt-skills.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/prebuilt-skills.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/prebuilt-skills.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.9.6&amp;rev=f4fb3976fbca">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Documentation sections">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.6 · Runtime 1.3.0 · 10 CELLS</div></div>
+      <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
+<div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
+<li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
+<li><a href="../../index.html#verify"><span class="doc-nav-num">03</span> <span>Verify</span></a></li></ol>
+<div class="doc-nav-section">REFERENCE</div><ol class="doc-nav" start="4"><li><a href="../../architecture.html"><span class="doc-nav-num">04</span> <span>Architecture</span></a></li>
+<li><a href="../../workflows.html"><span class="doc-nav-num">05</span> <span>Workflows</span></a></li>
+<li><a href="../../profiles.html"><span class="doc-nav-num">06</span> <span>Profiles &amp; Config</span></a></li></ol>
+<div class="doc-nav-section">OPERATE</div><ol class="doc-nav" start="7"><li><a href="../../showcase.html"><span class="doc-nav-num">07</span> <span>Showcase</span></a></li>
+<li><a href="../../troubleshooting.html"><span class="doc-nav-num">08</span> <span>Diagnostics</span></a></li></ol>
+<div class="doc-nav-section">LEGAL</div><ol class="doc-nav" start="9"><li><a href="../../privacy.html"><span class="doc-nav-num">09</span> <span>Privacy</span></a></li>
+<li><a href="../../terms.html"><span class="doc-nav-num">10</span> <span>Terms</span></a></li></ol></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="prebuilt-skills.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/prebuilt-skills.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="prebuilt-agent-skills" class="doc-title">Prebuilt agent skills</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Reference</p><p class="library-source">docs/prebuilt-skills.md</p><p>Original source language. <a href="../source/docs/prebuilt-skills.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>HeLa MCP servers can ship companion agent skills alongside their MCP tools. Skills provide task workflows and reference material to compatible agent harnesses; they do not add MCP tools or change server authorization. The skill list belongs to each server's <code>skills</code> array in <a href="../source/config/inventory.json"><code>config/inventory.json</code></a>, and selected profiles determine which servers' skills are eligible.</p>
+<h2 id="server-catalog">Server catalog</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Prebuilt agent skills — table 1</caption>
+<thead>
+<tr>
+<th style="text-align:left" scope="col">Server</th>
+<th style="text-align:left" scope="col">Bundled skills</th>
+<th style="text-align:left" scope="col">Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mitosis</strong> (<code>hela-mitosis</code>)</td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/chaining-mcp/tree/master/skills/skill-finder"><code>skill-finder</code></a>, <a href="https://github.com/Hela-Ecosystem/chaining-mcp/tree/master/skills/human-writing"><code>human-writing</code></a>, <a href="https://github.com/Hela-Ecosystem/chaining-mcp/tree/master/skills/caveman"><code>caveman</code></a>, <a href="https://github.com/Hela-Ecosystem/chaining-mcp/tree/master/skills/mema-vault"><code>mema-vault</code></a>, <a href="https://github.com/Hela-Ecosystem/chaining-mcp/tree/master/skills/blotcat-illustrations"><code>blotcat-illustrations</code></a>, <a href="https://github.com/Hela-Ecosystem/chaining-mcp/tree/master/skills/pcb"><code>pcb</code></a></td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/chaining-mcp"><code>chaining-mcp</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Genome</strong> (<code>hela-genome</code>)</td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/code-reviewer"><code>code-reviewer</code></a>, <a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/guardian-cache"><code>guardian-cache</code></a>, <a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/guardian-memory"><code>guardian-memory</code></a>, <a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/guardian-security"><code>guardian-security</code></a>, <a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/guardian-session"><code>guardian-session</code></a>, <a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/guardian-tracker"><code>guardian-tracker</code></a>, <a href="https://github.com/Hela-Ecosystem/project-mcp/tree/master/skills/guardian-wall"><code>guardian-wall</code></a></td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/project-mcp"><code>project-mcp</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Cytosol</strong> (<code>hela-cytosol</code>)</td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/browser-mcp/tree/master/skill/browser-agent"><code>browser-agent</code></a></td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/browser-mcp"><code>browser-mcp</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Phenotype</strong> (<code>hela-phenotype</code>)</td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/designer-mcp/tree/master/skills/logo-design"><code>logo-design</code></a>, <a href="https://github.com/Hela-Ecosystem/designer-mcp/tree/master/skills/motion-designer"><code>motion-designer</code></a>, <a href="https://github.com/Hela-Ecosystem/designer-mcp/tree/master/skills/brand-architecture"><code>brand-architecture</code></a>, <a href="https://github.com/Hela-Ecosystem/designer-mcp/tree/master/skills/modern-web-guidance"><code>modern-web-guidance</code></a>, <a href="https://github.com/Hela-Ecosystem/designer-mcp/tree/master/skills/video"><code>video</code></a></td>
+<td style="text-align:left"><a href="https://github.com/Hela-Ecosystem/designer-mcp"><code>designer-mcp</code></a></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Membrane, Nucleus, Ribosome, Enzyme, Receptor, Plastid, Runtime</strong></td>
+<td style="text-align:left">No bundled agent skills declared in the current inventory.</td>
+<td style="text-align:left">See their repositories in <a href="../source/config/inventory.json"><code>config/inventory.json</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="profile-availability">Profile availability</h2>
+<p>Every profile includes Mitosis and Genome, so their 13 skills are available in every profile. The specialist skills below are available only when the profile includes their server:</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Prebuilt agent skills — table 2</caption>
+<thead>
+<tr>
+<th style="text-align:left" scope="col">Profile</th>
+<th style="text-align:left" scope="col">Additional skill server(s)</th>
+<th style="text-align:left" scope="col">Additional skills</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>minimal</code></td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">—</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>dev-workspace</code></td>
+<td style="text-align:left">Cytosol, Phenotype</td>
+<td style="text-align:left"><code>browser-agent</code>, <code>logo-design</code>, <code>motion-designer</code>, <code>brand-architecture</code>, <code>modern-web-guidance</code>, <code>video</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>headless-server</code></td>
+<td style="text-align:left">Phenotype</td>
+<td style="text-align:left"><code>logo-design</code>, <code>motion-designer</code>, <code>brand-architecture</code>, <code>modern-web-guidance</code>, <code>video</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>research</code></td>
+<td style="text-align:left">Cytosol</td>
+<td style="text-align:left"><code>browser-agent</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>web-devops</code></td>
+<td style="text-align:left">Cytosol, Phenotype</td>
+<td style="text-align:left"><code>browser-agent</code>, <code>logo-design</code>, <code>motion-designer</code>, <code>brand-architecture</code>, <code>modern-web-guidance</code>, <code>video</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>android-testing</code></td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">—</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>3d-modeling</code></td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">—</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>all</code></td>
+<td style="text-align:left">Cytosol, Phenotype</td>
+<td style="text-align:left"><code>browser-agent</code>, <code>logo-design</code>, <code>motion-designer</code>, <code>brand-architecture</code>, <code>modern-web-guidance</code>, <code>video</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The inventory and profile definitions are the source of truth. Regenerate or review this mapping after changing either <code>skills[]</code> in <code>config/inventory.json</code> or membership in <code>config/profiles.json</code>.</p>
+<h2 id="how-skills-are-installed-and-refreshed">How skills are installed and refreshed</h2>
+<ul>
+<li>A skill is declared on its owning server with a repository-relative <code>path</code>. Its source directory must contain <code>SKILL.md</code>.</li>
+<li><code>npm run skills:sync -- --profile &lt;id&gt;</code> mirrors skills from servers in that profile to the configured harness skills directory. Use <code>--all</code> for the complete catalog. The sync reads the installed source checkouts, so a profile without Phenotype does not receive Phenotype skills.</li>
+<li><code>npm run skills:check -- --profile &lt;id&gt;</code> reports missing, changed, or duplicate skill copies without writing. Run the corresponding <code>skills:sync</code> command after updating server checkouts.</li>
+<li>Managed installations pin each server to a commit in their selected snapshot. The tracked <code>config/inventory.json</code> pins the source snapshot; release snapshots preserve their original commits and are not rewritten to absorb later skill changes.</li>
+<li>Skills are an agent-harness companion layer. A server may have tools without a skill, and an installed skill does not imply that its MCP server is active in the selected profile.</li>
+</ul>
+<h2 id="modern-web-guidance-pin-and-requirements">Modern Web Guidance pin and requirements</h2>
+<p>Phenotype <strong>3.0.3</strong>, pinned in <code>config/inventory.json</code> to commit <a href="https://github.com/Hela-Ecosystem/designer-mcp/tree/d9bf96d460f8de3adc5d5627efd76f8f23d8ee2a"><code>d9bf96d460f8de3adc5d5627efd76f8f23d8ee2a</code></a>, bundles the Apache-2.0 skill from <a href="https://github.com/GoogleChrome/modern-web-guidance">GoogleChrome/modern-web-guidance</a> at release <code>v1.0.0</code>, commit <a href="https://github.com/GoogleChrome/modern-web-guidance/tree/4dd968349e54ca45a05dd5c818fb035c9054b022"><code>4dd968349e54ca45a05dd5c818fb035c9054b022</code></a>. The bundled skill pins the CLI to <code>modern-web-guidance@1.0.0</code> and the guidance corpus to <code>2026_11_09-5bcc021b</code>. The skill and license are included in the Phenotype checkout and synced with its other skills; querying guidance uses the CLI and therefore needs Node.js 22+ and outbound network access. See the skill's <a href="https://github.com/Hela-Ecosystem/designer-mcp/blob/d9bf96d460f8de3adc5d5627efd76f8f23d8ee2a/skills/modern-web-guidance/UPSTREAM.md"><code>UPSTREAM.md</code></a> and <a href="https://github.com/Hela-Ecosystem/designer-mcp/blob/d9bf96d460f8de3adc5d5627efd76f8f23d8ee2a/skills/modern-web-guidance/SKILL.md"><code>SKILL.md</code></a>.</p>
+<p>Updating this skill requires refreshing the upstream skill files and license, verifying the CLI and corpus pins, updating Phenotype's installed-skills catalog, then recording the new Phenotype commit in the ecosystem inventory. Keep immutable historical snapshots unchanged.</p>
+</article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#server-catalog">Server catalog</a></li><li><a href="#profile-availability">Profile availability</a></li><li><a href="#how-skills-are-installed-and-refreshed">How skills are installed and refreshed</a></li><li><a href="#modern-web-guidance-pin-and-requirements">Modern Web Guidance pin and requirements</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.9.6"></script>
+  <script src="../../library-data.js?v=1.9.6&amp;rev=8dfdd2de6c13"></script>
+  <script src="../../library.js?v=1.9.6&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.9.6&amp;rev=2d0233b9cb8f"></script>
+</body>
+</html>
