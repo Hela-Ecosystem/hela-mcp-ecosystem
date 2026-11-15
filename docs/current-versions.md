@@ -9,7 +9,7 @@ Generated from package metadata, inventory, and the schema catalog. Ecosystem **
 - **HeLa Ribosome** (`hela-ribosome`): server **3.0.1**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
 - **HeLa Enzyme** (`hela-enzyme`): server **4.0.1**, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
 - **HeLa Cytosol** (`hela-cytosol`): server **3.2.0**, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
-- **HeLa Phenotype** (`hela-phenotype`): server **3.0.2**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
+- **HeLa Phenotype** (`hela-phenotype`): server **3.0.3**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.1**, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
 - **HeLa Plastid** (`hela-plastid`): server **3.0.1**, 15 canonical tools; [source](https://github.com/Hela-Ecosystem/ll3m-mcp).
 

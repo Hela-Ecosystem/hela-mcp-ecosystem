@@ -34,6 +34,8 @@ Every profile in the ecosystem includes the core dual backbone:
 
 There are eight profiles. The canonical membership is `config/profiles.json`; current versions and generated tool counts are in [current versions](current-versions.md) and [profile counts](generated-profile-counts.md).
 
+Agent skills bundled by MCP server are selected with the same profile. See the [prebuilt skills catalog](prebuilt-skills.md) for the complete server-to-skill mapping, profile availability, and sync behavior.
+
 ![Blotcat sorting profile choices between GUI and headless work](../assets/blotcat-illustrations/01-profile-selection.jpg)
 
 ### `minimal` — HeLa Minimal

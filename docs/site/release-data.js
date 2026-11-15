@@ -326,7 +326,7 @@ globalThis.HELA_DOCS_DATA = {
       "scope": "specialized",
       "role": "design",
       "entry": "dist/index.js",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "toolsCount": 28,
       "toolsMin": 28,
       "tools": [

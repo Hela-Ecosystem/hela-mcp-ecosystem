@@ -247,6 +247,7 @@ npm run skills:check
 * **[Beginner's Step-by-Step Guide](docs/beginner-guide.md)**: 3-minute, zero-code onboarding.
 * **[Keys & Secrets Guide](docs/keys-and-secrets.md)**: API key setup, sign-up URLs, and zero-key offline fallbacks.
 * **[Profiles Reference](docs/profiles.md)**: Full persona reference and capability mappings.
+* **[Prebuilt Agent Skills](docs/prebuilt-skills.md)**: Per-server skill catalog, profile availability, pinning, and synchronization behavior.
 * **[Workflows & Integration Guide](docs/workflows.md)**: Cross-MCP workflow pipelines (Workflows A–F).
 * **[Security & Reliability Audit](docs/security-audit.md)**: Threat model, sandboxing, and isolation standards.
 * **[Architecture Guide](docs/architecture.md)**: In-depth cellular architecture and communication topologies.
