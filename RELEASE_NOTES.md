@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.9.6 — pinned modern web guidance
+
+HeLa Phenotype 3.0.3 now bundles Google's Modern Web Guidance agent skill. The skill, CLI package (`1.0.0`), upstream source commit, and guidance corpus (`2026_11_09-5bcc021b`) are pinned. Profiles that include Phenotype receive the skill through the normal skill-sync workflow; the command-line lookup needs Node.js 22+ and outbound network access.
+
+The new [prebuilt-skills catalog](docs/prebuilt-skills.md) maps every bundled skill to its server and all eight profiles, and documents source pins, synchronization, and update handling. The coordinated v1.9.6 snapshot is immutable; `latest-stable` now resolves to it. v1.9.5 and older snapshots remain unchanged.
+
 ## v1.8.0 — dedicated Cytosol image analysis
 
 HeLa Cytosol now accepts a dedicated local image path, HTTP(S) image URL, or base64 image directly through `browser_image_analyze`. The tool returns Mirage VLM scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions without launching a browser page. Image inputs are bounded and protected by workspace, content-type, redirect, and SSRF checks.
