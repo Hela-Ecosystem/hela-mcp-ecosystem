@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f8f6bc8038dae3400ffb3e1491469abdcd03d04f",
+      "revision": "f87b5923d806b6765b1cce5fb1636c2de2ad1ef0",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -46,7 +46,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.0.4",
+      "version": "3.0.5",
       "skills": [
         {
           "name": "skill-finder",
@@ -89,14 +89,14 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "849f8b1857ba60d1ec64a469a4bc2ee4dcc0e05f",
+      "revision": "7ac32f8cb90b81074331c58f1d0b90777fed57f1",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "skills": [
         {
           "name": "code-reviewer",
@@ -143,10 +143,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "7ac1a8b92d974d44e6949314c7e3b43a4d271ccf",
+      "revision": "1ab60ae142587eaa2a984cbaa32243573953cb54",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
-      "version": "3.0.2"
+      "version": "3.0.3"
     },
     "hela-nucleus": {
       "id": "hela-nucleus",
@@ -166,10 +166,10 @@
       "systemDeps": {
         "tmux": "required"
       },
-      "revision": "add3d38690cfb805fe12bf5f4c583fbc37b932db",
+      "revision": "f14c4f5bb2b62a41b991ff264a64422b2e854069",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
-      "version": "3.0.3"
+      "version": "3.0.4"
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
@@ -189,10 +189,10 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "659ce9515e87fb16f9d706d8cd9e7ec6b8988bd4",
+      "revision": "9a6dec579eb9af9ab8d1d6426a73480e2689a98c",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.1.0"
+      "version": "3.1.1"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -209,7 +209,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "af929ce440ec51ae0da0134e52abf8bdea59c622",
+      "revision": "085653d3fc9f86ca23c5c5c548e0b4faa6fbc549",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -218,7 +218,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.3"
+      "version": "4.0.4"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -235,14 +235,14 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f2d816c9b260466512087d238a5a37ad6de7823b",
+      "revision": "11feaaa1d220f68846055075c58f4b0de6ea0369",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
         "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
         "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
       },
-      "version": "3.2.1",
+      "version": "3.2.2",
       "skills": [
         {
           "name": "browser-agent",
@@ -265,10 +265,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "b3a7255be0b26e0edffa7c4ef48021959f683f52",
+      "revision": "526b78837014c38e724ca4eb60a9897b01b2e6f7",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
-      "version": "3.0.3",
+      "version": "3.0.4",
       "skills": [
         {
           "name": "logo-design",
@@ -307,10 +307,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "f28d39e924ca21e0e8b0c1423e4396f21d5e9c76",
+      "revision": "96c7eb5715bc4b69d47cd47fbb30beb1fc27e54b",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
-      "version": "3.0.4",
+      "version": "3.0.5",
       "lazy": true
     },
     "hela-plastid": {
@@ -328,10 +328,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": false,
-      "revision": "6f51865a6ce846b9202aec57a974aa0905300d75",
+      "revision": "0196ba533bcb48e4b2ff669d7352aade12e5f03e",
       "env": [],
       "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
-      "version": "3.0.3",
+      "version": "3.0.4",
       "lazy": true
     },
     "hela-runtime": {
@@ -349,8 +349,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "058fc69bfe72e3f02bcfd3536936df38e3a9f4c2",
-      "version": "1.3.1",
+      "revision": "b6e5404db431404d1852146e492b92eee173350f",
+      "version": "1.3.2",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",
