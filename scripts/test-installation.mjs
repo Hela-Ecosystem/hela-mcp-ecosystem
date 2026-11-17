@@ -26,6 +26,11 @@ for (const name of ['tmux', 'sudo', 'apt-get', 'dnf', 'pacman', 'apk', 'brew']) 
   fs.writeFileSync(path.join(shimDir, name), `#!/bin/sh\nprintf '${name}\\n' >> "$HELA_SYSTEM_DEPS_LOG"\n${body}\n`, { mode: 0o700 });
 }
 const testPath = `${shimDir}${path.delimiter}${process.env.PATH}`;
+// Provisioning is disabled under CI by design, so the provisioning fixtures
+// must run with a CI-free environment; the CI behaviour has its own test.
+const provisionBase = { ...process.env };
+for (const key of ['CI', 'CONTINUOUS_INTEGRATION', 'GITHUB_ACTIONS', 'BUILDKITE', 'GITLAB_CI']) delete provisionBase[key];
+const provisionEnv = (extra = {}) => ({ ...provisionBase, PATH: testPath, ...extra });
 const metadata = path.join(scratch, 'metadata');
 fs.mkdirSync(path.join(metadata, 'config/snapshots'), { recursive: true });
 const inventory = JSON.parse(fs.readFileSync(path.join(root, 'config/inventory.json'), 'utf8'));
@@ -144,7 +149,7 @@ test('profile capability plan installs Needle and Mirage only when selected', ()
 test('tmux provisioning uses tolerant probes and never invokes a package manager after sudo refusal', async () => {
   fs.writeFileSync(commandLog, '');
   const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
-    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '1' },
+    env: provisionEnv({ HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '1' }),
     nonInteractive: true });
   assert.equal(result.status, 'skipped');
   const calls = fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean);
@@ -154,7 +159,7 @@ test('tmux provisioning uses tolerant probes and never invokes a package manager
 test('a noninteractive refusal is returned as declined without invoking the manager', async () => {
   fs.writeFileSync(commandLog, '');
   const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
-    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '0' },
+    env: provisionEnv({ HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '0' }),
     nonInteractive: true });
   assert.deepEqual(result, { status: 'declined', version: null, method: 'consent' });
   assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux', 'sudo']);
@@ -164,16 +169,16 @@ test('HELA_SYSTEM_DEPS_INSTALL opts a noninteractive install into tmux provision
   fs.writeFileSync(commandLog, '');
   const presence = path.join(scratch, 'tmux-opt-in-installed');
   const result = await provisionSystemDeps({ platform: 'linux', isRoot: false, nonInteractive: true,
-    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
-      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0', HELA_SYSTEM_DEPS_INSTALL: '1' } });
+    env: provisionEnv({ HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0', HELA_SYSTEM_DEPS_INSTALL: '1' }) });
   assert.deepEqual(result, { status: 'installed', version: '3.4', method: 'apt-get' });
   assert.match(fs.readFileSync(commandLog, 'utf8'), /apt-get install -y tmux/);
 });
 
 test('system dependency opt-in still requires sudo and CI disables provisioning', async () => {
   fs.writeFileSync(commandLog, '');
-  const base = { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
-    HELA_SUDO_STATUS: '1', HELA_SYSTEM_DEPS_INSTALL: '1' };
+  const base = provisionEnv({ HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+    HELA_SUDO_STATUS: '1', HELA_SYSTEM_DEPS_INSTALL: '1' });
   const noSudo = await provisionSystemDeps({ platform: 'linux', isRoot: false, nonInteractive: true, env: base });
   assert.equal(noSudo.status, 'skipped');
   assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux', 'sudo']);
@@ -187,8 +192,8 @@ test('apt installation runs only after explicit consent and verifies the install
   fs.writeFileSync(commandLog, '');
   const presence = path.join(scratch, 'tmux-installed');
   const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
-    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
-      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0' },
+    env: provisionEnv({ HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0' }),
     confirm: () => true });
   assert.deepEqual(result, { status: 'installed', version: '3.4', method: 'apt-get' });
   assert.match(fs.readFileSync(commandLog, 'utf8'), /apt-get install -y tmux/);
@@ -198,8 +203,8 @@ test('Homebrew installation uses the user package manager without sudo', async (
   fs.writeFileSync(commandLog, '');
   const presence = path.join(scratch, 'brew-tmux-installed');
   const result = await provisionSystemDeps({ platform: 'darwin', isRoot: false,
-    env: { ...process.env, PATH: testPath, HELA_SYSTEM_DEPS_LOG: commandLog,
-      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0' }, confirm: () => true });
+    env: provisionEnv({ HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0' }), confirm: () => true });
   assert.deepEqual(result, { status: 'installed', version: '3.4', method: 'brew' });
   const calls = fs.readFileSync(commandLog, 'utf8');
   assert.match(calls, /brew install tmux/);
@@ -209,8 +214,8 @@ test('Homebrew installation uses the user package manager without sudo', async (
 test('an existing incompatible tmux version is never upgraded', async () => {
   fs.writeFileSync(commandLog, '');
   const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
-    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
-      HELA_TMUX_VERSION: '1.7', HELA_SUDO_STATUS: '0' }, nonInteractive: true });
+    env: provisionEnv({ HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_TMUX_VERSION: '1.7', HELA_SUDO_STATUS: '0' }), nonInteractive: true });
   assert.deepEqual(result, { status: 'incompatible', version: '1.7', method: 'path' });
   assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux']);
 });
