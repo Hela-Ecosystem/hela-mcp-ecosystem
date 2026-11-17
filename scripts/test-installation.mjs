@@ -237,7 +237,10 @@ test('declined tmux provisioning is recorded in the host install manifest', asyn
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(fs.readFileSync(path.join(prefix, '.hela-install.json'), 'utf8')).systemDeps,
     { status: 'declined', version: null, method: 'consent' });
-  assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux', 'sudo']);
+  // On macOS the manager is Homebrew and needs no privilege check, so only the
+  // probe is logged; Linux/apt expects the sudo gate first.
+  const expectedCalls = process.platform === 'darwin' ? ['tmux'] : ['tmux', 'sudo'];
+  assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), expectedCalls);
   const doctor = await checkInstallation(prefix);
   assert.equal(doctor.status, 'READY');
   assert.equal(doctor.dependencies.tmux.severity, 'warn');
