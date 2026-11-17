@@ -307,7 +307,7 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "96c7eb5715bc4b69d47cd47fbb30beb1fc27e54b",
+      "revision": "7c8bbed5aee51793b76611067f220d32ddef5a96",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
       "version": "3.0.5",

@@ -68,7 +68,7 @@
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
-      "commit": "96c7eb5715bc4b69d47cd47fbb30beb1fc27e54b",
+      "commit": "7c8bbed5aee51793b76611067f220d32ddef5a96",
       "branch": "master",
       "entry": "dist/server.js",
       "serverVersion": "3.0.5"
