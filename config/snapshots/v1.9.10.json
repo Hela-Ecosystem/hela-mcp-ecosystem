@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "snapshot_version": "1.9.10",
+  "created_at": "2026-11-17T21:10:42Z",
+  "description": "Tooling release: headless verification of the authenticated Codex ACP session and the adapter-version guidance. Cell pins are identical to 1.9.9.",
+  "environment": {
+    "node_minimum": ">=22.0.0",
+    "recommended_node": "22 LTS (validated 22.23.4)",
+    "git_minimum": ">=2.30.0",
+    "sqlite_minimum": ">=3.35.0"
+  },
+  "servers": {
+    "hela-mitosis": {
+      "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
+      "commit": "f8f6bc8038dae3400ffb3e1491469abdcd03d04f",
+      "branch": "main",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.4"
+    },
+    "hela-genome": {
+      "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
+      "commit": "849f8b1857ba60d1ec64a469a4bc2ee4dcc0e05f",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.1"
+    },
+    "hela-membrane": {
+      "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
+      "commit": "7ac1a8b92d974d44e6949314c7e3b43a4d271ccf",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.2"
+    },
+    "hela-nucleus": {
+      "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git",
+      "commit": "add3d38690cfb805fe12bf5f4c583fbc37b932db",
+      "branch": "main",
+      "entry": "build/index.js",
+      "serverVersion": "3.0.3"
+    },
+    "hela-ribosome": {
+      "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
+      "commit": "659ce9515e87fb16f9d706d8cd9e7ec6b8988bd4",
+      "branch": "master",
+      "entry": "build/index.js",
+      "serverVersion": "3.1.0"
+    },
+    "hela-enzyme": {
+      "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
+      "commit": "0273245bcd4c8a68dedc3ed4bd6bb1af91e3f42e",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "4.0.2"
+    },
+    "hela-cytosol": {
+      "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
+      "commit": "83ae95609b007c04da82fd25060819d477d1b2d7",
+      "branch": "master",
+      "entry": "src/server.js",
+      "serverVersion": "3.2.0"
+    },
+    "hela-phenotype": {
+      "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
+      "commit": "b3a7255be0b26e0edffa7c4ef48021959f683f52",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.3"
+    },
+    "hela-receptor": {
+      "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
+      "commit": "05d6739faf9ed29f937f9c1933beafb2c5d3206f",
+      "branch": "master",
+      "entry": "dist/server.js",
+      "serverVersion": "3.0.2"
+    },
+    "hela-plastid": {
+      "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git",
+      "commit": "03c8add9723560643efae9a16a3dc0412f7655fd",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.2"
+    },
+    "hela-runtime": {
+      "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
+      "commit": "058fc69bfe72e3f02bcfd3536936df38e3a9f4c2",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "1.3.1"
+    }
+  },
+  "verified_profiles": [
+    "dev-workspace"
+  ],
+  "verified_clients": [],
+  "verification": {
+    "plastid_regressions": 12,
+    "receptor_tests": 124,
+    "installation_tests": 65,
+    "documentation_regressions": 95,
+    "client_configuration_combinations": 80,
+    "inventory_tests": 8,
+    "skill_sync_tests": 1,
+    "scope": "Tool-catalog parity, installation, doctor, profile and documentation gates re-run on 2026-11-18. Ribosome rendered screen and tmux durability are covered by unit and fake-ssh tests; real-host SSH, hardware, Blender bridge, GUI clients and providers remain separate."
+  }
+}
