@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "55ca1d45f0dacb0bd34358b272c11f2d9b7cc06e",
+      "revision": "0a49d2f9051ae689e687f1cd243b7a656499f458",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -98,13 +98,34 @@
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
       "version": "3.0.1",
       "skills": [
-        { "name": "code-reviewer", "path": "skills/code-reviewer" },
-        { "name": "guardian-cache", "path": "skills/guardian-cache" },
-        { "name": "guardian-memory", "path": "skills/guardian-memory" },
-        { "name": "guardian-security", "path": "skills/guardian-security" },
-        { "name": "guardian-session", "path": "skills/guardian-session" },
-        { "name": "guardian-tracker", "path": "skills/guardian-tracker" },
-        { "name": "guardian-wall", "path": "skills/guardian-wall" }
+        {
+          "name": "code-reviewer",
+          "path": "skills/code-reviewer"
+        },
+        {
+          "name": "guardian-cache",
+          "path": "skills/guardian-cache"
+        },
+        {
+          "name": "guardian-memory",
+          "path": "skills/guardian-memory"
+        },
+        {
+          "name": "guardian-security",
+          "path": "skills/guardian-security"
+        },
+        {
+          "name": "guardian-session",
+          "path": "skills/guardian-session"
+        },
+        {
+          "name": "guardian-tracker",
+          "path": "skills/guardian-tracker"
+        },
+        {
+          "name": "guardian-wall",
+          "path": "skills/guardian-wall"
+        }
       ]
     },
     "hela-membrane": {
@@ -122,10 +143,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "b80aafe08e9309549875fa8c431ee11081977e82",
+      "revision": "7ac1a8b92d974d44e6949314c7e3b43a4d271ccf",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
-      "version": "3.0.1"
+      "version": "3.0.2"
     },
     "hela-nucleus": {
       "id": "hela-nucleus",
@@ -142,11 +163,13 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "systemDeps": { "tmux": "required" },
-      "revision": "5f6449121d68668db424a8ead4c28c1d707f2355",
+      "systemDeps": {
+        "tmux": "required"
+      },
+      "revision": "add3d38690cfb805fe12bf5f4c583fbc37b932db",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
-      "version": "3.0.2"
+      "version": "3.0.3"
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
@@ -163,11 +186,13 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "systemDeps": { "tmux": "optional" },
-      "revision": "2ded6b8baffcf45e2bf725633cb1e6b78422d099",
+      "systemDeps": {
+        "tmux": "optional"
+      },
+      "revision": "036cb49e537c216b9159c0d804fdb868773ca002",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.0.1"
+      "version": "3.1.0"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -184,7 +209,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "a3aa21be67dfa045d41f521d1e31e061f98bfdc0",
+      "revision": "0273245bcd4c8a68dedc3ed4bd6bb1af91e3f42e",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -193,7 +218,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.1"
+      "version": "4.0.2"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -219,7 +244,10 @@
       },
       "version": "3.2.0",
       "skills": [
-        { "name": "browser-agent", "path": "skill/browser-agent" }
+        {
+          "name": "browser-agent",
+          "path": "skill/browser-agent"
+        }
       ]
     },
     "hela-phenotype": {
@@ -237,16 +265,31 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "d9bf96d460f8de3adc5d5627efd76f8f23d8ee2a",
+      "revision": "b3a7255be0b26e0edffa7c4ef48021959f683f52",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
       "version": "3.0.3",
       "skills": [
-        { "name": "logo-design", "path": "skills/logo-design" },
-        { "name": "motion-designer", "path": "skills/motion-designer" },
-        { "name": "brand-architecture", "path": "skills/brand-architecture" },
-        { "name": "modern-web-guidance", "path": "skills/modern-web-guidance" },
-        { "name": "video", "path": "skills/video" }
+        {
+          "name": "logo-design",
+          "path": "skills/logo-design"
+        },
+        {
+          "name": "motion-designer",
+          "path": "skills/motion-designer"
+        },
+        {
+          "name": "brand-architecture",
+          "path": "skills/brand-architecture"
+        },
+        {
+          "name": "modern-web-guidance",
+          "path": "skills/modern-web-guidance"
+        },
+        {
+          "name": "video",
+          "path": "skills/video"
+        }
       ]
     },
     "hela-receptor": {
@@ -264,10 +307,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "4bf7a0d9f5dcc72479c17714166bd7a0e858eb6f",
+      "revision": "05d6739faf9ed29f937f9c1933beafb2c5d3206f",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "lazy": true
     },
     "hela-plastid": {
@@ -285,10 +328,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": false,
-      "revision": "ee3e12bfe6c2ba797760a53f6459d2d44932dd66",
+      "revision": "03c8add9723560643efae9a16a3dc0412f7655fd",
       "env": [],
       "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "lazy": true
     },
     "hela-runtime": {
