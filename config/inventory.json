@@ -21,7 +21,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f87b5923d806b6765b1cce5fb1636c2de2ad1ef0",
+      "revision": "3064af70368457011c89cc584befe6d5f59d28a5",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -46,7 +46,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.0.5",
+      "version": "3.0.6",
       "skills": [
         {
           "name": "skill-finder",
@@ -235,14 +235,14 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "11feaaa1d220f68846055075c58f4b0de6ea0369",
+      "revision": "eac7e4c42d68959b85d664a4fa364325298cada7",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
         "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
         "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
       },
-      "version": "3.2.2",
+      "version": "3.2.3",
       "skills": [
         {
           "name": "browser-agent",
