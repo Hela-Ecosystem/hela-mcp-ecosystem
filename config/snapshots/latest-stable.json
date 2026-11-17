@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.14",
-  "created_at": "2026-11-17T22:38:44Z",
-  "description": "Lands the last two in-flight cell changes: the bundled pcb skill in Mitosis (deduplicated, MIT licence preserved) and the Cytosol headless-by-default fix, which previously made display-less service processes fail at launch.",
+  "snapshot_version": "1.9.15",
+  "created_at": "2026-11-17T23:23:33Z",
+  "description": "Tooling release: CI-only provisioning-test fix and restored changelog entries. Cell pins are identical to 1.9.14.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
