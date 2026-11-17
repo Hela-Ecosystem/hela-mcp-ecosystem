@@ -9494,10 +9494,10 @@
       ]
     },
     "hela-receptor": {
-      "revision": "96c7eb5715bc4b69d47cd47fbb30beb1fc27e54b",
+      "revision": "7c8bbed5aee51793b76611067f220d32ddef5a96",
       "version": "3.0.5",
       "digests": [
-        "4052a2e77dd672654a0d1e3a665648fdcc1fd6589a142adefc53d17be0f64738"
+        "c27aaf1c14fdd3c0608df08784ab5a190647d2fc2ea6a1e555f2b3d35230c0e9"
       ],
       "variants": [
         {
