@@ -1,3 +1,34 @@
+## [1.9.15] - 2026-11-18
+
+### Fixed
+- The tmux provisioning tests inherited `CI` from `process.env`, so on GitHub Actions provisioning short-circuited to `skipped`/`ci` before any assertion: eight failures that only existed on CI. The fixtures now strip CI variables, and the CI-disable case keeps its own explicit test.
+
+## [1.9.14] - 2026-11-18
+
+### Added
+- Mitosis `3.0.6` bundles the registry `pcb` skill (KiCad workflow, verification scripts, JLCPCB preparation, MIT licence preserved). The staged copy contained a duplicate of itself under `skills/pcb/pcb`; 3.3 MB removed so discovery sees one definition.
+
+### Fixed
+- Cytosol `3.2.3`: `BROWSER_HEADLESS` defaults to auto — headless without `DISPLAY`, headful with one, explicit values still winning. Display-less service processes could not launch Chromium before. `resolveHeadless` is exported and tested.
+- Browser CI pins `ubuntu-24.04`; `ubuntu-latest` moved to 26.04 where `playwright install --with-deps` exits without a Chromium build.
+- Runtime `1.3.2` refreshes the Nix `npmDepsHash` after the version bump.
+
+## [1.9.13] - 2026-11-18
+
+### Fixed
+- Every cell and the runtime now single-source the advertised MCP version in one module, guarded by a test against `package.json`. Six cells had shipped a stale `ServerInfo` this way (nucleus, enzyme, phenotype, receptor, cytosol, plastid), and a deliberate drift in mitosis was verified to fail its suite.
+
+## [1.9.12] - 2026-11-18
+
+### Added
+- Hardware and live-service validation: receptor `3.0.4` makes the device integration suite runnable (it spawned a non-existent entrypoint) and passes 18 checks on a Pixel 8 — UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard.
+- `npm run test:browserless` validates a remote Browserless instance with local fallback disabled; `npm run test:blender` drives the Blender bridge (scene, in-Blender code execution, object details); `npm run test:fallback` proves the search degradation chain with an invalid provider key.
+- Scrcpy parses the `SET_CLIPBOARD` acknowledgement frame instead of resetting the buffer on it.
+
+### Known limitations
+- The remote Browserless context can be closed between calls; `browser_health` reports it but there is no automatic reconnect.
+- Headless Blender reports a render path without writing a file; rendering still needs a GUI session.
+
 ## [1.9.11] - 2026-11-18
 
 ### Fixed
