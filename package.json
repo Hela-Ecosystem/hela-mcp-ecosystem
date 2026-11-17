@@ -1,6 +1,6 @@
 {
   "name": "hela-mcp-ecosystem",
-  "version": "1.9.9",
+  "version": "1.9.10",
   "description": "The modular, immortal cellular AI tooling ecosystem based on Model Context Protocol.",
   "type": "module",
   "scripts": {
@@ -29,7 +29,8 @@
     "test:all": "node scripts/test-all.mjs",
     "clean:all": "node scripts/clean-all.mjs",
     "skills:sync": "node scripts/sync-skills.mjs",
-    "skills:check": "node scripts/sync-skills.mjs --check"
+    "skills:check": "node scripts/sync-skills.mjs --check",
+    "test:acp": "node scripts/verify-acp.mjs"
   },
   "devDependencies": {
     "markdown-it": "15.0.3"

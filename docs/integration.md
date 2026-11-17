@@ -59,7 +59,7 @@ See [on-demand runtime](on-demand-runtime.md) for stale-cache refusal and explic
 
 Codex-native MCP entries and Zed-forwarded entries can have the same name. A duplicate warning can refer to the forwarded duplicate rather than failure of the native entry. `codex mcp list` inspects configuration; it does not execute servers or prove connectivity.
 
-Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP/GUI warning verification remains separate from isolated MCP discovery. See the adapter-version-specific guidance in [troubleshooting](troubleshooting.md#zed-forwards-a-server-that-codex-already-defines); the optional merge override is not enabled by this guide.
+Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP sessions are verified without the GUI by `npm run test:acp` (`scripts/verify-acp.mjs`), which drives the same adapter Zed does; the adapter must be new enough for the account's model list — the registry build `codex-acp` 0.11.1 fails every model with `model_not_found`, while 2.7.0 works (see [troubleshooting](troubleshooting.md#codex-acp-every-model-fails-with-model_not_found)). See the adapter-version-specific guidance in [troubleshooting](troubleshooting.md#zed-forwards-a-server-that-codex-already-defines); the optional merge override is not enabled by this guide.
 
 ## Keys and optional services
 
