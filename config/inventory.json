@@ -209,7 +209,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "0273245bcd4c8a68dedc3ed4bd6bb1af91e3f42e",
+      "revision": "af929ce440ec51ae0da0134e52abf8bdea59c622",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -218,7 +218,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.2"
+      "version": "4.0.3"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -235,14 +235,14 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "83ae95609b007c04da82fd25060819d477d1b2d7",
+      "revision": "f2d816c9b260466512087d238a5a37ad6de7823b",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
         "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
         "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
       },
-      "version": "3.2.0",
+      "version": "3.2.1",
       "skills": [
         {
           "name": "browser-agent",
@@ -307,10 +307,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "650e839b359592acc0644111385e9352b129e704",
+      "revision": "f28d39e924ca21e0e8b0c1423e4396f21d5e9c76",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
-      "version": "3.0.3",
+      "version": "3.0.4",
       "lazy": true
     },
     "hela-plastid": {
@@ -328,10 +328,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": false,
-      "revision": "03c8add9723560643efae9a16a3dc0412f7655fd",
+      "revision": "6f51865a6ce846b9202aec57a974aa0905300d75",
       "env": [],
       "description": "Autonomous 3D modeling system for Blender with natural language scene generation and iterative refinement.",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "lazy": true
     },
     "hela-runtime": {
