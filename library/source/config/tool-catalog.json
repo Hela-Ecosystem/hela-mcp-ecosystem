@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "f87b5923d806b6765b1cce5fb1636c2de2ad1ef0",
-      "version": "3.0.5",
+      "revision": "3064af70368457011c89cc584befe6d5f59d28a5",
+      "version": "3.0.6",
       "digests": [
-        "fe7d073f49df060caefbca3f41e62aa69e9c85fd1453882208b8f5c648ca5ad8"
+        "f93bb3dc96a5bd94e9a52691f18b3f99f394776b2ed738b41c24510ee732cec4"
       ],
       "variants": [
         {
@@ -6557,10 +6557,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "11feaaa1d220f68846055075c58f4b0de6ea0369",
-      "version": "3.2.2",
+      "revision": "eac7e4c42d68959b85d664a4fa364325298cada7",
+      "version": "3.2.3",
       "digests": [
-        "4d4dae9e11aa71482b1da9f433712682362a90ae52dce05d1137ae978fdd457e"
+        "102dabe269f6f67497c4747d4bf2e7c52aea329849f4111c69d75ce9091a8658"
       ],
       "variants": [
         {
