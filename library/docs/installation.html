@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <link rel="stylesheet" href="../../library.css?v=1.9.6&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../library.css?v=1.9.7&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.6 · Runtime 1.3.0 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.7 · Runtime 1.3.0 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -38,7 +38,7 @@
 <header class="library-document-meta" lang="en"><p class="library-kicker">Getting started</p><p class="library-source">docs/installation.md</p><p>Original source language. <a href="../source/docs/installation.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p><img src="../../assets/blotcat-installation.png" alt="Blotcat assembling a selected profile into a managed runtime" loading="lazy"></p>
 <p>The installer supports eight profiles through five modes: <code>individual</code>, <code>runtime</code>, <code>docker</code>, <code>docker-runtime</code>, and <code>nix</code>. Runtime-based modes support stdio and Streamable HTTP. A mode selects the execution mechanism; a profile selects eligible cells.</p>
 <p>On a clean selected workspace, installation creates a profile-aware HeLa persona under <code>agent_persona/</code> and links <code>AGENTS.md</code>, <code>CLAUDE.md</code>, and <code>GEMINI.md</code> to its session entrypoint. Frea and Mema are Azzar's personal AI assistant personas: Frea contributes autonomous technical execution and adaptive judgment, while Mema contributes security, credential boundaries, reproducibility, and continuity. HeLa is a distributable synthesis of those operating principles; it does not copy their private persona files, memories, biography, credentials, paths, or identifiers. Existing <code>agent_persona/</code>, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, or <code>GEMINI.md</code> files are preserved and never overwritten automatically.</p>
-<p>Capability setup follows the selected profile. Every canonical profile includes Mitosis, so Needle 3 is provisioned unless <code>--without-model</code> is explicitly passed. Profiles containing Cytosol (<code>dev-workspace</code>, <code>research</code>, <code>web-devops</code>, and <code>all</code>) also provision the managed Mirage Python bridge and its <code>cactus-compute[vision]</code> dependency. Other profiles do not install Mirage. A profile containing Cytosol therefore installs both capabilities automatically.</p>
+<p>Capability setup follows the selected profile. Every canonical profile includes Mitosis, so Needle 3 is provisioned unless <code>--without-model</code> is explicitly passed. Profiles containing Cytosol (<code>dev-workspace</code>, <code>research</code>, <code>web-devops</code>, and <code>all</code>) also provision the managed Mirage Python bridge and its <code>cactus-compute[vision]</code> dependency. Profiles containing Nucleus or Ribosome check for tmux; when missing, the installer asks before installing it through the platform package manager. <code>HELA_SYSTEM_DEPS_INSTALL=1</code> opts into that install without a prompt, including with <code>--non-interactive</code>, after the sudo availability check. CI always skips system dependency installation, and <code>--without-system-deps</code> overrides the opt-in. Existing tmux versions are never upgraded; versions older than 1.8 are reported as incompatible. Docker images and the Nix devShell provide tmux themselves.</p>
 <p>See <a href="installation-acceptance.html">local acceptance evidence</a> for the tested mechanisms, real client connections, persistence checks, and platform/integration boundaries.</p>
 <h2 id="requirements-and-boundaries">Requirements and boundaries</h2>
 <ul>
@@ -50,7 +50,121 @@
 <li>Mirage profiles require Python 3.9+ and network access during installation so the installer can create <code>browser-mcp/user_data/mirage/.venv</code> and install <code>cactus-compute[vision]</code>. The generated launcher passes the managed Mirage Python path to Cytosol and to the runtime when Cytosol is part of the selected profile. Mirage weights are downloaded and cached by Cactus on first image analysis.</li>
 <li>Chromium/browser services, Android devices/ADB, Blender/its bridge, provider credentials, and GUI client authentication remain separate integration requirements. <code>READY</code> does not certify those operations or provide an OS sandbox.</li>
 </ul>
-<p>Installation does not start a persistent service, change system packages, replace existing repositories, or rewrite live client settings. Endpoint security and credential rotation are not changed by this installer.</p>
+<p>Installation does not start a persistent service, replace existing repositories, or rewrite live client settings. For profiles containing Nucleus or Ribosome, tmux installation requires interactive consent or the explicit environment opt-in above. Endpoint security and credential rotation are not changed by this installer.</p>
+<p>&lt;!-- hela:installer-flags:start --&gt;
+&lt;!-- Generated by scripts/generate-docs.mjs from scripts/installation.mjs. --&gt;</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Installation modes and doctor — table 1</caption>
+<thead>
+<tr>
+<th scope="col">Flag</th>
+<th scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile VALUE</code></td>
+<td>Any of the eight canonical profiles (default minimal)</td>
+</tr>
+<tr>
+<td><code>--mode VALUE</code></td>
+<td>Select the installation mode.</td>
+</tr>
+<tr>
+<td><code>--client VALUE</code></td>
+<td>Generate a client fragment, never overwrite live client settings (default skip)</td>
+</tr>
+<tr>
+<td><code>--prefix VALUE</code></td>
+<td>Managed installation directory; existing unmanaged directories are refused</td>
+</tr>
+<tr>
+<td><code>--root VALUE</code></td>
+<td>Metadata source checkout (default this checkout)</td>
+</tr>
+<tr>
+<td><code>--snapshot VALUE</code></td>
+<td>Exact snapshot (default latest-stable)</td>
+</tr>
+<tr>
+<td><code>--out VALUE</code></td>
+<td>Explicit generated fragment destination; refuses existing files</td>
+</tr>
+<tr>
+<td><code>--workspace VALUE</code></td>
+<td>Workspace exposed to installed tools (default PREFIX/workspace)</td>
+</tr>
+<tr>
+<td><code>--image VALUE</code></td>
+<td>Docker image tag override</td>
+</tr>
+<tr>
+<td><code>--system VALUE</code></td>
+<td>Target system hint: <code>any</code>, <code>gui</code>, or <code>headless</code>.</td>
+</tr>
+<tr>
+<td><code>--transport VALUE</code></td>
+<td>Runtime transport: stdio or HTTP.</td>
+</tr>
+<tr>
+<td><code>--port VALUE</code></td>
+<td>HTTP listener port (default 8080)</td>
+</tr>
+<tr>
+<td><code>--url VALUE</code></td>
+<td>Doctor URL for a running HTTP endpoint.</td>
+</tr>
+<tr>
+<td><code>--non-interactive</code></td>
+<td>No prompts; missing/invalid arguments fail immediately</td>
+</tr>
+<tr>
+<td><code>--runtime</code></td>
+<td>Alias for runtime, or docker-runtime with --mode docker</td>
+</tr>
+<tr>
+<td><code>--with-runtime</code></td>
+<td>Also build runtime with an individual installation</td>
+</tr>
+<tr>
+<td><code>--reconfigure</code></td>
+<td>Generate a new fragment from a verified existing installation</td>
+</tr>
+<tr>
+<td><code>--dev</code></td>
+<td>Explicitly follow each snapshot's branch instead of its pin</td>
+</tr>
+<tr>
+<td><code>--json</code></td>
+<td>Emit doctor output as JSON.</td>
+</tr>
+<tr>
+<td><code>--help</code></td>
+<td>Show help</td>
+</tr>
+<tr>
+<td><code>-h</code></td>
+<td>Alias for <code>--help</code>.</td>
+</tr>
+<tr>
+<td><code>--without-model</code></td>
+<td>Explicitly omit the local Needle engine/model (core MCP only)</td>
+</tr>
+<tr>
+<td><code>--without-system-deps</code></td>
+<td>Skip tmux probing and installation.</td>
+</tr>
+<tr>
+<td><code>--nix</code></td>
+<td>Alias for <code>--mode nix</code>.</td>
+</tr>
+<tr>
+<td>&lt;!-- hela:installer-flags:end --&gt;</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="measure-persona-and-discovery-payload-size">Measure persona and discovery payload size</h2>
+<p>Run <code>node scripts/measure-overhead.mjs --profile &lt;id&gt;</code> to print the generated base persona size and a profile's schema discovery projection in UTF-8 bytes. The projection uses each selected cell's first (default feature) catalog variant, namespace-qualified tool names, and compact JSON; it excludes JSON-RPC framing and runtime-only aliases. The rough token estimate uses <code>ceil(UTF-8 bytes / 4)</code>, not a model tokenizer, so treat the byte counts as reproducible and the token counts as an explicit approximation.</p>
 <h2 id="managed-layout">Managed layout</h2>
 <p>Default prefix: <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/&lt;profile&gt;-&lt;mode&gt;</code>. Use <code>--prefix /absolute/path</code> to choose another directory.</p>
 <p>Each prefix contains its own ecosystem metadata, sibling source repositories, verified installation manifest, workspace, private data directories, and generated client fragments. Plastid is cloned at the repository root and built from <code>ll3m-mcp/brain</code>.</p>
@@ -135,13 +249,13 @@ node setup.mjs mode --prefix /path/to/existing/prefix --mode docker-runtime --cl
 <p>Doctor exits nonzero for missing or incomplete installations, modified builds, wrong revisions/versions, missing images, failed MCP replies, and runtime catalog/HTTP failures. A remote <code>--url</code> check verifies MCP initialize/discovery and the runtime version, not remote filesystem pins or hardware. Existing standalone sibling/nested checkouts remain diagnosable when no managed installation is selected.</p>
 <p>Never overwrite live SQLite files or force vault conflicts to resolve installation warnings. Use validated backups and a deliberate migration if you intend to move existing memory into a new managed prefix.</p>
 </article><footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#requirements-and-boundaries">Requirements and boundaries</a></li><li><a href="#managed-layout">Managed layout</a></li><li><a href="#individual-servers">Individual servers</a></li><li><a href="#single-stdio-runtime">Single stdio runtime</a></li><li><a href="#docker-separate-cells-or-runtime">Docker: separate cells or runtime</a></li><li><a href="#nix-runtime">Nix runtime</a></li><li><a href="#http-runtime">HTTP runtime</a></li><li><a href="#updates-and-automatic-checks">Updates and automatic checks</a></li><li><a href="#snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</a></li><li><a href="#switch-modes-in-place">Switch modes in place</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#requirements-and-boundaries">Requirements and boundaries</a></li><li><a href="#measure-persona-and-discovery-payload-size">Measure persona and discovery payload size</a></li><li><a href="#managed-layout">Managed layout</a></li><li><a href="#individual-servers">Individual servers</a></li><li><a href="#single-stdio-runtime">Single stdio runtime</a></li><li><a href="#docker-separate-cells-or-runtime">Docker: separate cells or runtime</a></li><li><a href="#nix-runtime">Nix runtime</a></li><li><a href="#http-runtime">HTTP runtime</a></li><li><a href="#updates-and-automatic-checks">Updates and automatic checks</a></li><li><a href="#snapshots-reconfiguration-and-failures">Snapshots, reconfiguration, and failures</a></li><li><a href="#switch-modes-in-place">Switch modes in place</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../release-data.js?v=1.9.6"></script>
-  <script src="../../library-data.js?v=1.9.6&amp;rev=253aa5e0fcfd"></script>
-  <script src="../../library.js?v=1.9.6&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.9.6&amp;rev=2d0233b9cb8f"></script>
+  <script src="../../release-data.js?v=1.9.7"></script>
+  <script src="../../library-data.js?v=1.9.7&amp;rev=4ac6e81479a0"></script>
+  <script src="../../library.js?v=1.9.7&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.9.7&amp;rev=2dfe17383063"></script>
 </body>
 </html>

@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overview — HeLa MCP Ecosystem</title>
-  <meta name="description" content="Install and verify the HeLa MCP Ecosystem: a 10-server MCP distribution suite with dual-backbone orchestration.">
+  <meta name="description" content="One client entry instead of ten: 10 specialized MCP cells, 292 tools, and 0 cells started on discovery behind a single lazy-loaded runtime endpoint.">
   <link rel="canonical" href="https://hela.my.id/index.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/index.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/index.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="HeLa MCP Ecosystem">
   <meta property="og:title" content="Overview — HeLa MCP Ecosystem">
-  <meta property="og:description" content="Install and verify the HeLa MCP Ecosystem: a 10-server MCP distribution suite with dual-backbone orchestration.">
+  <meta property="og:description" content="One client entry instead of ten: 10 specialized MCP cells, 292 tools, and 0 cells started on discovery behind a single lazy-loaded runtime endpoint.">
   <meta property="og:url" content="https://hela.my.id/index.html">
   <meta property="og:image" content="https://hela.my.id/assets/blotcat-hero.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Overview — HeLa MCP Ecosystem">
-  <meta name="twitter:description" content="Install and verify the HeLa MCP Ecosystem: a 10-server MCP distribution suite with dual-backbone orchestration.">
+  <meta name="twitter:description" content="One client entry instead of ten: 10 specialized MCP cells, 292 tools, and 0 cells started on discovery behind a single lazy-loaded runtime endpoint.">
   <meta name="twitter:image" content="https://hela.my.id/assets/blotcat-hero.jpg">
   <script type="application/ld+json">
   {
@@ -32,7 +32,7 @@
         "@type": "SoftwareApplication",
         "name": "HeLa MCP Ecosystem",
         "applicationCategory": "DeveloperApplication",
-        "softwareVersion": "1.9.6",
+        "softwareVersion": "1.9.7",
         "operatingSystem": "Linux, macOS, Windows",
         "url": "https://hela.my.id/",
         "downloadUrl": "https://github.com/Hela-Ecosystem/hela-mcp-ecosystem",
@@ -48,13 +48,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="library.css?v=1.9.6&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="library.css?v=1.9.7&amp;rev=f4fb3976fbca">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.6 · Runtime 1.3.0 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.7 · Runtime 1.3.0 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="library.html"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="index.html" aria-current="page"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -81,9 +81,15 @@
       </div>
       <main id="main-content" class="doc-content">
         <header class="specimen-plate">
-          <div class="specimen-ref"><span>SPEC_01 // Hela-Ecosystem-MCP</span><span>DOSSIER: OVERVIEW_AND_INSTALL</span></div>
           <h1 class="doc-title" data-i18n="index.title">HeLa Cellular MCP Workbench</h1>
-          <p class="doc-lead" data-i18n="index.lead">A reproducible, 10-server MCP distribution suite for AI agents. Dual-backbone orchestration (reasoning + memory), deterministic stdio transport, and per-profile client configuration across 8 agent harnesses.</p>
+          <p class="doc-lead" data-i18n="index.lead">Ten specialized MCP cells behind one lazy-loaded endpoint — one client entry instead of ten. Dual-backbone orchestration (reasoning + memory), deterministic stdio transport, and per-profile configuration across 8 agent harnesses.</p>
+          <ul class="hero-metrics">
+            <li class="badge badge-core">10 cells · 1 endpoint</li>
+            <li class="badge" title="Sum of the default schema variant for each of the ten cell servers; excludes runtime-only hela.pipe and agent aliases.">292 cell tool schemas</li>
+            <li class="badge">0 cells on discovery</li>
+            <li class="badge badge-special">8 profiles · 8 harnesses</li>
+          </ul>
+          <p class="metric-note">292 is the sum of the default schema variant for each cell; runtime discovery can add <code>hela.pipe</code> and the agent alias.</p>
         </header>
 
         <figure class="figure-plate">
@@ -96,7 +102,9 @@
         <section aria-labelledby="ecosystem-video">
           <h2 id="ecosystem-video">Complete ecosystem explainer</h2>
           <p>A narrated overview of the ten organelles, profile boundaries, and how the cells work together.</p>
-          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/1qv5kD3qApQ" title="Complete HeLa MCP Ecosystem explainer" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          <div class="video-frame video-facade" data-video-id="1qv5kD3qApQ" data-video-title="Complete HeLa MCP Ecosystem explainer">
+            <button class="video-play" type="button">Play explainer</button>
+          </div>
           <p class="video-caption"><a href="https://youtu.be/1qv5kD3qApQ">Watch the complete HeLa MCP Ecosystem explainer on YouTube</a></p>
         </section>
         <div class="doc-table-wrap">
@@ -120,7 +128,7 @@
         <p>Full tool catalogs, entries, and repositories: <a href="architecture.html">04 Architecture</a>. Named in recognition of <strong>Henrietta Lacks</strong> (1920–1951): modular specialization, deterministic replicability, longevity.</p>
 
         <h2 id="installation" data-i18n="index.install_title">Installation</h2>
-        <p>Use Node.js 22 LTS for the tested full stack and Git 2.30+. Genome uses Node SQLite bindings; the SQLite CLI is optional. Browser, Android, and Blender workflows need their respective runtimes/devices.</p>
+        <p>Node.js 22 LTS and Git 2.30+. One command installs pinned sources into a private prefix and writes a client fragment for you to review.</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // CLONE_AND_INSTALL</span><button class="copy-btn" type="button">Copy</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
@@ -140,30 +148,25 @@ node setup.mjs --profile dev-workspace --client opencode --mode runtime</code></
 3. Clone the repository and run:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
-   Linux/macOS: node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   Windows PowerShell: .\setup.ps1 --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   Windows Command Prompt: setup.cmd --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   Run the matching `doctor` command through the same entrypoint.
+   node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   On native Windows use .\setup.ps1 (PowerShell) or setup.cmd (Command Prompt) with the same flags.
+   Then run doctor through the same entrypoint.
 4. Safely merge the generated single hela-runtime client fragment. Do not deploy each hela-* cell as a separate client server.
 5. Let the installer create the profile-aware HeLa persona only when the workspace has no existing persona entrypoint; preserve existing persona files. After connecting, read the hela://profile/context resource or request the hela-profile-bootstrap MCP prompt.
 6. Initialize the workspace memory graph through the exposed Genome tool when that organelle is active and confirm the selected profile plus ready runtime tools.</code></pre>
         </div>
-        <p><code>setup.mjs</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Use <code>setup.ps1</code> or <code>setup.cmd</code> on native Windows; <code>setup.sh</code> remains a Unix compatibility shim. It verifies actual MCP replies and writes a private client fragment for review and manual merging, never replaces live client settings or existing repositories. Needle is provisioned with every profile; profiles containing Cytosol (<code>dev-workspace</code>, <code>research</code>, <code>web-devops</code>, and <code>all</code>) also provision the managed Mirage Python bridge automatically. Useful flags: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (new fragment), and <code>--without-model</code> (omit the optional Needle assets).</p>
-        <p>All eight profiles support <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker needs a working daemon and Compose v2; native builds need Python, make, and a C/C++ compiler, or the pinned Nix toolchain. See the <a href="library/docs/installation.html">installation guide</a> for prerequisites, Compose, Nix GC roots, and failure recovery.</p>
-        <p>Runtime modes also support <code>--transport http --port 8080</code>. HTTP stays loopback-only and is started explicitly; use <code>doctor --url http://127.0.0.1:8080/mcp</code> to check the running endpoint. Browser engines, provider keys, Android/Blender bridges, and GUI authentication remain separate requirements.</p>
-        <p><strong>Single-endpoint alternative:</strong> <code>node setup.mjs --profile minimal --client opencode --runtime</code> keeps the selected profile behind the <a href="https://github.com/Hela-Ecosystem/hela-runtime">HeLa Runtime</a>. Runtime is not a profile. Discovery starts no cells; the first call starts only its target. Other installations can select any of the eight profiles.</p>
+        <p><code>setup.mjs</code> installs pinned sources in a private managed prefix under <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code> and writes a private client fragment to review before merging — it never replaces live client settings or existing repositories. <strong>Needle</strong> (local tool-search index) ships with every profile; Cytosol profiles also provision <strong>Mirage</strong>, the managed Python browser bridge. Native Windows uses <code>setup.ps1</code> or <code>setup.cmd</code>.</p>
+        <p><code>--mode runtime</code> is the recommended shape: the selected profile stays behind one endpoint, and runtime is not itself a profile. Discovery starts no cells; the first call starts only its target. Every other flag — <code>--mode individual|docker|docker-runtime|nix</code>, <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code>, <code>--without-model</code>, <code>--transport http --port 8080</code> — plus Docker daemon, Compose v2, and native toolchain prerequisites are documented in the <a href="library/docs/installation.html">installation guide</a> and <a href="profiles.html">06 Profiles &amp; Config</a>.</p>
 
         <h2 id="verify" data-i18n="index.verify_title">Verify</h2>
-        <p data-i18n="index.verify_desc">Three gates, all expected green before use:</p>
+        <p data-i18n="index.verify_desc">One command, expected green before use:</p>
         <div class="code-dossier">
-          <div class="code-dossier-header"><span>SHELL // VERIFICATION_GATES</span><button class="copy-btn" type="button">Copy</button></div>
-          <pre><code>node setup.mjs doctor --profile dev-workspace
-npm run test:install  # Installer regression tests, not hardware acceptance
-npm run test:matrix   # 80 profile × client configurations</code></pre>
+          <div class="code-dossier-header"><span>SHELL // VERIFICATION_GATE</span><button class="copy-btn" type="button">Copy</button></div>
+          <pre><code>node setup.mjs doctor --profile dev-workspace</code></pre>
         </div>
         <div class="admonition success">
           <div class="admonition-title">EXPECTED RESULT</div>
-          <div>Doctor checks the selected cells, not a mandatory ten-server deployment. Add <code>--runtime</code> to doctor when the runtime is installed to verify cold catalog parity. Configuration checks, authenticated GUI sessions, external providers, and hardware integrations are different gates. See <a href="troubleshooting.html">08 Diagnostics</a>.</div>
+          <div>Doctor checks the selected cells, not a mandatory ten-server deployment. Add <code>--runtime</code> to doctor when the runtime is installed to verify cold catalog parity. Configuration checks, authenticated GUI sessions, external providers, and hardware integrations are different gates. Maintainer regressions (<code>npm run test:install</code>, <code>npm run test:matrix</code>, <code>npm run test:profiles</code>) are contributor tooling, not user acceptance — see <a href="troubleshooting.html">08 Diagnostics</a>.</div>
         </div>
 
         <h2 id="next">Next steps</h2>
@@ -172,7 +175,6 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
           <li><div><strong>Pick a profile.</strong> Eight pre-configured stacks (full desktop to headless CI) in <a href="profiles.html">06 Profiles &amp; Config</a> — generate the client file with the configurator.</div></li>
           <li><div><strong>Run a workflow.</strong> Six cross-MCP pipelines (feature engineering, research, UI verification, mobile QA, PTY orchestration, 3D) in <a href="workflows.html">05 Workflows</a>.</div></li>
         </ol>
-      </nav>
 
         <footer class="doc-footer"><span>MIT LICENSE · AZZAR</span><span>ARCHIVAL_RECORD_SEALED // HELA_MCP_ECOSYSTEM</span></footer>
       </main>
@@ -190,9 +192,9 @@ npm run test:matrix   # 80 profile × client configurations</code></pre>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="release-data.js?v=1.9.6"></script>
-  <script src="library-data.js?v=1.9.6&amp;rev=253aa5e0fcfd"></script>
-  <script src="library.js?v=1.9.6&amp;rev=e4e7b2f0ebad"></script>
-  <script src="app.js?v=1.9.6&amp;rev=2d0233b9cb8f"></script>
+  <script src="release-data.js?v=1.9.7"></script>
+  <script src="library-data.js?v=1.9.7&amp;rev=4ac6e81479a0"></script>
+  <script src="library.js?v=1.9.7&amp;rev=e4e7b2f0ebad"></script>
+  <script src="app.js?v=1.9.7&amp;rev=2dfe17383063"></script>
 </body>
 </html>
