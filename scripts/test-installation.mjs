@@ -11,10 +11,21 @@ import { probeMcp } from './mcp-probe.mjs';
 import { downloadVerified } from './provision-needle.mjs';
 import { createHash } from 'node:crypto';
 import { probeHttpEndpoint } from './http-probe.mjs';
+import { provisionSystemDeps } from './provision-system-deps.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'hela-install-test-'));
 after(() => fs.rmSync(scratch, { recursive: true, force: true }));
+const shimDir = path.join(scratch, 'bin');
+const commandLog = path.join(scratch, 'commands.log');
+fs.mkdirSync(shimDir, { recursive: true });
+for (const name of ['tmux', 'sudo', 'apt-get', 'dnf', 'pacman', 'apk', 'brew']) {
+  const body = name === 'tmux' ? 'if [ -n "$HELA_TMUX_VERSION" ]; then printf "tmux %s\\n" "$HELA_TMUX_VERSION"; exit 0; fi; if [ -n "$HELA_SYSTEM_DEPS_TMUX_PRESENT" ] && [ -f "$HELA_SYSTEM_DEPS_TMUX_PRESENT" ]; then echo "tmux 3.4"; exit 0; fi; exit 127'
+    : name === 'sudo' ? 'if [ "$1" = "-n" ] && [ "$2" = "true" ]; then exit "${HELA_SUDO_STATUS:-1}"; fi; printf "sudo %s\\n" "$*" >> "$HELA_SYSTEM_DEPS_LOG"; if [ "$1" = "-n" ]; then shift; fi; exec "$@"'
+      : 'printf "' + name + ' %s\\n" "$*" >> "$HELA_SYSTEM_DEPS_LOG"; if [ -n "$HELA_SYSTEM_DEPS_TMUX_PRESENT" ]; then touch "$HELA_SYSTEM_DEPS_TMUX_PRESENT"; fi; exit 0';
+  fs.writeFileSync(path.join(shimDir, name), `#!/bin/sh\nprintf '${name}\\n' >> "$HELA_SYSTEM_DEPS_LOG"\n${body}\n`, { mode: 0o700 });
+}
+const testPath = `${shimDir}${path.delimiter}${process.env.PATH}`;
 const metadata = path.join(scratch, 'metadata');
 fs.mkdirSync(path.join(metadata, 'config/snapshots'), { recursive: true });
 const inventory = JSON.parse(fs.readFileSync(path.join(root, 'config/inventory.json'), 'utf8'));
@@ -68,11 +79,14 @@ for (const [file, value] of [['inventory.json', inventory], ['profiles.json', pr
   fs.writeFileSync(path.join(metadata, 'config', file), JSON.stringify(value));
 }
 
-function install(prefix, extra = [], env = {}) {
+function install(prefix, extra = [], env = {}, profile = 'all') {
   const environment = { ...process.env, ...env };
+  environment.PATH = testPath;
+  environment.HELA_SYSTEM_DEPS_LOG = commandLog;
+  delete environment.CI;
   for (const key of ['OPENROUTER_API_KEY', 'GITHUB_TOKEN', 'GOOGLE_API_KEY', 'GOOGLE_CSE_ID', 'HELA_GENOME_OBSIDIAN_VAULT', 'HELA_GENOME_OBSIDIAN_SYNC_CMD']) delete environment[key];
   return spawnSync(process.execPath, [path.join(root, 'scripts/install.mjs'), '--root', metadata, '--prefix', prefix,
-    '--profile', 'all', '--client', 'skip', '--non-interactive', ...extra], {
+    '--profile', profile, '--client', 'skip', '--non-interactive', ...extra], {
     encoding: 'utf8', timeout: 180000, maxBuffer: 4 * 1024 * 1024, env: environment,
   });
 }
@@ -102,6 +116,7 @@ test('strict arguments reject missing values, unknown flags/modes/clients and un
     assert.throws(() => parseOptions(args, root));
   }
   assert.equal(parseOptions(['--runtime', '--client', 'docker'], root).mode, 'docker-runtime');
+  assert.equal(parseOptions(['--without-system-deps'], root).withoutSystemDeps, true);
   assert.equal(parseOptions(['--mode', 'runtime', '--client', 'docker'], root).mode, 'docker-runtime');
   assert.equal(parseOptions(['--mode', 'runtime'], root).profile, 'minimal');
   assert.equal(parseOptions(['--system', 'headless'], root).profile, 'headless-server');
@@ -118,10 +133,120 @@ test('profile capability plan installs Needle and Mirage only when selected', ()
   const byId = Object.fromEntries(profiles.profiles.map(profile => [profile.id, profileCapabilities(profile)]));
   for (const capabilities of Object.values(byId)) assert.equal(capabilities.needle, true);
   assert.equal(byId.minimal.mirage, false);
+  assert.equal(byId.minimal.tmux, false);
+  assert.equal(byId.all.tmux, true);
   assert.equal(byId['headless-server'].mirage, false);
   assert.equal(byId['android-testing'].mirage, false);
   assert.equal(byId['3d-modeling'].mirage, false);
   for (const id of ['dev-workspace', 'research', 'web-devops', 'all']) assert.equal(byId[id].mirage, true);
+});
+
+test('tmux provisioning uses tolerant probes and never invokes a package manager after sudo refusal', async () => {
+  fs.writeFileSync(commandLog, '');
+  const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
+    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '1' },
+    nonInteractive: true });
+  assert.equal(result.status, 'skipped');
+  const calls = fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean);
+  assert.deepEqual(calls, ['tmux', 'sudo']);
+});
+
+test('a noninteractive refusal is returned as declined without invoking the manager', async () => {
+  fs.writeFileSync(commandLog, '');
+  const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
+    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '0' },
+    nonInteractive: true });
+  assert.deepEqual(result, { status: 'declined', version: null, method: 'consent' });
+  assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux', 'sudo']);
+});
+
+test('HELA_SYSTEM_DEPS_INSTALL opts a noninteractive install into tmux provisioning', async () => {
+  fs.writeFileSync(commandLog, '');
+  const presence = path.join(scratch, 'tmux-opt-in-installed');
+  const result = await provisionSystemDeps({ platform: 'linux', isRoot: false, nonInteractive: true,
+    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0', HELA_SYSTEM_DEPS_INSTALL: '1' } });
+  assert.deepEqual(result, { status: 'installed', version: '3.4', method: 'apt-get' });
+  assert.match(fs.readFileSync(commandLog, 'utf8'), /apt-get install -y tmux/);
+});
+
+test('system dependency opt-in still requires sudo and CI disables provisioning', async () => {
+  fs.writeFileSync(commandLog, '');
+  const base = { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+    HELA_SUDO_STATUS: '1', HELA_SYSTEM_DEPS_INSTALL: '1' };
+  const noSudo = await provisionSystemDeps({ platform: 'linux', isRoot: false, nonInteractive: true, env: base });
+  assert.equal(noSudo.status, 'skipped');
+  assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux', 'sudo']);
+  fs.writeFileSync(commandLog, '');
+  const ci = await provisionSystemDeps({ platform: 'linux', isRoot: false, nonInteractive: true, env: { ...base, CI: 'true' } });
+  assert.deepEqual(ci, { status: 'skipped', version: null, method: 'ci' });
+  assert.equal(fs.readFileSync(commandLog, 'utf8'), '');
+});
+
+test('apt installation runs only after explicit consent and verifies the installed version', async () => {
+  fs.writeFileSync(commandLog, '');
+  const presence = path.join(scratch, 'tmux-installed');
+  const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
+    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0' },
+    confirm: () => true });
+  assert.deepEqual(result, { status: 'installed', version: '3.4', method: 'apt-get' });
+  assert.match(fs.readFileSync(commandLog, 'utf8'), /apt-get install -y tmux/);
+});
+
+test('Homebrew installation uses the user package manager without sudo', async () => {
+  fs.writeFileSync(commandLog, '');
+  const presence = path.join(scratch, 'brew-tmux-installed');
+  const result = await provisionSystemDeps({ platform: 'darwin', isRoot: false,
+    env: { ...process.env, PATH: testPath, HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_SYSTEM_DEPS_TMUX_PRESENT: presence, HELA_SUDO_STATUS: '0' }, confirm: () => true });
+  assert.deepEqual(result, { status: 'installed', version: '3.4', method: 'brew' });
+  const calls = fs.readFileSync(commandLog, 'utf8');
+  assert.match(calls, /brew install tmux/);
+  assert.doesNotMatch(calls, /sudo/);
+});
+
+test('an existing incompatible tmux version is never upgraded', async () => {
+  fs.writeFileSync(commandLog, '');
+  const result = await provisionSystemDeps({ platform: 'linux', isRoot: false,
+    env: { ...process.env, PATH: testPath, HELA_OS_ID: 'debian', HELA_SYSTEM_DEPS_LOG: commandLog,
+      HELA_TMUX_VERSION: '1.7', HELA_SUDO_STATUS: '0' }, nonInteractive: true });
+  assert.deepEqual(result, { status: 'incompatible', version: '1.7', method: 'path' });
+  assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux']);
+});
+
+test('minimal profile install never probes tmux or a package manager', () => {
+  fs.writeFileSync(commandLog, '');
+  const prefix = path.join(scratch, 'minimal-no-tmux');
+  const result = install(prefix, [], { HELA_SYSTEM_DEPS_LOG: commandLog }, 'minimal');
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(prefix, '.hela-install.json'), 'utf8')).systemDeps,
+    { status: 'skipped', version: null, method: 'profile' });
+  assert.equal(fs.readFileSync(commandLog, 'utf8'), '');
+});
+
+test('declined tmux provisioning is recorded in the host install manifest', async () => {
+  fs.writeFileSync(commandLog, '');
+  const prefix = path.join(scratch, 'declined-system-dep');
+  const result = install(prefix, [], { HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SUDO_STATUS: '0' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(prefix, '.hela-install.json'), 'utf8')).systemDeps,
+    { status: 'declined', version: null, method: 'consent' });
+  assert.deepEqual(fs.readFileSync(commandLog, 'utf8').trim().split('\n').filter(Boolean), ['tmux', 'sudo']);
+  const doctor = await checkInstallation(prefix);
+  assert.equal(doctor.status, 'READY');
+  assert.equal(doctor.dependencies.tmux.severity, 'warn');
+  assert.equal(doctor.dependencies.tmux.installStatus, 'declined');
+});
+
+test('--without-system-deps takes precedence over the tmux opt-in', () => {
+  fs.writeFileSync(commandLog, '');
+  const prefix = path.join(scratch, 'system-deps-opt-out');
+  const result = install(prefix, ['--without-system-deps'], { HELA_SYSTEM_DEPS_LOG: commandLog, HELA_SYSTEM_DEPS_INSTALL: '1' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(prefix, '.hela-install.json'), 'utf8')).systemDeps,
+    { status: 'skipped', version: null, method: 'flag' });
+  assert.equal(fs.readFileSync(commandLog, 'utf8'), '');
 });
 
 test('reconfigure infers existing mode/profile before validating transport and client', () => {

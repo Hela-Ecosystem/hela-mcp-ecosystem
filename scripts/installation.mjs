@@ -15,6 +15,7 @@ export function profileCapabilities(profile) {
   return {
     needle: servers.has('hela-mitosis'),
     mirage: servers.has('hela-cytosol'),
+    tmux: servers.has('hela-nucleus') || servers.has('hela-ribosome'),
   };
 }
 
@@ -46,6 +47,7 @@ export function parseOptions(argv, sourceRoot) {
   const booleans = new Map([['--non-interactive', 'nonInteractive'], ['--runtime', 'runtime'], ['--with-runtime', 'withRuntime'],
     ['--reconfigure', 'reconfigure'], ['--dev', 'dev'], ['--json', 'json'], ['--help', 'help'], ['-h', 'help']]);
   booleans.set('--without-model', 'withoutModel');
+  booleans.set('--without-system-deps', 'withoutSystemDeps');
   for (let i = start; i < argv.length; i++) {
     const flag = argv[i];
     if (values.has(flag)) {

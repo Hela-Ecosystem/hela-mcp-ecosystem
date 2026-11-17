@@ -98,6 +98,11 @@ async function runDoctor(options = {}) {
     else {
       console.log(`HeLa ${report.mode}/${report.profile}: ${report.status}`);
       for (const server of report.servers) console.log(`${server.id}: ${server.status}${server.error ? ` (${server.error})` : ` — ${server.tools} tools`}`);
+      if (report.dependencies?.tmux) {
+        const dependency = report.dependencies.tmux;
+        const state = dependency.ready ? `Ready${dependency.version ? ` (${dependency.version})` : ''}` : 'Optional tmux is unavailable';
+        console.log(`tmux [warn]: ${state}${dependency.drift ? ` (install-time state ${dependency.installStatus} has changed)` : ''}`);
+      }
       if (report.error) console.log(report.error);
       if (report.integrations) console.log(report.integrations);
     }
@@ -172,11 +177,19 @@ async function runDoctor(options = {}) {
     blenderReady = !!blenderVer;
   } catch {}
 
+  const tmuxProbe = spawnSync('tmux', ['-V'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 5000 });
+  const tmuxOutput = `${tmuxProbe.stdout ?? ''} ${tmuxProbe.stderr ?? ''}`;
+  const tmuxVersion = tmuxOutput.match(/(?:^|\s)tmux\s+(\d+)\.(\d+)(?:\.(\d+))?/i);
+  const tmuxReady = !tmuxProbe.error && tmuxProbe.status === 0 && Boolean(tmuxVersion)
+    && (Number(tmuxVersion[1]) > 1 || Number(tmuxVersion[1]) === 1 && Number(tmuxVersion[2]) >= 8);
+
   report.dependencies = {
     playwright: { ready: playwrightReady, note: playwrightReady ? 'Playwright installed' : 'Optional (needed for HeLa Cytosol)' },
     adb: { ready: adbReady, devices: adbDevices, note: adbReady ? `${adbDevices.length} device(s) connected` : 'Optional (needed for HeLa Receptor)' },
     blender: { ready: blenderReady, version: blenderVer, note: blenderReady ? blenderVer : 'Optional (needed for HeLa Plastid)' },
     pty: { ready: process.platform !== 'win32', note: process.platform !== 'win32' ? 'POSIX PTY supported' : 'Windows ConPTY' },
+    tmux: { ready: tmuxReady, version: tmuxVersion ? `${tmuxVersion[1]}.${tmuxVersion[2]}${tmuxVersion[3] ? `.${tmuxVersion[3]}` : ''}` : null,
+      severity: 'warn', note: tmuxReady ? 'tmux available' : 'Optional (needed for durable tmux sessions)' },
   };
 
   // 3. Secrets / API Keys (Safe Checks)
@@ -280,6 +293,7 @@ async function runDoctor(options = {}) {
   console.log(`ADB Bridge:  ${adbReady ? colors.green + '✓ Ready (' + adbDevices.length + ' devices)' : colors.yellow + '○ Optional (adb not found; needed for HeLa Receptor)'}${colors.reset}`);
   console.log(`Blender CLI: ${blenderReady ? colors.green + '✓ Ready (' + blenderVer + ')' : colors.yellow + '○ Optional (blender not found; needed for HeLa Plastid)'}${colors.reset}`);
   console.log(`PTY Support: ${report.dependencies.pty.ready ? colors.green + '✓ Ready' : colors.yellow + '○ Emulated'}${colors.reset}`);
+  console.log(`tmux:        ${tmuxReady ? colors.green + '✓ Ready (' + report.dependencies.tmux.version + ')' : colors.yellow + '○ Optional (tmux not found or older than 1.8)'}${colors.reset}`);
 
   logHeader('Optional API Keys & Graceful Fallbacks');
   for (const [k, v] of Object.entries(report.secrets)) {

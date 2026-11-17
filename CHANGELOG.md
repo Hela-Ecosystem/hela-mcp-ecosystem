@@ -2,6 +2,12 @@
 
 All notable changes to this project.
 
+## [1.9.7] - 2026-11-18
+
+- Provision tmux for Nucleus/Ribosome profiles with `HELA_SYSTEM_DEPS_INSTALL=1` as an explicit noninteractive opt-in, still blocked by CI, failed sudo checks, and `--without-system-deps`.
+- Report optional tmux readiness as a doctor warning and cover a Nucleus profile install plus doctor run in CI without changing system packages.
+- Sweep runtime facades, pin the 292 cell-schema metric definition, generate the installer flag reference, and add a reproducible persona/discovery payload measurement script.
+
 ## [1.9.6] - 2026-11-15
 
 ### Added

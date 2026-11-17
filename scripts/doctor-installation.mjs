@@ -5,8 +5,19 @@ import { spawnSync } from 'node:child_process';
 import { readInstallation, run, containerArgs, artifactDigest } from './installation.mjs';
 import { probeMcp } from './mcp-probe.mjs';
 
+function inspectTmux() {
+  const probe = spawnSync('tmux', ['-V'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 5000 });
+  const match = `${probe.stdout ?? ''} ${probe.stderr ?? ''}`.match(/(?:^|\s)tmux\s+(\d+)\.(\d+)(?:\.(\d+))?/i);
+  const version = match ? `${match[1]}.${match[2]}${match[3] ? `.${match[3]}` : ''}` : null;
+  const ready = !probe.error && probe.status === 0 && Boolean(match)
+    && (Number(match[1]) > 1 || Number(match[1]) === 1 && Number(match[2]) >= 8);
+  return { ready, version };
+}
+
 export async function checkContainerInstallation(manifest) {
   const report = { mode: manifest.mode, profile: manifest.profile, status: 'READY', isolated: true, servers: [],
+    dependencies: { tmux: { ready: manifest.systemDeps?.status === 'present', version: manifest.systemDeps?.version ?? null,
+      severity: 'warn', installStatus: manifest.systemDeps?.status ?? 'unknown', drift: false } },
     integrations: 'Browser engines, Android/Blender bridges, providers and workspace mounts require separate verification.' };
   try {
     const actualId = run('docker', ['image', 'inspect', '--format', '{{.Id}}', manifest.imageId]);
@@ -71,6 +82,13 @@ export async function checkInstallation(prefix) {
   if (manifest.mode.startsWith('docker')) return checkContainerInstallation(manifest);
   const report = { mode: manifest.mode, profile: manifest.profile, status: 'READY', isolated: true, servers: [], needle: manifest.needle, mirage: manifest.mirage,
     integrations: 'MCP readiness only. Browser executables, devices/Blender bridges and providers require separate checks.' };
+  const tmuxSelected = manifest.servers.some(server => ['hela-nucleus', 'hela-ribosome'].includes(server.id));
+  if (tmuxSelected && manifest.systemDeps?.method !== 'nix-devshell') {
+    const current = inspectTmux(), recorded = manifest.systemDeps ?? { status: 'unknown', version: null };
+    const drift = recorded.version ? recorded.version !== current.version
+      : ['skipped', 'declined'].includes(recorded.status) && current.ready;
+    report.dependencies = { tmux: { ...current, severity: 'warn', installStatus: recorded.status, drift } };
+  }
   if (manifest.needle?.ready) {
     for (const kind of ['engine', 'model']) {
       try {

@@ -162,3 +162,23 @@ test('browser configuration and install prompt default to minimal without a sele
   assert.match(prompt, /--profile <confirmed_profile>/);
   assert.match(prompt, /If the user does not choose, use minimal/);
 });
+
+test('video players are click-to-load facades, never eager embeds', () => {
+  const pages = ['index.html', 'architecture.html', 'profiles.html', 'showcase.html'];
+  let facades = 0;
+  for (const prefix of ['', 'id/']) {
+    for (const page of pages) {
+      const file = path.join(site, prefix + page);
+      if (!fs.existsSync(file)) continue;
+      const text = fs.readFileSync(file, 'utf8');
+      assert.ok(!text.includes('youtube-nocookie.com/embed'), `${file}: eager YouTube embed must not ship`);
+      for (const match of text.matchAll(/<div class="video-frame video-facade"([^>]*)>/g)) {
+        const attributes = match[1];
+        assert.match(attributes, /data-video-id="[A-Za-z0-9_-]{11}"/, `${file}: facade needs an 11-character video id`);
+        assert.match(attributes, /data-video-title="[^"]+"/, `${file}: facade needs a title for the player`);
+        facades++;
+      }
+    }
+  }
+  assert.equal(facades, 42, 'overview 2 + architecture 20 + profiles 16 + showcase 4');
+});

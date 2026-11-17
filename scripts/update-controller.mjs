@@ -319,6 +319,7 @@ async function applyUpdate(options) {
       '--root', metadata, '--snapshot', 'latest-stable', '--client', 'skip', '--transport', manifest.transport ?? 'stdio',
       '--port', String(manifest.port ?? 8080), '--workspace', manifest.workspace, '--non-interactive'];
     if (manifest.withoutModel) args.push('--without-model');
+    if (manifest.systemDeps?.status === 'declined' || manifest.systemDeps?.status === 'skipped') args.push('--without-system-deps');
     if (manifest.image) args.push('--image', manifest.image);
     atomicJson(pending, { managedBy: 'hela-update-controller', format: 1, status: 'applying', startedAt: new Date().toISOString(), backup });
     run(process.execPath, args, { stdio: 'inherit', timeout: 3600000 });

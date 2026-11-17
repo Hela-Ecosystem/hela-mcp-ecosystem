@@ -6,12 +6,12 @@ USER node
 ARG HELA_PROFILE=dev-workspace
 ARG HELA_WITHOUT_MODEL=0
 ENV HELA_PROBE_DEBUG=1
-RUN if [ "$HELA_WITHOUT_MODEL" = 1 ]; then node /bootstrap/scripts/install.mjs --mode runtime --profile "$HELA_PROFILE" --prefix /opt/hela --client skip --non-interactive --without-model; else node /bootstrap/scripts/install.mjs --mode runtime --profile "$HELA_PROFILE" --prefix /opt/hela --client skip --non-interactive; fi
+RUN if [ "$HELA_WITHOUT_MODEL" = 1 ]; then node /bootstrap/scripts/install.mjs --mode runtime --profile "$HELA_PROFILE" --prefix /opt/hela --client skip --non-interactive --without-model --without-system-deps; else node /bootstrap/scripts/install.mjs --mode runtime --profile "$HELA_PROFILE" --prefix /opt/hela --client skip --non-interactive --without-system-deps; fi
 RUN rm -rf /opt/hela/.build-home && chmod -R a+rX /opt/hela
 
 FROM node:22-bookworm-slim
 ARG HELA_PROFILE=dev-workspace
-RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates python3 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates python3 tmux && rm -rf /var/lib/apt/lists/*
 COPY --from=build --chown=node:node /opt/hela/ /opt/hela/
 RUN mkdir -p /data /workspace && chown node:node /data /workspace
 USER node

@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ikhtisar — Ekosistem HeLa MCP</title>
-  <meta name="description" content="Instalasi dan verifikasi Ekosistem HeLa MCP: rangkaian distribusi 10 server MCP dengan orkestrasi dual-backbone.">
+  <meta name="description" content="Satu entri klien untuk sepuluh sel MCP: 10 sel terspesialisasi, 292 alat, dan 0 sel dijalankan saat discovery di balik satu endpoint runtime lazy-load.">
   <link rel="canonical" href="https://hela.my.id/id/index.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/index.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/index.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ekosistem HeLa MCP">
   <meta property="og:title" content="Ikhtisar — Ekosistem HeLa MCP">
-  <meta property="og:description" content="Instalasi dan verifikasi Ekosistem HeLa MCP: rangkaian distribusi 10 server MCP dengan orkestrasi dual-backbone.">
+  <meta property="og:description" content="Satu entri klien untuk sepuluh sel MCP: 10 sel terspesialisasi, 292 alat, dan 0 sel dijalankan saat discovery di balik satu endpoint runtime lazy-load.">
   <meta property="og:url" content="https://hela.my.id/id/index.html">
   <meta property="og:image" content="https://hela.my.id/assets/blotcat-hero.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ikhtisar — Ekosistem HeLa MCP">
-  <meta name="twitter:description" content="Instalasi dan verifikasi Ekosistem HeLa MCP: rangkaian distribusi 10 server MCP dengan orkestrasi dual-backbone.">
+  <meta name="twitter:description" content="Satu entri klien untuk sepuluh sel MCP: 10 sel terspesialisasi, 292 alat, dan 0 sel dijalankan saat discovery di balik satu endpoint runtime lazy-load.">
   <meta name="twitter:image" content="https://hela.my.id/assets/blotcat-hero.jpg">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +30,7 @@
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
       <div class="doc-brand">
         <a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a>
-        <div class="doc-brand-meta">v1.9.6 · Runtime 1.3.0 · 10 SEL</div>
+        <div class="doc-brand-meta">v1.9.7 · Runtime 1.3.0 · 10 SEL</div>
       </div>
       <nav aria-label="Dokumentasi">
       <div class="doc-nav-section">MEMULAI</div>
@@ -71,9 +71,14 @@
       </div>
       <main id="main-content" class="doc-content">
         <header class="specimen-plate">
-          <div class="specimen-ref"><span>SPEC_01 // Hela-Ecosystem-MCP</span><span>DOSIR: IKHTISAR_DAN_INSTALASI</span></div>
           <h1 class="doc-title">Meja Kerja Seluler HeLa MCP</h1>
-          <p class="doc-lead">Rangkaian distribusi 10 server Model Context Protocol (MCP) yang dapat direproduksi untuk agen AI. Menghadirkan orkestrasi dual-backbone (penalaran + grafik memori), transport stdio deterministik, dan konfigurasi klien per-profil di 8 harness agen kecerdasan buatan.</p>
+          <p class="doc-lead">Sepuluh sel MCP terspesialisasi di balik satu endpoint lazy-load — satu entri klien menggantikan sepuluh. Orkestrasi dual-backbone (penalaran + memori), transport stdio deterministik, dan konfigurasi per-profil di 8 harness agen.</p>
+          <ul class="hero-metrics">
+            <li class="badge badge-core">10 sel · 1 endpoint</li>
+            <li class="badge">292 alat ter-gate</li>
+            <li class="badge">0 sel saat discovery</li>
+            <li class="badge badge-special">8 profil · 8 harness</li>
+          </ul>
         </header>
 
         <figure class="figure-plate">
@@ -86,7 +91,9 @@
         <section aria-labelledby="ecosystem-video">
           <h2 id="ecosystem-video">Penjelasan lengkap ekosistem</h2>
           <p>Ikhtisar bernarasi tentang sepuluh organel, batas profil, dan kolaborasi antar sel.</p>
-          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/1qv5kD3qApQ" title="Penjelasan lengkap Ekosistem MCP HeLa" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          <div class="video-frame video-facade" data-video-id="1qv5kD3qApQ" data-video-title="Penjelasan lengkap Ekosistem MCP HeLa">
+            <button class="video-play" type="button">Putar penjelasan</button>
+          </div>
           <p class="video-caption"><a href="https://youtu.be/1qv5kD3qApQ">Tonton penjelasan lengkap Ekosistem MCP HeLa di YouTube</a></p>
         </section>
         <div class="doc-table-wrap">
@@ -110,7 +117,7 @@
         <p>Katalog lengkap perkakas, entrypoint, dan repositori: <a href="architecture.html">04 Arsitektur</a>. Dinamai sebagai penghormatan kepada <strong>Henrietta Lacks</strong> (1920–1951): spesialisasi modular, replikasi deterministik, dan daya tahan jangka panjang.</p>
 
         <h2 id="installation">Instalasi</h2>
-        <p>Gunakan Node.js 22 LTS untuk full stack yang diuji dan Git 2.30+. Genome memakai binding SQLite Node; CLI SQLite bersifat opsional. Alur kerja browser, Android, dan Blender memerlukan runtime/perangkat masing-masing.</p>
+        <p>Node.js 22 LTS dan Git 2.30+. Satu perintah memasang sumber terkunci ke prefix privat dan menulis fragmen klien untuk Anda tinjau.</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // KLONING_DAN_INSTAL</span><button class="copy-btn" type="button">Salin</button></div>
           <pre><code>git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
@@ -133,10 +140,9 @@ node setup.mjs --profile dev-workspace --client opencode --mode runtime</code></
 3. Clone &amp; Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
-   Linux/macOS: node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   Windows PowerShell: .\setup.ps1 --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   Windows Command Prompt: setup.cmd --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
-   Jalankan perintah `doctor` melalui entrypoint yang sama.
+   node setup.mjs --profile &lt;confirmed_profile&gt; --client &lt;detected_client&gt; --mode runtime --non-interactive
+   Di Windows native gunakan .\setup.ps1 (PowerShell) atau setup.cmd (Command Prompt) dengan flag yang sama.
+   Jalankan doctor melalui entrypoint yang sama.
    Safely merge generated client configuration into my active MCP configuration file.
    Do not deploy each hela-* cell as a separate client server.
 
@@ -151,22 +157,18 @@ node setup.mjs --profile dev-workspace --client opencode --mode runtime</code></
 6. Final Handshake:
    Initialize the workspace memory graph through the exposed Genome tool when that organelle is active, and confirm the selected profile and runtime tools.</code></pre>
         </div>
-        <p><code>setup.mjs</code> memasang sumber terkunci di prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code>. Gunakan <code>setup.ps1</code> atau <code>setup.cmd</code> di Windows native; <code>setup.sh</code> tetap tersedia sebagai shim kompatibilitas Unix. Installer memverifikasi respons MCP nyata, lalu membuat fragmen konfigurasi klien untuk ditinjau dan digabungkan manual. Needle dipasang pada setiap profil; profil yang berisi Cytosol (<code>dev-workspace</code>, <code>research</code>, <code>web-devops</code>, dan <code>all</code>) juga memasang bridge Python Mirage secara otomatis. Repositori dan pengaturan klien aktif tidak ditimpa. Flag penting: <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code> (fragmen baru), dan <code>--without-model</code> (tanpa aset Needle opsional).</p>
-        <p>Delapan profil mendukung <code>--mode individual|runtime|docker|docker-runtime|nix</code>. Docker membutuhkan daemon aktif dan Compose v2; build native membutuhkan Python, make, dan compiler C/C++, atau toolchain Nix terkunci. Lihat <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a> untuk persyaratan, Compose, GC root Nix, dan pemulihan kegagalan.</p>
-        <p>Mode runtime mendukung <code>--transport http --port 8080</code>. Listener hanya di loopback dan harus dijalankan secara eksplisit; gunakan <code>doctor --url http://127.0.0.1:8080/mcp</code> untuk memeriksa endpoint aktif. Engine browser, kunci provider, bridge Android/Blender, dan autentikasi GUI tetap kebutuhan terpisah.</p>
-        <p><strong>Alternatif satu endpoint:</strong> tambahkan <code>--runtime</code> pada profil pilihan. Runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Jika profil tidak dipilih, runtime dan installer memakai <code>minimal</code>; profil lain tetap bisa dipilih secara eksplisit.</p>
+        <p><code>setup.mjs</code> memasang sumber terkunci ke prefix privat <code>${XDG_DATA_HOME:-$HOME/.local/share}/hela/installations/</code> lalu menulis fragmen konfigurasi klien untuk ditinjau sebelum digabungkan — pengaturan klien aktif dan repositori yang ada tidak pernah ditimpa. <strong>Needle</strong> (indeks pencarian alat lokal) ikut pada setiap profil; profil Cytosol juga memasang <strong>Mirage</strong>, bridge browser Python terkelola. Windows native memakai <code>setup.ps1</code> atau <code>setup.cmd</code>.</p>
+        <p><code>--mode runtime</code> adalah bentuk yang direkomendasikan: profil terpilih berada di balik satu endpoint, dan runtime bukan profil tersendiri. Discovery tidak menjalankan sel; panggilan pertama hanya menjalankan sel tujuannya. Flag lain — <code>--mode individual|docker|docker-runtime|nix</code>, <code>--prefix</code>, <code>--snapshot</code>, <code>--reconfigure</code>, <code>--without-model</code>, <code>--transport http --port 8080</code> — beserta prasyarat daemon Docker, Compose v2, dan toolchain native ada di <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/installation.md">panduan instalasi</a> dan <a href="profiles.html">06 Profil &amp; Konfigurasi</a>.</p>
 
         <h2 id="verify">Verifikasi</h2>
-        <p>Tiga gerbang verifikasi, semuanya diharapkan berstatus hijau sebelum digunakan:</p>
+        <p>Satu perintah, diharapkan hijau sebelum digunakan:</p>
         <div class="code-dossier">
           <div class="code-dossier-header"><span>SHELL // GERBANG_VERIFIKASI</span><button class="copy-btn" type="button">Salin</button></div>
-          <pre><code>node setup.mjs doctor --profile dev-workspace
-npm run test:install  # Regresi installer, bukan pengujian hardware
-npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
+          <pre><code>node setup.mjs doctor --profile dev-workspace</code></pre>
         </div>
         <div class="admonition success">
           <div class="admonition-title">HASIL YANG DIHARAPKAN</div>
-          <div>Doctor memeriksa sel pada profil terpilih, bukan mewajibkan sepuluh server. Tambahkan <code>--runtime</code> jika runtime dipasang untuk memeriksa kecocokan katalog tanpa startup sel. Konfigurasi, sesi GUI terautentikasi, provider eksternal, dan perangkat keras adalah pemeriksaan terpisah. Lihat <a href="troubleshooting.html">08 Diagnostik</a>.</div>
+          <div>Doctor memeriksa sel pada profil terpilih, bukan mewajibkan sepuluh server. Tambahkan <code>--runtime</code> jika runtime dipasang untuk memeriksa kecocokan katalog tanpa startup sel. Konfigurasi, sesi GUI terautentikasi, provider eksternal, dan perangkat keras adalah pemeriksaan terpisah. Regresi maintainer (<code>npm run test:install</code>, <code>npm run test:matrix</code>, <code>npm run test:profiles</code>) adalah perkakas kontributor, bukan acceptance pengguna — lihat <a href="troubleshooting.html">08 Diagnostik</a>.</div>
         </div>
 
         <h2 id="next">Langkah Selanjutnya</h2>
@@ -192,7 +194,7 @@ npm run test:matrix   # 80 kombinasi profil × klien</code></pre>
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../release-data.js?v=1.9.6"></script>
-  <script src="../app.js?v=1.9.6"></script>
+  <script src="../release-data.js?v=1.9.7"></script>
+  <script src="../app.js?v=1.9.7"></script>
 </body>
 </html>

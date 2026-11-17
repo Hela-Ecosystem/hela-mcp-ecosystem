@@ -63,10 +63,9 @@ ${profileChoices}
 3. Clone & Install the Managed Runtime:
    git clone https://github.com/Hela-Ecosystem/hela-mcp-ecosystem.git
    cd hela-mcp-ecosystem
-   Linux/macOS: node setup.mjs --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
-   Windows PowerShell: .\\setup.ps1 --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
-   Windows Command Prompt: setup.cmd --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
-   Run the matching doctor command through the same entrypoint.
+   node setup.mjs --profile <confirmed_profile> --client ${client} --mode runtime --non-interactive
+   On native Windows use .\\setup.ps1 (PowerShell) or setup.cmd (Command Prompt) with the same flags.
+   Then run doctor through the same entrypoint.
    Safely merge the generated ${client} configuration fragment into my active ${client} MCP settings.
    Do not deploy or configure each hela-* cell as a separate client server.
 
@@ -126,12 +125,12 @@ const I18N = {
     "nav.section.operate": "OPERATE",
     "nav.section.legal": "LEGAL",
     "index.title": "HeLa Cellular MCP Workbench",
-    "index.lead": "A reproducible, 10-server MCP distribution suite for AI agents. Dual-backbone orchestration (reasoning + memory), deterministic stdio transport, and per-profile client configuration across 8 agent harnesses.",
+    "index.lead": "Ten specialized MCP cells behind one lazy-loaded endpoint — one client entry instead of ten. Dual-backbone orchestration (reasoning + memory), deterministic stdio transport, and per-profile configuration across 8 agent harnesses.",
     "index.what_title": "What this is",
     "index.what_desc": "Ten specialized servers, each a biological cell with one job. Two backbones coordinate them: <strong>HeLa Mitosis</strong> (task reasoning and routing) and <strong>HeLa Genome</strong> (persistent memory graph). The remaining eight cells provide filesystem, execution, processes, research, browser and image perception, design, mobile, and 3D capabilities.",
     "index.install_title": "Installation",
     "index.verify_title": "Verify",
-    "index.verify_desc": "Three gates, all expected green before use:",
+    "index.verify_desc": "One command, expected green before use:",
     "profiles.title": "Profiles & Config",
     "profiles.lead": "Eight deployment profiles. Preview a client configuration below; use the CLI to generate the installed configuration. The CLI matrix checks 80 profile/backend combinations.",
     "profiles.matrix_title": "Profile matrix",
@@ -172,12 +171,12 @@ const I18N = {
     "nav.section.operate": "PENGOPERASIAN",
     "nav.section.legal": "LEGAL & HUKUM",
     "index.title": "Meja Kerja Seluler HeLa MCP",
-    "index.lead": "Rangkaian distribusi 10 server MCP yang dapat direproduksi untuk agen AI. Orkestrasi dual-backbone (penalaran + memori), transport stdio deterministik, dan konfigurasi klien per-profil di 8 harness agen.",
+    "index.lead": "Sepuluh sel MCP terspesialisasi di balik satu endpoint lazy-load — satu entri klien menggantikan sepuluh. Orkestrasi dual-backbone (penalaran + memori), transport stdio deterministik, dan konfigurasi per-profil di 8 harness agen.",
     "index.what_title": "Tentang Ekosistem Ini",
     "index.what_desc": "Sepuluh server terspesialisasi, masing-masing bertindak layaknya sel biologis dengan satu tugas utama. Dua backbone mengoordinasikannya: <strong>HeLa Mitosis</strong> (penalaran & perutean tugas) dan <strong>HeLa Genome</strong> (grafik memori persisten). Delapan sel lainnya menyediakan kapabilitas berkas, eksekusi perintah, proses, riset, browser dan persepsi gambar, desain antarmuka, mobile, dan 3D.",
     "index.install_title": "Instalasi",
     "index.verify_title": "Verifikasi",
-    "index.verify_desc": "Tiga gerbang verifikasi, semuanya diharapkan berstatus hijau sebelum digunakan:",
+    "index.verify_desc": "Satu perintah, diharapkan hijau sebelum digunakan:",
     "profiles.title": "Profil & Konfigurasi",
     "profiles.lead": "Delapan profil instalasi. Lihat pratinjau konfigurasi klien di bawah; gunakan CLI untuk membuat konfigurasi terpasang. Matriks CLI menguji 80 kombinasi profil/backend.",
     "profiles.matrix_title": "Matriks Profil",
@@ -399,4 +398,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (e.key === "Enter" && document.activeElement === cmdInput) cmdResults?.querySelector("a")?.click();
   });
+});
+
+// Video facades: build the player only on request, so no third-party frame
+// loads (and steals focus/scroll) while the reader is still on the heading.
+document.addEventListener("click", (event) => {
+  const facade = event.target.closest?.(".video-facade");
+  if (!facade) return;
+  const videoId = facade.getAttribute("data-video-id") || "";
+  if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) return;
+  const frame = document.createElement("div");
+  frame.className = "video-frame";
+  const player = document.createElement("iframe");
+  player.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+  player.title = facade.getAttribute("data-video-title") || "Video player";
+  player.allow = "accelerometer; encrypted-media; picture-in-picture; web-share";
+  player.referrerPolicy = "strict-origin-when-cross-origin";
+  player.allowFullscreen = true;
+  frame.appendChild(player);
+  facade.replaceWith(frame);
 });

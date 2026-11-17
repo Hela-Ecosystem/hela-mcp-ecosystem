@@ -6,7 +6,7 @@
   in {
     devShells = nixpkgs.lib.genAttrs systems (system: let pkgs = nixpkgs.legacyPackages.${system}; in {
       default = pkgs.mkShell {
-        packages = with pkgs; [ nodejs_22 git python3 gnumake pkg-config stdenv.cc sqlite ];
+        packages = with pkgs; [ nodejs_22 git python3 gnumake pkg-config stdenv.cc sqlite tmux ];
       };
     });
   };

@@ -7,6 +7,7 @@ import { createInterface } from 'node:readline/promises';
 import { probeMcp } from './mcp-probe.mjs';
 import { provisionNeedle } from './provision-needle.mjs';
 import { provisionMirage } from './provision-mirage.mjs';
+import { provisionSystemDeps } from './provision-system-deps.mjs';
 import { scaffoldPersonaIfMissing } from './scaffold-persona.mjs';
 import { modes, clients, parseOptions, installationPlan, readInstallation, run, atomicJson, isolatedBuildEnvironment,
   artifactDigest, composeConfiguration, modeFamily, profileCapabilities } from './installation.mjs';
@@ -23,6 +24,7 @@ const help = `Usage: node setup.mjs [doctor|mode|update] [OPTIONS]
   --runtime             Alias for runtime, or docker-runtime with --mode docker
   --with-runtime        Also build runtime with an individual installation
   --without-model       Explicitly omit the local Needle engine/model (core MCP only)
+  --without-system-deps Skip tmux probing and installation
   --transport stdio|http Runtime transport (HTTP is loopback-only; listener started explicitly)
   --port PORT           HTTP listener port (default 8080)
   --dev                 Explicitly follow each snapshot's branch instead of its pin
@@ -36,7 +38,7 @@ Doctor accepts --prefix/--mode/--profile/--runtime/--json, or --url URL for a ru
 Mode switching reuses an existing managed prefix and preserves its data directories:
   node setup.mjs mode --prefix PATH --mode individual|runtime|docker|docker-runtime|nix [--client NAME]
 Hardware/providers are separate checks.
-Profile capabilities are automatic: every canonical profile includes Needle through Mitosis; profiles containing Cytosol (dev-workspace, research, web-devops, all) also install the managed Mirage Python bridge.
+Profile capabilities are automatic: every canonical profile includes Needle through Mitosis; profiles containing Cytosol (dev-workspace, research, web-devops, all) also install the managed Mirage Python bridge. Profiles containing Nucleus or Ribosome check for tmux. Set HELA_SYSTEM_DEPS_INSTALL=1 to allow noninteractive installation after the sudo check; CI and --without-system-deps always skip it.
 Node 22+ required; --mode nix bootstraps the pinned Nix development environment.
 Optional provider keys are read from environment, never CLI arguments. Client settings are merged manually.`;
 
@@ -82,6 +84,11 @@ async function installSources(options, plan, { reuseBuilt = false } = {}) {
   const capabilities = profileCapabilities(plan.profile);
   if (capabilities.needle) log(`Capability Needle: selected by profile ${plan.profile.id}`);
   if (capabilities.mirage) log(`Capability Mirage: selected by profile ${plan.profile.id}`);
+  const systemDeps = capabilities.tmux
+    ? await provisionSystemDeps({ enabled: !options.withoutSystemDeps && !process.env.CI, nonInteractive: options.nonInteractive,
+      nix: options.mode === 'nix', onStatus: message => log(message) })
+    : { status: 'skipped', version: null, method: 'profile' };
+  if (capabilities.tmux) log(`Capability tmux: ${systemDeps.status}${systemDeps.version ? ` (${systemDeps.version})` : ''}`);
   for (const id of plan.keys) {
     const spec = plan.data.inventory[id], repository = path.join(options.prefix, spec.dir.split('/')[0]);
     const directory = path.join(options.prefix, spec.dir), pin = plan.snapshot.servers[id];
@@ -164,7 +171,7 @@ async function installSources(options, plan, { reuseBuilt = false } = {}) {
     server.tools = result.tools.length;
     log(`Verified ${server.id}: ${server.tools} tools`);
   }
-  return { servers: verified, runtimeExecutable, needle, mirage };
+  return { servers: verified, runtimeExecutable, needle, mirage, systemDeps };
 }
 
 async function installDocker(options, plan) {
@@ -182,13 +189,16 @@ async function installDocker(options, plan) {
     const imageId = run('docker', ['image', 'inspect', '--format', '{{.Id}}', image]);
     if (!/^sha256:[a-f0-9]{64}$/.test(imageId)) throw new Error('Invalid built Docker image ID');
     const { checkContainerInstallation } = await import('./doctor-installation.mjs');
-    const manifest = { mode: options.mode, profile: options.profile, image, imageId, ecosystemRoot: plan.ecosystemRoot,
+    const systemDeps = profileCapabilities(plan.profile).tmux
+      ? { status: 'present', version: null, method: 'docker-image' }
+      : { status: 'skipped', version: null, method: 'profile' };
+    const manifest = { mode: options.mode, profile: options.profile, image, imageId, ecosystemRoot: plan.ecosystemRoot, systemDeps,
       servers: plan.keys.map(id => { const s = plan.data.inventory[id]; return { id, dir: s.dir, entry: s.entry, revision: s.revision, version: s.version, env: s.env ?? [] }; }) };
     const report = await checkContainerInstallation(manifest);
     if (report.status !== 'READY') throw new Error(`Docker MCP verification failed: ${report.error || report.cleanupError || JSON.stringify(report.servers.filter(s => s.status !== 'READY'))}`);
     const selected = (options.mode === 'docker-runtime' ? ['hela-runtime'] : plan.profile.servers).map(id => plan.data.inventory[id]);
     atomicJson(path.join(options.prefix, 'compose.json'), composeConfiguration(selected, imageId, options.profile, options));
-    return { servers: manifest.servers, image, imageId };
+    return { servers: manifest.servers, image, imageId, systemDeps };
   } finally { fs.rmSync(context, { recursive: true, force: true }); }
 }
 
@@ -222,6 +232,7 @@ async function switchMode(options) {
     if (options.out) args.push('--out', options.out);
     if (options.image) args.push('--image', options.image);
     if (options.withoutModel) args.push('--without-model');
+    if (options.withoutSystemDeps) args.push('--without-system-deps');
     run('nix', ['develop', sourceRoot, '--command', 'node', ...args], { stdio: 'inherit', timeout: 3600000 });
     return;
   }
@@ -290,6 +301,7 @@ async function main() {
     args.push('--transport', options.transport, '--port', String(options.port));
     for (const flag of ['dev', 'reconfigure']) if (options[flag]) args.push(`--${flag}`);
     if (options.withoutModel) args.push('--without-model');
+    if (options.withoutSystemDeps) args.push('--without-system-deps');
     if (options.out) args.push('--out', options.out);
     run('nix', ['develop', sourceRoot, '--command', 'node', ...args], { stdio: 'inherit', timeout: 3600000 });
     return;

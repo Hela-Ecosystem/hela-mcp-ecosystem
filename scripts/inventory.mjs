@@ -9,6 +9,9 @@ export function loadInventory(root) {
     if (spec.id !== id || !/^hela-[a-z-]+$/.test(id) || typeof spec.dir !== 'string' || !spec.dir
         || typeof spec.entry !== 'string' || !spec.entry || typeof spec.version !== 'string') throw new Error(`Invalid inventory entry: ${id}`);
     if (spec.env && (!Array.isArray(spec.env) || !spec.env.every(key => typeof key === 'string'))) throw new Error(`Invalid environment declaration: ${id}`);
+    if (spec.systemDeps && (typeof spec.systemDeps !== 'object' || Array.isArray(spec.systemDeps)
+      || Object.entries(spec.systemDeps).some(([name, requirement]) => !/^[a-z][a-z0-9-]*$/.test(name)
+        || !['required', 'optional'].includes(requirement)))) throw new Error(`Invalid system dependency declaration: ${id}`);
     const features = Object.entries(spec.toolFeatures ?? {});
     if (features.length > 8 || features.some(([key, rule]) => !/^[A-Z][A-Z0-9_]*_ENABLED$/.test(key)
       || !rule || typeof rule !== 'object' || (rule.default !== undefined && typeof rule.default !== 'boolean'))) throw new Error(`Invalid feature declaration: ${id}`);

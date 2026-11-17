@@ -82,6 +82,12 @@ jobs:
         if: ${{ matrix.node-version == 22 }}
         run: npm run test:install
 
+      - name: Install a nucleus profile without system package changes and run doctor
+        if: ${{ matrix.node-version == 22 }}
+        run: |
+          ./setup.sh --profile headless-server --without-model --without-system-deps --prefix "$RUNNER_TEMP/hela-nucleus" --client skip --non-interactive
+          ./setup.sh doctor --prefix "$RUNNER_TEMP/hela-nucleus" --json
+
   docker-installation:
     name: Clean Docker installation and actual MCP doctor
     runs-on: ubuntu-latest
