@@ -349,7 +349,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "9d771b2b6473fe06e7edfcae68557e5c7370cab6",
+      "revision": "058fc69bfe72e3f02bcfd3536936df38e3a9f4c2",
       "version": "1.3.1",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
