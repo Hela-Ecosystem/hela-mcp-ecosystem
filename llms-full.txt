@@ -1,6 +1,14 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.9.11] - 2026-11-18
+
+### Fixed
+- Receptor `3.0.3`: the hardware integration harness spawned a non-existent entrypoint, so `npm run test:integration` could never pass; it now runs 18 checks against a real Pixel 8 (UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard).
+
+### Changed
+- Repins Receptor and publishes the `v1.9.11` snapshot.
+
 ## [1.9.10] - 2026-11-18
 
 ### Added
@@ -310,7 +318,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.10**, with runtime **1.3.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.11**, with runtime **1.3.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -446,7 +454,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.10 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.11 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -1051,7 +1059,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.10**; runtime **1.3.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.11**; runtime **1.3.1**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.4**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1061,7 +1069,7 @@ Generated from package metadata, inventory, and the schema catalog. Ecosystem **
 - **HeLa Enzyme** (`hela-enzyme`): server **4.0.2**, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
 - **HeLa Cytosol** (`hela-cytosol`): server **3.2.0**, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.0.3**, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
-- **HeLa Receptor** (`hela-receptor`): server **3.0.2**, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
+- **HeLa Receptor** (`hela-receptor`): server **3.0.3**, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
 - **HeLa Plastid** (`hela-plastid`): server **3.0.2**, 15 canonical tools; [source](https://github.com/Hela-Ecosystem/ll3m-mcp).
 
 Counts vary with declared features. Runtime adds `hela.pipe` and an agent alias when available. Profiles choose eligible cells, not an eager startup count. Historical release notes/snapshots keep their original versions.
