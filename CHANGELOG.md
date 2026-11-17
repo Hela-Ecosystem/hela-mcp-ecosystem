@@ -1,3 +1,13 @@
+## [1.9.9] - 2026-11-18
+
+### Added
+- Mitosis `3.0.4` splits `terminal.execute` into one-shot execution (Nucleus) and `terminal.session` (Ribosome), so planning can tell "run pytest" from "drive a tmux session".
+- Runtime `1.3.1` adds structured per-cell logs, per-cell start/restart/failure/tool counters on `/healthz`, and separate `/livez` and `/readyz` endpoints.
+
+### Changed
+- Ribosome `3.1.0` gains `npm run test:remote`, a live integration test for the ssh transport (spawn, tmux, reattach, kill on close, transport exit kind) verified against `servy`.
+- Repins the coordinated `v1.9.9` snapshot; `latest-stable` moves to it.
+
 ## [1.9.8] - 2026-11-18
 
 ### Changed

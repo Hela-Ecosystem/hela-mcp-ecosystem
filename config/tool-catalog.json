@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "0a49d2f9051ae689e687f1cd243b7a656499f458",
-      "version": "3.0.3",
+      "revision": "f8f6bc8038dae3400ffb3e1491469abdcd03d04f",
+      "version": "3.0.4",
       "digests": [
-        "fd02cb6f46788799b72c68d5593b204d06edfad8bef7046acfd5ea9d8d30183e"
+        "0b4549494521e8ae49e75dace1fcf4f8046651455fcbe4c552d73d357af66215"
       ],
       "variants": [
         {
@@ -5087,10 +5087,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "036cb49e537c216b9159c0d804fdb868773ca002",
+      "revision": "659ce9515e87fb16f9d706d8cd9e7ec6b8988bd4",
       "version": "3.1.0",
       "digests": [
-        "8f3a125e01b7d3075b4c03f942c57cadccb5b930e78e18bd62eac65cd054b8f1"
+        "593e0f3980b0e56faccd2b6537c0d4d5d7d0b13777a5cf0be0e17b6ec425c0d3"
       ],
       "variants": [
         {
