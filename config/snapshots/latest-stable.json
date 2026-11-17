@@ -54,7 +54,7 @@
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "eac7e4c42d68959b85d664a4fa364325298cada7",
+      "commit": "70ff3ee05fa4a278ab36858d06e07bf364dd0716",
       "branch": "master",
       "entry": "src/server.js",
       "serverVersion": "3.2.3"
