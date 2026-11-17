@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "f8f6bc8038dae3400ffb3e1491469abdcd03d04f",
-      "version": "3.0.4",
+      "revision": "f87b5923d806b6765b1cce5fb1636c2de2ad1ef0",
+      "version": "3.0.5",
       "digests": [
-        "0b4549494521e8ae49e75dace1fcf4f8046651455fcbe4c552d73d357af66215"
+        "fe7d073f49df060caefbca3f41e62aa69e9c85fd1453882208b8f5c648ca5ad8"
       ],
       "variants": [
         {
@@ -3213,10 +3213,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "849f8b1857ba60d1ec64a469a4bc2ee4dcc0e05f",
-      "version": "3.0.1",
+      "revision": "7ac32f8cb90b81074331c58f1d0b90777fed57f1",
+      "version": "3.0.2",
       "digests": [
-        "cdb9be6b6784e9eecaf806098e6c6d0e84269ca99401ac4f426530260ff8bbe1"
+        "5cb29f76c2cbf837327b32d348500e3ddb2abf8fb031b89b45e5343b14c32051"
       ],
       "variants": [
         {
@@ -4276,10 +4276,10 @@
       ]
     },
     "hela-membrane": {
-      "revision": "7ac1a8b92d974d44e6949314c7e3b43a4d271ccf",
-      "version": "3.0.2",
+      "revision": "1ab60ae142587eaa2a984cbaa32243573953cb54",
+      "version": "3.0.3",
       "digests": [
-        "8cd9741ee27c41aa2a7b12cad688e314069c82b31044a352726f07e3fc438c32"
+        "618a52ebe9d850fb585737d46d001c2891c0122ed8948723baa3c6a56a2a48db"
       ],
       "variants": [
         {
@@ -4808,10 +4808,10 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "add3d38690cfb805fe12bf5f4c583fbc37b932db",
-      "version": "3.0.3",
+      "revision": "f14c4f5bb2b62a41b991ff264a64422b2e854069",
+      "version": "3.0.4",
       "digests": [
-        "7b3e077c036b8970e27e2d0a5766fefe1f8c02f2c5682e32225643b2f77e5ed7"
+        "496b7790a5319587d70fa518d48dc4f8719966456db3345ea987b922949e488f"
       ],
       "variants": [
         {
@@ -5087,10 +5087,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "659ce9515e87fb16f9d706d8cd9e7ec6b8988bd4",
-      "version": "3.1.0",
+      "revision": "9a6dec579eb9af9ab8d1d6426a73480e2689a98c",
+      "version": "3.1.1",
       "digests": [
-        "593e0f3980b0e56faccd2b6537c0d4d5d7d0b13777a5cf0be0e17b6ec425c0d3"
+        "4b35a159adaaaeb8d12b52ea6dc17d5774dc1f76259bf932d0091b597a83d62a"
       ],
       "variants": [
         {
@@ -5781,10 +5781,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "af929ce440ec51ae0da0134e52abf8bdea59c622",
-      "version": "4.0.3",
+      "revision": "085653d3fc9f86ca23c5c5c548e0b4faa6fbc549",
+      "version": "4.0.4",
       "digests": [
-        "f20927a8627c19188f85b390719110bc59c334b9422b55daaf7b21c4269c1ee7"
+        "41e664b77e252523b5c59308e2b76b39f996d9514d1cee8d780ac2b59e70e3d8"
       ],
       "variants": [
         {
@@ -6557,10 +6557,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "f2d816c9b260466512087d238a5a37ad6de7823b",
-      "version": "3.2.1",
+      "revision": "11feaaa1d220f68846055075c58f4b0de6ea0369",
+      "version": "3.2.2",
       "digests": [
-        "bbab6c70019c03baae0f32fbb9a779fb0ce988cfad48214437d863084d6f2f00"
+        "4d4dae9e11aa71482b1da9f433712682362a90ae52dce05d1137ae978fdd457e"
       ],
       "variants": [
         {
@@ -8344,10 +8344,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "b3a7255be0b26e0edffa7c4ef48021959f683f52",
-      "version": "3.0.3",
+      "revision": "526b78837014c38e724ca4eb60a9897b01b2e6f7",
+      "version": "3.0.4",
       "digests": [
-        "9bc83c99b3c417a5082c3cde5671ed75d5e65488102ca1593ca9759d7e2168e7"
+        "5c2f2fc7493051693b001e22a4dd1227ccd1a60e07ea4d3972df9bc421069798"
       ],
       "variants": [
         {
@@ -9494,10 +9494,10 @@
       ]
     },
     "hela-receptor": {
-      "revision": "f28d39e924ca21e0e8b0c1423e4396f21d5e9c76",
-      "version": "3.0.4",
+      "revision": "96c7eb5715bc4b69d47cd47fbb30beb1fc27e54b",
+      "version": "3.0.5",
       "digests": [
-        "6d0e7a1b6926f03c18810af0e8a3760c4a0d35788edc718bd5415c3e052680f9"
+        "4052a2e77dd672654a0d1e3a665648fdcc1fd6589a142adefc53d17be0f64738"
       ],
       "variants": [
         {
@@ -12242,10 +12242,10 @@
       ]
     },
     "hela-plastid": {
-      "revision": "6f51865a6ce846b9202aec57a974aa0905300d75",
-      "version": "3.0.3",
+      "revision": "0196ba533bcb48e4b2ff669d7352aade12e5f03e",
+      "version": "3.0.4",
       "digests": [
-        "ac2a3c0dc0475725b63470486d894cb9fbbf2401cbcff11e787e227d4735111d"
+        "d0e8c5d4a3f0b24d37448a6dac30e0aa837e985b4b9b592f4ae31694897584e4"
       ],
       "variants": [
         {
