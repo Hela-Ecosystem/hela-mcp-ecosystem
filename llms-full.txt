@@ -1,6 +1,16 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.9.9] - 2026-11-18
+
+### Added
+- Mitosis `3.0.4` splits `terminal.execute` into one-shot execution (Nucleus) and `terminal.session` (Ribosome), so planning can tell "run pytest" from "drive a tmux session".
+- Runtime `1.3.1` adds structured per-cell logs, per-cell start/restart/failure/tool counters on `/healthz`, and separate `/livez` and `/readyz` endpoints.
+
+### Changed
+- Ribosome `3.1.0` gains `npm run test:remote`, a live integration test for the ssh transport (spawn, tmux, reattach, kill on close, transport exit kind) verified against `servy`.
+- Repins the coordinated `v1.9.9` snapshot; `latest-stable` moves to it.
+
 ## [1.9.8] - 2026-11-18
 
 ### Changed
@@ -292,7 +302,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.8**, with runtime **1.3.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.9**, with runtime **1.3.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -428,7 +438,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.8 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.9 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -1033,9 +1043,9 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.8**; runtime **1.3.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.9**; runtime **1.3.1**.
 
-- **HeLa Mitosis** (`hela-mitosis`): server **3.0.3**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
+- **HeLa Mitosis** (`hela-mitosis`): server **3.0.4**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.2**, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.3**, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
