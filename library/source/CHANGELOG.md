@@ -1,3 +1,10 @@
+## [1.9.8] - 2026-11-18
+
+### Changed
+- Repin every changed cell in `config/inventory.json` and publish the coordinated `v1.9.8` snapshot: Nucleus `3.0.3`, Ribosome `3.1.0`, Membrane `3.0.2`, Enzyme `4.0.2`, Receptor `3.0.2`, Plastid `3.0.2`, Phenotype `3.0.3`, and Mitosis at the mema-vault backup commit.
+- Regenerate `config/tool-catalog.json` and the per-cell canonical tool references from the new pins; the catalog still advertises 292 base tools across ten cells.
+- Sharpen the advertised versions that had drifted from `package.json`: Nucleus reported `3.0.2`, Enzyme's legacy entrypoint reported `4.0.1`, and Phenotype reported `3.0.2` from both the MCP server and export metadata.
+
 # Changelog
 
 All notable changes to this project.

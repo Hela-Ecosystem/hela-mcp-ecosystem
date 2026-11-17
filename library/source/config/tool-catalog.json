@@ -2,7 +2,7 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "55ca1d45f0dacb0bd34358b272c11f2d9b7cc06e",
+      "revision": "0a49d2f9051ae689e687f1cd243b7a656499f458",
       "version": "3.0.3",
       "digests": [
         "fd02cb6f46788799b72c68d5593b204d06edfad8bef7046acfd5ea9d8d30183e"
@@ -4276,10 +4276,10 @@
       ]
     },
     "hela-membrane": {
-      "revision": "b80aafe08e9309549875fa8c431ee11081977e82",
-      "version": "3.0.1",
+      "revision": "7ac1a8b92d974d44e6949314c7e3b43a4d271ccf",
+      "version": "3.0.2",
       "digests": [
-        "eb9d4ed005c2dd6836454b40b949f8dbd188875f1d8dd946e999c5a5739f5150"
+        "8cd9741ee27c41aa2a7b12cad688e314069c82b31044a352726f07e3fc438c32"
       ],
       "variants": [
         {
@@ -4808,10 +4808,10 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "5f6449121d68668db424a8ead4c28c1d707f2355",
-      "version": "3.0.2",
+      "revision": "add3d38690cfb805fe12bf5f4c583fbc37b932db",
+      "version": "3.0.3",
       "digests": [
-        "01a430707477051267c9bb79f8eadcd499b5e2cdb0f3e0af647a3ca3d6beaaa4"
+        "7b3e077c036b8970e27e2d0a5766fefe1f8c02f2c5682e32225643b2f77e5ed7"
       ],
       "variants": [
         {
@@ -5087,10 +5087,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "2ded6b8baffcf45e2bf725633cb1e6b78422d099",
-      "version": "3.0.1",
+      "revision": "036cb49e537c216b9159c0d804fdb868773ca002",
+      "version": "3.1.0",
       "digests": [
-        "be3f781ab5f1217bcf1bf5135ce862ac7e332032d2e16b6dd457154e4cffe2fd"
+        "8f3a125e01b7d3075b4c03f942c57cadccb5b930e78e18bd62eac65cd054b8f1"
       ],
       "variants": [
         {
@@ -5098,12 +5098,20 @@
           "tools": [
             {
               "name": "session_spawn",
-              "description": "Spawns a new child PTY session.",
+              "description": "Spawns a new child PTY session, or re-attaches to a tracked one when 'sessionId' names an existing session.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "command": {
                     "type": "string"
+                  },
+                  "sessionId": {
+                    "type": "string",
+                    "description": "Re-use this id. An id already tracked by this server is an idempotent re-attach: the rendered viewport resets, local scrollback is kept, and a '[reconnected at <iso>]' marker is injected. Ignored args on re-attach."
+                  },
+                  "persistOnClose": {
+                    "type": "boolean",
+                    "description": "SSH + tmux only: leave the remote tmux window running when the session is closed or the server shuts down (default false)."
                   },
                   "args": {
                     "type": "array",
@@ -5143,6 +5151,17 @@
                     "type": "number",
                     "description": "Optional Time-To-Live in milliseconds. Auto-closes session after it exits."
                   },
+                  "host": {
+                    "type": "string",
+                    "description": "Optional [user@]hostname. When set, the session runs the system ssh binary as its transport and 'command' is ignored."
+                  },
+                  "remoteCommand": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Argv to run on the remote host (requires 'host'). Omit for an interactive login shell."
+                  },
                   "run_id": {
                     "type": "string",
                     "description": "P0-B4: RunStore run id to link this session to"
@@ -5151,10 +5170,7 @@
                     "type": "string",
                     "description": "P0-B4: RunStore step id to link this session to"
                   }
-                },
-                "required": [
-                  "command"
-                ]
+                }
               }
             },
             {
@@ -5227,12 +5243,20 @@
             },
             {
               "name": "session_read",
-              "description": "Reads buffered output from the target session.",
+              "description": "Reads buffered output from the target session: the raw/stripped line buffer ('lines', default) or the rendered terminal screen ('screen').",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "sessionId": {
                     "type": "string"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "lines",
+                      "screen"
+                    ],
+                    "description": "'lines' (default) returns the ring buffer as text. 'screen' returns the @xterm/headless rendered frame as JSON — what a human would see — which is what TUIs, progress bars and full-screen apps actually need."
                   },
                   "tailLines": {
                     "type": "number"
@@ -5250,6 +5274,14 @@
                   "grepPattern": {
                     "type": "string",
                     "description": "Filter read lines by regex pattern"
+                  },
+                  "includeScrollback": {
+                    "type": "boolean",
+                    "description": "screen mode only: include rows that scrolled off the viewport (default false)."
+                  },
+                  "settleMs": {
+                    "type": "number",
+                    "description": "screen mode only: wait up to this long for the output stream to go quiet before snapshotting. Immediate by default; a snapshot taken at the cap reports settled:false."
                   }
                 },
                 "required": [
@@ -5288,12 +5320,16 @@
             },
             {
               "name": "session_close",
-              "description": "Kills and removes an interactive PTY session managed by this server, freeing its memory.",
+              "description": "Kills and removes an interactive PTY session managed by this server, freeing its memory. SSH sessions backed by tmux also get their remote window killed unless persistOnClose is set.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "sessionId": {
                     "type": "string"
+                  },
+                  "persistOnClose": {
+                    "type": "boolean",
+                    "description": "SSH + tmux only: keep the remote tmux window alive so a later session_spawn({sessionId}) can re-attach to it."
                   }
                 },
                 "required": [
@@ -5745,10 +5781,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "a3aa21be67dfa045d41f521d1e31e061f98bfdc0",
-      "version": "4.0.1",
+      "revision": "0273245bcd4c8a68dedc3ed4bd6bb1af91e3f42e",
+      "version": "4.0.2",
       "digests": [
-        "96e2d59f674dabbccec4e93c674894ff7f513c8b41dbebc62c57f12896347631"
+        "25c384522fa3173181fecd572c3d5c12520005ce758783c0ce324063a6f4d8bd"
       ],
       "variants": [
         {
@@ -6524,7 +6560,8 @@
       "revision": "83ae95609b007c04da82fd25060819d477d1b2d7",
       "version": "3.2.0",
       "digests": [
-        "517072f69fe3e7600c44634bf0530c0e05d3d5aa0550d497b05085f2fe7d14b5"
+        "517072f69fe3e7600c44634bf0530c0e05d3d5aa0550d497b05085f2fe7d14b5",
+        "80440e88ef025c337fccb240a9516a94e109541d535aa1f29f5d460bec9717e3"
       ],
       "variants": [
         {
@@ -8308,10 +8345,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "d9bf96d460f8de3adc5d5627efd76f8f23d8ee2a",
+      "revision": "b3a7255be0b26e0edffa7c4ef48021959f683f52",
       "version": "3.0.3",
       "digests": [
-        "eac3301d38c4fa65c88f6807171c09bbc2d7ccaf8cd10e0981b41b4c9f246228"
+        "9bc83c99b3c417a5082c3cde5671ed75d5e65488102ca1593ca9759d7e2168e7"
       ],
       "variants": [
         {
@@ -9458,10 +9495,10 @@
       ]
     },
     "hela-receptor": {
-      "revision": "4bf7a0d9f5dcc72479c17714166bd7a0e858eb6f",
-      "version": "3.0.1",
+      "revision": "05d6739faf9ed29f937f9c1933beafb2c5d3206f",
+      "version": "3.0.2",
       "digests": [
-        "1b4548e0a75e85b57c949fe8144a38d736ddfc32d8ac94a783ca294e264f7b72"
+        "4f780255941f229f3c956606b8c92185eb7e6573255fc9aeb338c0a6d0febffa"
       ],
       "variants": [
         {
@@ -12206,10 +12243,10 @@
       ]
     },
     "hela-plastid": {
-      "revision": "ee3e12bfe6c2ba797760a53f6459d2d44932dd66",
-      "version": "3.0.1",
+      "revision": "03c8add9723560643efae9a16a3dc0412f7655fd",
+      "version": "3.0.2",
       "digests": [
-        "8254eb95baf3ea60603c496a6b732ad669faaf719a043b2217f1ce5b864e799f"
+        "f5c50fa00c755b678e34a41a07e337fff9e183af92f411262ce8f6480d9721a6"
       ],
       "variants": [
         {
