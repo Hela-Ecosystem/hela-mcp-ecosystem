@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <link rel="stylesheet" href="../../library.css?v=1.9.9&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../library.css?v=1.9.10&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.9 · Runtime 1.3.1 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.10 · Runtime 1.3.1 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -74,7 +74,7 @@ node setup.mjs doctor --profile dev-workspace --runtime
 <p>See <a href="on-demand-runtime.html">on-demand runtime</a> for stale-cache refusal and explicit <code>hela.pipe</code> bootstrap. A healthy HTTP liveness endpoint alone is not full MCP or external-integration acceptance evidence.</p>
 <h2 id="zed-and-codex-acp-ownership">Zed and Codex ACP ownership</h2>
 <p>Codex-native MCP entries and Zed-forwarded entries can have the same name. A duplicate warning can refer to the forwarded duplicate rather than failure of the native entry. <code>codex mcp list</code> inspects configuration; it does not execute servers or prove connectivity.</p>
-<p>Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP/GUI warning verification remains separate from isolated MCP discovery. See the adapter-version-specific guidance in <a href="troubleshooting.html#zed-forwards-a-server-that-codex-already-defines">troubleshooting</a>; the optional merge override is not enabled by this guide.</p>
+<p>Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP sessions are verified without the GUI by <code>npm run test:acp</code> (<code>scripts/verify-acp.mjs</code>), which drives the same adapter Zed does; the adapter must be new enough for the account's model list — the registry build <code>codex-acp</code> 0.11.1 fails every model with <code>model_not_found</code>, while 2.7.0 works (see <a href="troubleshooting.html#codex-acp-every-model-fails-with-model_not_found">troubleshooting</a>). See the adapter-version-specific guidance in <a href="troubleshooting.html#zed-forwards-a-server-that-codex-already-defines">troubleshooting</a>; the optional merge override is not enabled by this guide.</p>
 <h2 id="keys-and-optional-services">Keys and optional services</h2>
 <p>GitHub tokens are optional for live remote prompt/catalog operations. Enzyme can use keyless network fallbacks when Google CSE credentials are absent; configured CSE uses <code>GOOGLE_API_KEY</code> and <strong><code>GOOGLE_CSE_ID</code></strong>. Model-backed tools require their configured engine/provider. SQLite remains Genome's base engine; Obsidian and Redis are optional. Read <a href="keys-and-secrets.html">keys and services</a> and the selected server's generated canonical tool reference.</p>
 <h2 id="docker-installations">Docker installations</h2>
@@ -97,9 +97,9 @@ npm run docs:check
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../release-data.js?v=1.9.9"></script>
-  <script src="../../library-data.js?v=1.9.9&amp;rev=21961556bf57"></script>
-  <script src="../../library.js?v=1.9.9&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.9.9&amp;rev=2dfe17383063"></script>
+  <script src="../../release-data.js?v=1.9.10"></script>
+  <script src="../../library-data.js?v=1.9.10&amp;rev=2a5e2c4266d7"></script>
+  <script src="../../library.js?v=1.9.10&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.9.10&amp;rev=2dfe17383063"></script>
 </body>
 </html>

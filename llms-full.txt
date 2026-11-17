@@ -1,6 +1,14 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.9.10] - 2026-11-18
+
+### Added
+- `npm run test:acp` drives the Zed Codex adapter over ACP (`initialize` → `session/new` → `session/prompt`) and passes only on a real text reply, so the authenticated ACP session is verified without the GUI.
+
+### Fixed
+- Documented why the registry Codex adapter failed with `model_not_found` for every model: the bundled adapter (`codex-acp` 0.11.1) carries a Codex core older than the account's model list. `@agentclientprotocol/codex-acp` 2.7.0 works with the same ChatGPT login; the guide shows the custom `agent_servers.codex-acp` entry and the manual troubleshooting signature.
+
 ## [1.9.9] - 2026-11-18
 
 ### Added
@@ -302,7 +310,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.9**, with runtime **1.3.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.10**, with runtime **1.3.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -438,7 +446,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.9 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.10 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -1043,7 +1051,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.9**; runtime **1.3.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.10**; runtime **1.3.1**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.4**, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.1**, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1523,7 +1531,7 @@ See [on-demand runtime](on-demand-runtime.md) for stale-cache refusal and explic
 
 Codex-native MCP entries and Zed-forwarded entries can have the same name. A duplicate warning can refer to the forwarded duplicate rather than failure of the native entry. `codex mcp list` inspects configuration; it does not execute servers or prove connectivity.
 
-Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP/GUI warning verification remains separate from isolated MCP discovery. See the adapter-version-specific guidance in [troubleshooting](troubleshooting.md#zed-forwards-a-server-that-codex-already-defines); the optional merge override is not enabled by this guide.
+Do not remove shared top-level Zed definitions as a workaround: native Zed and other agents may need them. Native agent-profile permissions are not a per-ACP forwarding switch. Authenticated ACP sessions are verified without the GUI by `npm run test:acp` (`scripts/verify-acp.mjs`), which drives the same adapter Zed does; the adapter must be new enough for the account's model list — the registry build `codex-acp` 0.11.1 fails every model with `model_not_found`, while 2.7.0 works (see [troubleshooting](troubleshooting.md#codex-acp-every-model-fails-with-model_not_found)). See the adapter-version-specific guidance in [troubleshooting](troubleshooting.md#zed-forwards-a-server-that-codex-already-defines); the optional merge override is not enabled by this guide.
 
 ## Keys and optional services
 
@@ -2282,6 +2290,53 @@ node setup.mjs --snapshot v1.5.1 --profile dev-workspace --non-interactive
 * **Run Integration Tests**: `npm test` discovers the installed cells; use `-- --profile <id>` for a selected subset. Tool counts depend on enabled features.
 * **Run Matrix Tests**: `npm run test:matrix` verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.
 * **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `node setup.mjs doctor --json` and the failed check. Do not attach private configs or environments.
+
+---
+
+## Codex ACP: every model fails with `model_not_found`
+
+**Symptom.** A Codex thread in Zed refuses to answer and the ACP log (`dev: open acp logs`) shows:
+
+```
+Unhandled error during turn: {"type":"error","status":400,
+ "error":{"type":"invalid_request_error",
+ "message":"The 'gpt-6-luna' model is not supported when using Codex with a ChatGPT account.",
+ "code":"model_not_found"}}
+```
+
+The same account works in `codex exec`, which is the clue: the account is fine, the adapter is stale. `codex-acp` bundles its own Codex core, and the build shipped by the Zed registry here (`0.11.1`) carries a model list older than the account, so every model it offers — including the configured one — is rejected. Nothing is wrong with the ChatGPT login, and no credentials need to be copied anywhere.
+
+**Fix.** Replace the registry adapter with a current one and point Zed at it as a custom agent:
+
+```sh
+mkdir -p ~/.local/share/zed/agent_servers/codex-acp-2.7.0
+cd ~/.local/share/zed/agent_servers/codex-acp-2.7.0
+npm i @agentclientprotocol/codex-acp@2.7.0
+```
+
+```json
+{
+  "agent_servers": {
+    "codex-acp": {
+      "type": "custom",
+      "command": "/home/USER/.local/share/zed/agent_servers/codex-acp-2.7.0/node_modules/@agentclientprotocol/codex-acp/dist/index.js",
+      "args": [],
+      "env": {},
+      "default_config_options": { "model": "gpt-6-luna", "mode": "agent-full-access" }
+    }
+  }
+}
+```
+
+Zed applies the settings change without a restart. Keep the model in `default_config_options` aligned with `~/.codex/config.toml`; a model that the account rejects fails the turn the same way regardless of adapter version.
+
+**Verify without the GUI.** From an ecosystem checkout:
+
+```sh
+node scripts/verify-acp.mjs          # or: npm run test:acp
+```
+
+It reads the custom entry from `~/.config/zed/settings.json`, drives the same adapter Zed does, and passes only when the agent returns text for a real prompt. Override the binary with `HELA_ACP_AGENT_BINARY` when testing a candidate build.
 
 
 ---

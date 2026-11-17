@@ -186,3 +186,50 @@ node setup.mjs --snapshot v1.5.1 --profile dev-workspace --non-interactive
 * **Run Integration Tests**: `npm test` discovers the installed cells; use `-- --profile <id>` for a selected subset. Tool counts depend on enabled features.
 * **Run Matrix Tests**: `npm run test:matrix` verifies 80 profile/client configuration combinations, not GUI authentication or hardware operations.
 * **File an Issue**: Open an issue at [`Hela-Ecosystem/hela-mcp-ecosystem/issues`](https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/issues) with reviewed/redacted output from `node setup.mjs doctor --json` and the failed check. Do not attach private configs or environments.
+
+---
+
+## Codex ACP: every model fails with `model_not_found`
+
+**Symptom.** A Codex thread in Zed refuses to answer and the ACP log (`dev: open acp logs`) shows:
+
+```
+Unhandled error during turn: {"type":"error","status":400,
+ "error":{"type":"invalid_request_error",
+ "message":"The 'gpt-6-luna' model is not supported when using Codex with a ChatGPT account.",
+ "code":"model_not_found"}}
+```
+
+The same account works in `codex exec`, which is the clue: the account is fine, the adapter is stale. `codex-acp` bundles its own Codex core, and the build shipped by the Zed registry here (`0.11.1`) carries a model list older than the account, so every model it offers — including the configured one — is rejected. Nothing is wrong with the ChatGPT login, and no credentials need to be copied anywhere.
+
+**Fix.** Replace the registry adapter with a current one and point Zed at it as a custom agent:
+
+```sh
+mkdir -p ~/.local/share/zed/agent_servers/codex-acp-2.7.0
+cd ~/.local/share/zed/agent_servers/codex-acp-2.7.0
+npm i @agentclientprotocol/codex-acp@2.7.0
+```
+
+```json
+{
+  "agent_servers": {
+    "codex-acp": {
+      "type": "custom",
+      "command": "/home/USER/.local/share/zed/agent_servers/codex-acp-2.7.0/node_modules/@agentclientprotocol/codex-acp/dist/index.js",
+      "args": [],
+      "env": {},
+      "default_config_options": { "model": "gpt-6-luna", "mode": "agent-full-access" }
+    }
+  }
+}
+```
+
+Zed applies the settings change without a restart. Keep the model in `default_config_options` aligned with `~/.codex/config.toml`; a model that the account rejects fails the turn the same way regardless of adapter version.
+
+**Verify without the GUI.** From an ecosystem checkout:
+
+```sh
+node scripts/verify-acp.mjs          # or: npm run test:acp
+```
+
+It reads the custom entry from `~/.config/zed/settings.json`, drives the same adapter Zed does, and passes only when the agent returns text for a real prompt. Override the binary with `HELA_ACP_AGENT_BINARY` when testing a candidate build.

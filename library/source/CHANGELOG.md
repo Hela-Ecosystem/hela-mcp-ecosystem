@@ -1,3 +1,11 @@
+## [1.9.10] - 2026-11-18
+
+### Added
+- `npm run test:acp` drives the Zed Codex adapter over ACP (`initialize` → `session/new` → `session/prompt`) and passes only on a real text reply, so the authenticated ACP session is verified without the GUI.
+
+### Fixed
+- Documented why the registry Codex adapter failed with `model_not_found` for every model: the bundled adapter (`codex-acp` 0.11.1) carries a Codex core older than the account's model list. `@agentclientprotocol/codex-acp` 2.7.0 works with the same ChatGPT login; the guide shows the custom `agent_servers.codex-acp` entry and the manual troubleshooting signature.
+
 ## [1.9.9] - 2026-11-18
 
 ### Added
