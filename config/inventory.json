@@ -307,10 +307,10 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "05d6739faf9ed29f937f9c1933beafb2c5d3206f",
+      "revision": "650e839b359592acc0644111385e9352b129e704",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "lazy": true
     },
     "hela-plastid": {

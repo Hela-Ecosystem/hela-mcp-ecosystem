@@ -1,3 +1,11 @@
+## [1.9.11] - 2026-11-18
+
+### Fixed
+- Receptor `3.0.3`: the hardware integration harness spawned a non-existent entrypoint, so `npm run test:integration` could never pass; it now runs 18 checks against a real Pixel 8 (UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard).
+
+### Changed
+- Repins Receptor and publishes the `v1.9.11` snapshot.
+
 ## [1.9.10] - 2026-11-18
 
 ### Added

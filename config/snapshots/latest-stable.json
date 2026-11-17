@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.10",
-  "created_at": "2026-11-17T21:10:42Z",
-  "description": "Tooling release: headless verification of the authenticated Codex ACP session and the adapter-version guidance. Cell pins are identical to 1.9.9.",
+  "snapshot_version": "1.9.11",
+  "created_at": "2026-11-17T21:32:19Z",
+  "description": "Receptor 3.0.3 makes the hardware integration suite runnable and verifies 18 checks on a Pixel 8.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -68,10 +68,10 @@
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
-      "commit": "05d6739faf9ed29f937f9c1933beafb2c5d3206f",
+      "commit": "650e839b359592acc0644111385e9352b129e704",
       "branch": "master",
       "entry": "dist/server.js",
-      "serverVersion": "3.0.2"
+      "serverVersion": "3.0.3"
     },
     "hela-plastid": {
       "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git",
@@ -100,6 +100,7 @@
     "client_configuration_combinations": 80,
     "inventory_tests": 8,
     "skill_sync_tests": 1,
-    "scope": "Tool-catalog parity, installation, doctor, profile and documentation gates re-run on 2026-11-18. Ribosome rendered screen and tmux durability are covered by unit and fake-ssh tests; real-host SSH, hardware, Blender bridge, GUI clients and providers remain separate."
+    "scope": "Hardware validation now includes a real Pixel 8 run (UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard through scrcpy). Ribosome rendered screen and tmux durability are covered by unit and fake-ssh tests plus a live servy run; Blender bridge, Browserless remote and providers remain separate.",
+    "receptor_hardware_checks": 18
   }
 }
