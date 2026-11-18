@@ -1,3 +1,8 @@
+## [1.9.24] - 2026-11-19
+
+### Fixed
+- Cytosol `3.2.6` accepts what `browser_observe` actually reports. `browser_fill_form` keys resolve in order — a ref number from the last observe/get_state, a bare name or id, then the key as a CSS selector — so the observe → fill path no longer misses and every existing selector caller keeps working. Attribute values are quoted, so a field name containing a quote cannot break out of the selector. An unmatched key now aborts the call and names what it tried instead of reaching `page.fill` and blocking for the full 30-second locator timeout; a miss resolves in milliseconds.
+
 ## [1.9.23] - 2026-11-19
 
 ### Fixed
