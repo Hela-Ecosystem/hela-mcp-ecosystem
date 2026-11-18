@@ -1,6 +1,21 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.9.19] - 2026-11-19
+
+### Fixed
+- The legal pages still claimed the whole ecosystem was MIT and granted sublicensing and sale over code that is GPL-3.0-or-later. Terms (EN and ID), their meta and JSON-LD descriptions, `llms.txt` and the `SoftwareApplication` structured data now state the split: MIT repository, six GPL-3.0-or-later cells named explicitly, per-cell terms govern redistribution. A test fails if the blanket claim returns.
+
+### Added
+- Documented the runtime update tools (`hela.update.check`, `hela.update.apply`) in the README, the on-demand guide and `llms.txt`. They already shipped with runtime 1.3.x; the docs now name them so agents can find them.
+
+## [1.9.18] - 2026-11-19
+
+### Changed
+- `npm audit fix` across nine cells and the runtime cleared a critical advisory in Mitosis and Cytosol plus twenty others: mitosis 11 to 3, cytosol 9 to 0, nucleus 8 to 0, membrane 10 to 3, genome/ribosome/enzyme/phenotype/runtime 2 to 0, receptor 1 to 0. The remaining findings need breaking majors (zod 4, glob 14) and stay with their open dependabot PRs.
+- Runtime `1.3.3` refreshed its Nix fixed-output dependency hash, verified with a local `nix build` before release.
+- No tool surfaces changed (292 base tools); the version guards kept every `ServerInfo` in step.
+
 ## [1.9.17] - 2026-11-19
 
 ### Added
@@ -362,7 +377,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.18**, with runtime **1.3.3**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.19**, with runtime **1.3.3**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -498,7 +513,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.18 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.19 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -610,6 +625,17 @@ npm run skills:check
 * **[Troubleshooting Guide](docs/troubleshooting.md)**: Common issues, diagnostic codes, and recovery procedures.
 
 ---
+
+## Updating
+
+Check for a newer snapshot without changing anything, then apply it behind an explicit confirmation:
+
+```sh
+node setup.mjs update check --prefix <installation>
+node setup.mjs update apply --confirm --prefix <installation>
+```
+
+Agents get the same controller through the runtime endpoint: `hela.update.check` (read-only, reports the snapshot delta) and `hela.update.apply` (confirmation-gated, stages through the pinned installer, verifies with doctor, and records a rollback directory). A successful apply returns `restartRequired: true`; restart the runtime or client to load the new build.
 
 ## License & Attribution
 
@@ -1114,7 +1140,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.18**; runtime **1.3.3**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.19**; runtime **1.3.3**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.7**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.3**, GPL-3.0-or-later, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
@@ -1784,6 +1810,10 @@ Doctor validates selected paths/builds, real isolated MCP handshakes, package/in
 - Reproducible Nix packages use Node 22.23.4 and pinned/fixed-output inputs on both Linux architectures. Runtime versions derive from package metadata.
 
 These checks do not authenticate GUI ACP sessions, reconcile live vault conflicts, exercise Android/Blender hardware, invoke model providers, or complete deferred endpoint security. Lappy retains its ten-server roster; servy retains its eight-cell `dev-workspace` selection.
+
+## Updating from the endpoint
+
+The runtime exposes the update controller directly, so an agent can maintain the cells it uses without shelling out: `hela.update.check` is read-only and reports the installed snapshot against the latest one, and `hela.update.apply` is confirmation-gated, stages the release through the pinned installer, verifies it with doctor, and keeps a rollback directory. Both return machine-readable JSON; `apply` reports `restartRequired: true` when the new build is on disk.
 
 ## Historical Servy rollout — runtime 1.2.0
 

@@ -45,6 +45,10 @@ Doctor validates selected paths/builds, real isolated MCP handshakes, package/in
 
 These checks do not authenticate GUI ACP sessions, reconcile live vault conflicts, exercise Android/Blender hardware, invoke model providers, or complete deferred endpoint security. Lappy retains its ten-server roster; servy retains its eight-cell `dev-workspace` selection.
 
+## Updating from the endpoint
+
+The runtime exposes the update controller directly, so an agent can maintain the cells it uses without shelling out: `hela.update.check` is read-only and reports the installed snapshot against the latest one, and `hela.update.apply` is confirmation-gated, stages the release through the pinned installer, verifies it with doctor, and keeps a rollback directory. Both return machine-readable JSON; `apply` reports `restartRequired: true` when the new build is on disk.
+
 ## Historical Servy rollout — runtime 1.2.0
 
 This section records the deployed Servy HTTP service, which remains on runtime `1.2.0`. The current source checkout and direct stdio runtime are `1.2.1`; this evidence is retained because the systemd deployment has not been promoted to that source version. Runtime source `9c92dbf5612db43fe80f1680ba4af97c4b5ea9b0` and ecosystem source release `1c47ca1c202c6a2acea79d7c6fdac5a19ef3c0bf` are deployed. Final-source Nix outputs are:

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[1.9.17] - 2026-11-19 — HeLa MCP Ecosystem</title>
-  <meta name="description" content="Per-cell licence disclosure (PR #7): config/inventory.json now carries each cell&#39;s licence, the library footer and page headers derive the real blend (MIT suite + six…">
+  <title>[1.9.19] - 2026-11-19 — HeLa MCP Ecosystem</title>
+  <meta name="description" content="The legal pages still claimed the whole ecosystem was MIT and granted sublicensing and sale over code that is GPL-3.0-or-later. Terms (EN and ID), their meta and JSON-LD…">
   <link rel="canonical" href="https://hela.my.id/library/CHANGELOG.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/CHANGELOG.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/CHANGELOG.html">
@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../library.css?v=1.9.18&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../library.css?v=1.9.19&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.18 · Runtime 1.3.3 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.19 · Runtime 1.3.3 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -34,43 +34,59 @@
     </aside>
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="CHANGELOG.html">EN</a><a class="lang-btn" data-lang="id" href="../id/library/CHANGELOG.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
-      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">CHANGELOG.md</p><p>Original source language. <a href="source/CHANGELOG.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="1917---2026-11-19">[1.9.17] - 2026-11-19</h2>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">CHANGELOG.md</p><p>Original source language. <a href="source/CHANGELOG.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="1919---2026-11-19">[1.9.19] - 2026-11-19</h2>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>The legal pages still claimed the whole ecosystem was MIT and granted sublicensing and sale over code that is GPL-3.0-or-later. Terms (EN and ID), their meta and JSON-LD descriptions, <code>llms.txt</code> and the <code>SoftwareApplication</code> structured data now state the split: MIT repository, six GPL-3.0-or-later cells named explicitly, per-cell terms govern redistribution. A test fails if the blanket claim returns.</li>
+</ul>
 <h3 id="added">Added</h3>
+<ul>
+<li>Documented the runtime update tools (<code>hela.update.check</code>, <code>hela.update.apply</code>) in the README, the on-demand guide and <code>llms.txt</code>. They already shipped with runtime 1.3.x; the docs now name them so agents can find them.</li>
+</ul>
+<h2 id="1918---2026-11-19">[1.9.18] - 2026-11-19</h2>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><code>npm audit fix</code> across nine cells and the runtime cleared a critical advisory in Mitosis and Cytosol plus twenty others: mitosis 11 to 3, cytosol 9 to 0, nucleus 8 to 0, membrane 10 to 3, genome/ribosome/enzyme/phenotype/runtime 2 to 0, receptor 1 to 0. The remaining findings need breaking majors (zod 4, glob 14) and stay with their open dependabot PRs.</li>
+<li>Runtime <code>1.3.3</code> refreshed its Nix fixed-output dependency hash, verified with a local <code>nix build</code> before release.</li>
+<li>No tool surfaces changed (292 base tools); the version guards kept every <code>ServerInfo</code> in step.</li>
+</ul>
+<h2 id="1917---2026-11-19">[1.9.17] - 2026-11-19</h2>
+<h3 id="added-1">Added</h3>
 <ul>
 <li>Per-cell licence disclosure (PR #7): <code>config/inventory.json</code> now carries each cell's licence, the library footer and page headers derive the real blend (MIT suite + six GPL-3.0-or-later cells) instead of a blanket MIT claim, and the architecture reference states which copyleft cells every profile installs. Derived from the inventory and covered by tests.</li>
 </ul>
-<h3 id="fixed">Fixed</h3>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li><code>update --json</code> (PR #6) emits one compact document, so a caller reading the last stdout line cannot be defeated by installer output.</li>
 </ul>
 <h2 id="1916---2026-11-19">[1.9.16] - 2026-11-19</h2>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>Runtime prose sat outside the single-sourcing pipeline: the architecture cards (EN and ID) and the on-demand guide said <code>1.2.1</code> while the inventory said <code>1.3.2</code>, and CI stayed green because the generator skipped the <code>hela-runtime</code> prose entirely. <code>generate-docs</code> now rewrites those sentences from the inventory, <code>docs:check</code> fails on drift (verified by deliberately reverting a mention), and a test covers both languages while keeping the dated Servy rollout record at the version it actually deployed.</li>
 </ul>
 <h2 id="1915---2026-11-18">[1.9.15] - 2026-11-18</h2>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li>The tmux provisioning tests inherited <code>CI</code> from <code>process.env</code>, so on GitHub Actions provisioning short-circuited to <code>skipped</code>/<code>ci</code> before any assertion: eight failures that only existed on CI. The fixtures now strip CI variables, and the CI-disable case keeps its own explicit test.</li>
 </ul>
 <h2 id="1914---2026-11-18">[1.9.14] - 2026-11-18</h2>
-<h3 id="added-1">Added</h3>
+<h3 id="added-2">Added</h3>
 <ul>
 <li>Mitosis <code>3.0.6</code> bundles the registry <code>pcb</code> skill (KiCad workflow, verification scripts, JLCPCB preparation, MIT licence preserved). The staged copy contained a duplicate of itself under <code>skills/pcb/pcb</code>; 3.3 MB removed so discovery sees one definition.</li>
 </ul>
-<h3 id="fixed-3">Fixed</h3>
+<h3 id="fixed-4">Fixed</h3>
 <ul>
 <li>Cytosol <code>3.2.3</code>: <code>BROWSER_HEADLESS</code> defaults to auto — headless without <code>DISPLAY</code>, headful with one, explicit values still winning. Display-less service processes could not launch Chromium before. <code>resolveHeadless</code> is exported and tested.</li>
 <li>Browser CI pins <code>ubuntu-24.04</code>; <code>ubuntu-latest</code> moved to 26.04 where <code>playwright install --with-deps</code> exits without a Chromium build.</li>
 <li>Runtime <code>1.3.2</code> refreshes the Nix <code>npmDepsHash</code> after the version bump.</li>
 </ul>
 <h2 id="1913---2026-11-18">[1.9.13] - 2026-11-18</h2>
-<h3 id="fixed-4">Fixed</h3>
+<h3 id="fixed-5">Fixed</h3>
 <ul>
 <li>Every cell and the runtime now single-source the advertised MCP version in one module, guarded by a test against <code>package.json</code>. Six cells had shipped a stale <code>ServerInfo</code> this way (nucleus, enzyme, phenotype, receptor, cytosol, plastid), and a deliberate drift in mitosis was verified to fail its suite.</li>
 </ul>
 <h2 id="1912---2026-11-18">[1.9.12] - 2026-11-18</h2>
-<h3 id="added-2">Added</h3>
+<h3 id="added-3">Added</h3>
 <ul>
 <li>Hardware and live-service validation: receptor <code>3.0.4</code> makes the device integration suite runnable (it spawned a non-existent entrypoint) and passes 18 checks on a Pixel 8 — UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard.</li>
 <li><code>npm run test:browserless</code> validates a remote Browserless instance with local fallback disabled; <code>npm run test:blender</code> drives the Blender bridge (scene, in-Blender code execution, object details); <code>npm run test:fallback</code> proves the search degradation chain with an invalid provider key.</li>
@@ -82,36 +98,36 @@
 <li>Headless Blender reports a render path without writing a file; rendering still needs a GUI session.</li>
 </ul>
 <h2 id="1911---2026-11-18">[1.9.11] - 2026-11-18</h2>
-<h3 id="fixed-5">Fixed</h3>
+<h3 id="fixed-6">Fixed</h3>
 <ul>
 <li>Receptor <code>3.0.3</code>: the hardware integration harness spawned a non-existent entrypoint, so <code>npm run test:integration</code> could never pass; it now runs 18 checks against a real Pixel 8 (UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard).</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Repins Receptor and publishes the <code>v1.9.11</code> snapshot.</li>
 </ul>
 <h2 id="1910---2026-11-18">[1.9.10] - 2026-11-18</h2>
-<h3 id="added-3">Added</h3>
+<h3 id="added-4">Added</h3>
 <ul>
 <li><code>npm run test:acp</code> drives the Zed Codex adapter over ACP (<code>initialize</code> → <code>session/new</code> → <code>session/prompt</code>) and passes only on a real text reply, so the authenticated ACP session is verified without the GUI.</li>
 </ul>
-<h3 id="fixed-6">Fixed</h3>
+<h3 id="fixed-7">Fixed</h3>
 <ul>
 <li>Documented why the registry Codex adapter failed with <code>model_not_found</code> for every model: the bundled adapter (<code>codex-acp</code> 0.11.1) carries a Codex core older than the account's model list. <code>@agentclientprotocol/codex-acp</code> 2.7.0 works with the same ChatGPT login; the guide shows the custom <code>agent_servers.codex-acp</code> entry and the manual troubleshooting signature.</li>
 </ul>
 <h2 id="199---2026-11-18">[1.9.9] - 2026-11-18</h2>
-<h3 id="added-4">Added</h3>
+<h3 id="added-5">Added</h3>
 <ul>
 <li>Mitosis <code>3.0.4</code> splits <code>terminal.execute</code> into one-shot execution (Nucleus) and <code>terminal.session</code> (Ribosome), so planning can tell &quot;run pytest&quot; from &quot;drive a tmux session&quot;.</li>
 <li>Runtime <code>1.3.1</code> adds structured per-cell logs, per-cell start/restart/failure/tool counters on <code>/healthz</code>, and separate <code>/livez</code> and <code>/readyz</code> endpoints.</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Ribosome <code>3.1.0</code> gains <code>npm run test:remote</code>, a live integration test for the ssh transport (spawn, tmux, reattach, kill on close, transport exit kind) verified against <code>servy</code>.</li>
 <li>Repins the coordinated <code>v1.9.9</code> snapshot; <code>latest-stable</code> moves to it.</li>
 </ul>
 <h2 id="198---2026-11-18">[1.9.8] - 2026-11-18</h2>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Repin every changed cell in <code>config/inventory.json</code> and publish the coordinated <code>v1.9.8</code> snapshot: Nucleus <code>3.0.3</code>, Ribosome <code>3.1.0</code>, Membrane <code>3.0.2</code>, Enzyme <code>4.0.2</code>, Receptor <code>3.0.2</code>, Plastid <code>3.0.2</code>, Phenotype <code>3.0.3</code>, and Mitosis at the mema-vault backup commit.</li>
 <li>Regenerate <code>config/tool-catalog.json</code> and the per-cell canonical tool references from the new pins; the catalog still advertises 292 base tools across ten cells.</li>
@@ -126,7 +142,7 @@
 <li>Sweep runtime facades, pin the 292 cell-schema metric definition, generate the installer flag reference, and add a reproducible persona/discovery payload measurement script.</li>
 </ul>
 <h2 id="196---2026-11-15">[1.9.6] - 2026-11-15</h2>
-<h3 id="added-5">Added</h3>
+<h3 id="added-6">Added</h3>
 <ul>
 <li>Bundle Google Chrome's Modern Web Guidance skill in Phenotype 3.0.3, pinned to upstream release <code>v1.0.0</code>, CLI package <code>1.0.0</code>, and corpus <code>2026_11_09-5bcc021b</code>.</li>
 <li>Add a dedicated prebuilt-skills catalog showing server ownership, availability in all eight profiles, and the install/sync lifecycle.</li>
@@ -148,7 +164,7 @@
 <li>Publish Phenotype <code>3.0.2</code> with the research-backed <code>brand-architecture</code> skill and refresh the reproducible <code>latest-stable</code> pin to its new commit.</li>
 </ul>
 <h2 id="192---2026-11-14">[1.9.2] - 2026-11-14</h2>
-<h3 id="added-6">Added</h3>
+<h3 id="added-7">Added</h3>
 <ul>
 <li>Make Needle and Mirage installer capabilities profile-aware: every canonical profile provisions Needle through Mitosis, while profiles containing Cytosol provision the managed Mirage Python bridge automatically.</li>
 <li>Add checksum-verified Windows x64/ARM64 Needle assets so native Windows profiles receive the same local agent capability without manual path configuration.</li>
@@ -156,18 +172,18 @@
 <li>Publish Terminal/Nucleus <code>3.0.2</code> with checksum-verified user-local RTK bootstrap on Linux, macOS, Windows, and Windows ARM64.</li>
 <li>Move <code>latest-stable</code> to the coordinated <code>v1.9.2</code> snapshot while retaining <code>v1.9.1</code> unchanged.</li>
 </ul>
-<h3 id="fixed-7">Fixed</h3>
+<h3 id="fixed-8">Fixed</h3>
 <ul>
 <li>Align the mutable <code>latest-stable</code> metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable <code>v1.8.0</code> snapshot.</li>
 </ul>
 <h2 id="191---2026-11-14">[1.9.1] - 2026-11-14</h2>
-<h3 id="fixed-8">Fixed</h3>
+<h3 id="fixed-9">Fixed</h3>
 <ul>
 <li>Refresh every canonical cell and runtime revision to the latest validated default-branch commit.</li>
 <li>Publish the coordinated <code>v1.9.1</code> snapshot while retaining the immutable <code>v1.9.0</code> release.</li>
 </ul>
 <h2 id="190---2026-11-14">[1.9.0] - 2026-11-14</h2>
-<h3 id="added-7">Added</h3>
+<h3 id="added-8">Added</h3>
 <ul>
 <li>Add a cross-platform Node update controller with read-only snapshot checks, explicit confirmation for apply, rollback records, and doctor verification.</li>
 <li>Add opt-in check-only schedules for systemd user timers, launchd agents, and Windows Task Scheduler; automatic checks never apply updates.</li>
@@ -175,21 +191,21 @@
 <li>Publish the immutable <code>v1.9.0</code> snapshot with runtime <code>1.3.0</code>.</li>
 </ul>
 <h2 id="180---2026-11-13">[1.8.0] - 2026-11-13</h2>
-<h3 id="added-8">Added</h3>
+<h3 id="added-9">Added</h3>
 <ul>
 <li>Upgraded HeLa Cytosol to <code>3.2.0</code> with dedicated image analysis through local paths, safe HTTP(S) URLs, and base64 image input.</li>
 <li>Added the full Mirage VLM pipeline to the catalog: scene understanding, OCR, object detection, segmentation, spatial relations, and schema-based decisions.</li>
 <li>Published the reproducible <code>v1.8.0</code> snapshot and moved <code>latest-stable</code> to the dedicated-image release.</li>
 </ul>
 <h2 id="170---2026-11-13">[1.7.0] - 2026-11-13</h2>
-<h3 id="added-9">Added</h3>
+<h3 id="added-10">Added</h3>
 <ul>
 <li>Upgraded HeLa Cytosol to <code>3.1.0</code> with first-class Mirage visual intelligence.</li>
 <li>Added lazy local model acquisition, managed Cactus runtime setup, and the <code>browser_visual_analyze</code> capability to the canonical catalog.</li>
 <li>Published the reproducible <code>v1.7.0</code> snapshot and moved <code>latest-stable</code> to the new Cytosol release.</li>
 </ul>
 <h2 id="164---2026-11-13">[1.6.4] - 2026-11-13</h2>
-<h3 id="fixed-9">Fixed</h3>
+<h3 id="fixed-10">Fixed</h3>
 <ul>
 <li>Updated the <code>latest-stable</code> snapshot alias to the coordinated 1.6.3 cell and runtime release pins.</li>
 </ul>
@@ -256,18 +272,18 @@
 <li>Record native x86_64/aarch64 Linux Nix builds separately from client authentication, hardware testing, and unresolved vault conflicts.</li>
 </ul>
 <h2 id="300---2026-10-31">[3.0.0] - 2026-10-31</h2>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li><strong>Version reset to 3.0.0</strong> — per-server version metadata baseline reset (Phase 7). All <code>package.json</code>, MCP <code>ServerInfo.version</code>, and HTTP metadata now report <code>3.0.0</code>. This is a metadata/interface baseline reset; for <code>hela-plastid</code> it is not an upgrade from the previous <code>4.2.0</code> advert.</li>
 </ul>
 </article><footer class="doc-footer"><span>MIT SUITE · GPL-3.0 + MIT CELLS · HELA ECOSYSTEM</span><a href="../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1917---2026-11-19">[1.9.17] - 2026-11-19</a></li><li><a href="#1916---2026-11-19">[1.9.16] - 2026-11-19</a></li><li><a href="#1915---2026-11-18">[1.9.15] - 2026-11-18</a></li><li><a href="#1914---2026-11-18">[1.9.14] - 2026-11-18</a></li><li><a href="#1913---2026-11-18">[1.9.13] - 2026-11-18</a></li><li><a href="#1912---2026-11-18">[1.9.12] - 2026-11-18</a></li><li><a href="#1911---2026-11-18">[1.9.11] - 2026-11-18</a></li><li><a href="#1910---2026-11-18">[1.9.10] - 2026-11-18</a></li><li><a href="#199---2026-11-18">[1.9.9] - 2026-11-18</a></li><li><a href="#198---2026-11-18">[1.9.8] - 2026-11-18</a></li><li><a href="#197---2026-11-18">[1.9.7] - 2026-11-18</a></li><li><a href="#196---2026-11-15">[1.9.6] - 2026-11-15</a></li><li><a href="#195---2026-11-15">[1.9.5] - 2026-11-15</a></li><li><a href="#194---2026-11-15">[1.9.4] - 2026-11-15</a></li><li><a href="#193---2026-11-15">[1.9.3] - 2026-11-15</a></li><li><a href="#192---2026-11-14">[1.9.2] - 2026-11-14</a></li><li><a href="#191---2026-11-14">[1.9.1] - 2026-11-14</a></li><li><a href="#190---2026-11-14">[1.9.0] - 2026-11-14</a></li><li><a href="#180---2026-11-13">[1.8.0] - 2026-11-13</a></li><li><a href="#170---2026-11-13">[1.7.0] - 2026-11-13</a></li><li><a href="#164---2026-11-13">[1.6.4] - 2026-11-13</a></li><li><a href="#163---2026-11-13">[1.6.3] - 2026-11-13</a></li><li><a href="#162---2026-11-08">[1.6.2] - 2026-11-08</a></li><li><a href="#161---2026-11-08">[1.6.1] - 2026-11-08</a></li><li><a href="#160---2026-11-08">[1.6.0] - 2026-11-08</a></li><li><a href="#153---2026-11-07">[1.5.3] - 2026-11-07</a></li><li><a href="#152---2026-11-07">[1.5.2] - 2026-11-07</a></li><li><a href="#151---2026-11-06">[1.5.1] - 2026-11-06</a></li><li><a href="#150---2026-11-06">[1.5.0] - 2026-11-06</a></li><li><a href="#140---2026-11-06">[1.4.0] - 2026-11-06</a></li><li><a href="#300---2026-10-31">[3.0.0] - 2026-10-31</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1919---2026-11-19">[1.9.19] - 2026-11-19</a></li><li><a href="#1918---2026-11-19">[1.9.18] - 2026-11-19</a></li><li><a href="#1917---2026-11-19">[1.9.17] - 2026-11-19</a></li><li><a href="#1916---2026-11-19">[1.9.16] - 2026-11-19</a></li><li><a href="#1915---2026-11-18">[1.9.15] - 2026-11-18</a></li><li><a href="#1914---2026-11-18">[1.9.14] - 2026-11-18</a></li><li><a href="#1913---2026-11-18">[1.9.13] - 2026-11-18</a></li><li><a href="#1912---2026-11-18">[1.9.12] - 2026-11-18</a></li><li><a href="#1911---2026-11-18">[1.9.11] - 2026-11-18</a></li><li><a href="#1910---2026-11-18">[1.9.10] - 2026-11-18</a></li><li><a href="#199---2026-11-18">[1.9.9] - 2026-11-18</a></li><li><a href="#198---2026-11-18">[1.9.8] - 2026-11-18</a></li><li><a href="#197---2026-11-18">[1.9.7] - 2026-11-18</a></li><li><a href="#196---2026-11-15">[1.9.6] - 2026-11-15</a></li><li><a href="#195---2026-11-15">[1.9.5] - 2026-11-15</a></li><li><a href="#194---2026-11-15">[1.9.4] - 2026-11-15</a></li><li><a href="#193---2026-11-15">[1.9.3] - 2026-11-15</a></li><li><a href="#192---2026-11-14">[1.9.2] - 2026-11-14</a></li><li><a href="#191---2026-11-14">[1.9.1] - 2026-11-14</a></li><li><a href="#190---2026-11-14">[1.9.0] - 2026-11-14</a></li><li><a href="#180---2026-11-13">[1.8.0] - 2026-11-13</a></li><li><a href="#170---2026-11-13">[1.7.0] - 2026-11-13</a></li><li><a href="#164---2026-11-13">[1.6.4] - 2026-11-13</a></li><li><a href="#163---2026-11-13">[1.6.3] - 2026-11-13</a></li><li><a href="#162---2026-11-08">[1.6.2] - 2026-11-08</a></li><li><a href="#161---2026-11-08">[1.6.1] - 2026-11-08</a></li><li><a href="#160---2026-11-08">[1.6.0] - 2026-11-08</a></li><li><a href="#153---2026-11-07">[1.5.3] - 2026-11-07</a></li><li><a href="#152---2026-11-07">[1.5.2] - 2026-11-07</a></li><li><a href="#151---2026-11-06">[1.5.1] - 2026-11-06</a></li><li><a href="#150---2026-11-06">[1.5.0] - 2026-11-06</a></li><li><a href="#140---2026-11-06">[1.4.0] - 2026-11-06</a></li><li><a href="#300---2026-10-31">[3.0.0] - 2026-10-31</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../release-data.js?v=1.9.18"></script>
-  <script src="../library-data.js?v=1.9.18&amp;rev=f44ec03eb8d9"></script>
-  <script src="../library.js?v=1.9.18&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.9.18&amp;rev=2dfe17383063"></script>
+  <script src="../release-data.js?v=1.9.19"></script>
+  <script src="../library-data.js?v=1.9.19&amp;rev=0868e7ce7685"></script>
+  <script src="../library.js?v=1.9.19&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../app.js?v=1.9.19&amp;rev=2dfe17383063"></script>
 </body>
 </html>

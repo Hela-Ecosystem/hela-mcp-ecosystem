@@ -6,7 +6,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.18**, with runtime **1.3.3**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.19**, with runtime **1.3.3**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -142,7 +142,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.18 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.19 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -254,6 +254,17 @@ npm run skills:check
 * **[Troubleshooting Guide](docs/troubleshooting.md)**: Common issues, diagnostic codes, and recovery procedures.
 
 ---
+
+## Updating
+
+Check for a newer snapshot without changing anything, then apply it behind an explicit confirmation:
+
+```sh
+node setup.mjs update check --prefix <installation>
+node setup.mjs update apply --confirm --prefix <installation>
+```
+
+Agents get the same controller through the runtime endpoint: `hela.update.check` (read-only, reports the snapshot delta) and `hela.update.apply` (confirmation-gated, stages through the pinned installer, verifies with doctor, and records a rollback directory). A successful apply returns `restartRequired: true`; restart the runtime or client to load the new build.
 
 ## License & Attribution
 
