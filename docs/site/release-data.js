@@ -24,6 +24,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "backbone-orchestration",
       "entry": "dist/index.js",
       "version": "3.0.6",
+      "license": "GPL-3.0-or-later",
       "toolsCount": 29,
       "toolsMin": 24,
       "tools": [
@@ -67,6 +68,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "backbone-state",
       "entry": "dist/index.js",
       "version": "3.0.2",
+      "license": "GPL-3.0-or-later",
       "toolsCount": 29,
       "toolsMin": 29,
       "tools": [
@@ -110,6 +112,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "workspace",
       "entry": "dist/index.js",
       "version": "3.0.3",
+      "license": "GPL-3.0-or-later",
       "toolsCount": 16,
       "toolsMin": 16,
       "tools": [
@@ -140,6 +143,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "workspace",
       "entry": "build/index.js",
       "version": "3.0.4",
+      "license": "MIT",
       "toolsCount": 7,
       "toolsMin": 7,
       "tools": [
@@ -161,6 +165,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "workspace",
       "entry": "build/index.js",
       "version": "3.1.1",
+      "license": "GPL-3.0-or-later",
       "toolsCount": 28,
       "toolsMin": 28,
       "tools": [
@@ -203,6 +208,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "knowledge",
       "entry": "dist/index.js",
       "version": "4.0.4",
+      "license": "GPL-3.0-or-later",
       "toolsCount": 24,
       "toolsMin": 24,
       "tools": [
@@ -241,6 +247,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "interaction",
       "entry": "src/server.js",
       "version": "3.2.3",
+      "license": "MIT",
       "toolsCount": 75,
       "toolsMin": 75,
       "tools": [
@@ -330,6 +337,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "design",
       "entry": "dist/index.js",
       "version": "3.0.4",
+      "license": "MIT",
       "toolsCount": 28,
       "toolsMin": 28,
       "tools": [
@@ -372,6 +380,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "mobile",
       "entry": "dist/server.js",
       "version": "3.0.5",
+      "license": "MIT",
       "toolsCount": 46,
       "toolsMin": 46,
       "tools": [
@@ -432,6 +441,7 @@ globalThis.HELA_DOCS_DATA = {
       "role": "3d",
       "entry": "dist/index.js",
       "version": "3.0.4",
+      "license": "GPL-3.0-or-later",
       "toolsCount": 15,
       "toolsMin": 15,
       "tools": [
