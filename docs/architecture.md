@@ -170,8 +170,8 @@ The optional runtime supervises child MCP processes behind one stdio or Streamab
 - **Source:** https://github.com/Hela-Ecosystem/hela-runtime
 - **Entry:** `hela-runtime/dist/index.js`
 - **Serve mode:** add `--runtime` to any profile, for example `node setup.mjs --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; an omitted profile defaults to `minimal`.
-- **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, `HELA_NAMESPACE_TOOLS`.
-- **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, opt-in namespacing, runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
+- **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, and `HELA_NAMESPACE_TOOLS` — namespacing is on by default, and `HELA_NAMESPACE_TOOLS=0` restores bare cell-local tool names for clients that pin them.
+- **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, namespacing on by default (a bare `read_file` cannot shadow the host's), runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
 - **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
 - **Details:** [on-demand startup, cache invalidation and deployment evidence](on-demand-runtime.md).
 

@@ -4,57 +4,57 @@
     "minimal": {
       "cells": 3,
       "runtimeTools": {
-        "min": 78,
-        "max": 84
+        "min": 80,
+        "max": 86
       }
     },
     "dev-workspace": {
       "cells": 8,
       "runtimeTools": {
-        "min": 232,
-        "max": 238
+        "min": 234,
+        "max": 240
       }
     },
     "headless-server": {
       "cells": 7,
       "runtimeTools": {
-        "min": 157,
-        "max": 163
+        "min": 159,
+        "max": 165
       }
     },
     "research": {
       "cells": 5,
       "runtimeTools": {
-        "min": 169,
-        "max": 175
+        "min": 171,
+        "max": 177
       }
     },
     "web-devops": {
       "cells": 6,
       "runtimeTools": {
-        "min": 180,
-        "max": 186
+        "min": 182,
+        "max": 188
       }
     },
     "android-testing": {
       "cells": 5,
       "runtimeTools": {
-        "min": 131,
-        "max": 137
+        "min": 133,
+        "max": 139
       }
     },
     "3d-modeling": {
       "cells": 5,
       "runtimeTools": {
-        "min": 92,
-        "max": 98
+        "min": 94,
+        "max": 100
       }
     },
     "all": {
       "cells": 10,
       "runtimeTools": {
-        "min": 293,
-        "max": 299
+        "min": 295,
+        "max": 301
       }
     }
   }

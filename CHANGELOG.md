@@ -1,3 +1,18 @@
+## [1.9.25] - 2026-11-19
+
+### Added
+- The search loop closes through Genome. Genome `3.0.6` records which source produced the result a caller actually used in a `source_feedback` table in the central memory database, exposed as `search_feedback` (record) and `search_priors` (read). Enzyme `4.0.7` reads that table read-only with `node:sqlite` — no new dependency — and ranks `research_brief` / `multi_site_search` with the derived multipliers instead of constants, stating which table it used (`priors: static` or `priors: learned (N)`).
+- The priors carry a collapse guard, because a feedback loop can starve itself: one unlucky run lowers a source's multiplier, the lower multiplier keeps its results under the relevance floor, no further samples arrive, and the mistake becomes permanent. A source with no samples in an active class, or whose newest sample is over 30 days old, is floored at 1.0 and lifted by 0.15 so it stays reachable. Three tests in each repo fail if the guard is removed.
+- `scripts/check-prose-facts.mjs` now fails `docs:check` when hand-written prose restates a fact the build knows: an unknown Hela repository name, a live version literal, a roster claim that disagrees with the inventory or profile set, a licence no cell uses, or a per-profile server count that drifted. Ten tests prove each rule fires. It found two real drifts on its first run (a page claiming runtime 1.3.6 after the runtime moved, and a setup page pinning Phenotype 3.0.3 against an inventory at 3.0.5).
+
+### Changed
+- Runtime `1.3.7` namespaces cell tools by default: `hela_nucleus_execute_command` instead of `execute_command`. A bare name shadows whatever the host already exposes and the collision is settled by whichever server connected last. `HELA_NAMESPACE_TOOLS=0` restores the previous surface; this is breaking for clients that pin bare tool names, and the manifest cache key already covers the mode so a switching client rebuilds its fingerprints once.
+- Genome creates the parent directory of a configured database path. `GUARDIAN_CENTRAL_DB` pointing into a directory that did not exist yet used to die with `SQLITE_CANTOPEN` on the first query.
+
+### Closed
+- Four Dependabot pull requests (chaining `#13`, `#18`; filesystem `#17`, `#16`) were closed as already satisfied: both default branches resolve zod 4.6.7, glob 14.0.6 and minimatch 11.0.9.
+- `filesystem-mcp#15` (signed receipts) was answered: no signing keys in the server, but populated `artifacts[].sha256` digests for produced files are a change worth taking.
+
 ## [1.9.24] - 2026-11-19
 
 ### Fixed
