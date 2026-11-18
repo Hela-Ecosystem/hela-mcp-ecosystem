@@ -6,7 +6,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.16**, with runtime **1.3.2**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.17**, with runtime **1.3.2**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -142,7 +142,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.16 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.17 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -257,6 +257,17 @@ npm run skills:check
 
 ## License & Attribution
 
-Distributed under the MIT License. Underlying repositories remain independently copyrighted by their respective authors.
+This repository — the installer, runtime glue, configuration, and documentation — is distributed under the MIT License.
+
+The cells it installs are separate upstream projects under their own licences, and six of the ten are copyleft:
+
+| Licence | Cells |
+| --- | --- |
+| GPL-3.0-or-later | Mitosis (`chaining-mcp`), Genome (`project-mcp`), Membrane (`filesystem-mcp`), Ribosome (`menager-mcp`), Enzyme (`researcher-mcp`), Plastid (`ll3m-mcp`) |
+| MIT | Nucleus (`terminal-mcp`), Cytosol (`browser-mcp`), Phenotype (`designer-mcp`), Receptor (`scrcpy-mcp`), Runtime (`hela-runtime`) |
+
+Mitosis and Genome are members of every profile, so **every install — `minimal` included — places GPL-3.0-or-later code on disk.** Weigh that against your own licence policy before deploying. Per-cell licences are listed in [current versions](docs/current-versions.md) and on each card in the architecture reference; `config/inventory.json` is the source both are generated from.
+
+Underlying repositories remain independently copyrighted by their respective authors.
 
 The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring scientific legacy of HeLa cells.

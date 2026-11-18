@@ -8,6 +8,7 @@
   "inventory": {
     "hela-mitosis": {
       "id": "hela-mitosis",
+      "license": "GPL-3.0-or-later",
       "alias": "HeLa Mitosis",
       "name": "HeLa Mitosis (chaining-mcp)",
       "source": "chaining-mcp",
@@ -76,6 +77,7 @@
     },
     "hela-genome": {
       "id": "hela-genome",
+      "license": "GPL-3.0-or-later",
       "alias": "HeLa Genome",
       "name": "HeLa Genome (project-mcp)",
       "source": "project-mcp",
@@ -130,6 +132,7 @@
     },
     "hela-membrane": {
       "id": "hela-membrane",
+      "license": "GPL-3.0-or-later",
       "alias": "HeLa Membrane",
       "name": "HeLa Membrane (filesystem-mcp)",
       "source": "filesystem-mcp",
@@ -150,6 +153,7 @@
     },
     "hela-nucleus": {
       "id": "hela-nucleus",
+      "license": "MIT",
       "alias": "HeLa Nucleus",
       "name": "HeLa Nucleus (terminal-mcp)",
       "source": "terminal-mcp",
@@ -173,6 +177,7 @@
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
+      "license": "GPL-3.0-or-later",
       "alias": "HeLa Ribosome",
       "name": "HeLa Ribosome (menager-mcp)",
       "source": "menager-mcp",
@@ -196,6 +201,7 @@
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
+      "license": "GPL-3.0-or-later",
       "alias": "HeLa Enzyme",
       "name": "HeLa Enzyme (researcher-mcp)",
       "source": "researcher-mcp",
@@ -222,6 +228,7 @@
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
+      "license": "MIT",
       "alias": "HeLa Cytosol",
       "name": "HeLa Cytosol (browser-mcp)",
       "source": "browser-mcp",
@@ -252,6 +259,7 @@
     },
     "hela-phenotype": {
       "id": "hela-phenotype",
+      "license": "MIT",
       "alias": "HeLa Phenotype",
       "name": "HeLa Phenotype (designer-mcp)",
       "source": "designer-mcp",
@@ -294,6 +302,7 @@
     },
     "hela-receptor": {
       "id": "hela-receptor",
+      "license": "MIT",
       "alias": "HeLa Receptor",
       "name": "HeLa Receptor (scrcpy-mcp)",
       "source": "scrcpy-mcp",
@@ -315,6 +324,7 @@
     },
     "hela-plastid": {
       "id": "hela-plastid",
+      "license": "GPL-3.0-or-later",
       "alias": "HeLa Plastid",
       "name": "HeLa Plastid (ll3m-mcp)",
       "source": "ll3m-mcp",
@@ -336,6 +346,7 @@
     },
     "hela-runtime": {
       "id": "hela-runtime",
+      "license": "MIT",
       "alias": "HeLa Runtime",
       "name": "HeLa Runtime (hela-runtime)",
       "source": "hela-runtime",
