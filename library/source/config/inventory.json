@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "1d56727729a6dbed32d6cf3dde0ff852c9fd8796",
+      "revision": "43ebee30676efd274b4750a3c5c471291844dbcf",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -224,7 +224,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.7"
+      "version": "4.0.8"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",

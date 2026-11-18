@@ -5855,10 +5855,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "1d56727729a6dbed32d6cf3dde0ff852c9fd8796",
-      "version": "4.0.7",
+      "revision": "43ebee30676efd274b4750a3c5c471291844dbcf",
+      "version": "4.0.8",
       "digests": [
-        "4b321ee44cfa92998e0b93fc94c19a259932c113d98827a4e1f3f4457b8a21fc"
+        "9705db557e58d6e28c0ac25fbfd286c8a512761307fbc4f0aab6d59a4b0a8a3c"
       ],
       "variants": [
         {
