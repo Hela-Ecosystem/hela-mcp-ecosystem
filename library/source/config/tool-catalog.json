@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "3064af70368457011c89cc584befe6d5f59d28a5",
-      "version": "3.0.6",
+      "revision": "1cba566233a186bccaae48415300721a5ec82fdc",
+      "version": "3.0.7",
       "digests": [
-        "f93bb3dc96a5bd94e9a52691f18b3f99f394776b2ed738b41c24510ee732cec4"
+        "0f0bc498177e39c08c02350421a689da99709f47dd0787844c6ec6608f7f5dea"
       ],
       "variants": [
         {
@@ -3213,10 +3213,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "7ac32f8cb90b81074331c58f1d0b90777fed57f1",
-      "version": "3.0.2",
+      "revision": "01777123a4100d732ee83187cfcea84270a083cc",
+      "version": "3.0.3",
       "digests": [
-        "5cb29f76c2cbf837327b32d348500e3ddb2abf8fb031b89b45e5343b14c32051"
+        "81798069fdffc44921d8e65a2ed582e6bda1e3df00432d96cddc18971477df02"
       ],
       "variants": [
         {
@@ -4276,10 +4276,10 @@
       ]
     },
     "hela-membrane": {
-      "revision": "1ab60ae142587eaa2a984cbaa32243573953cb54",
-      "version": "3.0.3",
+      "revision": "c5a71077f977c0772e22355ac52379cd4d953987",
+      "version": "3.0.4",
       "digests": [
-        "618a52ebe9d850fb585737d46d001c2891c0122ed8948723baa3c6a56a2a48db"
+        "6e0f459fa38fbf62752b6f3192fbbd781d8e5a38ba653e6efe960c349b3d9905"
       ],
       "variants": [
         {
@@ -4808,10 +4808,10 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "f14c4f5bb2b62a41b991ff264a64422b2e854069",
-      "version": "3.0.4",
+      "revision": "c4e9a2f1df57da7e29b0ecaa0b34a09558d2b7e2",
+      "version": "3.0.5",
       "digests": [
-        "496b7790a5319587d70fa518d48dc4f8719966456db3345ea987b922949e488f"
+        "1ee0b35aabe9a013d0532579d7bdcb5848f9ea436139b1b7aeda978498fba753"
       ],
       "variants": [
         {
@@ -5087,10 +5087,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "9a6dec579eb9af9ab8d1d6426a73480e2689a98c",
-      "version": "3.1.1",
+      "revision": "02aeb580e3719bf48b9c128f139049d66f6c166e",
+      "version": "3.1.2",
       "digests": [
-        "4b35a159adaaaeb8d12b52ea6dc17d5774dc1f76259bf932d0091b597a83d62a"
+        "a5f88f9492dcd3ab53bdae262d5edb928a5bbd2290703d6a00c14f0070adba29"
       ],
       "variants": [
         {
@@ -5781,10 +5781,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "085653d3fc9f86ca23c5c5c548e0b4faa6fbc549",
-      "version": "4.0.4",
+      "revision": "505ea285a9550944ea35f5002c561b5445d2c447",
+      "version": "4.0.5",
       "digests": [
-        "41e664b77e252523b5c59308e2b76b39f996d9514d1cee8d780ac2b59e70e3d8"
+        "dc0509a27afe8ee0354949edf0f039dd38278c9abd9126bfb78374dcd4e3187a"
       ],
       "variants": [
         {
@@ -6557,10 +6557,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "70ff3ee05fa4a278ab36858d06e07bf364dd0716",
-      "version": "3.2.3",
+      "revision": "e2497b35d9ddcd8ce52672ec90e10f194b02b600",
+      "version": "3.2.4",
       "digests": [
-        "102dabe269f6f67497c4747d4bf2e7c52aea329849f4111c69d75ce9091a8658"
+        "5a32420f4b7285b74dbbb0ac0ee9c0b78f1a8050af81f0b614dd2f2704b90a27"
       ],
       "variants": [
         {
@@ -8344,10 +8344,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "526b78837014c38e724ca4eb60a9897b01b2e6f7",
-      "version": "3.0.4",
+      "revision": "7555f4293b6807d20f2ae72f9879909bda7a92b1",
+      "version": "3.0.5",
       "digests": [
-        "5c2f2fc7493051693b001e22a4dd1227ccd1a60e07ea4d3972df9bc421069798"
+        "42ef046c15e3a4e8f6ca3d43dda2bad26fe571c92d6bf071acf8b1dfd0c720d5"
       ],
       "variants": [
         {
@@ -9494,10 +9494,10 @@
       ]
     },
     "hela-receptor": {
-      "revision": "7c8bbed5aee51793b76611067f220d32ddef5a96",
-      "version": "3.0.5",
+      "revision": "47e6895d9a163d36f4e901d5046b2d8eb4be8b5b",
+      "version": "3.0.6",
       "digests": [
-        "c27aaf1c14fdd3c0608df08784ab5a190647d2fc2ea6a1e555f2b3d35230c0e9"
+        "6946cbe84644225831909c1b98fd6cfa03647d1e4e5664d82675d3a401984f0a"
       ],
       "variants": [
         {
