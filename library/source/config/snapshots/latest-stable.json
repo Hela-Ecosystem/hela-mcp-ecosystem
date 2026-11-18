@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.24",
-  "created_at": "2026-11-18T20:56:40Z",
-  "description": "Cytosol 3.2.6 accepts observe refs and bare field names in browser_fill_form, and an unmatched key now fails in milliseconds instead of a 30-second locator timeout. Everything else pins unchanged from 1.9.23.",
+  "snapshot_version": "1.9.25",
+  "created_at": "2026-11-18T21:34:56Z",
+  "description": "Learned search-source priors: Genome 3.0.6 records which source a caller used in the central memory database and Enzyme 4.0.7 ranks with those multipliers, guarded so an unsampled source can always recover. Runtime 1.3.7 namespaces tool names by default. Prose facts are now checked, not retyped.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -19,10 +19,10 @@
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "b720edf2cc7988073afc4bc342eb4e49ca12a76a",
+      "commit": "a331cfb4a7c3ddcf14d66cddd1b937be25332831",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.5"
+      "serverVersion": "3.0.6"
     },
     "hela-membrane": {
       "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
@@ -47,10 +47,10 @@
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "eb257b8156f648f0255d9444c8ede6347c3f07ef",
+      "commit": "1d56727729a6dbed32d6cf3dde0ff852c9fd8796",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "4.0.6"
+      "serverVersion": "4.0.7"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
@@ -82,10 +82,10 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "c2b02ffa5128a551497ecfdd28ba1dae598ba3d8",
+      "commit": "200fc5dd6d51d5e7339aee6b74c02f6cf4fcaf13",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.3.6"
+      "serverVersion": "1.3.7"
     }
   },
   "verified_profiles": [

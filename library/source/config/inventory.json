@@ -91,14 +91,14 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "b720edf2cc7988073afc4bc342eb4e49ca12a76a",
+      "revision": "a331cfb4a7c3ddcf14d66cddd1b937be25332831",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.0.5",
+      "version": "3.0.6",
       "skills": [
         {
           "name": "code-reviewer",
@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "eb257b8156f648f0255d9444c8ede6347c3f07ef",
+      "revision": "1d56727729a6dbed32d6cf3dde0ff852c9fd8796",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -224,7 +224,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.6"
+      "version": "4.0.7"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -360,8 +360,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c2b02ffa5128a551497ecfdd28ba1dae598ba3d8",
-      "version": "1.3.6",
+      "revision": "200fc5dd6d51d5e7339aee6b74c02f6cf4fcaf13",
+      "version": "1.3.7",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",

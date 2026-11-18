@@ -1,6 +1,21 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.9.25] - 2026-11-19
+
+### Added
+- The search loop closes through Genome. Genome `3.0.6` records which source produced the result a caller actually used in a `source_feedback` table in the central memory database, exposed as `search_feedback` (record) and `search_priors` (read). Enzyme `4.0.7` reads that table read-only with `node:sqlite` — no new dependency — and ranks `research_brief` / `multi_site_search` with the derived multipliers instead of constants, stating which table it used (`priors: static` or `priors: learned (N)`).
+- The priors carry a collapse guard, because a feedback loop can starve itself: one unlucky run lowers a source's multiplier, the lower multiplier keeps its results under the relevance floor, no further samples arrive, and the mistake becomes permanent. A source with no samples in an active class, or whose newest sample is over 30 days old, is floored at 1.0 and lifted by 0.15 so it stays reachable. Three tests in each repo fail if the guard is removed.
+- `scripts/check-prose-facts.mjs` now fails `docs:check` when hand-written prose restates a fact the build knows: an unknown Hela repository name, a live version literal, a roster claim that disagrees with the inventory or profile set, a licence no cell uses, or a per-profile server count that drifted. Ten tests prove each rule fires. It found two real drifts on its first run (a page claiming runtime 1.3.6 after the runtime moved, and a setup page pinning Phenotype 3.0.3 against an inventory at 3.0.5).
+
+### Changed
+- Runtime `1.3.7` namespaces cell tools by default: `hela_nucleus_execute_command` instead of `execute_command`. A bare name shadows whatever the host already exposes and the collision is settled by whichever server connected last. `HELA_NAMESPACE_TOOLS=0` restores the previous surface; this is breaking for clients that pin bare tool names, and the manifest cache key already covers the mode so a switching client rebuilds its fingerprints once.
+- Genome creates the parent directory of a configured database path. `GUARDIAN_CENTRAL_DB` pointing into a directory that did not exist yet used to die with `SQLITE_CANTOPEN` on the first query.
+
+### Closed
+- Four Dependabot pull requests (chaining `#13`, `#18`; filesystem `#17`, `#16`) were closed as already satisfied: both default branches resolve zod 4.6.7, glob 14.0.6 and minimatch 11.0.9.
+- `filesystem-mcp#15` (signed receipts) was answered: no signing keys in the server, but populated `artifacts[].sha256` digests for produced files are a change worth taking.
+
 ## [1.9.24] - 2026-11-19
 
 ### Fixed
@@ -416,7 +431,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.24**, with runtime **1.3.6**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.25**, with runtime **1.3.7**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -552,7 +567,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.24 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.25 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -1058,8 +1073,8 @@ The optional runtime supervises child MCP processes behind one stdio or Streamab
 - **Source:** https://github.com/Hela-Ecosystem/hela-runtime
 - **Entry:** `hela-runtime/dist/index.js`
 - **Serve mode:** add `--runtime` to any profile, for example `node setup.mjs --profile dev-workspace --client opencode --runtime`. Runtime is not a profile; an omitted profile defaults to `minimal`.
-- **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, `HELA_NAMESPACE_TOOLS`.
-- **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, opt-in namespacing, runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
+- **Env:** `HELA_ECOSYSTEM_ROOT`, `HELA_PROFILE`, `HELA_HTTP_PORT`, and `HELA_NAMESPACE_TOOLS` — namespacing is on by default, and `HELA_NAMESPACE_TOOLS=0` restores bare cell-local tool names for clients that pin them.
+- **Features:** true on-demand ignition for every selected cell, fingerprinted schema caches, bounded crash/timeout recovery, namespacing on by default (a bare `read_file` cannot shadow the host's), runtime-internal `hela.pipe`, and HTTP `/healthz` liveness.
 - **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
 - **Details:** [on-demand startup, cache invalidation and deployment evidence](on-demand-runtime.md).
 
@@ -1179,14 +1194,14 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.24**; runtime **1.3.6**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.25**; runtime **1.3.7**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.8**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
-- **HeLa Genome** (`hela-genome`): server **3.0.5**, GPL-3.0-or-later, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
+- **HeLa Genome** (`hela-genome`): server **3.0.6**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.5**, GPL-3.0-or-later, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.6**, MIT, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
 - **HeLa Ribosome** (`hela-ribosome`): server **3.1.2**, GPL-3.0-or-later, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
-- **HeLa Enzyme** (`hela-enzyme`): server **4.0.6**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
+- **HeLa Enzyme** (`hela-enzyme`): server **4.0.7**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
 - **HeLa Cytosol** (`hela-cytosol`): server **3.2.6**, MIT, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.0.5**, MIT, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.6**, MIT, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
@@ -1388,14 +1403,14 @@ URL: https://hela.my.id/library/docs/generated-profile-counts.html
 
 Regenerate with `npm run catalog:generate`; includes `hela.pipe` and the agent alias where enabled.
 
-- `minimal`: 3 cells, 78–84 runtime tools.
-- `dev-workspace`: 8 cells, 232–238 runtime tools.
-- `headless-server`: 7 cells, 157–163 runtime tools.
-- `research`: 5 cells, 169–175 runtime tools.
-- `web-devops`: 6 cells, 180–186 runtime tools.
-- `android-testing`: 5 cells, 131–137 runtime tools.
-- `3d-modeling`: 5 cells, 92–98 runtime tools.
-- `all`: 10 cells, 293–299 runtime tools.
+- `minimal`: 3 cells, 80–86 runtime tools.
+- `dev-workspace`: 8 cells, 234–240 runtime tools.
+- `headless-server`: 7 cells, 159–165 runtime tools.
+- `research`: 5 cells, 171–177 runtime tools.
+- `web-devops`: 6 cells, 182–188 runtime tools.
+- `android-testing`: 5 cells, 133–139 runtime tools.
+- `3d-modeling`: 5 cells, 94–100 runtime tools.
+- `all`: 10 cells, 295–301 runtime tools.
 
 
 ---
@@ -1870,7 +1885,7 @@ URL: https://hela.my.id/library/docs/on-demand-runtime.html
 
 ![Blotcat waking one selected cell while the other runtime cells sleep](../assets/blotcat-on-demand-runtime.png)
 
-Runtime **1.3.6** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
+The runtime implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
 
 The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. On a clean workspace, installation also creates a private profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. HeLa is the distributable synthesis of Azzar's private Frea and Mema personal AI assistant personas: Frea contributes autonomous technical execution, while Mema contributes security and continuity discipline. Their private files, memories, credentials, and identifiers are not distributed. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.
 
