@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.21",
-  "created_at": "2026-11-18T19:37:53Z",
-  "description": "Hardening release: runtime recovers cells whose manifest went stale, dependency majors cleared (zod 4, glob 14), browser context recovery, honest headless render failures, and SQLite schema versioning.",
+  "snapshot_version": "1.9.22",
+  "created_at": "2026-11-18T20:04:56Z",
+  "description": "Documentation release: licence wording, JSON-LD licence URLs and the llms.txt licence line are derived from the inventory. Cell pins unchanged from 1.9.21.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",

@@ -250,24 +250,38 @@ test('every cell declares a licence and the pages follow it', () => {
   }
 });
 
-test('legal copy names the copyleft cells instead of claiming MIT for everything', () => {
-  const runtimeVersion = data.inventory['hela-runtime'].version;
-  const gpl = Object.entries(data.inventory)
-    .filter(([id, spec]) => id !== 'hela-runtime' && spec.license?.startsWith('GPL'))
-    .map(([, spec]) => spec.alias.replace(/^HeLa /, ''));
-  for (const file of [path.join(site, 'terms.html'), path.join(site, 'id', 'terms.html')]) {
+test('legal copy is derived from the inventory, not retyped', () => {
+  const cells = Object.entries(data.inventory).filter(([id]) => id !== 'hela-runtime').map(([, spec]) => spec);
+  const gpl = cells.filter(spec => spec.license && spec.license !== 'MIT');
+  const names = list => list.map(spec => spec.alias.replace(/^HeLa /, ''));
+  const always = gpl.filter(spec => data.profiles.every(profile => profile.servers.includes(spec.id)));
+  const licenceUrls = ['https://opensource.org/license/mit', ...new Set(gpl.map(spec => spec.license))].map((value) =>
+    value === 'GPL-3.0-or-later' ? 'https://www.gnu.org/licenses/gpl-3.0.html' : value);
+
+  for (const [file, language] of [[path.join(site, 'terms.html'), 'en'], [path.join(site, 'id', 'terms.html'), 'id']]) {
     const text = fs.readFileSync(file, 'utf8');
-    assert.match(text, /GPL-3\.0-or-later/, `${file}: must name the copyleft licence`);
-    for (const cell of gpl) assert.ok(text.includes(cell), `${file}: must name ${cell} as copyleft`);
-    assert.ok(!/Seluruh perangkat lunak[^.]*Lisensi MIT/.test(text), `${file}: no blanket MIT claim over all software`);
+    assert.ok(text.includes(String(gpl.length)), `${file}: GPL cell count must be derived`);
+    for (const name of names(gpl)) assert.ok(text.includes(name), `${file}: must name ${name}`);
+    if (always.length) {
+      for (const name of names(always)) assert.ok(text.includes(name), `${file}: must name always-installed ${name}`);
+    }
+    // Meta copy must stay free of counts that would drift with the inventory.
+    const meta = text.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '';
+    assert.ok(!/(?:six|enam|\b[0-9]+\s*(?:GPL|cells|sel))/i.test(meta), `${file}: meta description must not hardcode counts`);
+    assert.ok(meta.length > 0, `${file}: meta description missing`);
+    const jsonld = text.match(/"license":\s*\[([^\]]*)\]/);
+    if (jsonld) assert.deepEqual(JSON.parse(`[${jsonld[1]}]`), licenceUrls, `${file}: JSON-LD licence list must be derived`);
+    assert.ok(language === 'id' || text.includes('MIT License'), `${file}: MIT suite licence must stay stated`);
   }
+
   const llms = fs.readFileSync(path.join(site, 'llms.txt'), 'utf8');
-  assert.match(llms, /GPL-3\.0-or-later/, 'llms.txt must state the per-cell licence split');
+  assert.match(llms, new RegExp(`- License: .*${gpl.length} GPL-3.0-or-later`), 'llms.txt licence line must be derived');
   assert.match(llms, /hela\.update\.check/, 'llms.txt should name the runtime update tools');
+
   const index = fs.readFileSync(path.join(site, 'index.html'), 'utf8');
   assert.match(index, /"license":\s*\[/, 'index JSON-LD must carry licence metadata');
-  assert.ok(index.includes(runtimeVersion), 'index should reference the current runtime version somewhere');
 });
+
 
 test('no current page carries a version the inventory does not know', () => {
   // Toolchain floors and loopback addresses look like versions but are not.

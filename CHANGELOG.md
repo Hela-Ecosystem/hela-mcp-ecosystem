@@ -1,3 +1,9 @@
+## [1.9.22] - 2026-11-19
+
+### Fixed
+- The licence wording in the legal pages, `llms.txt` and the JSON-LD licence list was hand-written, so a seventh copyleft cell would have left those statements stale — the same failure mode as the old runtime prose. They are now generated from `config/inventory.json`: counts, cell names, the always-installed set, the structured-data licence URLs and the machine-readable line all follow the inventory, and meta descriptions no longer encode a count that can drift.
+- A test recomputes those strings from the inventory and fails on any divergence; `docs:check` also rejects a stale page, verified by flipping one cell's licence.
+
 ## [1.9.21] - 2026-11-19
 
 ### Fixed

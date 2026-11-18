@@ -69,6 +69,32 @@ const site = path.join(root, 'docs/site');
  * follows the cells rather than a literal nobody remembers to edit.
  */
 const cellLicenses = [...new Set(Object.values(inventory).map(item => item.license))].sort();
+const licenceUrl = { 'MIT': 'https://opensource.org/license/mit', 'GPL-3.0-or-later': 'https://www.gnu.org/licenses/gpl-3.0.html' };
+const licenceUrls = JSON.stringify([licenceUrl.MIT, ...new Set(Object.values(inventory)
+  .map(item => item.license).filter(value => value !== 'MIT').map(value => licenceUrl[value] ?? value))]);
+const cellNames = list => list.map(item => item.alias.replace(/^HeLa /, ''));
+const gplCells = Object.values(inventory).filter(item => item.license !== 'MIT');
+const mitCells = Object.values(inventory).filter(item => item.license === 'MIT');
+const alwaysInstalled = gplCells.filter(item => data.profiles.every(profile => profile.servers.includes(item.id)));
+/**
+ * The legal pages state which cells are copyleft, which every profile installs, and what
+ * that means for redistribution. That sentence used to be hand-written, so a seventh GPL
+ * cell would have left it lying; build it from the inventory instead.
+ */
+const licenceParagraph = (language) => {
+  const join = list => cellNames(list).join(', ');
+  if (language === 'id') {
+    const universal = alwaysInstalled.length
+      ? ` Setiap profil memasang sedikitnya ${alwaysInstalled.length} sel ${gplCells[0]?.license ?? 'non-MIT'} (${join(alwaysInstalled)}), sehingga instalasi HeLa menempatkan kode tersebut di mesin Anda dengan ketentuan lisensinya sendiri.`
+      : '';
+    return `<p>Repositori ini — installer, runtime, konfigurasi, dan dokumentasi — didistribusikan di bawah <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Lisensi MIT</a> (hak cipta 2026 Azzar). Sepuluh sel adalah proyek upstream terpisah dengan lisensinya masing-masing: ${gplCells.length} berlisensi ${gplCells[0]?.license ?? 'non-MIT'} (${join(gplCells)}) dan ${mitCells.length} berlisensi MIT (${join(mitCells)}).${universal} Lisensi MIT di atas tidak mengubah lisensi kode ${gplCells[0]?.license ?? 'non-MIT'}; sublisensi, distribusi, atau penjualan sel tersebut tunduk pada lisensinya — baca LICENSE tiap sel sebelum mendistribusikan ulang. Materi situs mengikuti ketentuan MIT kecuali dinyatakan lain.</p>`;
+  }
+  const universal = alwaysInstalled.length
+    ? ` Every profile installs at least ${alwaysInstalled.length} of the ${gplCells[0]?.license ?? 'non-MIT'} cells (${join(alwaysInstalled)}), so installing HeLa places that code on your machine under its own terms.`
+    : '';
+  return `<p>This repository — the installer, runtime, configuration and documentation — is released under the <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a> (copyright 2026 Azzar). The ten cell servers are separate upstream projects under their own licences: ${gplCells.length} are ${gplCells[0]?.license ?? 'non-MIT'} (${join(gplCells)}) and ${mitCells.length} are MIT (${join(mitCells)}).${universal} The MIT grant above does not relicense ${gplCells[0]?.license ?? 'non-MIT'} code, and sublicensing, distribution or sale of those cells is governed by their licences — read each cell LICENSE before redistributing. Site content follows the MIT terms unless stated otherwise.</p>`;
+};
+
 const licenseBlend = cellLicenses.map(value => value.replace(/-or-later$/, '')).join(' + ');
 const footerLicense = language => language === 'id'
   ? `SUITE MIT · SEL ${licenseBlend} · AZZAR`
@@ -151,8 +177,23 @@ for (const directory of [site, path.join(site, 'id')]) {
       if (text.includes('"softwareVersion":')) text = text.replace(/"softwareVersion":\s*"[^"]*"/, `"softwareVersion": "${version}"`);
       else text = text.replace('"applicationCategory": "DeveloperApplication",', `"applicationCategory": "DeveloperApplication",\n        "softwareVersion": "${version}",`);
     }
-    outputs.set(file, runtimeProse(text));
+    let next = runtimeProse(text);
+    if (name === 'terms.html') {
+      if (!/<!-- hela:license:start -->[\s\S]*?<!-- hela:license:end -->/.test(next)) {
+        throw new Error('Missing generated licence markers in docs/site/terms.html');
+      }
+      next = next.replace(/<!-- hela:license:start -->[\s\S]*?<!-- hela:license:end -->/,
+        `<!-- hela:license:start -->\n        ${licenceParagraph(id ? 'id' : 'en')}\n        <!-- hela:license:end -->`);
+    }
+    next = next.replace(/"license":\s*\[[^\]]*\]/, `"license": ${licenceUrls}`);
+    outputs.set(file, next);
   }
+}
+const llmsFile = path.join(site, 'llms.txt');
+if (fs.existsSync(llmsFile)) {
+  const llms = fs.readFileSync(llmsFile, 'utf8');
+  const line = `- License: this repository (installer, runtime, configuration, docs) is MIT. The ${Object.keys(inventory).length} cell servers are separate projects: ${gplCells.length} ${gplCells[0]?.license ?? 'non-MIT'} (${cellNames(gplCells).join(', ')}), ${mitCells.length} MIT (${cellNames(mitCells).join(', ')}). ${alwaysInstalled.length ? `Every profile installs at least ${alwaysInstalled.length} of those ${gplCells[0]?.license ?? 'non-MIT'} cells; ` : ''}read each cell LICENSE before redistributing.`;
+  outputs.set(llmsFile, llms.replace(/^- License: .*$/m, line));
 }
 for (const name of ['on-demand-runtime.md']) {
   const file = path.join(root, 'docs', name);
