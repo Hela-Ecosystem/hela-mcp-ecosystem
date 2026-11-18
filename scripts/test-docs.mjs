@@ -207,3 +207,45 @@ test('runtime prose follows the inventory version in both languages', () => {
     }
   }
 });
+
+test('every cell declares a licence and the pages follow it', () => {
+  const cells = Object.entries(data.inventory).filter(([id]) => id !== 'hela-runtime');
+  for (const [id, cell] of cells) {
+    assert.ok(cell.license, `${id}: inventory entry has no licence`);
+  }
+
+  // The suite is MIT; the cells are not all MIT. A footer that says only "MIT LICENSE"
+  // misreports what an install puts on disk, so no published page may carry that claim
+  // on its own, and every page must show the blend the inventory actually describes.
+  const blend = [...new Set(cells.map(([, cell]) => cell.license))]
+    .sort().map(value => value.replace(/-or-later$/, '')).join(' + ');
+
+  const pages = [];
+  const walk = (directory) => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const full = path.join(directory, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith('.html')) pages.push(full);
+    }
+  };
+  walk(site);
+  assert.ok(pages.length > 0, 'expected generated pages');
+
+  for (const file of pages) {
+    const footer = fs.readFileSync(file, 'utf8').match(/<footer class="doc-footer">[\s\S]*?<\/footer>/)?.[0];
+    if (!footer) continue;
+    assert.ok(!/(?:MIT LICENSE|LISENSI MIT)\s*·/.test(footer), `${file}: footer claims the whole suite is MIT`);
+    assert.ok(footer.includes(blend), `${file}: footer does not state the inventory licence blend (${blend})`);
+  }
+
+  // Each architecture card states its own cell's licence, in both languages.
+  for (const page of ['architecture.html', 'id/architecture.html']) {
+    const text = fs.readFileSync(path.join(site, page), 'utf8');
+    for (const [id, cell] of cells) {
+      const card = text.match(new RegExp(`<section class="server-card" aria-labelledby="srv-${id.slice(5)}">[\\s\\S]*?</section>`))?.[0];
+      assert.ok(card, `${page}: no card for ${id}`);
+      assert.match(card, new RegExp(`(?:license|lisensi) <code>${cell.license}</code>`), `${page}: ${id} card omits its licence`);
+    }
+    assert.match(text, /id="licensing"[^>]*>[\s\S]*?GPL-3\.0-or-later/, `${page}: missing the licensing note`);
+  }
+});

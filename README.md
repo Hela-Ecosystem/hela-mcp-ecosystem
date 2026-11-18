@@ -257,6 +257,17 @@ npm run skills:check
 
 ## License & Attribution
 
-Distributed under the MIT License. Underlying repositories remain independently copyrighted by their respective authors.
+This repository — the installer, runtime glue, configuration, and documentation — is distributed under the MIT License.
+
+The cells it installs are separate upstream projects under their own licences, and six of the ten are copyleft:
+
+| Licence | Cells |
+| --- | --- |
+| GPL-3.0-or-later | Mitosis (`chaining-mcp`), Genome (`project-mcp`), Membrane (`filesystem-mcp`), Ribosome (`menager-mcp`), Enzyme (`researcher-mcp`), Plastid (`ll3m-mcp`) |
+| MIT | Nucleus (`terminal-mcp`), Cytosol (`browser-mcp`), Phenotype (`designer-mcp`), Receptor (`scrcpy-mcp`), Runtime (`hela-runtime`) |
+
+Mitosis and Genome are members of every profile, so **every install — `minimal` included — places GPL-3.0-or-later code on disk.** Weigh that against your own licence policy before deploying. Per-cell licences are listed in [current versions](docs/current-versions.md) and on each card in the architecture reference; `config/inventory.json` is the source both are generated from.
+
+Underlying repositories remain independently copyrighted by their respective authors.
 
 The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring scientific legacy of HeLa cells.

@@ -167,7 +167,7 @@ export function renderSidebar({ language, page, version, runtime }) {
     </aside>`;
 }
 
-export function renderShell({ language, page, title, description, content, toc = '', version, runtime }) {
+export function renderShell({ language, page, title, description, content, toc = '', version, runtime, license }) {
   const languageRoot = language === 'id' ? 'id/' : '';
   const prefix = path.posix.relative(path.posix.dirname(page), languageRoot || '.');
   const pagePrefix = prefix ? prefix + '/' : '';
@@ -201,7 +201,7 @@ export function renderShell({ language, page, title, description, content, toc =
     ${renderSidebar({ language, page, version, runtime })}
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="${pagePrefix}library.html">${label}</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn${language === 'en' ? ' active' : ''}" data-lang="en" href="${en}">EN</a><a class="lang-btn${language === 'id' ? ' active' : ''}" data-lang="id" href="${id}">ID</a></div><button class="btn open-cmd-palette" type="button">${language === 'id' ? 'Cari' : 'Search'} <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
-      <main id="main-content" class="doc-content library-content">${content}<footer class="doc-footer"><span>MIT LICENSE · HELA ECOSYSTEM</span><a href="${pagePrefix}library.html">${label}</a></footer></main>
+      <main id="main-content" class="doc-content library-content">${content}<footer class="doc-footer"><span>${license ?? (language === 'id' ? 'SUITE MIT · HELA ECOSYSTEM' : 'MIT SUITE · HELA ECOSYSTEM')}</span><a href="${pagePrefix}library.html">${label}</a></footer></main>
       <nav class="doc-toc" aria-label="${language === 'id' ? 'Di halaman ini' : 'On this page'}"><div class="doc-toc-title">${language === 'id' ? 'DI HALAMAN INI' : 'ON THIS PAGE'}</div><ol id="tocList">${toc}</ol></nav>
     </div>
   </div>
@@ -227,5 +227,5 @@ export function renderLibraryIndex(documents, language, release) {
   const content = `<header><p class="library-kicker">${isId ? 'BACA DI SITUS INI' : 'READ ON THIS SITE'}</p><h1 class="doc-title">${title}</h1><p class="doc-lead">${intro}</p></header>
 <form class="library-filters" role="search"><div><label for="librarySearch">${isId ? 'Cari di seluruh isi' : 'Search full document text'}</label><input type="search" id="librarySearch" placeholder="${isId ? 'Topik, perintah, atau nama berkas…' : 'Topic, command, or filename…'}" autocomplete="off"></div><div><label for="libraryCategory">${isId ? 'Bagian' : 'Section'}</label><select id="libraryCategory"><option value="">${isId ? 'Semua bagian' : 'All sections'}</option>${Object.entries(categories).map(([key, label]) => `<option value="${key}">${label[language]}</option>`).join('')}</select></div><button class="btn" type="reset">${isId ? 'Atur ulang' : 'Reset'}</button></form>
 <p id="libraryCount" class="library-count" role="status" aria-live="polite">${documents.length} ${isId ? 'dokumen' : 'documents'}</p><p id="libraryEmpty" hidden>${isId ? 'Tidak ada dokumen yang cocok. Coba kata lain atau atur ulang filter.' : 'No documents match. Try another term or reset the filters.'}</p><noscript><p>${isId ? 'Pencarian memerlukan JavaScript; semua tautan dan dokumen di bawah tetap dapat dibaca.' : 'Search needs JavaScript; every document below remains readable without it.'}</p></noscript>${groups}`;
-  return renderShell({ language, page, title, description: intro, content, version: release.ecosystem, runtime: release.runtime });
+  return renderShell({ language, page, title, description: intro, content, version: release.ecosystem, runtime: release.runtime, license: release.license?.[language] });
 }

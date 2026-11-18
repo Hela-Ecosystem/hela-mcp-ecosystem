@@ -43,7 +43,15 @@ export function buildSite({ root = defaultRoot, output = path.join(root, '_site'
   const resources = new Set([...tracked].filter(source => /^config\/[^\0]+\.(?:json|toml|ya?ml)$/.test(source)));
   const pkg = JSON.parse(readPublicFile(root, 'package.json'));
   const inventory = JSON.parse(readPublicFile(root, 'config/inventory.json'));
-  const release = { ecosystem: pkg.version, runtime: inventory.inventory['hela-runtime'].version };
+  // The library shell footer used to hardcode MIT, which is true of the suite but not of
+  // the six GPL-3.0-or-later cells it installs. Derive it from the same inventory.
+  const cellLicenses = [...new Set(Object.entries(inventory.inventory)
+    .filter(([id]) => id !== 'hela-runtime')
+    .map(([, cell]) => cell.license))].sort();
+  if (cellLicenses.some(value => !value)) throw new Error('A cell is missing its licence declaration');
+  const licenseBlend = cellLicenses.map(value => value.replace(/-or-later$/, '')).join(' + ');
+  const release = { ecosystem: pkg.version, runtime: inventory.inventory['hela-runtime'].version,
+    license: { en: `MIT SUITE · ${licenseBlend} CELLS · HELA ECOSYSTEM`, id: `SUITE MIT · SEL ${licenseBlend} · HELA ECOSYSTEM` } };
   const outputs = new Map();
   const sourceSite = path.join(root, 'docs/site');
   const visit = directory => {
@@ -69,7 +77,7 @@ export function buildSite({ root = defaultRoot, output = path.join(root, '_site'
       const firstHeading = rendered.html.match(/^<h1\b[\s\S]*?<\/h1>\s*/)?.[0] ?? '';
       const content = `<article class="library-article" lang="en">${firstHeading}<header class="library-document-meta" lang="${language}"><p class="library-kicker">${categories[document.category][language]}</p><p class="library-source">${escapeHtml(document.source)}</p><p>${language === 'id' ? 'Isi dalam bahasa sumber.' : 'Original source language.'} <a href="${relativeUrl(page, `library/source/${document.source}`)}" download>${language === 'id' ? 'Unduh sumber' : 'Download source'}</a> · <a href="${relativeUrl(page, (language === 'id' ? 'id/' : '') + 'library.html')}">${language === 'id' ? 'Semua dokumen' : 'All documents'}</a></p></header>${archive}${rendered.html.slice(firstHeading.length)}</article>`;
       const toc = rendered.headings.filter(heading => heading.level === 2).map(heading => `<li><a href="#${escapeHtml(heading.id)}">${escapeHtml(heading.title)}</a></li>`).join('');
-      outputs.set(page, renderShell({ language, page, title: document.title, description: document.summary || document.title, content, toc, version: release.ecosystem, runtime: release.runtime }));
+      outputs.set(page, renderShell({ language, page, title: document.title, description: document.summary || document.title, content, toc, version: release.ecosystem, runtime: release.runtime, license: release.license[language] }));
     }
   }
   for (const language of ['en', 'id']) outputs.set((language === 'id' ? 'id/' : '') + 'library.html', renderLibraryIndex(documents, language, release));
