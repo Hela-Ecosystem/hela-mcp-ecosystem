@@ -1,3 +1,8 @@
+## [1.9.20] - 2026-11-19
+
+### Added
+- `docs/deployment-2026-11-19.md`: the servy rollout record for 1.9.19 / runtime 1.3.3 — eight-cell `dev-workspace` roster, Nix package, staged wrapper, drop-in switch, backups and rollback, plus the stale-digest failure that hid two cells until the catalog was regenerated on the host.
+
 ## [1.9.19] - 2026-11-19
 
 ### Fixed

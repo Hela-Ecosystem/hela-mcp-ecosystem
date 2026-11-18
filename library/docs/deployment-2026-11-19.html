@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servy runtime update — 2026-11-19 — HeLa MCP Ecosystem</title>
+  <meta name="description" content="Records the lappy → servy rollout of ecosystem 1.9.19 and runtime 1.3.3. Evidence for this host only; it does not describe other machines.">
+  <link rel="canonical" href="https://hela.my.id/library/docs/deployment-2026-11-19.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/deployment-2026-11-19.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/deployment-2026-11-19.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.9.20&amp;rev=f4fb3976fbca">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Documentation sections">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.20 · Runtime 1.3.3 · 10 CELLS</div></div>
+      <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
+<div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
+<li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
+<li><a href="../../index.html#verify"><span class="doc-nav-num">03</span> <span>Verify</span></a></li></ol>
+<div class="doc-nav-section">REFERENCE</div><ol class="doc-nav" start="4"><li><a href="../../architecture.html"><span class="doc-nav-num">04</span> <span>Architecture</span></a></li>
+<li><a href="../../workflows.html"><span class="doc-nav-num">05</span> <span>Workflows</span></a></li>
+<li><a href="../../profiles.html"><span class="doc-nav-num">06</span> <span>Profiles &amp; Config</span></a></li></ol>
+<div class="doc-nav-section">OPERATE</div><ol class="doc-nav" start="7"><li><a href="../../showcase.html"><span class="doc-nav-num">07</span> <span>Showcase</span></a></li>
+<li><a href="../../troubleshooting.html"><span class="doc-nav-num">08</span> <span>Diagnostics</span></a></li></ol>
+<div class="doc-nav-section">LEGAL</div><ol class="doc-nav" start="9"><li><a href="../../privacy.html"><span class="doc-nav-num">09</span> <span>Privacy</span></a></li>
+<li><a href="../../terms.html"><span class="doc-nav-num">10</span> <span>Terms</span></a></li></ol></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="deployment-2026-11-19.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/deployment-2026-11-19.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="servy-runtime-update--2026-11-19" class="doc-title">Servy runtime update — 2026-11-19</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Historical records</p><p class="library-source">docs/deployment-2026-11-19.md</p><p>Original source language. <a href="../source/docs/deployment-2026-11-19.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p class="admonition library-history">Historical record: versions and verification results describe the state when this document was written.</p><p>Records the lappy → servy rollout of ecosystem <strong>1.9.19</strong> and runtime <strong>1.3.3</strong>. Evidence for this host only; it does not describe other machines.</p>
+<h2 id="host-layout-unchanged-by-this-update">Host layout (unchanged by this update)</h2>
+<ul>
+<li>Source checkouts: <code>/home/ubuntu/MCPservers/*</code> (ecosystem, runtime, eight cells).</li>
+<li>Service: <code>hela-runtime.service</code>, <code>HELA_PROFILE=dev-workspace</code>, <code>HELA_ECOSYSTEM_ROOT=/home/ubuntu/MCPservers/hela-mcp-ecosystem</code>, HTTP on <code>0.0.0.0:8090</code>.</li>
+<li>Roster: <strong>eight cells</strong> — Mitosis, Genome, Membrane, Nucleus, Ribosome, Enzyme, Phenotype, Cytosol. Receptor and Plastid are deliberately absent: this host has neither <code>adb</code> nor <code>blender</code>. Lappy runs the ten-cell <code>all</code> roster; the difference is an installation choice, not a code fork.</li>
+<li>ExecStart comes from the <code>10-nix-package.conf</code> drop-in and points at a wrapper in a dated deployment directory, which execs a Nix-built runtime with the pinned Node 22.23.4.</li>
+</ul>
+<h2 id="what-ran">What ran</h2>
+<ol>
+<li><code>memory.db</code>, <code>hela-runs.db</code> and the local tool-catalog copy backed up to <code>/home/ubuntu/.local/state/hela/backups/pre-1.9.18-20261119T015844Z/</code>.</li>
+<li>All ten checkouts pulled fast-forward to the 1.9.19 revisions (<code>hela-runtime</code> 6ca8b61, ecosystem 61f848e, cells at their release commits). <code>researcher-mcp</code> was on a detached HEAD and was moved onto <code>master</code> first.</li>
+<li>Cells rebuilt (<code>npm ci</code> + <code>npm run build</code>) — eight cells plus runtime, all green.</li>
+<li>Runtime packaged with Nix: <code>hela-runtime-1.3.3</code> at <code>/nix/store/pc49i4nc1qs7nfkkk5mz81mnc9jqj508-hela-runtime-1.3.3</code>, GC-rooted at <code>~/.local/state/hela/gcroots/runtime-1.3.3</code>.</li>
+<li>Staged wrapper under <code>~/.local/state/hela/deployments/servy-1.9.18-20261118T190500Z/</code>, smoke-tested on port 8091 (health reported 1.3.3) before touching the live unit.</li>
+<li>Drop-in backed up, ExecStart switched, <code>daemon-reload</code>, <code>systemctl restart</code>. Old deployment directory and drop-in backup retained for rollback.</li>
+</ol>
+<h2 id="result">Result</h2>
+<ul>
+<li><code>systemctl is-active</code> → active; <code>/healthz</code> → <code>{&quot;version&quot;:&quot;1.3.3&quot;}</code>.</li>
+<li>HTTP MCP doctor → READY, <strong>240 tools</strong>.</li>
+<li>Lazy boot verified: <code>terminal_session_list</code> started Nucleus and answered.</li>
+</ul>
+<h2 id="gotcha-worth-remembering">Gotcha worth remembering</h2>
+<p>After the rebuild, the runtime advertised only 209 tools and refused <code>terminal_session_list</code> and <code>keyword_extraction</code> as unknown. Cause: the runtime trusts a cell manifest only when its build digest matches the catalog, and cells rebuilt on this host hash differently from the catalog produced on lappy — two manifests were rejected and those cells vanished from the surface silently.</p>
+<p>Fix: regenerate the catalog on the host that runs the cells (<code>node scripts/generate-tool-catalog.mjs --profile dev-workspace</code>), then restart. The runtime is on-demand, so nothing else changed. A profile-scoped catalog is a deployment artifact here; the repository copy is untouched.</p>
+<h2 id="rollback">Rollback</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-sh">sudo cp /etc/systemd/system/hela-runtime.service.d/10-nix-package.conf.bak-&lt;stamp&gt; \
+        /etc/systemd/system/hela-runtime.service.d/10-nix-package.conf
+sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart hela-runtime
+</code></pre>
+</div>
+<p>The previous wrapper (<code>servy-update-20261114T063237Z</code>) and its Nix runtime are still on disk.</p>
+</article><footer class="doc-footer"><span>MIT SUITE · GPL-3.0 + MIT CELLS · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#host-layout-unchanged-by-this-update">Host layout (unchanged by this update)</a></li><li><a href="#what-ran">What ran</a></li><li><a href="#result">Result</a></li><li><a href="#gotcha-worth-remembering">Gotcha worth remembering</a></li><li><a href="#rollback">Rollback</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.9.20"></script>
+  <script src="../../library-data.js?v=1.9.20&amp;rev=be2726dc1443"></script>
+  <script src="../../library.js?v=1.9.20&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.9.20&amp;rev=2dfe17383063"></script>
+</body>
+</html>

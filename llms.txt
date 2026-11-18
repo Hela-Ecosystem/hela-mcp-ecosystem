@@ -61,7 +61,7 @@ configuration checks remain separate from authenticated GUI and hardware checks.
 - [Document library](https://hela.my.id/library.html)
 - [Full documentation text](https://hela.my.id/llms-full.txt)
 
-- [[1.9.19] - 2026-11-19](https://hela.my.id/library/CHANGELOG.html): CHANGELOG.md
+- [[1.9.20] - 2026-11-19](https://hela.my.id/library/CHANGELOG.html): CHANGELOG.md
 - [Contributing to the HeLa MCP Ecosystem](https://hela.my.id/library/CONTRIBUTING.html): CONTRIBUTING.md
 - [MIT License](https://hela.my.id/library/LICENSE.html): LICENSE
 - [HeLa MCP Ecosystem](https://hela.my.id/library/README.html): README.md
@@ -70,6 +70,7 @@ configuration checks remain separate from authenticated GUI and hardware checks.
 - [Beginner's Guide: HeLa MCP Ecosystem](https://hela.my.id/library/docs/beginner-guide.html): docs/beginner-guide.md
 - [Current versions and tool surfaces](https://hela.my.id/library/docs/current-versions.html): docs/current-versions.md
 - [Servy deployment verification — 2026-11-06](https://hela.my.id/library/docs/deployment-2026-11-06.html): docs/deployment-2026-11-06.md
+- [Servy runtime update — 2026-11-19](https://hela.my.id/library/docs/deployment-2026-11-19.html): docs/deployment-2026-11-19.md
 - [Documentation refresh — 2026-11-06](https://hela.my.id/library/docs/documentation-refresh-2026-11-06.html): docs/documentation-refresh-2026-11-06.md
 - [Generated profile counts](https://hela.my.id/library/docs/generated-profile-counts.html): docs/generated-profile-counts.md
 - [Installer acceptance — 2026-11-07 (historical record)](https://hela.my.id/library/docs/installation-acceptance.html): docs/installation-acceptance.md

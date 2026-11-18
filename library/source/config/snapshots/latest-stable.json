@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.18",
-  "created_at": "2026-11-18T18:18:05Z",
-  "description": "Dependency-hygiene release: npm audit fixes across nine cells and the runtime clear a critical advisory in Mitosis and Cytosol plus eleven others. Cell pins, tool surfaces and 292 base tools are unchanged; three findings remain in Membrane and need breaking majors.",
+  "snapshot_version": "1.9.20",
+  "created_at": "2026-11-18T19:14:55Z",
+  "description": "Documentation release: servy rollout record for 1.9.19 / runtime 1.3.3. Cell pins unchanged from 1.9.19.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
