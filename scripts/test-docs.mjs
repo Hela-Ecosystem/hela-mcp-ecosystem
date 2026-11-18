@@ -182,3 +182,28 @@ test('video players are click-to-load facades, never eager embeds', () => {
   }
   assert.equal(facades, 42, 'overview 2 + architecture 20 + profiles 16 + showcase 4');
 });
+
+test('runtime prose follows the inventory version in both languages', () => {
+  const runtimeVersion = data.inventory['hela-runtime'].version;
+  const pages = [
+    path.join(site, 'architecture.html'),
+    path.join(site, 'id/architecture.html'),
+    path.join(site, 'library/docs/on-demand-runtime.html'),
+  ].filter((file) => fs.existsSync(file));
+
+  for (const file of pages) {
+    const text = fs.readFileSync(file, 'utf8');
+    // Dated rollout records keep the version that was actually deployed; only the
+    // current description must track the inventory.
+    const historicalAt = text.search(/Historical Servy rollout/i);
+    const current = historicalAt >= 0 ? text.slice(0, historicalAt) : text;
+    const mentions = [...current.matchAll(/runtime(?:\s+opsional)?\s+(\d+\.\d+\.\d+)/gi)].map((match) => match[1]);
+    assert.ok(mentions.length > 0, `${file}: expected a runtime version mention`);
+    for (const mentioned of mentions) {
+      assert.equal(mentioned, runtimeVersion, `${file}: stale runtime version ${mentioned} (inventory ${runtimeVersion})`);
+    }
+    if (historicalAt >= 0) {
+      assert.match(text.slice(historicalAt), /runtime[\s\S]{0,60}1\.2\.0/, `${file}: the historical rollout record must keep its deployed version`);
+    }
+  }
+});
