@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "1cba566233a186bccaae48415300721a5ec82fdc",
-      "version": "3.0.7",
+      "revision": "4e4af56068229d4d58f3dc9c9cf2d2557be92e25",
+      "version": "3.0.8",
       "digests": [
-        "0f0bc498177e39c08c02350421a689da99709f47dd0787844c6ec6608f7f5dea"
+        "28fc2423f9028bf016c3dd6c5237a47e48e5c09c02bd10215b0ff4bb3e322af8"
       ],
       "variants": [
         {
@@ -3213,10 +3213,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "01777123a4100d732ee83187cfcea84270a083cc",
-      "version": "3.0.3",
+      "revision": "00c047bfaa80670b6189575bdb71238926bfcb86",
+      "version": "3.0.4",
       "digests": [
-        "81798069fdffc44921d8e65a2ed582e6bda1e3df00432d96cddc18971477df02"
+        "55574061484ed256d5a93b9395f56e08f2098777d1402909b9f56fc5a7aedaec"
       ],
       "variants": [
         {
@@ -4276,10 +4276,10 @@
       ]
     },
     "hela-membrane": {
-      "revision": "c5a71077f977c0772e22355ac52379cd4d953987",
-      "version": "3.0.4",
+      "revision": "886d5d9de1903baa1a08be39060b7bf97b0b7d09",
+      "version": "3.0.5",
       "digests": [
-        "6e0f459fa38fbf62752b6f3192fbbd781d8e5a38ba653e6efe960c349b3d9905"
+        "c0f1da89a504e3d477129a23cdb838a6412b223a1f5067065db23ef4ab6fe404"
       ],
       "variants": [
         {
@@ -6557,10 +6557,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "e2497b35d9ddcd8ce52672ec90e10f194b02b600",
-      "version": "3.2.4",
+      "revision": "16321e506779f04c49e52b3fac0ace9757cdabf1",
+      "version": "3.2.5",
       "digests": [
-        "5a32420f4b7285b74dbbb0ac0ee9c0b78f1a8050af81f0b614dd2f2704b90a27"
+        "aa88e8bf74b4f5c1b7925fdc6f48d82a196be6d04a96c555175f4a10fc8939f9"
       ],
       "variants": [
         {
@@ -12242,10 +12242,10 @@
       ]
     },
     "hela-plastid": {
-      "revision": "0196ba533bcb48e4b2ff669d7352aade12e5f03e",
-      "version": "3.0.4",
+      "revision": "4722a1407455077bf272823603b002d4df9d0e0c",
+      "version": "3.0.5",
       "digests": [
-        "d0e8c5d4a3f0b24d37448a6dac30e0aa837e985b4b9b592f4ae31694897584e4"
+        "ed2e83b994c82b284782f34f59883067e187c02be0e18e66e6e55b8a806f3093"
       ],
       "variants": [
         {

@@ -1,3 +1,15 @@
+## [1.9.21] - 2026-11-19
+
+### Fixed
+- Runtime `1.3.4` no longer hides a cell whose catalog manifest went stale: each cell's manifest source is logged with the regeneration command, only stale cells are probed once so their tools stay advertised, and the sources are exposed on `/readyz`. On servy this had silently reduced the surface from 240 to 209 tools.
+- Cytosol `3.2.5` reconnects once when the browser context was closed under it; a blank page is reported instead of retried, because the previous call may already have acted.
+- Plastid `3.0.5` fails honestly when a headless Blender render writes no file, instead of returning a path to nothing.
+- Mitosis `3.0.8` and Membrane `3.0.5` complete the zod 4 / glob 14 migration; `npm audit --omit=dev` now reports zero vulnerabilities in every cell and the runtime.
+
+### Added
+- Genome `3.0.4` stamps `PRAGMA user_version` after creating its schema, treats a rerun as a no-op and refuses a database written by a newer build.
+- `npm run nix:hash` in the runtime refreshes the flake's npm dependency hash and rebuilds to confirm, so a version bump no longer costs a CI round trip.
+
 ## [1.9.20] - 2026-11-19
 
 ### Added

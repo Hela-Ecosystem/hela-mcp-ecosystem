@@ -268,3 +268,24 @@ test('legal copy names the copyleft cells instead of claiming MIT for everything
   assert.match(index, /"license":\s*\[/, 'index JSON-LD must carry licence metadata');
   assert.ok(index.includes(runtimeVersion), 'index should reference the current runtime version somewhere');
 });
+
+test('no current page carries a version the inventory does not know', () => {
+  // Toolchain floors and loopback addresses look like versions but are not.
+  const allowed = new Set(['127.0.0.1', '2.30.0', '3.35.0', '22.23.4']);
+  allowed.add(version);
+  allowed.add(data.inventory['hela-runtime'].version);
+  for (const [id, spec] of Object.entries(data.inventory)) if (id !== 'hela-runtime') allowed.add(spec.version);
+
+  const pages = ['index.html', 'architecture.html', 'profiles.html', 'terms.html', 'privacy.html', 'workflows.html', 'showcase.html', 'troubleshooting.html'];
+  const stale = [];
+  for (const prefix of ['', 'id/']) {
+    for (const page of pages) {
+      const file = path.join(site, prefix + page);
+      if (!fs.existsSync(file)) continue;
+      for (const match of fs.readFileSync(file, 'utf8').matchAll(/(?<![\d.])(\d+\.\d+\.\d+)(?![\d.])/g)) {
+        if (!allowed.has(match[1])) stale.push(`${prefix}${page}: ${match[1]}`);
+      }
+    }
+  }
+  assert.deepEqual([...new Set(stale)], [], 'stale version literals on current pages');
+});

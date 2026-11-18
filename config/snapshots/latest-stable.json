@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.20",
-  "created_at": "2026-11-18T19:14:55Z",
-  "description": "Documentation release: servy rollout record for 1.9.19 / runtime 1.3.3. Cell pins unchanged from 1.9.19.",
+  "snapshot_version": "1.9.21",
+  "created_at": "2026-11-18T19:37:53Z",
+  "description": "Hardening release: runtime recovers cells whose manifest went stale, dependency majors cleared (zod 4, glob 14), browser context recovery, honest headless render failures, and SQLite schema versioning.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -12,24 +12,24 @@
   "servers": {
     "hela-mitosis": {
       "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
-      "commit": "1cba566233a186bccaae48415300721a5ec82fdc",
+      "commit": "4e4af56068229d4d58f3dc9c9cf2d2557be92e25",
       "branch": "main",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.7"
+      "serverVersion": "3.0.8"
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "01777123a4100d732ee83187cfcea84270a083cc",
-      "branch": "master",
-      "entry": "dist/index.js",
-      "serverVersion": "3.0.3"
-    },
-    "hela-membrane": {
-      "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
-      "commit": "c5a71077f977c0772e22355ac52379cd4d953987",
+      "commit": "00c047bfaa80670b6189575bdb71238926bfcb86",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "3.0.4"
+    },
+    "hela-membrane": {
+      "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
+      "commit": "886d5d9de1903baa1a08be39060b7bf97b0b7d09",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.5"
     },
     "hela-nucleus": {
       "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git",
@@ -54,10 +54,10 @@
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "e2497b35d9ddcd8ce52672ec90e10f194b02b600",
+      "commit": "16321e506779f04c49e52b3fac0ace9757cdabf1",
       "branch": "master",
       "entry": "src/server.js",
-      "serverVersion": "3.2.4"
+      "serverVersion": "3.2.5"
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
@@ -75,17 +75,17 @@
     },
     "hela-plastid": {
       "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git",
-      "commit": "0196ba533bcb48e4b2ff669d7352aade12e5f03e",
+      "commit": "4722a1407455077bf272823603b002d4df9d0e0c",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.4"
+      "serverVersion": "3.0.5"
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "6ca8b618a3c04d9c19ea45bc0b4429822b71cf6d",
+      "commit": "bf1ffd0b8b016660bd73625e67914af02b2aaa14",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.3.3"
+      "serverVersion": "1.3.4"
     }
   },
   "verified_profiles": [
@@ -100,7 +100,7 @@
     "client_configuration_combinations": 80,
     "inventory_tests": 8,
     "skill_sync_tests": 1,
-    "scope": "npm audit --omit=dev reports zero vulnerabilities for nine cells and the runtime; Membrane keeps three that require zod 4 / glob 14. Hardware, live-service and version-guard evidence from 1.9.12-1.9.14 carries forward.",
+    "scope": "npm audit --omit=dev reports zero vulnerabilities in all ten cells and the runtime. Runtime 1.3.4 recovers mismatched manifests and reports their source; schema versioning refuses newer databases. Hardware and live-service evidence from 1.9.12 carries forward.",
     "receptor_hardware_checks": 18
   }
 }
