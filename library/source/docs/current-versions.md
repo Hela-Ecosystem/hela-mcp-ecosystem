@@ -1,6 +1,6 @@
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.21**; runtime **1.3.4**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.22**; runtime **1.3.4**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.8**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.4**, GPL-3.0-or-later, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).

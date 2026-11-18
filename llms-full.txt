@@ -1,6 +1,12 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.9.22] - 2026-11-19
+
+### Fixed
+- The licence wording in the legal pages, `llms.txt` and the JSON-LD licence list was hand-written, so a seventh copyleft cell would have left those statements stale — the same failure mode as the old runtime prose. They are now generated from `config/inventory.json`: counts, cell names, the always-installed set, the structured-data licence URLs and the machine-readable line all follow the inventory, and meta descriptions no longer encode a count that can drift.
+- A test recomputes those strings from the inventory and fails on any divergence; `docs:check` also rejects a stale page, verified by flipping one cell's licence.
+
 ## [1.9.21] - 2026-11-19
 
 ### Fixed
@@ -394,7 +400,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.9.21**, with runtime **1.3.4**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.9.22**, with runtime **1.3.4**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -530,7 +536,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.21 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.9.22 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -1157,7 +1163,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.21**; runtime **1.3.4**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.9.22**; runtime **1.3.4**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.8**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.4**, GPL-3.0-or-later, 29 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
