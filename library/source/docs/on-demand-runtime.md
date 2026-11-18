@@ -2,7 +2,7 @@
 
 ![Blotcat waking one selected cell while the other runtime cells sleep](../assets/blotcat-on-demand-runtime.png)
 
-Runtime **1.3.4** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
+Runtime **1.3.6** implements §10.3: no cell starts during runtime startup or `tools/list`. The first call starts only its target; concurrent calls share that startup. Cells already started retain the existing crash/timeout supervisor. Standalone MCP servers are unchanged, all eight profiles remain supported, and the runtime/installer default is `minimal` when no profile is selected.
 
 The same endpoint owns profile-aware agent instructions. `prompts/list` exposes `hela-profile-bootstrap`, `prompts/get` renders it from the selected profile, and `resources/read` serves `hela://profile/context`. On a clean workspace, installation also creates a private profile-aware HeLa persona under `agent_persona/` and links the harness entrypoints to it. HeLa is the distributable synthesis of Azzar's private Frea and Mema personal AI assistant personas: Frea contributes autonomous technical execution, while Mema contributes security and continuity discipline. Their private files, memories, credentials, and identifiers are not distributed. Existing `agent_persona/`, `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files are preserved; the runtime context remains authoritative for active organelles. No individual cell deployment is required.
 

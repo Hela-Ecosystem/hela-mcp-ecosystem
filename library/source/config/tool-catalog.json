@@ -3213,10 +3213,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "00c047bfaa80670b6189575bdb71238926bfcb86",
-      "version": "3.0.4",
+      "revision": "b720edf2cc7988073afc4bc342eb4e49ca12a76a",
+      "version": "3.0.5",
       "digests": [
-        "55574061484ed256d5a93b9395f56e08f2098777d1402909b9f56fc5a7aedaec"
+        "46ec761ed925f499ffa018bf1889c2645d08a63a3463714c3a2e94ae7fa15a61"
       ],
       "variants": [
         {
@@ -4808,10 +4808,10 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "c4e9a2f1df57da7e29b0ecaa0b34a09558d2b7e2",
-      "version": "3.0.5",
+      "revision": "0088f0b68a474336398cdc36f6571ee7d8cebccd",
+      "version": "3.0.6",
       "digests": [
-        "1ee0b35aabe9a013d0532579d7bdcb5848f9ea436139b1b7aeda978498fba753"
+        "c9ce54e4c29b015887aa2bd06c795cc0ed47c6f829d228134f4cdca7666e5f63"
       ],
       "variants": [
         {
@@ -5781,10 +5781,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "505ea285a9550944ea35f5002c561b5445d2c447",
-      "version": "4.0.5",
+      "revision": "eb257b8156f648f0255d9444c8ede6347c3f07ef",
+      "version": "4.0.6",
       "digests": [
-        "dc0509a27afe8ee0354949edf0f039dd38278c9abd9126bfb78374dcd4e3187a"
+        "dbf717d5482ecbb617db460ff7565b04087d247bd900c5b7f21831ee6441bd6e"
       ],
       "variants": [
         {
