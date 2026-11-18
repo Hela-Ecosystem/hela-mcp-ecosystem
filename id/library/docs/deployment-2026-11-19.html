@@ -68,13 +68,25 @@ sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart hela-runtime
 </code></pre>
 </div>
 <p>The previous wrapper (<code>servy-update-20261114T063237Z</code>) and its Nix runtime are still on disk.</p>
+<h2 id="1924-rollout-servy-2026-11-19t2101z">1.9.24 rollout (servy, 2026-11-19T21:01Z)</h2>
+<p>Second pass on the same day, carrying the RPC and search releases.</p>
+<ol>
+<li>Checkouts pulled fast-forward: <code>project-mcp</code> b720edf (3.0.5), <code>terminal-mcp</code> 0088f0b (3.0.6), <code>researcher-mcp</code> eb257b8 (4.0.6), <code>browser-mcp</code> 8f0b39f (3.2.6), <code>hela-runtime</code> c2b02ff (1.3.6), ecosystem d193cc4 (1.9.24). The repository catalog copy was reverted before the pull — on this host it is a deployment artifact, as noted below.</li>
+<li>Those four cells rebuilt (<code>npm run build</code>).</li>
+<li>Catalog regenerated <strong>on servy</strong> with <code>--profile dev-workspace</code> before any restart, so the digests match the builds on this host.</li>
+<li>Runtime packaged with Nix: <code>hela-runtime-1.3.6</code> at <code>/nix/store/g1npgvsii07mpclxzsxc9lm3gd15n12m-hela-runtime-1.3.6</code>, GC-rooted by <code>runtime-nix</code> inside the new deployment directory.</li>
+<li>Staged wrapper at <code>~/.local/state/hela/deployments/servy-1.9.24-20261118T210125Z/runtime/bin/hela-runtime</code>, drop-in backed up to <code>10-nix-package.conf.bak-20261118T210124Z</code>, ExecStart switched, <code>daemon-reload</code>, restart.</li>
+<li>Verified over HTTP: <code>/healthz</code> → <code>1.3.6</code>; <code>tools/list</code> → <strong>239 tools</strong> on the 8-cell <code>dev-workspace</code> profile (297 unique cell tools at profile all, minus Receptor 46 and Plastid 15, plus the 3 runtime tools); <code>hela.agent.run</code> present and the cell-local <code>agent_run</code> gone; <code>execute_command</code> with <code>cd /tmp &amp;&amp; echo marker-ok</code> returned <code>stdout &quot;marker-ok\n&quot;</code>, exit 0; the scatter query returned zero Wikipedia hits.</li>
+</ol>
+<p>239 rather than the earlier 240 because Mitosis now contributes one schema variant (24 tools) instead of the union across its four variants (29). Not a missing cell: Nucleus and Enzyme were both present and callable, which is the failure mode this host hit at 1.9.19.</p>
+<p>Rollback is unchanged: restore the drop-in backup and restart. The 1.9.21 deployment directory and its Nix runtime stay on disk.</p>
 </article><footer class="doc-footer"><span>SUITE MIT · SEL GPL-3.0 + MIT · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
-      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#host-layout-unchanged-by-this-update">Host layout (unchanged by this update)</a></li><li><a href="#what-ran">What ran</a></li><li><a href="#result">Result</a></li><li><a href="#gotcha-worth-remembering">Gotcha worth remembering</a></li><li><a href="#rollback">Rollback</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#host-layout-unchanged-by-this-update">Host layout (unchanged by this update)</a></li><li><a href="#what-ran">What ran</a></li><li><a href="#result">Result</a></li><li><a href="#gotcha-worth-remembering">Gotcha worth remembering</a></li><li><a href="#rollback">Rollback</a></li><li><a href="#1924-rollout-servy-2026-11-19t2101z">1.9.24 rollout (servy, 2026-11-19T21:01Z)</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../../release-data.js?v=1.9.24"></script>
-  <script src="../../../library-data.js?v=1.9.24&amp;rev=bfcbad889392"></script>
+  <script src="../../../library-data.js?v=1.9.24&amp;rev=32d4b72aeef8"></script>
   <script src="../../../library.js?v=1.9.24&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../../app.js?v=1.9.24&amp;rev=2dfe17383063"></script>
 </body>

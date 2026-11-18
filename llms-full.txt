@@ -1320,6 +1320,21 @@ sudo systemctl daemon-reload && sudo systemctl restart hela-runtime
 
 The previous wrapper (`servy-update-20261114T063237Z`) and its Nix runtime are still on disk.
 
+## 1.9.24 rollout (servy, 2026-11-19T21:01Z)
+
+Second pass on the same day, carrying the RPC and search releases.
+
+1. Checkouts pulled fast-forward: `project-mcp` b720edf (3.0.5), `terminal-mcp` 0088f0b (3.0.6), `researcher-mcp` eb257b8 (4.0.6), `browser-mcp` 8f0b39f (3.2.6), `hela-runtime` c2b02ff (1.3.6), ecosystem d193cc4 (1.9.24). The repository catalog copy was reverted before the pull — on this host it is a deployment artifact, as noted below.
+2. Those four cells rebuilt (`npm run build`).
+3. Catalog regenerated **on servy** with `--profile dev-workspace` before any restart, so the digests match the builds on this host.
+4. Runtime packaged with Nix: `hela-runtime-1.3.6` at `/nix/store/g1npgvsii07mpclxzsxc9lm3gd15n12m-hela-runtime-1.3.6`, GC-rooted by `runtime-nix` inside the new deployment directory.
+5. Staged wrapper at `~/.local/state/hela/deployments/servy-1.9.24-20261118T210125Z/runtime/bin/hela-runtime`, drop-in backed up to `10-nix-package.conf.bak-20261118T210124Z`, ExecStart switched, `daemon-reload`, restart.
+6. Verified over HTTP: `/healthz` → `1.3.6`; `tools/list` → **239 tools** on the 8-cell `dev-workspace` profile (297 unique cell tools at profile all, minus Receptor 46 and Plastid 15, plus the 3 runtime tools); `hela.agent.run` present and the cell-local `agent_run` gone; `execute_command` with `cd /tmp && echo marker-ok` returned `stdout "marker-ok\n"`, exit 0; the scatter query returned zero Wikipedia hits.
+
+239 rather than the earlier 240 because Mitosis now contributes one schema variant (24 tools) instead of the union across its four variants (29). Not a missing cell: Nucleus and Enzyme were both present and callable, which is the failure mode this host hit at 1.9.19.
+
+Rollback is unchanged: restore the drop-in backup and restart. The 1.9.21 deployment directory and its Nix runtime stay on disk.
+
 
 ---
 
