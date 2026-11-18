@@ -1,3 +1,8 @@
+## [1.9.26] - 2026-11-19
+
+### Fixed
+- Learned search priors never applied on a host whose genome still uses the legacy central store. Enzyme resolved `~/memory/memory.db` only, while genome keeps writing `~/memory.db` when its migration did not run — so every brief reported `priors: static` and the recorded decisions sat in a file nobody read. Enzyme now resolves the way genome does: the migrated path when it exists, otherwise the legacy file. Verified end to end with an isolated HOME: ten decisions land in the file the brief reads and it reports `priors: learned (10 samples)`.
+
 ## [1.9.25] - 2026-11-19
 
 ### Added
