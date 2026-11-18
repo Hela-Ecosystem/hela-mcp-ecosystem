@@ -6557,10 +6557,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "532223d2ff384ff43449a9e3eb5c8f826263e579",
-      "version": "3.2.5",
+      "revision": "8f0b39f2023cc04ff9511be678178d784d0beef5",
+      "version": "3.2.6",
       "digests": [
-        "aa88e8bf74b4f5c1b7925fdc6f48d82a196be6d04a96c555175f4a10fc8939f9"
+        "d389552b71439ca0a3257212f3e49ee08070b437009c492276cf633b9f7dec2c"
       ],
       "variants": [
         {
@@ -6782,13 +6782,13 @@
             },
             {
               "name": "browser_fill_form",
-              "description": "Fill multiple form fields at once. Set typeAware=true to auto-detect input types (date, number, email, tel, url, select, checkbox, radio, file, contenteditable) and format values with the right Playwright method — much more reliable for structured forms than raw fill.",
+              "description": "Fill multiple form fields at once. Keys accept a browser_observe ref, a bare name/id, or a CSS selector. Set typeAware=true to auto-detect input types (date, number, email, tel, url, select, checkbox, radio, file, contenteditable) and format values with the right Playwright method — much more reliable for structured forms than raw fill.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "data": {
                     "type": "object",
-                    "description": "Key-value pairs of selector: value"
+                    "description": "Key-value pairs of field: value. Each key may be a ref number from browser_observe, a bare field name or id, or a CSS selector."
                   },
                   "submit": {
                     "type": "boolean",
