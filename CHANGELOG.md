@@ -1,3 +1,14 @@
+## [1.9.23] - 2026-11-19
+
+### Fixed
+- Enzyme `4.0.6` scores every search result on query-term coverage with a phrase bonus, title weighted above snippet, and drops results below a named floor. Wikipedia's floor is higher (0.4) than Google's (0.16) because its OR-matched recall is cheap and its precision is not: the scatter query that returned Smalltalk and XML now returns nothing, while a precise query still returns five pages. `research_brief` and `multi_site_search` apply cheap query-class priors, every result line carries its score, and `academic_search` enforces `dateRange` on arXiv with a submittedDate window plus a published-date post-filter — a 2021 paper can no longer answer a `y2` query.
+- Nucleus `3.0.6` passes any command containing `;`, `&` or `|` to the shell instead of treating the whole string as a working directory, so `cd /tmp && echo marker-ok` runs; only a standalone `cd` updates the session directory, and it takes its first path argument so a trailing option is not swallowed.
+- Runtime `1.3.6` types the cell RPC boundary: `callTool` resolves a validated MCP tool result and raises `CellProtocolError` on a JSON-RPC error or an unexpected shape instead of forwarding `undefined`; cell directory resolution no longer consults `process.cwd()` and names the root and every path tried when a cell is missing; and a malformed JSON-RPC frame rejects its request immediately rather than costing a full timeout.
+
+### Changed
+- One agent tool: Mitosis's cell-local `agent_run` was advertised next to the runtime-native `hela.agent.run` and carried the runtime description, so callers could not tell which one ran. Only `hela.agent.run` is exposed now.
+- Genome `3.0.5` adds `npm run vault:conflicts`, which archives frontmatter-only sync conflicts without rewriting the note and lists body-divergent ones for a per-note decision. First pass: 641 conflicts archived, 615 left across 302 notes.
+
 ## [1.9.22] - 2026-11-19
 
 ### Fixed
