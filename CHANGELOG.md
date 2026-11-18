@@ -1,3 +1,11 @@
+## [1.9.17] - 2026-11-19
+
+### Added
+- Per-cell licence disclosure (PR #7): `config/inventory.json` now carries each cell's licence, the library footer and page headers derive the real blend (MIT suite + six GPL-3.0-or-later cells) instead of a blanket MIT claim, and the architecture reference states which copyleft cells every profile installs. Derived from the inventory and covered by tests.
+
+### Fixed
+- `update --json` (PR #6) emits one compact document, so a caller reading the last stdout line cannot be defeated by installer output.
+
 ## [1.9.16] - 2026-11-19
 
 ### Fixed
