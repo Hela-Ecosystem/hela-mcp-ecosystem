@@ -192,7 +192,7 @@ for (const directory of [site, path.join(site, 'id')]) {
 const llmsFile = path.join(site, 'llms.txt');
 if (fs.existsSync(llmsFile)) {
   const llms = fs.readFileSync(llmsFile, 'utf8');
-  const line = `- License: this repository (installer, runtime, configuration, docs) is MIT. The ${Object.keys(inventory).length} cell servers are separate projects: ${gplCells.length} ${gplCells[0]?.license ?? 'non-MIT'} (${cellNames(gplCells).join(', ')}), ${mitCells.length} MIT (${cellNames(mitCells).join(', ')}). ${alwaysInstalled.length ? `Every profile installs at least ${alwaysInstalled.length} of those ${gplCells[0]?.license ?? 'non-MIT'} cells; ` : ''}read each cell LICENSE before redistributing.`;
+  const line = `- License: this repository (installer, runtime, configuration, docs) is MIT. The ${Object.keys(inventory).length} cell servers are separate projects: ${gplCells.length} ${gplCells[0]?.license ?? 'non-MIT'} (${cellNames(gplCells).join(', ')}), ${mitCells.length} MIT (${cellNames(mitCells).join(', ')}). ${alwaysInstalled.length ? `Every profile installs at least ${alwaysInstalled.length} of those ${gplCells[0]?.license ?? 'non-MIT'} cells; ` : ''}Read each cell LICENSE before redistributing.`;
   outputs.set(llmsFile, llms.replace(/^- License: .*$/m, line));
 }
 for (const name of ['on-demand-runtime.md']) {
