@@ -249,3 +249,22 @@ test('every cell declares a licence and the pages follow it', () => {
     assert.match(text, /id="licensing"[^>]*>[\s\S]*?GPL-3\.0-or-later/, `${page}: missing the licensing note`);
   }
 });
+
+test('legal copy names the copyleft cells instead of claiming MIT for everything', () => {
+  const runtimeVersion = data.inventory['hela-runtime'].version;
+  const gpl = Object.entries(data.inventory)
+    .filter(([id, spec]) => id !== 'hela-runtime' && spec.license?.startsWith('GPL'))
+    .map(([, spec]) => spec.alias.replace(/^HeLa /, ''));
+  for (const file of [path.join(site, 'terms.html'), path.join(site, 'id', 'terms.html')]) {
+    const text = fs.readFileSync(file, 'utf8');
+    assert.match(text, /GPL-3\.0-or-later/, `${file}: must name the copyleft licence`);
+    for (const cell of gpl) assert.ok(text.includes(cell), `${file}: must name ${cell} as copyleft`);
+    assert.ok(!/Seluruh perangkat lunak[^.]*Lisensi MIT/.test(text), `${file}: no blanket MIT claim over all software`);
+  }
+  const llms = fs.readFileSync(path.join(site, 'llms.txt'), 'utf8');
+  assert.match(llms, /GPL-3\.0-or-later/, 'llms.txt must state the per-cell licence split');
+  assert.match(llms, /hela\.update\.check/, 'llms.txt should name the runtime update tools');
+  const index = fs.readFileSync(path.join(site, 'index.html'), 'utf8');
+  assert.match(index, /"license":\s*\[/, 'index JSON-LD must carry licence metadata');
+  assert.ok(index.includes(runtimeVersion), 'index should reference the current runtime version somewhere');
+});

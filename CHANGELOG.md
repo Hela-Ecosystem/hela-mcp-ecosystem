@@ -1,3 +1,18 @@
+## [1.9.19] - 2026-11-19
+
+### Fixed
+- The legal pages still claimed the whole ecosystem was MIT and granted sublicensing and sale over code that is GPL-3.0-or-later. Terms (EN and ID), their meta and JSON-LD descriptions, `llms.txt` and the `SoftwareApplication` structured data now state the split: MIT repository, six GPL-3.0-or-later cells named explicitly, per-cell terms govern redistribution. A test fails if the blanket claim returns.
+
+### Added
+- Documented the runtime update tools (`hela.update.check`, `hela.update.apply`) in the README, the on-demand guide and `llms.txt`. They already shipped with runtime 1.3.x; the docs now name them so agents can find them.
+
+## [1.9.18] - 2026-11-19
+
+### Changed
+- `npm audit fix` across nine cells and the runtime cleared a critical advisory in Mitosis and Cytosol plus twenty others: mitosis 11 to 3, cytosol 9 to 0, nucleus 8 to 0, membrane 10 to 3, genome/ribosome/enzyme/phenotype/runtime 2 to 0, receptor 1 to 0. The remaining findings need breaking majors (zod 4, glob 14) and stay with their open dependabot PRs.
+- Runtime `1.3.3` refreshed its Nix fixed-output dependency hash, verified with a local `nix build` before release.
+- No tool surfaces changed (292 base tools); the version guards kept every `ServerInfo` in step.
+
 ## [1.9.17] - 2026-11-19
 
 ### Added
