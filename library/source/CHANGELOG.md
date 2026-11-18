@@ -1,3 +1,8 @@
+## [1.9.16] - 2026-11-19
+
+### Fixed
+- Runtime prose sat outside the single-sourcing pipeline: the architecture cards (EN and ID) and the on-demand guide said `1.2.1` while the inventory said `1.3.2`, and CI stayed green because the generator skipped the `hela-runtime` prose entirely. `generate-docs` now rewrites those sentences from the inventory, `docs:check` fails on drift (verified by deliberately reverting a mention), and a test covers both languages while keeping the dated Servy rollout record at the version it actually deployed.
+
 ## [1.9.15] - 2026-11-18
 
 ### Fixed
