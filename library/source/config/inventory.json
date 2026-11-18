@@ -242,7 +242,7 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "16321e506779f04c49e52b3fac0ace9757cdabf1",
+      "revision": "975df1289eb290d0074233a9e6f4eb48bbbcc343",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
