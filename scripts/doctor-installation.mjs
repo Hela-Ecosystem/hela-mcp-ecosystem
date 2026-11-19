@@ -14,6 +14,25 @@ function inspectTmux() {
   return { ready, version };
 }
 
+/**
+ * Every cell tool the probe discovered must be reachable through the runtime, as the
+ * runtime's own namespaced name (`hela_<cell>_<tool>`) or, when a client opts out of
+ * namespacing, the bare name. Comparing only bare names reported DEGRADED as soon as
+ * namespacing became the default, without saying why.
+ */
+export function missingFromRuntimeCatalog(servers, discoveries, actual) {
+  const missing = [];
+  for (const server of servers) {
+    if (server.id === 'hela-runtime') continue;
+    const short = server.id.replace(/^hela-/, '');
+    for (const name of discoveries.get(server.id) ?? []) {
+      if (!actual.has(name) && !actual.has(`hela_${short}_${name}`)) missing.push(`${server.id}/${name}`);
+    }
+  }
+  if (!actual.has('hela.pipe')) missing.push('hela.pipe');
+  return missing;
+}
+
 export async function checkContainerInstallation(manifest) {
   const report = { mode: manifest.mode, profile: manifest.profile, status: 'READY', isolated: true, servers: [],
     dependencies: { tmux: { ready: manifest.systemDeps?.status === 'present', version: manifest.systemDeps?.version ?? null,
@@ -64,13 +83,16 @@ export async function checkContainerInstallation(manifest) {
     }
   }
   if (discoveries.has('hela-runtime')) {
-    const expected = new Set(manifest.servers.filter(s => s.id !== 'hela-runtime').flatMap(s => discoveries.get(s.id) ?? []));
-    expected.add('hela.pipe');
     const actual = new Set(discoveries.get('hela-runtime'));
+    const missing = missingFromRuntimeCatalog(manifest.servers, discoveries, actual);
     // Runtime may expose native capabilities (for example Needle agent and
     // catalog tools) in addition to the delegated cell catalog.
-    report.catalogMatch = [...expected].every(name => actual.has(name));
-    if (!report.catalogMatch) report.status = 'DEGRADED';
+    report.catalogMatch = missing.length === 0;
+    if (!report.catalogMatch) {
+      report.status = 'DEGRADED';
+      // Name what is missing: a bare `[]` told an operator nothing.
+      report.error = `Runtime catalog is missing ${missing.length} cell tool(s): ${missing.slice(0, 5).join(', ')}${missing.length > 5 ? ', …' : ''}`;
+    }
   }
   return report;
 }

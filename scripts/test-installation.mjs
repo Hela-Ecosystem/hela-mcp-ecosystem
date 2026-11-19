@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { test, after } from 'node:test';
 import { parseOptions, installationPlan, readInstallation, modes, run, profileCapabilities } from './installation.mjs';
-import { checkInstallation, checkContainerInstallation } from './doctor-installation.mjs';
+import { checkInstallation, checkContainerInstallation, missingFromRuntimeCatalog } from './doctor-installation.mjs';
 import { probeMcp } from './mcp-probe.mjs';
 import { downloadVerified } from './provision-needle.mjs';
 import { createHash } from 'node:crypto';
@@ -527,4 +527,27 @@ console.log(JSON.stringify({jsonrpc:'2.0',id:m.id,result:m.method==='initialize'
     assert.match(name, /^hela-doctor-/);
     assert.deepEqual(calls.at(-1), ['rm', '--force', name]);
   } finally { process.env.PATH = previous; }
+});
+
+test('runtime catalog coverage understands namespaced and bare surfaces', () => {
+  const servers = [{ id: 'hela-runtime' }, { id: 'hela-membrane' }, { id: 'hela-nucleus' }];
+  const discoveries = new Map([
+    ['hela-membrane', ['read_file', 'write_file']],
+    ['hela-nucleus', ['execute_command']],
+  ]);
+
+  const namespaced = new Set(['hela_membrane_read_file', 'hela_membrane_write_file', 'hela_nucleus_execute_command', 'hela.pipe']);
+  assert.deepEqual(missingFromRuntimeCatalog(servers, discoveries, namespaced), [],
+    'a namespaced runtime still covers every discovered cell tool');
+
+  const bare = new Set(['read_file', 'write_file', 'execute_command', 'hela.pipe']);
+  assert.deepEqual(missingFromRuntimeCatalog(servers, discoveries, bare), [],
+    'a client that opts out of namespacing is equally valid');
+
+  const partial = new Set(['hela_membrane_read_file', 'hela_nucleus_execute_command', 'hela.pipe']);
+  assert.deepEqual(missingFromRuntimeCatalog(servers, discoveries, partial), ['hela-membrane/write_file'],
+    'a genuinely missing tool is named with its cell');
+
+  const noPipe = new Set(['hela_membrane_read_file', 'hela_membrane_write_file', 'hela_nucleus_execute_command']);
+  assert.deepEqual(missingFromRuntimeCatalog(servers, discoveries, noPipe), ['hela.pipe']);
 });
