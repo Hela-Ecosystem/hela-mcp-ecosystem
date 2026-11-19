@@ -1,3 +1,9 @@
+## [1.9.27] - 2026-11-19
+
+### Fixed
+- The Docker doctor reported `DEGRADED` with an empty `[]` on a clean image because it compared the runtime catalog against bare cell tool names. The container never receives `HELA_NAMESPACE_TOOLS`, so the runtime applies its new default and advertises `hela_membrane_read_file`; 23 of 24 expected names therefore looked missing. Coverage now accepts the runtime's namespaced name or the bare one, and a real gap names the cell and tool instead of printing an empty array. Unit tests cover both surfaces and a genuinely missing tool.
+- Enzyme `4.0.9` runs its priors suite on Node 20 instead of failing at import: `node:sqlite` only exists from 22.5, so the database cases are gated on the runtime version while the resolution and collapse-guard tests still run. The package claims Node 20, where learned priors deliberately degrade to the static table.
+
 ## [1.9.26] - 2026-11-19
 
 ### Fixed
