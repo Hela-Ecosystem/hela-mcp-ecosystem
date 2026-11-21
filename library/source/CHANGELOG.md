@@ -1,3 +1,8 @@
+## [1.10.3] - 2026-11-22
+
+### Fixed
+- `chaining-mcp` 3.0.9: peer discovery reads the runtime's generated tool catalog, so Mitosis sees the ten cells it orchestrates when they are multiplexed behind one endpoint. `validate_tool_chain` no longer reports every real tool as unavailable (`read_file` on `hela-membrane` included), and availability now distinguishes an absent tool (error) from an undiscovered server or missing catalog (warning) — the direction that had been discarding correct plans. Verified against the installed catalog: 10 cells, 299 tools.
+
 ## [1.10.2] - 2026-11-22
 
 ### Fixed

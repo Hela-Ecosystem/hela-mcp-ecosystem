@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.10.2",
-  "created_at": "2026-11-21T21:58:04Z",
-  "description": "Terminal cells report what actually happened: execute_command no longer lets pkill/pgrep match its wrapper, RTK rejects degenerate summaries and keeps the source. Enzyme backs off long queries, folds morphological variants, weights terms by rarity, and returns a feedback handle for the priors loop. No runtime change.",
+  "snapshot_version": "1.10.3",
+  "created_at": "2026-11-21T22:04:41Z",
+  "description": "Mitosis discovers sibling cells through the runtime catalog instead of client configs, so validate_tool_chain stops rejecting real tools under the runtime; availability distinguishes absent from unverifiable. Carries the nucleus and enzyme fixes from 1.10.2. Runtime unchanged.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -12,10 +12,10 @@
   "servers": {
     "hela-mitosis": {
       "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
-      "commit": "4e4af56068229d4d58f3dc9c9cf2d2557be92e25",
+      "commit": "e755432af17e1d5588c96722926d87a29340cd93",
       "branch": "main",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.8"
+      "serverVersion": "3.0.9"
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",

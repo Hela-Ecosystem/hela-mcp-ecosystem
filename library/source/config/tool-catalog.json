@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "4e4af56068229d4d58f3dc9c9cf2d2557be92e25",
-      "version": "3.0.8",
+      "revision": "e755432af17e1d5588c96722926d87a29340cd93",
+      "version": "3.0.9",
       "digests": [
-        "28fc2423f9028bf016c3dd6c5237a47e48e5c09c02bd10215b0ff4bb3e322af8"
+        "69e659395c6b2f1b5defc19c7b56c80139457064fee9d8903319f441ce2da80d"
       ],
       "variants": [
         {

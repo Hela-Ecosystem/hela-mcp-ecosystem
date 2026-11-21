@@ -22,7 +22,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "4e4af56068229d4d58f3dc9c9cf2d2557be92e25",
+      "revision": "e755432af17e1d5588c96722926d87a29340cd93",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -47,7 +47,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.0.8",
+      "version": "3.0.9",
       "skills": [
         {
           "name": "skill-finder",

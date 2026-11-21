@@ -1,5 +1,20 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.3 — Mitosis can see the organism again
+
+Under `--mode runtime` the cells sit behind one endpoint, so Mitosis's config-based peer
+discovery found none of them and `validate_tool_chain` rejected every real tool. It now also
+reads the runtime's generated `config/tool-catalog.json`, which already knows each cell's
+tools and is revision-validated at build time. Verified against the installed catalog: ten
+cells, 299 tools.
+
+Availability is three-state rather than two: a discovered server missing a tool is an error,
+a server that was not discovered is a warning ("could not be verified"), and a run with no
+catalog produces one warning instead of one error per step. The previous behaviour failed in
+the direction that discards correct plans.
+
+Carries the nucleus 3.0.7 and enzyme 4.1.0 fixes from 1.10.2. Runtime unchanged at 1.3.7.
+
 ## v1.10.2 — the cells stop reporting quiet failures
 
 Two cell releases, both about a step that failed while looking like it succeeded.
