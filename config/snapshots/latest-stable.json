@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.10.7",
-  "created_at": "2026-11-21T22:57:40Z",
-  "description": "Enzyme 4.2.1 ships the backoff and feedback-spool behaviour in the entry production runs (research-server.ts), and triggers backoff on an empty ranked result. Carries 1.10.6. Runtime unchanged.",
+  "snapshot_version": "1.10.8",
+  "created_at": "2026-11-21T23:02:58Z",
+  "description": "Enzyme 4.2.2 weights brief terms by rarity among the returned pages (IDF corpus). Carries 1.10.7.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -47,10 +47,10 @@
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "4308678b6a6986d0ab6bfc18d706adc52f6a6f39",
+      "commit": "2bd1de68f8dd8d6d196d0f3c24eb12bea03e0e46",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "4.2.1"
+      "serverVersion": "4.2.2"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
