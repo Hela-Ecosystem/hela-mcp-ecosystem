@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.9.27",
-  "created_at": "2026-11-19T07:18:53Z",
-  "description": "Docker doctor compares the runtime catalog by namespaced name as well as bare name, so a namespaced runtime is no longer reported DEGRADED; enzyme 4.0.9 runs its priors suite on Node 20 instead of failing the import. Fixes the two red CI jobs.",
+  "snapshot_version": "1.10.0",
+  "created_at": "2026-11-21T14:38:49Z",
+  "description": "Host-layer diagnostics and a single client entry point. doctor --hosts checks the interpreter floor derived from cell engines, apt-mark state, credential modes and keys, all six client configs, backup exposure and a live handshake, with --repair; scripts/host-entry.sh becomes the canonical entry point. No cell changes: revisions and versions pin unchanged from 1.9.27.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
