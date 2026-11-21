@@ -21,7 +21,7 @@
     "catalog:generate": "node scripts/generate-tool-catalog.mjs",
     "catalog:check": "node scripts/generate-tool-catalog.mjs --check",
     "docs:generate": "node scripts/generate-docs.mjs",
-    "docs:check": "node scripts/generate-docs.mjs --check && node scripts/check-prose-facts.mjs",
+    "docs:check": "node scripts/generate-docs.mjs --check && node scripts/check-prose-facts.mjs && node scripts/check-release-consistency.mjs",
     "docs:build": "node scripts/build-site.mjs",
     "test:docs": "node --test scripts/test-docs.mjs scripts/test-document-library.mjs scripts/test-prose-facts.mjs",
     "test:install": "node --test scripts/test-installation.mjs",
