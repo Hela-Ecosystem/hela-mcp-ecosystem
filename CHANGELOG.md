@@ -1,3 +1,8 @@
+## [1.10.9] - 2026-11-22
+
+### Fixed
+- Repin the runtime to the commit that refreshes `npmDepsHash`. The 1.4.0 version bump changed the npm-deps derivation input, so the Nix verification job failed at build time on a fixed-output hash mismatch — the installer and CI both build from the pinned revision, which still carried the stale hash. No runtime behaviour change.
+
 ## [1.10.8] - 2026-11-22
 
 ### Fixed

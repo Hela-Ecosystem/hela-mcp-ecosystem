@@ -1,5 +1,15 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.9 — the Nix pin catches up with the runtime fix
+
+Bumping the runtime to 1.4.0 changed the npm-deps derivation input, so `flake.nix`'s
+fixed-output hash no longer matched. The runtime repository fixed it; the ecosystem still pinned
+the older revision, so the installer and the clean-install CI job kept building the stale tree
+and failing at hash verification.
+
+This release pins the corrected revision. Nothing changes at runtime — the runtime code is
+identical; only the Nix dependency hash moves.
+
 ## v1.10.8 — scoring weights that actually compute
 
 `research_brief` scored candidates without a corpus, so the IDF half of the scorer never
