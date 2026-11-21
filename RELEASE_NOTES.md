@@ -1,5 +1,20 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.7 — the enzyme fix that actually ships
+
+The backoff and feedback work released as 4.1.0/4.2.0 compiled into
+`src/combinedMcp.ts`, while the executable entry (`dist/index.js`) loads the root
+`research-server.ts`, which carries its own `research_brief`. Unit tests passed, the pin
+said 4.2.0, and the deployed cell still behaved like 4.0.9 — no backoff, no feedback
+handle, no spool writes.
+
+Enzyme 4.2.1 ports all three into the entry production runs, and corrects the trigger:
+backoff now fires when the **ranked** result is empty, since pages that all fall below the
+relevance floor still read as "No results from any source".
+
+Found by verifying the deployed cell end to end after the previous release, not by the test
+suite, which exercises the other entry. Carries 1.10.6; runtime unchanged.
+
 ## v1.10.6 — pipe stops lying about success
 
 `hela_pipe` exists so intermediate results never pass through the model, which means the
