@@ -96,7 +96,23 @@ async function runDoctor(options = {}) {
     process.exitCode = report.status === 'READY' ? 0 : 1;
     return;
   }
-  if (fs.existsSync(path.join(parsed.prefix, '.hela-install.json')) || process.argv.includes('--prefix')) {
+  const usingInstallation = fs.existsSync(path.join(parsed.prefix, '.hela-install.json')) || process.argv.includes('--prefix');
+  let installationCandidates = [];
+  if (!usingInstallation) {
+    // A profile can be installed under any mode; <profile>-individual is only the default.
+    // Silence here reads as "nothing is installed" and sends people to reinstall.
+    const base = path.join(process.env.XDG_DATA_HOME || path.join(os.homedir(), '.local/share'), 'hela/installations');
+    try {
+      for (const name of fs.readdirSync(base)) {
+        if (!name.startsWith(`${parsed.profile}-`)) continue;
+        const candidate = path.join(base, name);
+        if (fs.existsSync(path.join(candidate, '.hela-install.json'))) {
+          installationCandidates.push({ name, path: candidate, mode: name.slice(parsed.profile.length + 1) });
+        }
+      }
+    } catch { /* no installations directory at all */ }
+  }
+  if (usingInstallation) {
     const manifest = readInstallation(parsed.prefix);
     if (process.argv.includes('--profile') && parsed.profile !== manifest.profile) throw new Error('Doctor profile does not match installation');
     if ((process.argv.includes('--mode') || process.argv.includes('--runtime')) && parsed.mode !== manifest.mode) throw new Error('Doctor mode does not match installation');
@@ -283,6 +299,8 @@ async function runDoctor(options = {}) {
 
   report.status = allHealthy ? 'READY' : 'DEGRADED';
 
+  if (installationCandidates.length) report.installationCandidates = installationCandidates;
+
   if (isJson) {
     console.log(JSON.stringify(report, null, 2));
     process.exit(allHealthy ? 0 : 1);
@@ -306,6 +324,14 @@ async function runDoctor(options = {}) {
   for (const [k, v] of Object.entries(report.secrets)) {
     const isSet = !v.startsWith('Not set');
     console.log(`${k.padEnd(20)}: ${isSet ? colors.green + '✓ ' : colors.cyan + '○ '}${v}${colors.reset}`);
+  }
+
+  if (installationCandidates.length) {
+    const names = installationCandidates.map(item => item.name).join(', ');
+    console.log(`${colors.yellow}No installation at ${parsed.prefix}, but this host has: ${names}${colors.reset}`);
+    for (const item of installationCandidates) {
+      console.log(`  · pass --mode ${item.mode} (or --prefix "${item.path}") to diagnose it`);
+    }
   }
 
   logHeader(`Component Health (${targetProfileId ? 'Profile: ' + targetProfileId : 'All 10 Servers'})`);
