@@ -1,3 +1,9 @@
+## [1.10.1] - 2026-11-22
+
+### Fixed
+- Running `doctor` against a bare checkout printed ten rows of `missing*` / `Not checked` without naming a path or a next step, which is indistinguishable from a broken install — and reads as a platform bug when it happens on Windows. Rows now say `not installed`, and when every component is missing the report lists the paths it resolved plus the two commands that fix it (install, then `doctor --prefix`).
+- A profile can be installed under any mode, but doctor only looked at `<profile>-individual` unless `--prefix` was passed. Installing with `--runtime` therefore made a healthy host report every component missing. When the default prefix has no manifest, doctor now scans for sibling `<profile>-*` installations and prints each one with the `--mode` or `--prefix` that would diagnose it; JSON output carries the same list under `installationCandidates`.
+
 ## [1.10.0] - 2026-11-21
 
 ### Added

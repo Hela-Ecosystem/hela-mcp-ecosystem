@@ -1,6 +1,12 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.10.1] - 2026-11-22
+
+### Fixed
+- Running `doctor` against a bare checkout printed ten rows of `missing*` / `Not checked` without naming a path or a next step, which is indistinguishable from a broken install — and reads as a platform bug when it happens on Windows. Rows now say `not installed`, and when every component is missing the report lists the paths it resolved plus the two commands that fix it (install, then `doctor --prefix`).
+- A profile can be installed under any mode, but doctor only looked at `<profile>-individual` unless `--prefix` was passed. Installing with `--runtime` therefore made a healthy host report every component missing. When the default prefix has no manifest, doctor now scans for sibling `<profile>-*` installations and prints each one with the `--mode` or `--prefix` that would diagnose it; JSON output carries the same list under `installationCandidates`.
+
 ## [1.10.0] - 2026-11-21
 
 ### Added
@@ -479,7 +485,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.10.0**, with runtime **1.3.7**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.10.1**, with runtime **1.3.7**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -615,7 +621,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.0 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.1 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -764,6 +770,17 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes
+
+Two lookups produced a report that blamed the host for what was really a path miss. Doctor
+now says `not installed` instead of `Not checked`, and when every component is missing it
+prints the paths it resolved along with the install-then-diagnose commands. Separately, an
+installation made with `--runtime` lives under `<profile>-runtime`, but doctor only checked
+`<profile>-individual`; it now scans for sibling `<profile>-*` installations and names the
+`--mode` or `--prefix` needed to diagnose each one, in human and JSON output alike.
+
+No cell changes: revisions and versions pin unchanged from 1.10.0.
 
 ## v1.10.0 — host-layer doctor and a single MCP entry point
 
@@ -1268,7 +1285,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.0**; runtime **1.3.7**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.1**; runtime **1.3.7**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.8**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.6**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
