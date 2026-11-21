@@ -1,3 +1,9 @@
+## [1.10.2] - 2026-11-22
+
+### Fixed
+- `terminal-mcp` 3.0.7: local commands run from a temporary script instead of `sh -c`, so `pkill -f` no longer matches and kills the wrapper shell, and `pgrep -f` no longer reports it as a live process. RTK summarisation rejects summaries below 5% of the source, retains and names the original output, and anchors its log heuristic to line starts. Two defects that both made a failed step look successful.
+- `researcher-mcp` 4.1.0: `research_brief` retries once with a reduced query when every source returns nothing and discloses it (`backoff: "…"`); scoring folds morphological variants and weights terms by how much they discriminate among the candidates; the brief returns a feedback handle plus the exact `genome search_feedback` call, and a follow-up tool on a brief URL appends it with `used=true`.
+
 ## [1.10.1] - 2026-11-22
 
 ### Fixed

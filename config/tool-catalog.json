@@ -4882,10 +4882,10 @@
       ]
     },
     "hela-nucleus": {
-      "revision": "0088f0b68a474336398cdc36f6571ee7d8cebccd",
-      "version": "3.0.6",
+      "revision": "3ad8592fa166b16d3844080d8425321e52085442",
+      "version": "3.0.7",
       "digests": [
-        "c9ce54e4c29b015887aa2bd06c795cc0ed47c6f829d228134f4cdca7666e5f63"
+        "ac7e3f3b0b02c349581f4c58cd351e3bd448bf09954feab48a8253849bd7796d"
       ],
       "variants": [
         {
@@ -5855,10 +5855,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "a378b34a86820fa162a17f961e0961c715514f60",
-      "version": "4.0.9",
+      "revision": "da7687046b2d79e39e8aecd57c9e73676213bb33",
+      "version": "4.1.0",
       "digests": [
-        "56a39195642b912592f132e998ea638ac3cce8e02609cf30d0738e72ebac64ac"
+        "1d1f8cdf915b6cee89dfd661a04917c6f12b7ffb8655f6cf59052118d475aab3"
       ],
       "variants": [
         {

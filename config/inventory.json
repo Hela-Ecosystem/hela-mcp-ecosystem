@@ -170,10 +170,10 @@
       "systemDeps": {
         "tmux": "required"
       },
-      "revision": "0088f0b68a474336398cdc36f6571ee7d8cebccd",
+      "revision": "3ad8592fa166b16d3844080d8425321e52085442",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
-      "version": "3.0.6"
+      "version": "3.0.7"
     },
     "hela-ribosome": {
       "id": "hela-ribosome",
@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "a378b34a86820fa162a17f961e0961c715514f60",
+      "revision": "da7687046b2d79e39e8aecd57c9e73676213bb33",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -224,7 +224,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.0.9"
+      "version": "4.1.0"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
