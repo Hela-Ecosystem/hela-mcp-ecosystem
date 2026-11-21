@@ -1,3 +1,8 @@
+## [1.10.5] - 2026-11-22
+
+### Fixed
+- `filesystem-mcp` 3.0.6: four responses promised what the implementation did not deliver. Ranged `read_file` now snaps to character boundaries and reports `startByte`/`endByte` (chunked reads of non-ASCII files no longer lose a character per boundary); `extract_archive` reports `extracted`/`entries`/`skipped` with a reason instead of a silent partial success; `watch_file` buffers events and returns them on the next call (plus waits for chokidar's initial scan); `compare_files` reports `size` in bytes with a separate `characters` field and a correct line count.
+
 ## [1.10.4] - 2026-11-22
 
 ### Added

@@ -4350,10 +4350,10 @@
       ]
     },
     "hela-membrane": {
-      "revision": "886d5d9de1903baa1a08be39060b7bf97b0b7d09",
-      "version": "3.0.5",
+      "revision": "ddf6d5155f9da2a8ad13c9a8dd2037b66fa44f3a",
+      "version": "3.0.6",
       "digests": [
-        "c0f1da89a504e3d477129a23cdb838a6412b223a1f5067065db23ef4ab6fe404"
+        "9999e679280081bf6117918ab3db5e834d94dea99cd9f9ec99314469e1a8ae7e"
       ],
       "variants": [
         {
@@ -4711,7 +4711,7 @@
             },
             {
               "name": "watch_file",
-              "description": "Watch file or directory for changes",
+              "description": "Watch file or directory for changes. Repeat calls return the events buffered since the previous call; stop_watching returns any remaining events.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -4842,7 +4842,7 @@
             },
             {
               "name": "extract_archive",
-              "description": "Extract archive to destination",
+              "description": "Extract archive to destination. Reports extracted and skipped entries; path-traversal entries are rejected and listed with a reason.",
               "inputSchema": {
                 "type": "object",
                 "properties": {

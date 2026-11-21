@@ -1,5 +1,19 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.5 — membrane answers match what happened
+
+Four tools in the filesystem cell returned a shape that promised more than the code did.
+Ranged reads split UTF-8 characters and lost them at every chunk edge; extraction dropped
+path-traversal entries silently and called the remainder a success; `watch_file` started a
+watcher whose events were discarded on return; `compare_files` measured characters where the
+rest of the cell measures bytes.
+
+Membrane 3.0.6 fixes the four: boundary-snapped ranges with `startByte`/`endByte`, extraction
+that lists every skipped entry and why, buffered watch events collected by polling (and a
+wait for chokidar's initial scan), and bytes plus a separate `characters` field.
+
+Carries 1.10.4. Runtime unchanged at 1.3.7.
+
 ## v1.10.4 — the priors loop is closed
 
 The adaptive ranking mechanism had been built and never fed. Enzyme observed which source
