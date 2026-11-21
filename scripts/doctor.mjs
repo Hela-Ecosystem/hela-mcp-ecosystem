@@ -225,7 +225,7 @@ async function runDoctor(options = {}) {
     const snapshotCommit = snapshot.servers?.[s.id]?.commit;
     const isPinnedCommit = s.revision && currentCommit ? currentCommit === s.revision && currentCommit === snapshotCommit : false;
 
-    let smokeStatus = { ok: false, reason: 'Not checked' };
+    let smokeStatus = { ok: false, reason: exists ? 'Not checked' : 'not installed' };
     if (exists && entryExists) {
       smokeStatus = await checkServerProcess(entryFile, dirPath, selectedProfile.id);
     }
@@ -322,6 +322,18 @@ async function runDoctor(options = {}) {
     console.log(
       `${s.alias.padEnd(18)} ${s.scope.padEnd(8)} ${revTag.padEnd(10)} ${verColor}${verTag.padEnd(8)}${colors.reset} ${entryTag.padEnd(12)} ${statusColor}[${s.status}] ${diagNote}${colors.reset}`
     );
+  }
+
+  const absent = report.servers.filter(server => !server.exists);
+  if (report.servers.length && absent.length === report.servers.length) {
+    const searched = [...new Set(report.servers.map(server => server.dir))];
+    console.log(`${colors.yellow}Every component is missing. The doctor resolves cells next to this checkout, or under an installation prefix.${colors.reset}`);
+    console.log('It looked in:');
+    for (const dir of searched.slice(0, 4)) console.log(`  · ${dir}`);
+    if (searched.length > 4) console.log(`  · … and ${searched.length - 4} more paths`);
+    console.log(`${colors.cyan}Nothing is installed yet. Install, then point the doctor at the prefix:${colors.reset}`);
+    console.log('  node setup.mjs --profile <id> --client <host> --non-interactive');
+    console.log('  node setup.mjs doctor --prefix <prefix>');
   }
 
   console.log('\n' + '='.repeat(78));
