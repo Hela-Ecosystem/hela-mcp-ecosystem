@@ -1,3 +1,8 @@
+## [1.10.8] - 2026-11-22
+
+### Fixed
+- `researcher-mcp` 4.2.2: the IDF half of the scorer was inert in production because `research_brief` passed no candidate corpus. Terms are now weighted by how much they discriminate among the returned pages, so a common term contributes little and a rare one carries the match.
+
 ## [1.10.7] - 2026-11-22
 
 ### Fixed

@@ -1,5 +1,14 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.8 — scoring weights that actually compute
+
+`research_brief` scored candidates without a corpus, so the IDF half of the scorer never
+engaged: every term kept a uniform weight and only morphological folding applied. Enzyme
+4.2.2 builds the corpus from the pages it returned, so a term present in every title
+contributes almost nothing and a rare one carries the match.
+
+Carries 1.10.7; runtime unchanged.
+
 ## v1.10.7 — the enzyme fix that actually ships
 
 The backoff and feedback work released as 4.1.0/4.2.0 compiled into
