@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.10.4",
-  "created_at": "2026-11-21T22:17:04Z",
-  "description": "The search priors loop is closed: enzyme appends observed follow-up signals to a spool, genome drains it into source_feedback, so learned priors can finally leave static mode. Carries mitosis 3.0.9, nucleus 3.0.7 and the earlier enzyme work. Runtime unchanged.",
+  "snapshot_version": "1.10.5",
+  "created_at": "2026-11-21T22:29:34Z",
+  "description": "Membrane stops reporting success it cannot back up: ranged reads keep characters intact, extraction reports skipped entries, watch_file delivers buffered events, compare_files uses bytes. Carries 1.10.4. Runtime unchanged.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -26,10 +26,10 @@
     },
     "hela-membrane": {
       "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
-      "commit": "886d5d9de1903baa1a08be39060b7bf97b0b7d09",
+      "commit": "ddf6d5155f9da2a8ad13c9a8dd2037b66fa44f3a",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.5"
+      "serverVersion": "3.0.6"
     },
     "hela-nucleus": {
       "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git",

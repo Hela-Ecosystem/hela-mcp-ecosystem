@@ -146,10 +146,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "886d5d9de1903baa1a08be39060b7bf97b0b7d09",
+      "revision": "ddf6d5155f9da2a8ad13c9a8dd2037b66fa44f3a",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
-      "version": "3.0.5"
+      "version": "3.0.6"
     },
     "hela-nucleus": {
       "id": "hela-nucleus",
