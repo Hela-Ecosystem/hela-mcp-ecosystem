@@ -61,6 +61,8 @@ for f in *.mmd; do
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome \
     npx -y @mermaid-js/mermaid-cli@11 -i &quot;$f&quot; -o &quot;${f%.mmd}.svg&quot; -b white -t neutral
 done
+# mermaid-cli writes no trailing newline; the pre-commit end-of-file hook rejects that.
+for f in *.svg; do [ -n &quot;$(tail -c1 &quot;$f&quot;)&quot; ] &amp;&amp; printf '\n' &gt;&gt; &quot;$f&quot;; done
 </code></pre>
 </div>
 <p>White background with the <code>neutral</code> theme on purpose: the SVGs stay readable in light
@@ -433,7 +435,7 @@ shape they encoded is the one this document describes.</p>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.10.8"></script>
-  <script src="../../library-data.js?v=1.10.8&amp;rev=efae15127b68"></script>
+  <script src="../../library-data.js?v=1.10.8&amp;rev=4275ab3d206f"></script>
   <script src="../../library.js?v=1.10.8&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.10.8&amp;rev=2dfe17383063"></script>
 </body>

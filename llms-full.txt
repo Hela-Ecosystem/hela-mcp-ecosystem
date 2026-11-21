@@ -2784,6 +2784,8 @@ for f in *.mmd; do
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome \
     npx -y @mermaid-js/mermaid-cli@11 -i "$f" -o "${f%.mmd}.svg" -b white -t neutral
 done
+# mermaid-cli writes no trailing newline; the pre-commit end-of-file hook rejects that.
+for f in *.svg; do [ -n "$(tail -c1 "$f")" ] && printf '\n' >> "$f"; done
 ```
 
 White background with the `neutral` theme on purpose: the SVGs stay readable in light
