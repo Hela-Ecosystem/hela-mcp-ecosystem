@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Mode for HeLa: research and design — HeLa MCP Ecosystem</title>
+  <meta name="description" content="Status: research. Nothing here is implemented.">
+  <link rel="canonical" href="https://hela.my.id/id/library/docs/code-mode-research.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/code-mode-research.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/code-mode-research.html">
+  <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../library.css?v=1.10.1&amp;rev=f4fb3976fbca">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Langsung ke isi</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.10.1 · Runtime 1.3.7 · 10 SEL</div></div>
+      <nav aria-label="Dokumentasi"><details class="doc-mobile-nav" open><summary>Jelajahi dokumentasi</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Pustaka dokumentasi</span></a></li></ol>
+<div class="doc-nav-section">MEMULAI</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Ikhtisar</span></a></li>
+<li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Instalasi</span></a></li>
+<li><a href="../../index.html#verify"><span class="doc-nav-num">03</span> <span>Verifikasi</span></a></li></ol>
+<div class="doc-nav-section">REFERENSI</div><ol class="doc-nav" start="4"><li><a href="../../architecture.html"><span class="doc-nav-num">04</span> <span>Arsitektur</span></a></li>
+<li><a href="../../workflows.html"><span class="doc-nav-num">05</span> <span>Alur Kerja</span></a></li>
+<li><a href="../../profiles.html"><span class="doc-nav-num">06</span> <span>Profil &amp; Konfigurasi</span></a></li></ol>
+<div class="doc-nav-section">PENGOPERASIAN</div><ol class="doc-nav" start="7"><li><a href="../../showcase.html"><span class="doc-nav-num">07</span> <span>Pameran &amp; Demo</span></a></li>
+<li><a href="../../troubleshooting.html"><span class="doc-nav-num">08</span> <span>Diagnostik</span></a></li></ol>
+<div class="doc-nav-section">LEGAL &amp; HUKUM</div><ol class="doc-nav" start="9"><li><a href="../../privacy.html"><span class="doc-nav-num">09</span> <span>Privasi</span></a></li>
+<li><a href="../../terms.html"><span class="doc-nav-num">10</span> <span>Ketentuan</span></a></li></ol></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Pustaka dokumentasi</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn" data-lang="en" href="../../../library/docs/code-mode-research.html">EN</a><a class="lang-btn active" data-lang="id" href="code-mode-research.html">ID</a></div><button class="btn open-cmd-palette" type="button">Cari <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="code-mode-for-hela-research-and-design" class="doc-title">Code Mode for HeLa: research and design</h1>
+<header class="library-document-meta" lang="id"><p class="library-kicker">Referensi</p><p class="library-source">docs/code-mode-research.md</p><p>Isi dalam bahasa sumber. <a href="../../../library/source/docs/code-mode-research.md" download>Unduh sumber</a> · <a href="../../library.html">Semua dokumen</a></p></header><p>Status: research. Nothing here is implemented.</p>
+<p>The question: should the ecosystem expose <strong>one code-execution tool</strong> instead of (or beside)
+hundreds of MCP tool schemas — and what would that cost in security and complexity?</p>
+<p>Two independent labs published the same pattern within six weeks of each other, from very
+different platforms. That coincidence is the strongest signal in this document. The evidence
+is thinner than the blog posts suggest, and the sandbox is the whole problem.</p>
+<h2 id="1-what-code-mode-is">1. What Code Mode is</h2>
+<p>The model receives one tool whose input is source code. That code calls typed functions
+representing the connected tools, runs in a sandbox, and returns only its final output.
+Intermediate results never enter the model's context.</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code>direct tool calling                    code mode
+─────────────────                      ─────────
+model → tool call → result             model → code ──┐
+model → tool call → result                          ├─ sandbox: call, filter, loop
+model → tool call → result                          ├─ sandbox: call, join
+model → answer                                      └─ return only the answer
+</code></pre>
+</div>
+<p>Three claims are made, and they fail or succeed independently:</p>
+<ol>
+<li><strong>Context economy</strong> — schemas and intermediate results stop competing with the task.</li>
+<li><strong>Composition</strong> — loops, branches, joins and retries move out of the message loop.</li>
+<li><strong>Accuracy</strong> — models write better code than tool-call JSON, because they have seen more
+of it.</li>
+</ol>
+<p>Claim 3 is repeated most and evidenced least.</p>
+<h2 id="2-evidence-and-what-each-source-actually-shows">2. Evidence, and what each source actually shows</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Code Mode for HeLa: research and design — tabel 1</caption>
+<thead>
+<tr>
+<th scope="col">Source</th>
+<th scope="col">Claim</th>
+<th scope="col">What it demonstrates</th>
+<th scope="col">Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anthropic, <em>Code execution with MCP</em> (Nov 2025)</td>
+<td>150k → 2k tokens, &quot;98.7%&quot;</td>
+<td>One worked example with a generated tool-file tree; illustrative, not a benchmark</td>
+<td>Direction yes, magnitude no</td>
+</tr>
+<tr>
+<td>Cloudflare, <em>Code Mode</em> (Sep 2025)</td>
+<td>&quot;Striking&quot; results; more and more complex tools as TypeScript</td>
+<td>Qualitative engineering report; no published eval or failure rates</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>CodeAct (ICML 2024)</td>
+<td>Code actions beat JSON/text &quot;up to 20%&quot;</td>
+<td>17 LLMs, API-Bank plus a new benchmark</td>
+<td>High for code-as-action; not MCP-specific</td>
+</tr>
+</tbody>
+</table></div>
+<p>None of them quantify: how often generated code is wrong where a tool call would have
+succeeded, what the sandbox costs to operate, or who reviews code that mutates state.</p>
+<h2 id="3-what-it-would-cost-here-measured">3. What it would cost <em>here</em>, measured</h2>
+<p>Measured against this installation's live catalog, not a hypothetical:</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Code Mode for HeLa: research and design — tabel 2</caption>
+<thead>
+<tr>
+<th scope="col">Metric</th>
+<th scope="col">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reachable tools in one session</td>
+<td>305</td>
+</tr>
+<tr>
+<td><code>tools/list</code> schema size</td>
+<td><strong>161 KB</strong></td>
+</tr>
+<tr>
+<td>Estimated tokens (bytes ÷ 4)</td>
+<td><strong>≈ 40,000</strong></td>
+</tr>
+<tr>
+<td>Average schema per tool</td>
+<td>528 B</td>
+</tr>
+<tr>
+<td>Largest single schema</td>
+<td>4.9 KB (<code>logo_workflow</code>)</td>
+</tr>
+<tr>
+<td>Declared across all cells</td>
+<td>591 (286 shadowed by bare-name collisions)</td>
+</tr>
+</tbody>
+</table></div>
+<p>40k tokens is roughly a fifth of a 200k window, paid before the first request. Namespacing
+every tool would make the number worse, not better — 591 schemas. That is the real
+motivation: not that code mode is fashionable, but that this catalog is too large to inline.</p>
+<p>Two honest caveats:</p>
+<ul>
+<li>Providers cache tool definitions (Anthropic prompt caching, OpenAI automatic caching), so
+the <em>marginal</em> cost is lower than 40k per turn. The context window is still occupied, and
+cache reads are cheap but not free.</li>
+<li>The saving only converts to wall-clock or accuracy if the model actually needed most of
+those schemas. For a single-tool task, inlining 305 tools versus loading one costs the same
+either way — and code mode adds a sandbox and a failure mode for nothing.</li>
+</ul>
+<h2 id="4-critiques-worth-taking-seriously">4. Critiques worth taking seriously</h2>
+<ul>
+<li><strong>You still need the types.</strong> Code that calls <code>membrane.read_file(path, encoding)</code> must
+know the signature. Without <code>describe</code>, models hallucinate parameters; with it, you have
+traded a schema block for a discovery round-trip. Neither is free.</li>
+<li><strong>Debugging moves to the model.</strong> A failed tool call returns a tool error. Failed code
+returns a stack trace through a sandbox; the retry burns tokens on the whole program, not
+one call.</li>
+<li><strong>Reviewability drops by default.</strong> Tool calls are individually visible in a transcript;
+one execution that makes forty calls is not, unless the runtime logs each proxied call.
+Auditability must be designed in, not inherited.</li>
+<li><strong>Prompt injection becomes code execution.</strong> If any tool output can steer the model, the
+blast radius is now &quot;whatever the sandbox allows&quot; instead of &quot;whatever the next tool call
+allows&quot;. This is the argument for keeping credentials and network out of the sandbox.</li>
+<li><strong>It rewards strong models.</strong> CodeAct shows gains across 17 models, but the spread is wide;
+a weaker model writing a 40-line program that half-works is worse than three tool calls.</li>
+<li><strong>Sandbox dependencies rot.</strong> Native modules (<code>isolated-vm</code>) must be rebuilt per Node ABI;
+WASM runtimes are stable but slow. The cheapest robust option is an OS-level boundary
+around a plain Node child process.</li>
+</ul>
+<h2 id="5-three-designs">5. Three designs</h2>
+<p><strong>A. Execute + discover inside the runtime (recommended).</strong> Two new tools beside the existing
+ones: <code>hela.execute({code})</code> and a discovery path (<code>search</code>, <code>describe</code>). Every sandbox call
+proxies back to the runtime, which applies the same roots policy, approvals and audit as a
+direct call.</p>
+<p><img src="../../../assets/diagrams/09-code-mode-flow.svg" alt="Code mode flow" loading="lazy"></p>
+<p><em>Source: <a href="../../../assets/diagrams/09-code-mode-flow.mmd">09-code-mode-flow.mmd</a>.</em></p>
+<p><strong>B. Filesystem of tools.</strong> Generate <code>servers/&lt;cell&gt;/&lt;tool&gt;.ts</code> plus <code>index.ts</code> and let the
+agent read what it needs. Anthropic's shape. Cheapest to bolt on, but it needs a readable
+filesystem inside the sandbox and costs more tokens per discovery than one <code>describe</code> call.</p>
+<p><strong>C. Keep direct calls.</strong> Correct for small catalogs; at 305 tools it is what we do now.</p>
+<p>A and B compose: A's <code>describe</code> can serve the same generated text B writes to disk.</p>
+<h2 id="6-trust-boundary">6. Trust boundary</h2>
+<p><img src="../../../assets/diagrams/10-code-mode-boundary.svg" alt="Code mode boundary" loading="lazy"></p>
+<p><em>Source: <a href="../../../assets/diagrams/10-code-mode-boundary.mmd">10-code-mode-boundary.mmd</a>.</em></p>
+<p>The rule that makes the design coherent: <strong>capabilities live in the parent; the sandbox holds
+none.</strong> No network, no host filesystem beyond a per-execution workspace, no environment, no
+credentials. Tool calls cross one RPC channel that the parent validates. If the sandbox is
+compromised, an attacker gets a workspace and a list of tool calls that policy already allows.</p>
+<h2 id="7-sandbox-options-on-linux">7. Sandbox options on Linux</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Code Mode for HeLa: research and design — tabel 3</caption>
+<thead>
+<tr>
+<th scope="col">Option</th>
+<th scope="col">Isolation</th>
+<th scope="col">Cost</th>
+<th scope="col">Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>node:vm</code> in-process</td>
+<td><strong>none</strong> — documented as not a security boundary</td>
+<td>~0</td>
+<td>Only for trusted snippets; never for model output</td>
+</tr>
+<tr>
+<td>Node permission model</td>
+<td>fs/net/child-process gating</td>
+<td>~25 ms</td>
+<td>Useful hardening; not a security boundary</td>
+</tr>
+<tr>
+<td>Bun</td>
+<td>none by default</td>
+<td>low</td>
+<td>Reject</td>
+</tr>
+<tr>
+<td>Deno subprocess</td>
+<td>capability-based, deny by default</td>
+<td>30–50 ms</td>
+<td>Strong ergonomics; ships a second runtime</td>
+</tr>
+<tr>
+<td>QuickJS (WASM)</td>
+<td>strong; no host bindings unless exposed</td>
+<td>low, slow compute</td>
+<td>Good for pure logic, awkward for async RPC</td>
+</tr>
+<tr>
+<td><code>isolated-vm</code></td>
+<td>V8 isolate, memory-isolated</td>
+<td>native build per ABI</td>
+<td>Strong; maintenance risk</td>
+</tr>
+<tr>
+<td>Child process + Landlock/seccomp</td>
+<td>kernel-enforced fs/net</td>
+<td>~20 ms</td>
+<td>Best complement; Linux-only</td>
+</tr>
+</tbody>
+</table></div>
+<p>Recommendation: <strong>child process + Landlock (or <code>bwrap</code>) profile + stdio RPC</strong>, with the
+parent enforcing time, memory, call budget and output size. It is not containment against a
+kernel exploit; it is containment against <code>rm -rf ~</code>, <code>curl | sh</code>, and runaway loops — which
+is the realistic threat for a local, single-user agent.</p>
+<p>Note what this machine already grants: the nucleus cell runs arbitrary shell commands today.
+Code mode does not add a capability class here; it adds a <em>narrower, audited</em> interface and a
+place to enforce limits that raw shell access does not have. A sandbox weaker than the
+existing shell would be theatre.</p>
+<h2 id="8-progressive-discovery">8. Progressive discovery</h2>
+<p>Loading 305 signatures up front recreates the problem. Two tools instead:</p>
+<ul>
+<li><code>search(query, {limit})</code> → ranked <code>{path, cell, tool, one_line}</code>, no schemas.</li>
+<li><code>describe(path)</code> → one TypeScript signature plus its doc comment.</li>
+</ul>
+<p>Detail levels (name / signature / full) matter: triage does not need parameter docs.
+Names must be unique for paths to exist, which is the concrete argument for turning
+namespacing on: 286 declared tools have no addressable identity today because a later cell
+shadows the bare name.</p>
+<h2 id="9-execution-contract">9. Execution contract</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code>hela.execute({ code, timeout_ms?, max_calls? })
+  → { status: &quot;ok&quot; | &quot;error&quot; | &quot;timeout&quot; | &quot;denied&quot;,
+      result, logs,
+      calls: [{ path, ms, ok }],
+      duration_ms }
+</code></pre>
+</div>
+<p>Enforced by the parent, not the sandbox: wall clock (default 30 s), output (256 KB, then
+truncate with a marker), call count (default 50), memory (rlimit/cgroup).</p>
+<p>Failures are data. Sandbox error, tool error and policy denial all return a structured
+<code>status</code> so the model can retry or report, and the host never dies from generated code.</p>
+<h2 id="10-security-model">10. Security model</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Code Mode for HeLa: research and design — tabel 4</caption>
+<thead>
+<tr>
+<th scope="col">Threat</th>
+<th scope="col">Mitigation</th>
+<th scope="col">Residual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Injected code exfiltrates files</td>
+<td>no network, workspace-only fs, roots policy per call</td>
+<td>data can be written into an allowed root and read later</td>
+</tr>
+<tr>
+<td>Destructive calls (<code>delete_file</code>, archive extract)</td>
+<td>per-tool approval; mutating tools denied by default in code mode</td>
+<td>approved code can still be wrong</td>
+</tr>
+<tr>
+<td>Resource exhaustion</td>
+<td>time, call budget, memory, output caps</td>
+<td>legal-but-heavy work still costs CPU</td>
+</tr>
+<tr>
+<td>Secrets reachable from code</td>
+<td>credentials stay in the parent; bindings, not env</td>
+<td>a tool returning secrets leaks them into <code>logs</code></td>
+</tr>
+<tr>
+<td>No audit trail</td>
+<td>every RPC logged: path, args digest, duration, execution id</td>
+<td>logs hold digests, not payloads</td>
+</tr>
+</tbody>
+</table></div>
+<p>Approval fatigue is the realistic failure: a prompt people click through is not a control.
+Read-only tools should run unprompted; only mutations should stop.</p>
+<h2 id="11-implementation-plan">11. Implementation plan</h2>
+<p>Phase 1 — read-only, no approvals:</p>
+<ol>
+<li><code>code-mode/catalog.mjs</code>: unique path per tool from live <code>tools/list</code>; one-line summary and
+full signature per tool.</li>
+<li><code>code-mode/search.mjs</code>: token-overlap or BM25 over name + description. No embeddings.</li>
+<li><code>code-mode/executor.mjs</code>: child process, stdio RPC, Landlock/bwrap profile, kill on
+timeout.</li>
+<li>Register <code>hela.execute</code> and <code>hela.describe</code> behind <code>HELA_CODE_MODE=1</code>.</li>
+<li>Tests: escape attempts (fs outside workspace, <code>fetch</code>, <code>process</code>, infinite loop, memory
+bomb) and golden multi-step tasks.</li>
+</ol>
+<p>Phase 2: approval policy for mutating tools; append-only audit log; <code>--dry-run</code> returning
+planned calls without executing them.</p>
+<p>Phase 3: snippets — save a successful execution as a skill under
+<code>~/.local/share/hela/snippets</code> with a <code>SKILL.md</code>, discoverable by <code>search</code>. This is the part
+that compounds: capability grows without schemas growing.</p>
+<p>Measure before/after on three fixed tasks: schema bytes in context, model-mediated calls,
+wall time, wrong-tool rate. If the schema saving does not show up as wall-time or error-rate
+improvement, stop at phase 1.</p>
+<h2 id="12-what-would-make-this-not-worth-doing">12. What would make this not worth doing</h2>
+<ul>
+<li>If client-side caching keeps schemas out of context, claim 1 mostly evaporates and only
+composition remains.</li>
+<li>If HeLa's task mix is mostly single-tool, code mode adds a sandbox for nothing. Measure the
+mix first.</li>
+<li>If the sandbox ends up in-process, the honest description is &quot;no sandbox&quot;, and approvals
+stop being optional.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<ul>
+<li>Cloudflare, <em>Code Mode: the better way to use MCP</em> — https://blog.cloudflare.com/code-mode/</li>
+<li>Cloudflare, <em>Code Mode</em> and <em>How Code Mode works</em> — https://developers.cloudflare.com/agents/tools/codemode/</li>
+<li>Anthropic, <em>Code execution with MCP</em> — https://www.anthropic.com/engineering/code-execution-with-mcp</li>
+<li>Wang et al., <em>Executable Code Actions Elicit Better LLM Agents</em> (CodeAct, ICML 2024) — https://arxiv.org/abs/2402.01030</li>
+</ul>
+</article><footer class="doc-footer"><span>SUITE MIT · SEL GPL-3.0 + MIT · HELA ECOSYSTEM</span><a href="../../library.html">Pustaka dokumentasi</a></footer></main>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#1-what-code-mode-is">1. What Code Mode is</a></li><li><a href="#2-evidence-and-what-each-source-actually-shows">2. Evidence, and what each source actually shows</a></li><li><a href="#3-what-it-would-cost-here-measured">3. What it would cost here, measured</a></li><li><a href="#4-critiques-worth-taking-seriously">4. Critiques worth taking seriously</a></li><li><a href="#5-three-designs">5. Three designs</a></li><li><a href="#6-trust-boundary">6. Trust boundary</a></li><li><a href="#7-sandbox-options-on-linux">7. Sandbox options on Linux</a></li><li><a href="#8-progressive-discovery">8. Progressive discovery</a></li><li><a href="#9-execution-contract">9. Execution contract</a></li><li><a href="#10-security-model">10. Security model</a></li><li><a href="#11-implementation-plan">11. Implementation plan</a></li><li><a href="#12-what-would-make-this-not-worth-doing">12. What would make this not worth doing</a></li><li><a href="#sources">Sources</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../../release-data.js?v=1.10.1"></script>
+  <script src="../../../library-data.js?v=1.10.1&amp;rev=9072b44967db"></script>
+  <script src="../../../library.js?v=1.10.1&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../../app.js?v=1.10.1&amp;rev=2dfe17383063"></script>
+</body>
+</html>

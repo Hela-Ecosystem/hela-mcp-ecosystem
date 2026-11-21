@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    participant M as Model
+    participant R as hela-runtime (trusted)
+    participant S as Sandbox
+    participant C as Cells
+
+    M->>R: search("delete files")
+    R-->>M: ranked paths, one line each (no schemas)
+    M->>R: describe("membrane.delete_file")
+    R-->>M: one TypeScript signature
+    M->>R: execute(code)
+    R->>S: spawn child, workspace only, no network
+    S->>R: call membrane.delete_file(...)
+    Note over R: roots policy · approval · audit
+    R->>C: dispatch tool call
+    C-->>R: result
+    R-->>S: result stays inside the sandbox
+    S->>S: filter · loop · join · branch
+    S-->>R: logs + final value
+    R-->>M: status, logs, calls, duration

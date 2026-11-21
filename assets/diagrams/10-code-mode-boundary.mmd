@@ -1,0 +1,19 @@
+flowchart LR
+    M["Model<br/>writes code"]
+
+    subgraph T["trusted: hela-runtime process"]
+        P["policy<br/>roots · approvals · audit"]
+        K[("mcp.env<br/>credentials")]
+        CELLS["10 cells<br/>real capabilities"]
+    end
+
+    subgraph U["untrusted: generated code"]
+        S["sandbox child process<br/>no network · workspace fs only<br/>no env · no credentials"]
+    end
+
+    M -->|"code"| P
+    P -->|"spawn + RPC"| S
+    S -->|"tool call"| P
+    P --> CELLS
+    K -.->|"never crosses"| S
+    S -.->|"logs + result only"| M

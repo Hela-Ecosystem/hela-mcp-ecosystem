@@ -68,6 +68,7 @@ configuration checks remain separate from authenticated GUI and hardware checks.
 - [HeLa MCP Ecosystem Release Notes](https://hela.my.id/library/RELEASE_NOTES.html): RELEASE_NOTES.md
 - [HeLa MCP Ecosystem Architecture](https://hela.my.id/library/docs/architecture.html): docs/architecture.md
 - [Beginner's Guide: HeLa MCP Ecosystem](https://hela.my.id/library/docs/beginner-guide.html): docs/beginner-guide.md
+- [Code Mode for HeLa: research and design](https://hela.my.id/library/docs/code-mode-research.html): docs/code-mode-research.md
 - [Current versions and tool surfaces](https://hela.my.id/library/docs/current-versions.html): docs/current-versions.md
 - [Servy deployment verification — 2026-11-06](https://hela.my.id/library/docs/deployment-2026-11-06.html): docs/deployment-2026-11-06.md
 - [Servy runtime update — 2026-11-19](https://hela.my.id/library/docs/deployment-2026-11-19.html): docs/deployment-2026-11-19.md
