@@ -50,6 +50,33 @@ npm run test:docs
 pre-commit run --all-files
 ```
 
+### 2.3 Version bumps touch seven surfaces
+
+A release is only consistent when every surface names the same version. `npm run docs:check`
+ends with `scripts/check-release-consistency.mjs`, which fails with a per-surface list, so
+this is enforced rather than remembered:
+
+| Surface | What it must say |
+|---|---|
+| `package.json` | the version itself — the source of truth |
+| `config/snapshots/v<version>.json` | exists, with matching `snapshot_version` |
+| `config/snapshots/latest-stable.json` | `snapshot_version` = new version |
+| `README.md` | `Current source snapshot: **v<version>**` |
+| `CHANGELOG.md` | leading `## [<version>] - YYYY-MM-DD` entry |
+| `RELEASE_NOTES.md` | leading `## v<version>` entry |
+| `docs/current-versions.md` | `Ecosystem **<version>**` |
+
+The snapshot pair is the one people forget, and forgetting it is not cosmetic: docs then
+advertise `--snapshot v<version>`, and the installer has nothing to resolve. Regenerate the
+rest rather than editing by hand:
+
+```bash
+npm version <version> --no-git-tag-version
+npm run catalog:generate     # only when the tool surface changed
+npm run docs:generate
+npm run docs:check           # includes the consistency guard
+```
+
 ### 2.3 Build and preview the complete documentation site
 
 Use Node.js 22 LTS. Markdown rendering is a pinned build-only dependency; visitors receive static HTML, not a client-side Markdown framework.

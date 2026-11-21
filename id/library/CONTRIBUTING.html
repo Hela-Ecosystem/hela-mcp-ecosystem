@@ -80,6 +80,57 @@ npm run test:docs
 pre-commit run --all-files
 </code></pre>
 </div>
+<h3 id="23-version-bumps-touch-seven-surfaces">2.3 Version bumps touch seven surfaces</h3>
+<p>A release is only consistent when every surface names the same version. <code>npm run docs:check</code>
+ends with <code>scripts/check-release-consistency.mjs</code>, which fails with a per-surface list, so
+this is enforced rather than remembered:</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">Contributing to the HeLa MCP Ecosystem — tabel 1</caption>
+<thead>
+<tr>
+<th scope="col">Surface</th>
+<th scope="col">What it must say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>package.json</code></td>
+<td>the version itself — the source of truth</td>
+</tr>
+<tr>
+<td><code>config/snapshots/v&lt;version&gt;.json</code></td>
+<td>exists, with matching <code>snapshot_version</code></td>
+</tr>
+<tr>
+<td><code>config/snapshots/latest-stable.json</code></td>
+<td><code>snapshot_version</code> = new version</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td><code>Current source snapshot: **v&lt;version&gt;**</code></td>
+</tr>
+<tr>
+<td><code>CHANGELOG.md</code></td>
+<td>leading <code>## [&lt;version&gt;] - YYYY-MM-DD</code> entry</td>
+</tr>
+<tr>
+<td><code>RELEASE_NOTES.md</code></td>
+<td>leading <code>## v&lt;version&gt;</code> entry</td>
+</tr>
+<tr>
+<td><code>docs/current-versions.md</code></td>
+<td><code>Ecosystem **&lt;version&gt;**</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The snapshot pair is the one people forget, and forgetting it is not cosmetic: docs then
+advertise <code>--snapshot v&lt;version&gt;</code>, and the installer has nothing to resolve. Regenerate the
+rest rather than editing by hand:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">npm version &lt;version&gt; --no-git-tag-version
+npm run catalog:generate     # only when the tool surface changed
+npm run docs:generate
+npm run docs:check           # includes the consistency guard
+</code></pre>
+</div>
 <h3 id="23-build-and-preview-the-complete-documentation-site">2.3 Build and preview the complete documentation site</h3>
 <p>Use Node.js 22 LTS. Markdown rendering is a pinned build-only dependency; visitors receive static HTML, not a client-side Markdown framework.</p>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Salin kode</button><pre><code class="language-bash">npm ci --ignore-scripts
@@ -115,7 +166,7 @@ python3 -m http.server 8080 --bind 127.0.0.1 --directory _site
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.10.0"></script>
-  <script src="../../library-data.js?v=1.10.0&amp;rev=39cafe02fd0d"></script>
+  <script src="../../library-data.js?v=1.10.0&amp;rev=3e804caeee2a"></script>
   <script src="../../library.js?v=1.10.0&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.10.0&amp;rev=2dfe17383063"></script>
 </body>
