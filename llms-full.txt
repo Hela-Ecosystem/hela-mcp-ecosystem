@@ -1,6 +1,11 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.10.9] - 2026-11-22
+
+### Fixed
+- Repin the runtime to the commit that refreshes `npmDepsHash`. The 1.4.0 version bump changed the npm-deps derivation input, so the Nix verification job failed at build time on a fixed-output hash mismatch — the installer and CI both build from the pinned revision, which still carried the stale hash. No runtime behaviour change.
+
 ## [1.10.8] - 2026-11-22
 
 ### Fixed
@@ -521,7 +526,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.10.8**, with runtime **1.4.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.10.9**, with runtime **1.4.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -657,7 +662,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.8 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.9 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -807,6 +812,16 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.10.9 — the Nix pin catches up with the runtime fix
+
+Bumping the runtime to 1.4.0 changed the npm-deps derivation input, so `flake.nix`'s
+fixed-output hash no longer matched. The runtime repository fixed it; the ecosystem still pinned
+the older revision, so the installer and the clean-install CI job kept building the stale tree
+and failing at hash verification.
+
+This release pins the corrected revision. Nothing changes at runtime — the runtime code is
+identical; only the Nix dependency hash moves.
 
 ## v1.10.8 — scoring weights that actually compute
 
@@ -1671,7 +1686,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.8**; runtime **1.4.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.9**; runtime **1.4.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.9**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.7**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
