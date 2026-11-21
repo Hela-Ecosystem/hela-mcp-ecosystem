@@ -1,5 +1,20 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.6 — pipe stops lying about success
+
+`hela_pipe` exists so intermediate results never pass through the model, which means the
+model cannot see a step failing — the runtime is the only thing positioned to notice, and it
+did not. A three-step chain with a failed middle step returned `ok: true` and then fed the
+error string to the next tool, which produced a plausible keyword analysis of `ENOENT`.
+
+Runtime 1.4.0 makes the pipe fail closed: `ok` reflects every step, `failedStep` names the
+first failure, `onError` defaults to `stop` (with `continue` for deliberate best-effort), each
+result carries its own `ok`, and `{{prev}}` is unset after a failure instead of carrying the
+error onward. The next step's payload is now the parsed result rather than the MCP envelope.
+
+The default change is breaking on purpose — a caller checking `ok` was getting an answer that
+was wrong. Cells carry forward from 1.10.5.
+
 ## v1.10.5 — membrane answers match what happened
 
 Four tools in the filesystem cell returned a shape that promised more than the code did.

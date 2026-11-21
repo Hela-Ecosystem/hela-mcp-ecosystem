@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[1.10.5] - 2026-11-22 — HeLa MCP Ecosystem</title>
-  <meta name="description" content="filesystem-mcp 3.0.6: four responses promised what the implementation did not deliver. Ranged read_file now snaps to character boundaries and reports startByte/endByte (chunked…">
+  <title>[1.10.6] - 2026-11-22 — HeLa MCP Ecosystem</title>
+  <meta name="description" content="hela.pipe fails closed. A chain whose middle step failed returned ok: true and piped the error text into the next step, which produced a confident result computed from ENOENT.…">
   <link rel="canonical" href="https://hela.my.id/library/CHANGELOG.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/CHANGELOG.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/CHANGELOG.html">
@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../library.css?v=1.10.5&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../library.css?v=1.10.6&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.10.5 · Runtime 1.3.7 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.10.6 · Runtime 1.4.0 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -34,7 +34,12 @@
     </aside>
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="CHANGELOG.html">EN</a><a class="lang-btn" data-lang="id" href="../id/library/CHANGELOG.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
-      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">CHANGELOG.md</p><p>Original source language. <a href="source/CHANGELOG.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="1105---2026-11-22">[1.10.5] - 2026-11-22</h2>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">CHANGELOG.md</p><p>Original source language. <a href="source/CHANGELOG.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="1106---2026-11-22">[1.10.6] - 2026-11-22</h2>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong><code>hela.pipe</code> fails closed.</strong> A chain whose middle step failed returned <code>ok: true</code> and piped the error text into the next step, which produced a confident result computed from <code>ENOENT</code>. <code>ok</code> now reflects every step, <code>failedStep</code> names the first failure, <code>onError</code> defaults to <code>stop</code>, and each result carries its own <code>ok</code>. This is a breaking default by intent: callers that checked <code>ok</code> were getting a wrong answer. Runtime 1.4.0.</li>
+</ul>
+<h2 id="1105---2026-11-22">[1.10.5] - 2026-11-22</h2>
 <h3 id="fixed">Fixed</h3>
 <ul>
 <li><code>filesystem-mcp</code> 3.0.6: four responses promised what the implementation did not deliver. Ranged <code>read_file</code> now snaps to character boundaries and reports <code>startByte</code>/<code>endByte</code> (chunked reads of non-ASCII files no longer lose a character per boundary); <code>extract_archive</code> reports <code>extracted</code>/<code>entries</code>/<code>skipped</code> with a reason instead of a silent partial success; <code>watch_file</code> buffers events and returns them on the next call (plus waits for chokidar's initial scan); <code>compare_files</code> reports <code>size</code> in bytes with a separate <code>characters</code> field and a correct line count.</li>
@@ -68,7 +73,7 @@
 <li><code>scripts/host-entry.sh</code> is the canonical client entry point, installed as <code>~/.local/bin/hela-runtime-mcp</code>. It resolves the interpreter at spawn time, refuses to start below the required major, sources one 0600 credentials file, and logs failures because MCP hosts swallow child stderr. It is PATH-independent: every external command is absolute, so it reports a stripped environment instead of failing inside it.</li>
 <li><code>docs/reliability.md</code> documents the host-to-cell failure model with eight diagrams. Sources are Mermaid under <code>assets/diagrams/</code>, renders are SVG beside them, because the document renderer carries <code>markdown-it</code> without Mermaid and escapes raw HTML.</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Credentials found in client-config backups were copied into mema-vault before those backups were deleted, so the host doctor reports a clean backup surface instead of a permanent warning. <code>docs/reliability.md</code> documents vault-based recovery.</li>
 </ul>
@@ -90,7 +95,7 @@
 <li>The priors carry a collapse guard, because a feedback loop can starve itself: one unlucky run lowers a source's multiplier, the lower multiplier keeps its results under the relevance floor, no further samples arrive, and the mistake becomes permanent. A source with no samples in an active class, or whose newest sample is over 30 days old, is floored at 1.0 and lifted by 0.15 so it stays reachable. Three tests in each repo fail if the guard is removed.</li>
 <li><code>scripts/check-prose-facts.mjs</code> now fails <code>docs:check</code> when hand-written prose restates a fact the build knows: an unknown Hela repository name, a live version literal, a roster claim that disagrees with the inventory or profile set, a licence no cell uses, or a per-profile server count that drifted. Ten tests prove each rule fires. It found two real drifts on its first run (a page claiming runtime 1.3.6 after the runtime moved, and a setup page pinning Phenotype 3.0.3 against an inventory at 3.0.5).</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Runtime <code>1.3.7</code> namespaces cell tools by default: <code>hela_nucleus_execute_command</code> instead of <code>execute_command</code>. A bare name shadows whatever the host already exposes and the collision is settled by whichever server connected last. <code>HELA_NAMESPACE_TOOLS=0</code> restores the previous surface; this is breaking for clients that pin bare tool names, and the manifest cache key already covers the mode so a switching client rebuilds its fingerprints once.</li>
 <li>Genome creates the parent directory of a configured database path. <code>GUARDIAN_CENTRAL_DB</code> pointing into a directory that did not exist yet used to die with <code>SQLITE_CANTOPEN</code> on the first query.</li>
@@ -112,7 +117,7 @@
 <li>Nucleus <code>3.0.6</code> passes any command containing <code>;</code>, <code>&amp;</code> or <code>|</code> to the shell instead of treating the whole string as a working directory, so <code>cd /tmp &amp;&amp; echo marker-ok</code> runs; only a standalone <code>cd</code> updates the session directory, and it takes its first path argument so a trailing option is not swallowed.</li>
 <li>Runtime <code>1.3.6</code> types the cell RPC boundary: <code>callTool</code> resolves a validated MCP tool result and raises <code>CellProtocolError</code> on a JSON-RPC error or an unexpected shape instead of forwarding <code>undefined</code>; cell directory resolution no longer consults <code>process.cwd()</code> and names the root and every path tried when a cell is missing; and a malformed JSON-RPC frame rejects its request immediately rather than costing a full timeout.</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>One agent tool: Mitosis's cell-local <code>agent_run</code> was advertised next to the runtime-native <code>hela.agent.run</code> and carried the runtime description, so callers could not tell which one ran. Only <code>hela.agent.run</code> is exposed now.</li>
 <li>Genome <code>3.0.5</code> adds <code>npm run vault:conflicts</code>, which archives frontmatter-only sync conflicts without rewriting the note and lists body-divergent ones for a per-note decision. First pass: 641 conflicts archived, 615 left across 302 notes.</li>
@@ -151,7 +156,7 @@
 <li>Documented the runtime update tools (<code>hela.update.check</code>, <code>hela.update.apply</code>) in the README, the on-demand guide and <code>llms.txt</code>. They already shipped with runtime 1.3.x; the docs now name them so agents can find them.</li>
 </ul>
 <h2 id="1918---2026-11-19">[1.9.18] - 2026-11-19</h2>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li><code>npm audit fix</code> across nine cells and the runtime cleared a critical advisory in Mitosis and Cytosol plus twenty others: mitosis 11 to 3, cytosol 9 to 0, nucleus 8 to 0, membrane 10 to 3, genome/ribosome/enzyme/phenotype/runtime 2 to 0, receptor 1 to 0. The remaining findings need breaking majors (zod 4, glob 14) and stay with their open dependabot PRs.</li>
 <li>Runtime <code>1.3.3</code> refreshed its Nix fixed-output dependency hash, verified with a local <code>nix build</code> before release.</li>
@@ -209,7 +214,7 @@
 <ul>
 <li>Receptor <code>3.0.3</code>: the hardware integration harness spawned a non-existent entrypoint, so <code>npm run test:integration</code> could never pass; it now runs 18 checks against a real Pixel 8 (UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard).</li>
 </ul>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>Repins Receptor and publishes the <code>v1.9.11</code> snapshot.</li>
 </ul>
@@ -228,13 +233,13 @@
 <li>Mitosis <code>3.0.4</code> splits <code>terminal.execute</code> into one-shot execution (Nucleus) and <code>terminal.session</code> (Ribosome), so planning can tell &quot;run pytest&quot; from &quot;drive a tmux session&quot;.</li>
 <li>Runtime <code>1.3.1</code> adds structured per-cell logs, per-cell start/restart/failure/tool counters on <code>/healthz</code>, and separate <code>/livez</code> and <code>/readyz</code> endpoints.</li>
 </ul>
-<h3 id="changed-5">Changed</h3>
+<h3 id="changed-6">Changed</h3>
 <ul>
 <li>Ribosome <code>3.1.0</code> gains <code>npm run test:remote</code>, a live integration test for the ssh transport (spawn, tmux, reattach, kill on close, transport exit kind) verified against <code>servy</code>.</li>
 <li>Repins the coordinated <code>v1.9.9</code> snapshot; <code>latest-stable</code> moves to it.</li>
 </ul>
 <h2 id="198---2026-11-18">[1.9.8] - 2026-11-18</h2>
-<h3 id="changed-6">Changed</h3>
+<h3 id="changed-7">Changed</h3>
 <ul>
 <li>Repin every changed cell in <code>config/inventory.json</code> and publish the coordinated <code>v1.9.8</code> snapshot: Nucleus <code>3.0.3</code>, Ribosome <code>3.1.0</code>, Membrane <code>3.0.2</code>, Enzyme <code>4.0.2</code>, Receptor <code>3.0.2</code>, Plastid <code>3.0.2</code>, Phenotype <code>3.0.3</code>, and Mitosis at the mema-vault backup commit.</li>
 <li>Regenerate <code>config/tool-catalog.json</code> and the per-cell canonical tool references from the new pins; the catalog still advertises 292 base tools across ten cells.</li>
@@ -379,18 +384,18 @@
 <li>Record native x86_64/aarch64 Linux Nix builds separately from client authentication, hardware testing, and unresolved vault conflicts.</li>
 </ul>
 <h2 id="300---2026-10-31">[3.0.0] - 2026-10-31</h2>
-<h3 id="changed-7">Changed</h3>
+<h3 id="changed-8">Changed</h3>
 <ul>
 <li><strong>Version reset to 3.0.0</strong> — per-server version metadata baseline reset (Phase 7). All <code>package.json</code>, MCP <code>ServerInfo.version</code>, and HTTP metadata now report <code>3.0.0</code>. This is a metadata/interface baseline reset; for <code>hela-plastid</code> it is not an upgrade from the previous <code>4.2.0</code> advert.</li>
 </ul>
 </article><footer class="doc-footer"><span>MIT SUITE · GPL-3.0 + MIT CELLS · HELA ECOSYSTEM</span><a href="../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1105---2026-11-22">[1.10.5] - 2026-11-22</a></li><li><a href="#1104---2026-11-22">[1.10.4] - 2026-11-22</a></li><li><a href="#1103---2026-11-22">[1.10.3] - 2026-11-22</a></li><li><a href="#1102---2026-11-22">[1.10.2] - 2026-11-22</a></li><li><a href="#1101---2026-11-22">[1.10.1] - 2026-11-22</a></li><li><a href="#1100---2026-11-21">[1.10.0] - 2026-11-21</a></li><li><a href="#1927---2026-11-19">[1.9.27] - 2026-11-19</a></li><li><a href="#1926---2026-11-19">[1.9.26] - 2026-11-19</a></li><li><a href="#1925---2026-11-19">[1.9.25] - 2026-11-19</a></li><li><a href="#1924---2026-11-19">[1.9.24] - 2026-11-19</a></li><li><a href="#1923---2026-11-19">[1.9.23] - 2026-11-19</a></li><li><a href="#1922---2026-11-19">[1.9.22] - 2026-11-19</a></li><li><a href="#1921---2026-11-19">[1.9.21] - 2026-11-19</a></li><li><a href="#1920---2026-11-19">[1.9.20] - 2026-11-19</a></li><li><a href="#1919---2026-11-19">[1.9.19] - 2026-11-19</a></li><li><a href="#1918---2026-11-19">[1.9.18] - 2026-11-19</a></li><li><a href="#1917---2026-11-19">[1.9.17] - 2026-11-19</a></li><li><a href="#1916---2026-11-19">[1.9.16] - 2026-11-19</a></li><li><a href="#1915---2026-11-18">[1.9.15] - 2026-11-18</a></li><li><a href="#1914---2026-11-18">[1.9.14] - 2026-11-18</a></li><li><a href="#1913---2026-11-18">[1.9.13] - 2026-11-18</a></li><li><a href="#1912---2026-11-18">[1.9.12] - 2026-11-18</a></li><li><a href="#1911---2026-11-18">[1.9.11] - 2026-11-18</a></li><li><a href="#1910---2026-11-18">[1.9.10] - 2026-11-18</a></li><li><a href="#199---2026-11-18">[1.9.9] - 2026-11-18</a></li><li><a href="#198---2026-11-18">[1.9.8] - 2026-11-18</a></li><li><a href="#197---2026-11-18">[1.9.7] - 2026-11-18</a></li><li><a href="#196---2026-11-15">[1.9.6] - 2026-11-15</a></li><li><a href="#195---2026-11-15">[1.9.5] - 2026-11-15</a></li><li><a href="#194---2026-11-15">[1.9.4] - 2026-11-15</a></li><li><a href="#193---2026-11-15">[1.9.3] - 2026-11-15</a></li><li><a href="#192---2026-11-14">[1.9.2] - 2026-11-14</a></li><li><a href="#191---2026-11-14">[1.9.1] - 2026-11-14</a></li><li><a href="#190---2026-11-14">[1.9.0] - 2026-11-14</a></li><li><a href="#180---2026-11-13">[1.8.0] - 2026-11-13</a></li><li><a href="#170---2026-11-13">[1.7.0] - 2026-11-13</a></li><li><a href="#164---2026-11-13">[1.6.4] - 2026-11-13</a></li><li><a href="#163---2026-11-13">[1.6.3] - 2026-11-13</a></li><li><a href="#162---2026-11-08">[1.6.2] - 2026-11-08</a></li><li><a href="#161---2026-11-08">[1.6.1] - 2026-11-08</a></li><li><a href="#160---2026-11-08">[1.6.0] - 2026-11-08</a></li><li><a href="#153---2026-11-07">[1.5.3] - 2026-11-07</a></li><li><a href="#152---2026-11-07">[1.5.2] - 2026-11-07</a></li><li><a href="#151---2026-11-06">[1.5.1] - 2026-11-06</a></li><li><a href="#150---2026-11-06">[1.5.0] - 2026-11-06</a></li><li><a href="#140---2026-11-06">[1.4.0] - 2026-11-06</a></li><li><a href="#300---2026-10-31">[3.0.0] - 2026-10-31</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#1106---2026-11-22">[1.10.6] - 2026-11-22</a></li><li><a href="#1105---2026-11-22">[1.10.5] - 2026-11-22</a></li><li><a href="#1104---2026-11-22">[1.10.4] - 2026-11-22</a></li><li><a href="#1103---2026-11-22">[1.10.3] - 2026-11-22</a></li><li><a href="#1102---2026-11-22">[1.10.2] - 2026-11-22</a></li><li><a href="#1101---2026-11-22">[1.10.1] - 2026-11-22</a></li><li><a href="#1100---2026-11-21">[1.10.0] - 2026-11-21</a></li><li><a href="#1927---2026-11-19">[1.9.27] - 2026-11-19</a></li><li><a href="#1926---2026-11-19">[1.9.26] - 2026-11-19</a></li><li><a href="#1925---2026-11-19">[1.9.25] - 2026-11-19</a></li><li><a href="#1924---2026-11-19">[1.9.24] - 2026-11-19</a></li><li><a href="#1923---2026-11-19">[1.9.23] - 2026-11-19</a></li><li><a href="#1922---2026-11-19">[1.9.22] - 2026-11-19</a></li><li><a href="#1921---2026-11-19">[1.9.21] - 2026-11-19</a></li><li><a href="#1920---2026-11-19">[1.9.20] - 2026-11-19</a></li><li><a href="#1919---2026-11-19">[1.9.19] - 2026-11-19</a></li><li><a href="#1918---2026-11-19">[1.9.18] - 2026-11-19</a></li><li><a href="#1917---2026-11-19">[1.9.17] - 2026-11-19</a></li><li><a href="#1916---2026-11-19">[1.9.16] - 2026-11-19</a></li><li><a href="#1915---2026-11-18">[1.9.15] - 2026-11-18</a></li><li><a href="#1914---2026-11-18">[1.9.14] - 2026-11-18</a></li><li><a href="#1913---2026-11-18">[1.9.13] - 2026-11-18</a></li><li><a href="#1912---2026-11-18">[1.9.12] - 2026-11-18</a></li><li><a href="#1911---2026-11-18">[1.9.11] - 2026-11-18</a></li><li><a href="#1910---2026-11-18">[1.9.10] - 2026-11-18</a></li><li><a href="#199---2026-11-18">[1.9.9] - 2026-11-18</a></li><li><a href="#198---2026-11-18">[1.9.8] - 2026-11-18</a></li><li><a href="#197---2026-11-18">[1.9.7] - 2026-11-18</a></li><li><a href="#196---2026-11-15">[1.9.6] - 2026-11-15</a></li><li><a href="#195---2026-11-15">[1.9.5] - 2026-11-15</a></li><li><a href="#194---2026-11-15">[1.9.4] - 2026-11-15</a></li><li><a href="#193---2026-11-15">[1.9.3] - 2026-11-15</a></li><li><a href="#192---2026-11-14">[1.9.2] - 2026-11-14</a></li><li><a href="#191---2026-11-14">[1.9.1] - 2026-11-14</a></li><li><a href="#190---2026-11-14">[1.9.0] - 2026-11-14</a></li><li><a href="#180---2026-11-13">[1.8.0] - 2026-11-13</a></li><li><a href="#170---2026-11-13">[1.7.0] - 2026-11-13</a></li><li><a href="#164---2026-11-13">[1.6.4] - 2026-11-13</a></li><li><a href="#163---2026-11-13">[1.6.3] - 2026-11-13</a></li><li><a href="#162---2026-11-08">[1.6.2] - 2026-11-08</a></li><li><a href="#161---2026-11-08">[1.6.1] - 2026-11-08</a></li><li><a href="#160---2026-11-08">[1.6.0] - 2026-11-08</a></li><li><a href="#153---2026-11-07">[1.5.3] - 2026-11-07</a></li><li><a href="#152---2026-11-07">[1.5.2] - 2026-11-07</a></li><li><a href="#151---2026-11-06">[1.5.1] - 2026-11-06</a></li><li><a href="#150---2026-11-06">[1.5.0] - 2026-11-06</a></li><li><a href="#140---2026-11-06">[1.4.0] - 2026-11-06</a></li><li><a href="#300---2026-10-31">[3.0.0] - 2026-10-31</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../release-data.js?v=1.10.5"></script>
-  <script src="../library-data.js?v=1.10.5&amp;rev=bf643db4e17e"></script>
-  <script src="../library.js?v=1.10.5&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.10.5&amp;rev=2dfe17383063"></script>
+  <script src="../release-data.js?v=1.10.6"></script>
+  <script src="../library-data.js?v=1.10.6&amp;rev=0b690491c187"></script>
+  <script src="../library.js?v=1.10.6&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../app.js?v=1.10.6&amp;rev=2dfe17383063"></script>
 </body>
 </html>

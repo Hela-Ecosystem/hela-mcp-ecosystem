@@ -1,6 +1,11 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.10.6] - 2026-11-22
+
+### Changed
+- **`hela.pipe` fails closed.** A chain whose middle step failed returned `ok: true` and piped the error text into the next step, which produced a confident result computed from `ENOENT`. `ok` now reflects every step, `failedStep` names the first failure, `onError` defaults to `stop`, and each result carries its own `ok`. This is a breaking default by intent: callers that checked `ok` were getting a wrong answer. Runtime 1.4.0.
+
 ## [1.10.5] - 2026-11-22
 
 ### Fixed
@@ -506,7 +511,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.10.5**, with runtime **1.3.7**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.10.6**, with runtime **1.4.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -642,7 +647,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.5 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.6 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -792,6 +797,21 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.10.6 — pipe stops lying about success
+
+`hela_pipe` exists so intermediate results never pass through the model, which means the
+model cannot see a step failing — the runtime is the only thing positioned to notice, and it
+did not. A three-step chain with a failed middle step returned `ok: true` and then fed the
+error string to the next tool, which produced a plausible keyword analysis of `ENOENT`.
+
+Runtime 1.4.0 makes the pipe fail closed: `ok` reflects every step, `failedStep` names the
+first failure, `onError` defaults to `stop` (with `continue` for deliberate best-effort), each
+result carries its own `ok`, and `{{prev}}` is unset after a failure instead of carrying the
+error onward. The next step's payload is now the parsed result rather than the MCP envelope.
+
+The default change is breaking on purpose — a caller checking `ok` was getting an answer that
+was wrong. Cells carry forward from 1.10.5.
 
 ## v1.10.5 — membrane answers match what happened
 
@@ -1617,7 +1637,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.5**; runtime **1.3.7**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.6**; runtime **1.4.0**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.9**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.7**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).

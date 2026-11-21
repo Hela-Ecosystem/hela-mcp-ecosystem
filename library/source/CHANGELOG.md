@@ -1,3 +1,8 @@
+## [1.10.6] - 2026-11-22
+
+### Changed
+- **`hela.pipe` fails closed.** A chain whose middle step failed returned `ok: true` and piped the error text into the next step, which produced a confident result computed from `ENOENT`. `ok` now reflects every step, `failedStep` names the first failure, `onError` defaults to `stop`, and each result carries its own `ok`. This is a breaking default by intent: callers that checked `ok` were getting a wrong answer. Runtime 1.4.0.
+
 ## [1.10.5] - 2026-11-22
 
 ### Fixed
