@@ -25,6 +25,7 @@ import { loadInventory, resolveServerDir, selectProfile } from './inventory.mjs'
 import { parseOptions, readInstallation } from './installation.mjs';
 import { checkInstallation } from './doctor-installation.mjs';
 import { probeHttpEndpoint } from './http-probe.mjs';
+import { runHostDoctor } from './host-layer.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ECOSYSTEM_ROOT = path.resolve(__dirname, '..');
@@ -75,9 +76,15 @@ function getGitCommit(dir) {
 }
 
 async function runDoctor(options = {}) {
+  // Host-layer mode inspects the wiring between client apps and the runtime;
+  // the default path inspects the installation itself.
+  if (process.argv.includes('--hosts')) {
+    process.exit(await runHostDoctor(process.argv.slice(2)));
+  }
+
   const parsed = parseOptions(process.argv.slice(2), ECOSYSTEM_ROOT);
   if (parsed.help) {
-    console.log('Usage: node setup.mjs doctor [--prefix PATH] [--mode individual|runtime|docker|docker-runtime|nix] [--profile ID] [--runtime] [--json], or --url URL');
+    console.log('Usage: node setup.mjs doctor [--prefix PATH] [--mode individual|runtime|docker|docker-runtime|nix] [--profile ID] [--runtime] [--json], or --url URL, or --hosts [--repair] [--notify] [--no-live] [--timeout N]');
     return;
   }
   if (parsed.url) {
