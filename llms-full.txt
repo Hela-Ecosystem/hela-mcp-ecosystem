@@ -1,6 +1,16 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.10.0] - 2026-11-21
+
+### Added
+- `doctor.mjs --hosts` inspects the layer the doctor previously ignored: the wiring between client applications and the runtime. It checks the interpreter floor derived from cell `engines`, whether `nodejs` is still marked manual for apt, the gate file the launcher reads, credential-file modes and key presence, all six client configs, backup exposure, and a live `initialize`/`tools/list` handshake. `--repair` reinstalls the pinned node package, re-asserts the manual mark and fixes credential/backup modes; exit codes remain 0/1/2.
+- `scripts/host-entry.sh` is the canonical client entry point, installed as `~/.local/bin/hela-runtime-mcp`. It resolves the interpreter at spawn time, refuses to start below the required major, sources one 0600 credentials file, and logs failures because MCP hosts swallow child stderr. It is PATH-independent: every external command is absolute, so it reports a stripped environment instead of failing inside it.
+- `docs/reliability.md` documents the host-to-cell failure model with eight diagrams. Sources are Mermaid under `assets/diagrams/`, renders are SVG beside them, because the document renderer carries `markdown-it` without Mermaid and escapes raw HTML.
+
+### Changed
+- Credentials found in client-config backups were copied into mema-vault before those backups were deleted, so the host doctor reports a clean backup surface instead of a permanent warning. `docs/reliability.md` documents vault-based recovery.
+
 ## [1.9.27] - 2026-11-19
 
 ### Fixed
