@@ -1,5 +1,16 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes
+
+Two lookups produced a report that blamed the host for what was really a path miss. Doctor
+now says `not installed` instead of `Not checked`, and when every component is missing it
+prints the paths it resolved along with the install-then-diagnose commands. Separately, an
+installation made with `--runtime` lives under `<profile>-runtime`, but doctor only checked
+`<profile>-individual`; it now scans for sibling `<profile>-*` installations and names the
+`--mode` or `--prefix` needed to diagnose each one, in human and JSON output alike.
+
+No cell changes: revisions and versions pin unchanged from 1.10.0.
+
 ## v1.10.0 — host-layer doctor and a single MCP entry point
 
 The doctor now covers the layer it previously ignored: the wiring between client
