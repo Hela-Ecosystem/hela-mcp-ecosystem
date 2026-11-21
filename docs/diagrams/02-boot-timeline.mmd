@@ -1,0 +1,16 @@
+sequenceDiagram
+    autonumber
+    participant Host
+    participant L as Launcher
+    participant R as Runtime
+    participant C as Cells
+
+    Host->>L: spawn (inherits host env)
+    Note over L: gates: secrets → entry<br/>node → version<br/>fail ⇒ exit 78 / 127<br/>logged, host shows failed<br/>at once, no 60 s hang
+    L->>R: exec node dist/index.js, env only
+    Note over R: reads the cell catalog<br/>11 cells, entry + digest<br/>node floor per cell
+    R->>R: register 305 tool names<br/>(591 declared; namespacing off)
+    Host->>R: initialize + tools/list
+    R-->>Host: 305 tools, ~260 ms
+    R->>C: spawn cell on first tool call
+    Note over C: on demand, so boot<br/>does not pay for<br/>10 processes

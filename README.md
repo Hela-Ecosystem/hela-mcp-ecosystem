@@ -250,6 +250,7 @@ npm run skills:check
 * **[Prebuilt Agent Skills](docs/prebuilt-skills.md)**: Per-server skill catalog, profile availability, pinning, and synchronization behavior.
 * **[Workflows & Integration Guide](docs/workflows.md)**: Cross-MCP workflow pipelines (Workflows A–F).
 * **[Security & Reliability Audit](docs/security-audit.md)**: Threat model, sandboxing, and isolation standards.
+* **[Reliability Contract](docs/reliability.md)**: Host-to-cell failure model, triage tree, diagrammed boot/supervision paths, and the hourly doctor loop.
 * **[Architecture Guide](docs/architecture.md)**: In-depth cellular architecture and communication topologies.
 * **[Troubleshooting Guide](docs/troubleshooting.md)**: Common issues, diagnostic codes, and recovery procedures.
 

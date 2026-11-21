@@ -1,0 +1,12 @@
+flowchart LR
+    T["systemd user timer<br/>2 min after login, then hourly"]
+    D["hela-doctor --repair --notify"]
+    CHK["~22 checks, state-dependent<br/>~0.4 s incl. live handshake"]
+    FIX["repairs, idempotent only:<br/>node package · secrets perms · backup perms"]
+    OK["exit 0<br/>journal line, silent"]
+    BAD["exit 1<br/>notify-send critical + journal"]
+
+    T --> D --> CHK
+    CHK -->|"failures"| FIX --> OK
+    CHK -->|"clean"| OK
+    CHK -->|"unrepaired"| BAD

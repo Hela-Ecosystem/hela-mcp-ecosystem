@@ -1,0 +1,10 @@
+flowchart LR
+    S["host reports<br/>MCP failure"] --> Q{"what did it say?"}
+
+    Q -->|"NotFound spawn / node not found"| A1["interpreter gone<br/><b>fatal for every host</b><br/>hela-doctor --repair"]
+    Q -->|"below required major 22"| A2["interpreter too old<br/><b>fatal for every host</b><br/>hela-doctor --repair"]
+    Q -->|"connected, 0 tools"| A3["runtime or manifest<br/><b>fatal for that session</b><br/>check HELA_PROFILE, cells"]
+    Q -->|"tools vanish mid-session"| A4["cell died after 3 crashes<br/><b>contained to one cell</b><br/>restart the host"]
+    Q -->|"only one host fails"| A5["wiring drift<br/><b>fatal for that client</b><br/>hela-doctor hosts line"]
+    Q -->|"path escapes / invalid_union"| A6["sandbox boundary<br/><b>normal, reports badly</b><br/>add the root if legitimate"]
+    Q -->|"401 / credentials rejected"| A7["secrets<br/><b>fix once, all recover</b><br/>env-file, env-keys"]
