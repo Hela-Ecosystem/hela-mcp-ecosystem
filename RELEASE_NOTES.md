@@ -1,5 +1,23 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.10 — phenotype measures what it claims
+
+Three of the five fixes in Phenotype 3.1.0 are about claims the tools could not back up.
+
+`design_audit` flagged inline contrast only when the colour strings were identical, so
+white-on-white (1.01:1) and yellow-on-white (1.07:1) passed and the page graded A/96. It now
+computes WCAG relative luminance; the same page grades B/75 with measured issues. Palette
+variants no longer add saturation to greys (an undefined hue was read as red, turning
+`#767676` into `#816a6a`), the High Contrast variant names the surface its AAA claim is
+measured against, and the derived focus token is clamped into sRGB instead of being emitted
+outside it.
+
+The fifth is a surface fix: the five Stitch tools that need the CLI are advertised only when
+the CLI resolves — 23 tools instead of 28 on a host without it, with
+`HELA_PHENOTYPE_STITCH` to override either way.
+
+Carries 1.10.9; runtime unchanged.
+
 ## v1.10.9 — the Nix pin catches up with the runtime fix
 
 Bumping the runtime to 1.4.0 changed the npm-deps derivation input, so `flake.nix`'s

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.10.9",
-  "created_at": "2026-11-21T23:21:55Z",
-  "description": "Runtime 1.4.0 repinned to the commit that carries the refreshed npmDepsHash, so the Nix installation verification in CI builds instead of failing on a fixed-output mismatch. No behaviour change.",
+  "snapshot_version": "1.10.10",
+  "created_at": "2026-11-21T23:35:21Z",
+  "description": "Phenotype 3.1.0 measures inline contrast instead of string-matching it, keeps greys grey, qualifies the High Contrast claim, clamps the derived focus chroma into sRGB, and advertises the Stitch CLI tools only when the CLI exists. Carries 1.10.9.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -61,10 +61,10 @@
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "7555f4293b6807d20f2ae72f9879909bda7a92b1",
+      "commit": "7d9b81c4fa9d86232155f3f76d396f45862fa18d",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.5"
+      "serverVersion": "3.1.0"
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
