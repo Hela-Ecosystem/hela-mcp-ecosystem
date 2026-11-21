@@ -3213,10 +3213,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "a331cfb4a7c3ddcf14d66cddd1b937be25332831",
-      "version": "3.0.6",
+      "revision": "38de1715f4f39e8fe230c5ac087161101f80b792",
+      "version": "3.0.7",
       "digests": [
-        "d3685868c4cf798e35ce73730b53d82bc4b1ea0c9ab966e01ea26f9abeac0714"
+        "11dcff9d4565596e96ff8a6f0e2ff465bcf8533910dec83c5199499fcb8af70d"
       ],
       "variants": [
         {
@@ -5855,10 +5855,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "da7687046b2d79e39e8aecd57c9e73676213bb33",
-      "version": "4.1.0",
+      "revision": "b3d13eff2d46bbc1cf86908ee7587c44035bf71d",
+      "version": "4.2.0",
       "digests": [
-        "1d1f8cdf915b6cee89dfd661a04917c6f12b7ffb8655f6cf59052118d475aab3"
+        "55e76af4d06750fcc3d1f45282f6a02900aa751b65054a378f8525d8a228f04b"
       ],
       "variants": [
         {

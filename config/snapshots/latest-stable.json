@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.10.3",
-  "created_at": "2026-11-21T22:04:41Z",
-  "description": "Mitosis discovers sibling cells through the runtime catalog instead of client configs, so validate_tool_chain stops rejecting real tools under the runtime; availability distinguishes absent from unverifiable. Carries the nucleus and enzyme fixes from 1.10.2. Runtime unchanged.",
+  "snapshot_version": "1.10.4",
+  "created_at": "2026-11-21T22:17:04Z",
+  "description": "The search priors loop is closed: enzyme appends observed follow-up signals to a spool, genome drains it into source_feedback, so learned priors can finally leave static mode. Carries mitosis 3.0.9, nucleus 3.0.7 and the earlier enzyme work. Runtime unchanged.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -19,10 +19,10 @@
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "a331cfb4a7c3ddcf14d66cddd1b937be25332831",
+      "commit": "38de1715f4f39e8fe230c5ac087161101f80b792",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.6"
+      "serverVersion": "3.0.7"
     },
     "hela-membrane": {
       "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
@@ -47,10 +47,10 @@
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "da7687046b2d79e39e8aecd57c9e73676213bb33",
+      "commit": "b3d13eff2d46bbc1cf86908ee7587c44035bf71d",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "4.1.0"
+      "serverVersion": "4.2.0"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",

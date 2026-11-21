@@ -1,5 +1,21 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.4 — the priors loop is closed
+
+The adaptive ranking mechanism had been built and never fed. Enzyme observed which source
+produced a result a caller actually used, but could not write the table; genome owned it and
+nothing called the writer.
+
+Enzyme 4.2.0 now appends one record per observed follow-up to a spool file, with the display
+rank so position bias stays visible. Genome 3.0.7 drains that spool into `source_feedback` on
+the next `search_priors` or `search_feedback` call: claimed by rename so two processes cannot
+import the same line twice, malformed lines skipped, failed inserts put back for a later pass.
+
+The header still reports `priors: static` until five samples accumulate per class — that is
+the system being honest, and now it can stop being honest.
+
+Carries mitosis 3.0.9, nucleus 3.0.7 and enzyme's query/scoring work. Runtime unchanged.
+
 ## v1.10.3 — Mitosis can see the organism again
 
 Under `--mode runtime` the cells sit behind one endpoint, so Mitosis's config-based peer
