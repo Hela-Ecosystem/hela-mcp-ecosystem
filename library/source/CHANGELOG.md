@@ -1,3 +1,8 @@
+## [1.10.7] - 2026-11-22
+
+### Fixed
+- `researcher-mcp` 4.2.1: the enzyme fixes from 4.1.0/4.2.0 were compiled into a module the shipped entry never loads. The real `research_brief` (root `research-server.ts`) now backs off once on an empty ranked result, discloses it, returns the feedback handle, and appends spool signals from `extract_content`. Found by post-deploy verification: the pinned 4.2.0 cell still behaved like 4.0.9.
+
 ## [1.10.6] - 2026-11-22
 
 ### Changed
