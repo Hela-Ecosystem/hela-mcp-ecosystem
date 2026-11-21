@@ -35,7 +35,7 @@ const GATE = path.join(STATE, 'node-min-major');
 const SECRET_MARKERS = ['TOKEN', 'API_KEY', 'CSE_ID', 'SECRET', 'PASSWORD'];
 
 const HOSTS = {
-  opencode: { file: path.join(HOME, '.config/opencode/opencode.json'), select: ['mcp', 'servers', 'hela-runtime'] },
+  opencode: { file: path.join(HOME, '.config/opencode/opencode.json'), select: [['mcp', 'hela-runtime'], ['mcp', 'servers', 'hela-runtime']] },
   claude: { file: path.join(HOME, '.claude.json'), select: ['mcpServers', 'hela-runtime'] },
   gemini: { file: path.join(HOME, '.gemini/settings.json'), select: ['mcpServers', 'hela-runtime'] },
   'gemini-config': { file: path.join(HOME, '.gemini/config/mcp_config.json'), select: ['mcpServers', 'hela-runtime'] },
@@ -197,7 +197,14 @@ function loadHost({ file, select }) {
       const match = /\[mcp_servers\.hela-runtime\]\n([\s\S]*?)(?=\n\[|$)/.exec(text);
       return match ? { _raw: match[1] } : {};
     }
-    return select.reduce((node, key) => node?.[key], JSON.parse(fs.readFileSync(file, 'utf8')));
+    const parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
+    // `select` is one path, or a list of candidate paths (opencode has shipped both layouts).
+    const paths = Array.isArray(select[0]) ? select : [select];
+    for (const candidate of paths) {
+      const entry = candidate.reduce((node, key) => node?.[key], parsed);
+      if (entry !== undefined) return entry;
+    }
+    return {};
   } catch {
     return {};
   }
