@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeLa MCP Reliability Contract — HeLa MCP Ecosystem</title>
+  <meta name="description" content="How the MCP stack is wired, what breaks it, and how to repair it. Written after the 2026-11-20 outage where apt-get autoremove purged nodejs and every MCP host failed with…">
+  <link rel="canonical" href="https://hela.my.id/library/docs/reliability.html">
+  <link rel="alternate" hreflang="en" href="https://hela.my.id/library/docs/reliability.html">
+  <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/docs/reliability.html">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../library.css?v=1.9.27&amp;rev=f4fb3976fbca">
+</head>
+<body class="library-page" data-page-prefix="../../">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="doc-shell">
+    <aside class="doc-sidebar" aria-label="Documentation sections">
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.9.27 · Runtime 1.3.7 · 10 CELLS</div></div>
+      <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
+<div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
+<li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
+<li><a href="../../index.html#verify"><span class="doc-nav-num">03</span> <span>Verify</span></a></li></ol>
+<div class="doc-nav-section">REFERENCE</div><ol class="doc-nav" start="4"><li><a href="../../architecture.html"><span class="doc-nav-num">04</span> <span>Architecture</span></a></li>
+<li><a href="../../workflows.html"><span class="doc-nav-num">05</span> <span>Workflows</span></a></li>
+<li><a href="../../profiles.html"><span class="doc-nav-num">06</span> <span>Profiles &amp; Config</span></a></li></ol>
+<div class="doc-nav-section">OPERATE</div><ol class="doc-nav" start="7"><li><a href="../../showcase.html"><span class="doc-nav-num">07</span> <span>Showcase</span></a></li>
+<li><a href="../../troubleshooting.html"><span class="doc-nav-num">08</span> <span>Diagnostics</span></a></li></ol>
+<div class="doc-nav-section">LEGAL</div><ol class="doc-nav" start="9"><li><a href="../../privacy.html"><span class="doc-nav-num">09</span> <span>Privacy</span></a></li>
+<li><a href="../../terms.html"><span class="doc-nav-num">10</span> <span>Terms</span></a></li></ol></details></nav>
+    </aside>
+    <div class="doc-main">
+      <div class="doc-topbar"><a class="doc-topbar-title" href="../../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="reliability.html">EN</a><a class="lang-btn" data-lang="id" href="../../id/library/docs/reliability.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="hela-mcp-reliability-contract" class="doc-title">HeLa MCP Reliability Contract</h1>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Reference</p><p class="library-source">docs/reliability.md</p><p>Original source language. <a href="../source/docs/reliability.md" download>Download source</a> · <a href="../../library.html">All documents</a></p></header><p>How the MCP stack is wired, what breaks it, and how to repair it. Written after the
+2026-11-20 outage where <code>apt-get autoremove</code> purged <code>nodejs</code> and every MCP host
+failed with <code>NotFound: ChildProcess.spawn (/usr/bin/node …)</code>.</p>
+<p>Audited 2026-11-21 by a second agent against the live system; every number here was
+re-measured or dropped. Where a figure is approximate, it says so.</p>
+<h2 id="how-the-diagrams-work">How the diagrams work</h2>
+<p>Each diagram exists twice, on purpose:</p>
+<ul>
+<li><strong>Rendered SVG</strong> in <code>docs/diagrams/*.svg</code>, embedded below. This is what <code>markm</code>
+displays — its renderer is <code>markdown-it</code> + <code>highlight.js</code> + <code>katex</code> with <strong>no Mermaid
+plugin</strong>, so a raw Mermaid block would appear as code. It also runs with <code>html: false</code>
+and escapes raw HTML, which is why this document contains no <code>&lt;details&gt;</code> or inline
+<code>&lt;img&gt;</code> tags: they would print as literal text.</li>
+<li><strong>Mermaid source</strong> in <code>docs/diagrams/*.mmd</code>, linked under each diagram. Edit there and
+re-render; never hand-edit an SVG.</li>
+</ul>
+<p>Relative image paths are safe: markm rewrites a relative image reference into
+<code>data-local-src</code>, resolves it against the open document's directory (normalising <code>..</code>),
+then loads it through Neutralino's <code>filesystem.readBinaryFile</code>.</p>
+<p>GitHub, Obsidian and VS Code render the embedded SVG natively.</p>
+<p>Regenerate after editing any <code>.mmd</code>:</p>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">cd docs/diagrams
+for f in *.mmd; do
+  PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome \
+    npx -y @mermaid-js/mermaid-cli@11 -i &quot;$f&quot; -o &quot;${f%.mmd}.svg&quot; -b white -t neutral
+done
+</code></pre>
+</div>
+<p>White background with the <code>neutral</code> theme on purpose: the SVGs stay readable in light
+and dark viewers alike.</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">HeLa MCP Reliability Contract — table 1</caption>
+<thead>
+<tr>
+<th scope="col">Diagram</th>
+<th scope="col">Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Layer map</td>
+<td>What talks to what, and who owns which failure?</td>
+</tr>
+<tr>
+<td>2. Boot timeline</td>
+<td>What happens between &quot;host starts&quot; and &quot;305 tools&quot;?</td>
+</tr>
+<tr>
+<td>3. Triage tree</td>
+<td>Host says <em>failed</em> — where do I look first?</td>
+</tr>
+<tr>
+<td>4. Cell supervision</td>
+<td>Why did one tool stop working mid-session?</td>
+</tr>
+<tr>
+<td>5. Trust boundaries</td>
+<td>Who can write credentials, and what can the sandbox touch?</td>
+</tr>
+<tr>
+<td>6. Incident anatomy</td>
+<td>How did the 11-20 outage actually unfold?</td>
+</tr>
+<tr>
+<td>7. Check loop</td>
+<td>What runs hourly, and what may it change on its own?</td>
+</tr>
+<tr>
+<td>8. Before/after</td>
+<td>Why is it one launcher instead of six inline configs?</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Naming:</strong> there are <strong>5 client applications</strong> and <strong>6 config files</strong> — Gemini keeps two
+(<code>~/.gemini/settings.json</code> and <code>~/.gemini/config/mcp_config.json</code>). Diagrams that say
+&quot;configs&quot; mean six; diagrams that name hosts show five.</p>
+<hr>
+<h2 id="1-layer-map">1. Layer map</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/01-layer-map.svg" alt="Layer map" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/01-layer-map.mmd">01-layer-map.mmd</a> — edit, then re-render (see top).</em></p>
+<ul>
+<li>The <strong>host</strong> only knows one command. If it reports failure, the problem is at or below
+the launcher — never &quot;that one client's settings&quot; unless <code>hela-doctor</code> says <code>hosts</code> is
+drifting.</li>
+<li>The <strong>cells</strong> are children of the runtime. If the runtime boots and lists tools, the
+host is healthy even if one cell later dies (diagram 4).</li>
+<li>The launcher's own overhead is ~6 ms. A bare <code>node</code> start is ~25 ms, so the launcher is
+not a meaningful cost — it is one shell process plus four tests the runtime would
+otherwise fail on later with a worse message.</li>
+</ul>
+<h3 id="why-the-shape-changed">Why the shape changed</h3>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/08-before-after.svg" alt="Before and after" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/08-before-after.mmd">08-before-after.mmd</a> — edit, then re-render (see top).</em></p>
+<p>The left side is what the machine looked like before this work: five clients each holding
+27–31 env vars inline, two of them already disagreeing on <code>NEEDLE_TOOL_INDEX_PATH</code> and
+<code>HELA_ALLOWED_ROOTS</code>, and every one of them pinning <code>/usr/bin/node</code>. The right side is
+today: identical command everywhere, one file to rotate, one place to repair.</p>
+<h2 id="2-boot-timeline">2. Boot timeline</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/02-boot-timeline.svg" alt="Boot timeline" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/02-boot-timeline.mmd">02-boot-timeline.mmd</a> — edit, then re-render (see top).</em></p>
+<p>Measured three times against the launcher: <code>initialize</code> is answered at ~257–269 ms
+(mean ~262 ms), and <code>tools/list</code> adds ~3 ms. So <strong>tool registration is the cheapest step</strong>,
+not the expensive one — nearly all of the time is Node starting and the runtime reading
+its cell catalog. Budget ~300 ms total.</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">HeLa MCP Reliability Contract — table 2</caption>
+<thead>
+<tr>
+<th scope="col">Exit</th>
+<th scope="col">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>78</code></td>
+<td>unreadable secrets, missing entry, or node below the required floor</td>
+</tr>
+<tr>
+<td><code>127</code></td>
+<td>no node on PATH, <strong>or</strong> <code>node -v</code> unparseable (the message names the binary and the raw output)</td>
+</tr>
+<tr>
+<td>silent</td>
+<td>runtime booted but exposed 0 tools → <code>HELA_PROFILE</code> or manifest</td>
+</tr>
+</tbody>
+</table></div>
+<p>Host-side startup timeouts are separate: Codex uses <code>startup_timeout_sec = 60</code>, and the
+doctor's own probe allows 90 s by default (120 s in the timer). Nothing in the chain
+assumes 60 s.</p>
+<p>Why the launcher logs to a file as well as stderr: hosts swallow child stderr. After a
+failure the UI keeps only a one-line status; the log keeps the reason. The timestamp is
+best-effort — if <code>date</code> is unavailable the line still records the reason, with
+<code>unknown-time</code> in place of the clock.</p>
+<h2 id="3-triage-tree">3. Triage tree</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/03-triage.svg" alt="Triage tree" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/03-triage.mmd">03-triage.mmd</a> — edit, then re-render (see top).</em></p>
+<p>Start at the symptom the host actually showed. Note the asymmetry: interpreter and wiring
+failures are fatal for every host, cell deaths are contained to one tool family, and
+sandbox denials are normal behavior that merely reports badly.</p>
+<h2 id="4-cell-supervision">4. Cell supervision</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/04-supervision.svg" alt="Cell supervision" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/04-supervision.mmd">04-supervision.mmd</a> — edit, then re-render (see top).</em></p>
+<p>Restart delays are <strong>1 s, 2 s, 4 s</strong>. The code caps the delay at 8 s, but with the default
+three attempts that cap is unreachable — the third failure marks the cell dead before any
+delay is computed.</p>
+<p>More important, and easy to misread: <strong>the attempt counter is never reset</strong>. A cell that
+crashes, recovers, crashes, recovers, then crashes again is dead on that third crash, even
+across hours. It is three strikes per runtime lifetime, not per outage. Only a host
+restart re-arms.</p>
+<h2 id="5-trust-boundaries">5. Trust boundaries</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/05-trust-boundaries.svg" alt="Trust boundaries" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/05-trust-boundaries.mmd">05-trust-boundaries.mmd</a> — edit, then re-render (see top).</em></p>
+<p>Two separate boundaries, often confused: <em>who may write credentials</em> and <em>what the sandbox
+may touch</em>.</p>
+<p><code>mcp.env</code> is <strong>sourced as shell</strong>, not parsed. <code>set -a; . &quot;$SECRETS&quot;</code> means any command
+substitution or function definition in that file executes as you at every MCP session
+start, across all six configs. The boundary that matters is therefore <strong>write</strong> access to
+<code>~/.config/hela/</code> — 0700 dir, 0600 file. The launcher warns if the file is group/world
+readable; <code>hela-doctor</code> fails it and <code>--repair</code> fixes it.</p>
+<p>The <code>~/gdrive</code> exclusion is not incidental — that tree contains a Drive shortcut cycle
+(a shortcut pointing back into its own folder), which makes any local traversal descend
+until <code>PATH_MAX</code>. Keeping it outside the roots means the filesystem cell cannot be walked
+into that trap.</p>
+<h2 id="6-incident-anatomy">6. Incident anatomy</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/06-incident.svg" alt="Incident timeline" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/06-incident.mmd">06-incident.mmd</a> — edit, then re-render (see top).</em></p>
+<p>The 50-minute gap between cause and symptom is the reason the launcher now logs and the
+timer checks hourly. The other lesson: <strong>restarting the app alone does not clear this</strong> —
+the host caches the failed connect, so the binary has to exist first.</p>
+<h2 id="7-check-loop">7. Check loop</h2>
+<p><img src="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/07-doctor-loop.svg" alt="Doctor loop" loading="lazy"></p>
+<p><em>Source: <a href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem/blob/master/docs/diagrams/07-doctor-loop.mmd">07-doctor-loop.mmd</a> — edit, then re-render (see top).</em></p>
+<p>The doctor has ~22 distinct check names; which ones emit depends on state. A healthy run
+today prints 17 lines (15 ok, 2 warn) in ~0.4 s including the live handshake. The two
+steady-state warnings are housekeeping: credential-bearing backups, and shadowed tools.</p>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">HeLa MCP Reliability Contract — table 3</caption>
+<thead>
+<tr>
+<th scope="col">Layer</th>
+<th scope="col">Check line</th>
+<th scope="col">Detects</th>
+<th scope="col"><code>--repair</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interpreter</td>
+<td><code>node</code>, <code>node-mark</code>, <code>node-floor</code>, <code>node-path</code>, <code>node-shadow</code>, <code>npm</code></td>
+<td>missing/old node, <strong>auto-marked nodejs</strong>, stale launcher gate, PATH shadowing</td>
+<td>node only</td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td><code>manifest</code>, <code>runtime-entry</code>, <code>runtime-deps</code></td>
+<td>missing/unreadable manifest, missing <code>dist/index.js</code>, missing MCP SDK</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Cells</td>
+<td><code>cells</code></td>
+<td>unbuilt entry, absent <code>node_modules</code></td>
+<td>no</td>
+</tr>
+<tr>
+<td>Assets</td>
+<td><code>needle-engine</code>, <code>needle-model</code>, <code>needle-profile</code>, <code>scrcpy-server</code></td>
+<td>truncated model, non-executable engine, missing adb payload</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Secrets</td>
+<td><code>env-file</code>, <code>env-dir</code>, <code>env-keys</code>, <code>env-credentials</code></td>
+<td>perms, missing keys, <strong>blank/truncated credentials</strong></td>
+<td>perms</td>
+</tr>
+<tr>
+<td>Wiring</td>
+<td><code>hosts</code>, <code>host-mode:&lt;name&gt;</code>, <code>host-missing</code>, <code>host-binaries</code></td>
+<td>drift off the launcher, disabled client, dead third-party commands</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Exposure</td>
+<td><code>host-secrets</code>, <code>backups</code>, <code>backups-large</code></td>
+<td>plaintext keys in configs, credential backups, unscannable large backups</td>
+<td>chmod 600</td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td><code>live</code></td>
+<td>handshake, tool count, shadowed tools</td>
+<td>no</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>--repair</code> performs four mutations, all idempotent: <code>apt-get install nodejs</code> +
+<code>apt-mark manual</code>, <code>chmod 600</code> on <code>mcp.env</code>, <code>chmod 700</code> on <code>~/.config/hela</code>, and
+<code>chmod 600</code> on credential-bearing <code>*.bak*</code> (including large ones it cannot scan). It never
+edits a host config.</p>
+<h2 id="the-three-failure-classes-seen-so-far">The three failure classes seen so far</h2>
+<div class="doc-table-wrap"><table class="doc-table"><caption class="visually-hidden">HeLa MCP Reliability Contract — table 4</caption>
+<thead>
+<tr>
+<th scope="col">Class</th>
+<th scope="col">Symptom</th>
+<th scope="col">Detection</th>
+<th scope="col">Repair</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interpreter loss/downgrade</td>
+<td><code>ChildProcess.spawn (/usr/bin/node)</code> NotFound; or cells failing on <code>engines.node</code></td>
+<td><code>node</code>, <code>node-mark</code></td>
+<td><code>--repair</code> reinstalls the pinned package and re-marks it manual</td>
+</tr>
+<tr>
+<td>Config drift</td>
+<td>one client works, another doesn't; keys missing or stale</td>
+<td><code>hosts</code>, <code>env-keys</code></td>
+<td>point <code>command</code> at the launcher; restore keys from <code>*.bak-secrets-centralized</code></td>
+</tr>
+<tr>
+<td>Credential sprawl</td>
+<td>plaintext keys in host configs or backups</td>
+<td><code>host-secrets</code>, <code>backups</code></td>
+<td>strip env blocks; chmod 600 or delete backups</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="commands">Commands</h2>
+<div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-bash">hela-doctor                      # full check + live handshake (~0.4s)
+hela-doctor --json               # machine-readable
+hela-doctor --repair             # fix node, credential modes, backup exposure
+hela-doctor --no-live            # skip the handshake (offline / no network)
+hela-doctor --notify             # desktop alert on failure
+</code></pre>
+</div>
+<p>Exit codes: <code>0</code> healthy (warnings allowed), <code>1</code> failures, <code>2</code> doctor itself broke
+(<code>--notify</code> fires on 2 as well). Logs: <code>journalctl --user -u hela-doctor.service</code>;
+launcher failures append to <code>~/.local/state/hela/logs/mcp-launcher.log</code> (rotated at
+512 KB).</p>
+<p>Note that a plain run is not read-only: it writes <code>~/.local/state/hela/node-min-major</code>
+(the launcher's version gate) and refreshes <code>node-pin</code> (the version <code>--repair</code> restores).</p>
+<h2 id="automation">Automation</h2>
+<p><code>hela-doctor.service</code> runs
+<code>%h/.local/bin/hela-doctor --repair --notify --timeout 120</code> 2 minutes after login and
+hourly thereafter. It exits 1 on genuine failures; <code>SuccessExitStatus=0 1</code> keeps that an
+alert rather than a failed unit.</p>
+<p>Two facts worth knowing:</p>
+<ul>
+<li><code>Persistent=true</code> in the timer is inert — it only applies to <code>OnCalendar=</code> timers.</li>
+<li>The steady state includes one permanent warning: 31 credential-bearing backups exist.
+<code>0 warn</code> is not achievable until they are deleted.</li>
+</ul>
+<h2 id="operating-rules">Operating rules</h2>
+<ol>
+<li><strong>Never pin an absolute interpreter in host configs.</strong> Use the launcher; it resolves
+<code>node</code> at spawn time and fails with an actionable message. Note the exception: the
+installer manifest <code>.hela-install.json</code> still carries <code>&quot;node&quot;: &quot;/usr/bin/node&quot;</code>. No
+runtime code reads it — only the ecosystem's install/launch scripts and this doctor —
+so it is a latent trap, not a live one. Retire it when convenient.</li>
+<li><strong>One credentials file, and treat it as code.</strong> <code>~/.config/hela/mcp.env</code>, 0600, dir
+0700. It is sourced, so anyone who can write it can run code as you at every session
+start. Never paste keys into client configs.</li>
+<li><strong>Keep nodejs marked manual.</strong> <code>hela-doctor</code> now fails with <code>node-mark</code> if the mark
+drifts back to <code>auto</code> — that mark is what let <code>autoremove</code> delete the runtime the first
+time — and <code>--repair</code> re-asserts it.</li>
+<li><strong><code>HELA_ALLOWED_ROOTS</code> is the sandbox boundary.</strong> Currently project, Documents,
+Downloads, persona, skills, memory, HeLa state/install, <code>/tmp</code>, <code>/var/tmp</code>. Add a root
+when a legitimate tool is denied; never restore <code>/</code>.</li>
+<li><strong>After changing <code>mcp.env</code> or the launcher, restart the host.</strong> A running MCP server
+keeps the env it booted with, and hosts cache a failed connect until restart.</li>
+<li><strong>Do not pass <code>HELA_SECRETS_FILE</code> or <code>HELA_RUNTIME_ENTRY</code> through a host.</strong> The
+launcher ignores them by design; if you find a config setting one, that is drift.</li>
+</ol>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li><strong>The live probe proves less than it looks.</strong> It spawns no cell and calls no tool:
+<code>tools/list</code> is answered from the manifest cache because cells are created on first
+tool call. <code>[OK] live 305 tools</code> means node runs, the launcher gates pass, the manifest
+parses and the SDK answers. No cell is known to be executable.</li>
+<li><strong>305 of 591 declared tools are reachable.</strong> With <code>HELA_NAMESPACE_TOOLS=0</code>, bare names
+collide across cells and the runtime keeps whichever cell registered last; the agent
+catalog resolves the same collisions first-cell-first. The doctor reports the 286
+shadowed names as a warning. Turning namespacing on exposes all of them but renames
+every tool, so it is a deliberate choice, not a flip.</li>
+<li>Policy denials from <code>filesystem-mcp</code> surface as <code>Invalid tools/call result: invalid_union</code> instead of <code>path escapes configured workspace roots</code> — the cell returns
+a malformed error shape. Access is still denied; only the message is wrong.</li>
+<li><code>node-shadow</code> and <code>npm</code> warnings are informational; <code>--repair</code> cannot fix a PATH that
+resolves a different node, only the installed package.</li>
+<li>Diagram SVGs carry mermaid's <code>&lt;foreignObject&gt;</code> labels, which browsers render but
+non-browser rasterizers (librsvg, ImageMagick) drop — boxes appear empty. Use Chrome
+headless to flatten to PNG.</li>
+<li>Audit tooling caveat: <code>rtk</code>-wrapped <code>cat</code>/<code>sed</code>/<code>wc</code> has served a stale revision of this
+file (410 lines) while <code>/usr/bin/*</code> showed the current one. When verifying a document,
+read it with absolute binaries.</li>
+</ul>
+<h2 id="rollback">Rollback</h2>
+<p>Every config touched during the hardening carries a sibling backup:</p>
+<ul>
+<li><code>*</code> + <code>.bak-secrets-centralized</code> — pre-launcher state (inline env, per-client commands)</li>
+<li><code>*</code> + <code>.bak-provider-key-authjson</code> — opencode.json before the provider key was dropped
+(key lives in <code>~/.local/share/opencode/auth.json</code>, same value)</li>
+<li><code>*</code> + <code>.bak-node-path-hardening</code> — state right after the <code>/usr/bin/node</code> fix</li>
+</ul>
+<p>Older backups exist from earlier work (<code>~40</code> files across ~8 suffix families); 31 still
+contain credentials, all mode 600. Restoring any backup puts credentials back in that
+file; chmod 600 it and re-run <code>hela-doctor</code>.</p>
+</article><footer class="doc-footer"><span>MIT SUITE · GPL-3.0 + MIT CELLS · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#how-the-diagrams-work">How the diagrams work</a></li><li><a href="#1-layer-map">1. Layer map</a></li><li><a href="#2-boot-timeline">2. Boot timeline</a></li><li><a href="#3-triage-tree">3. Triage tree</a></li><li><a href="#4-cell-supervision">4. Cell supervision</a></li><li><a href="#5-trust-boundaries">5. Trust boundaries</a></li><li><a href="#6-incident-anatomy">6. Incident anatomy</a></li><li><a href="#7-check-loop">7. Check loop</a></li><li><a href="#the-three-failure-classes-seen-so-far">The three failure classes seen so far</a></li><li><a href="#commands">Commands</a></li><li><a href="#automation">Automation</a></li><li><a href="#operating-rules">Operating rules</a></li><li><a href="#known-limits">Known limits</a></li><li><a href="#rollback">Rollback</a></li></ol></nav>
+    </div>
+  </div>
+  <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
+  <script src="../../release-data.js?v=1.9.27"></script>
+  <script src="../../library-data.js?v=1.9.27&amp;rev=91d06044ab33"></script>
+  <script src="../../library.js?v=1.9.27&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.9.27&amp;rev=2dfe17383063"></script>
+</body>
+</html>
