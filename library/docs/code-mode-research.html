@@ -75,7 +75,7 @@ of it.</li>
 <tr>
 <td>Anthropic, <em>Code execution with MCP</em> (Nov 2025)</td>
 <td>150k → 2k tokens, &quot;98.7%&quot;</td>
-<td>One worked example with a generated tool-file tree; illustrative, not a benchmark</td>
+<td>One worked example with a generated tool-file tree; illustrative, not a benchmark. Their platform docs separately claim 35–75% input-token reductions on multi-step workflows — the more defensible number</td>
 <td>Direction yes, magnitude no</td>
 </tr>
 <tr>
@@ -195,14 +195,14 @@ compromised, an attacker gets a workspace and a list of tool calls that policy a
 <tr>
 <td><code>node:vm</code> in-process</td>
 <td><strong>none</strong> — documented as not a security boundary</td>
-<td>~0</td>
+<td>&lt;1 ms</td>
 <td>Only for trusted snippets; never for model output</td>
 </tr>
 <tr>
 <td>Node permission model</td>
 <td>fs/net/child-process gating</td>
 <td>~25 ms</td>
-<td>Useful hardening; not a security boundary</td>
+<td>Useful hardening; still not a security boundary</td>
 </tr>
 <tr>
 <td>Bun</td>
@@ -218,28 +218,37 @@ compromised, an attacker gets a workspace and a list of tool calls that policy a
 </tr>
 <tr>
 <td>QuickJS (WASM)</td>
-<td>strong; no host bindings unless exposed</td>
-<td>low, slow compute</td>
-<td>Good for pure logic, awkward for async RPC</td>
+<td>near-perfect (software fault isolation); a guest loop or OOM cannot kill the host</td>
+<td>1–3 ms, slow compute</td>
+<td>Excellent fast path for pure data work; async is limited to one concurrent bridge call</td>
 </tr>
 <tr>
 <td><code>isolated-vm</code></td>
 <td>V8 isolate, memory-isolated</td>
-<td>native build per ABI</td>
-<td>Strong; maintenance risk</td>
+<td>2–5 ms; native build per ABI</td>
+<td><strong>Avoid</strong>: maintenance mode, fragile C++, a V8 panic takes the host process down with it</td>
 </tr>
 <tr>
-<td>Child process + Landlock/seccomp</td>
-<td>kernel-enforced fs/net</td>
-<td>~20 ms</td>
-<td>Best complement; Linux-only</td>
+<td>Child process + <code>bwrap</code>/seccomp/Landlock</td>
+<td>kernel-enforced namespaces, fs and net</td>
+<td>10–25 ms</td>
+<td>Strongest for orchestration; Linux-only</td>
 </tr>
 </tbody>
 </table></div>
-<p>Recommendation: <strong>child process + Landlock (or <code>bwrap</code>) profile + stdio RPC</strong>, with the
+<p>A two-tier split is possible — route pure data work to an in-process QuickJS isolate, and
+only orchestration to a process sandbox. It buys ~20 ms on the cheap path and doubles the
+execution surface to maintain. Phase 1 should ship <strong>one</strong> tier; add the fast path only if
+measurement shows the process start dominates real tasks.</p>
+<p>Recommendation: <strong>child process + <code>bwrap</code>/Landlock profile + stdio RPC</strong>, with the
 parent enforcing time, memory, call budget and output size. It is not containment against a
 kernel exploit; it is containment against <code>rm -rf ~</code>, <code>curl | sh</code>, and runaway loops — which
 is the realistic threat for a local, single-user agent.</p>
+<p>Three details that are cheap and easy to forget: mark inherited file descriptors
+<code>O_CLOEXEC</code> and <code>close_range(3, ~0)</code> before exec (a leaked socket is a channel); run with
+<code>--unshare-net</code>, <code>--cap-drop ALL</code>, read-only <code>/usr</code> and <code>tmpfs</code> <code>/tmp</code>; and cap tool calls
+per execution (30–50) so an infinite loop cannot hammer an external API even while inside
+the time limit.</p>
 <p>Note what this machine already grants: the nucleus cell runs arbitrary shell commands today.
 Code mode does not add a capability class here; it adds a <em>narrower, audited</em> interface and a
 place to enforce limits that raw shell access does not have. A sandbox weaker than the
@@ -250,6 +259,9 @@ existing shell would be theatre.</p>
 <li><code>search(query, {limit})</code> → ranked <code>{path, cell, tool, one_line}</code>, no schemas.</li>
 <li><code>describe(path)</code> → one TypeScript signature plus its doc comment.</li>
 </ul>
+<p>Both are generated from the same source: a <code>tools.d.ts</code> built at boot from each cell's
+<code>tools/list</code> schema. The file is the catalog's single representation — <code>search</code> indexes it,
+<code>describe</code> serves a slice, and the sandbox can be handed the declarations it asked for.</p>
 <p>Detail levels (name / signature / full) matter: triage does not need parameter docs.
 Names must be unique for paths to exist, which is the concrete argument for turning
 namespacing on: 286 declared tools have no addressable identity today because a later cell
@@ -311,8 +323,9 @@ Read-only tools should run unprompted; only mutations should stop.</p>
 <li><code>code-mode/catalog.mjs</code>: unique path per tool from live <code>tools/list</code>; one-line summary and
 full signature per tool.</li>
 <li><code>code-mode/search.mjs</code>: token-overlap or BM25 over name + description. No embeddings.</li>
-<li><code>code-mode/executor.mjs</code>: child process, stdio RPC, Landlock/bwrap profile, kill on
-timeout.</li>
+<li><code>code-mode/executor.mjs</code>: child process, stdio RPC, <code>bwrap</code> profile (<code>--unshare-net</code>,
+<code>--cap-drop ALL</code>, <code>--tmpfs /tmp</code>, read-only system paths), <code>close_range</code> before exec,
+kill on timeout.</li>
 <li>Register <code>hela.execute</code> and <code>hela.describe</code> behind <code>HELA_CODE_MODE=1</code>.</li>
 <li>Tests: escape attempts (fs outside workspace, <code>fetch</code>, <code>process</code>, infinite loop, memory
 bomb) and golden multi-step tasks.</li>
@@ -339,6 +352,7 @@ stop being optional.</li>
 <li>Cloudflare, <em>Code Mode: the better way to use MCP</em> — https://blog.cloudflare.com/code-mode/</li>
 <li>Cloudflare, <em>Code Mode</em> and <em>How Code Mode works</em> — https://developers.cloudflare.com/agents/tools/codemode/</li>
 <li>Anthropic, <em>Code execution with MCP</em> — https://www.anthropic.com/engineering/code-execution-with-mcp</li>
+<li>Anthropic platform docs, <em>Advanced tool use</em> (search tools, programmatic tool calling) — https://docs.anthropic.com/en/docs/build-with-claude/tool-use</li>
 <li>Wang et al., <em>Executable Code Actions Elicit Better LLM Agents</em> (CodeAct, ICML 2024) — https://arxiv.org/abs/2402.01030</li>
 </ul>
 </article><footer class="doc-footer"><span>MIT SUITE · GPL-3.0 + MIT CELLS · HELA ECOSYSTEM</span><a href="../../library.html">Document library</a></footer></main>
@@ -347,7 +361,7 @@ stop being optional.</li>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
   <script src="../../release-data.js?v=1.10.1"></script>
-  <script src="../../library-data.js?v=1.10.1&amp;rev=9072b44967db"></script>
+  <script src="../../library-data.js?v=1.10.1&amp;rev=738aef23498f"></script>
   <script src="../../library.js?v=1.10.1&amp;rev=e4e7b2f0ebad"></script>
   <script src="../../app.js?v=1.10.1&amp;rev=2dfe17383063"></script>
 </body>

@@ -1323,7 +1323,7 @@ Claim 3 is repeated most and evidenced least.
 
 | Source | Claim | What it demonstrates | Confidence |
 |---|---|---|---|
-| Anthropic, *Code execution with MCP* (Nov 2025) | 150k → 2k tokens, "98.7%" | One worked example with a generated tool-file tree; illustrative, not a benchmark | Direction yes, magnitude no |
+| Anthropic, *Code execution with MCP* (Nov 2025) | 150k → 2k tokens, "98.7%" | One worked example with a generated tool-file tree; illustrative, not a benchmark. Their platform docs separately claim 35–75% input-token reductions on multi-step workflows — the more defensible number | Direction yes, magnitude no |
 | Cloudflare, *Code Mode* (Sep 2025) | "Striking" results; more and more complex tools as TypeScript | Qualitative engineering report; no published eval or failure rates | Medium |
 | CodeAct (ICML 2024) | Code actions beat JSON/text "up to 20%" | 17 LLMs, API-Bank plus a new benchmark | High for code-as-action; not MCP-specific |
 
@@ -1410,18 +1410,29 @@ compromised, an attacker gets a workspace and a list of tool calls that policy a
 
 | Option | Isolation | Cost | Verdict |
 |---|---|---|---|
-| `node:vm` in-process | **none** — documented as not a security boundary | ~0 | Only for trusted snippets; never for model output |
-| Node permission model | fs/net/child-process gating | ~25 ms | Useful hardening; not a security boundary |
+| `node:vm` in-process | **none** — documented as not a security boundary | <1 ms | Only for trusted snippets; never for model output |
+| Node permission model | fs/net/child-process gating | ~25 ms | Useful hardening; still not a security boundary |
 | Bun | none by default | low | Reject |
 | Deno subprocess | capability-based, deny by default | 30–50 ms | Strong ergonomics; ships a second runtime |
-| QuickJS (WASM) | strong; no host bindings unless exposed | low, slow compute | Good for pure logic, awkward for async RPC |
-| `isolated-vm` | V8 isolate, memory-isolated | native build per ABI | Strong; maintenance risk |
-| Child process + Landlock/seccomp | kernel-enforced fs/net | ~20 ms | Best complement; Linux-only |
+| QuickJS (WASM) | near-perfect (software fault isolation); a guest loop or OOM cannot kill the host | 1–3 ms, slow compute | Excellent fast path for pure data work; async is limited to one concurrent bridge call |
+| `isolated-vm` | V8 isolate, memory-isolated | 2–5 ms; native build per ABI | **Avoid**: maintenance mode, fragile C++, a V8 panic takes the host process down with it |
+| Child process + `bwrap`/seccomp/Landlock | kernel-enforced namespaces, fs and net | 10–25 ms | Strongest for orchestration; Linux-only |
 
-Recommendation: **child process + Landlock (or `bwrap`) profile + stdio RPC**, with the
+A two-tier split is possible — route pure data work to an in-process QuickJS isolate, and
+only orchestration to a process sandbox. It buys ~20 ms on the cheap path and doubles the
+execution surface to maintain. Phase 1 should ship **one** tier; add the fast path only if
+measurement shows the process start dominates real tasks.
+
+Recommendation: **child process + `bwrap`/Landlock profile + stdio RPC**, with the
 parent enforcing time, memory, call budget and output size. It is not containment against a
 kernel exploit; it is containment against `rm -rf ~`, `curl | sh`, and runaway loops — which
 is the realistic threat for a local, single-user agent.
+
+Three details that are cheap and easy to forget: mark inherited file descriptors
+`O_CLOEXEC` and `close_range(3, ~0)` before exec (a leaked socket is a channel); run with
+`--unshare-net`, `--cap-drop ALL`, read-only `/usr` and `tmpfs` `/tmp`; and cap tool calls
+per execution (30–50) so an infinite loop cannot hammer an external API even while inside
+the time limit.
 
 Note what this machine already grants: the nucleus cell runs arbitrary shell commands today.
 Code mode does not add a capability class here; it adds a *narrower, audited* interface and a
@@ -1434,6 +1445,10 @@ Loading 305 signatures up front recreates the problem. Two tools instead:
 
 - `search(query, {limit})` → ranked `{path, cell, tool, one_line}`, no schemas.
 - `describe(path)` → one TypeScript signature plus its doc comment.
+
+Both are generated from the same source: a `tools.d.ts` built at boot from each cell's
+`tools/list` schema. The file is the catalog's single representation — `search` indexes it,
+`describe` serves a slice, and the sandbox can be handed the declarations it asked for.
 
 Detail levels (name / signature / full) matter: triage does not need parameter docs.
 Names must be unique for paths to exist, which is the concrete argument for turning
@@ -1475,8 +1490,9 @@ Phase 1 — read-only, no approvals:
 1. `code-mode/catalog.mjs`: unique path per tool from live `tools/list`; one-line summary and
    full signature per tool.
 2. `code-mode/search.mjs`: token-overlap or BM25 over name + description. No embeddings.
-3. `code-mode/executor.mjs`: child process, stdio RPC, Landlock/bwrap profile, kill on
-   timeout.
+3. `code-mode/executor.mjs`: child process, stdio RPC, `bwrap` profile (`--unshare-net`,
+   `--cap-drop ALL`, `--tmpfs /tmp`, read-only system paths), `close_range` before exec,
+   kill on timeout.
 4. Register `hela.execute` and `hela.describe` behind `HELA_CODE_MODE=1`.
 5. Tests: escape attempts (fs outside workspace, `fetch`, `process`, infinite loop, memory
    bomb) and golden multi-step tasks.
@@ -1506,6 +1522,7 @@ improvement, stop at phase 1.
 - Cloudflare, *Code Mode: the better way to use MCP* — https://blog.cloudflare.com/code-mode/
 - Cloudflare, *Code Mode* and *How Code Mode works* — https://developers.cloudflare.com/agents/tools/codemode/
 - Anthropic, *Code execution with MCP* — https://www.anthropic.com/engineering/code-execution-with-mcp
+- Anthropic platform docs, *Advanced tool use* (search tools, programmatic tool calling) — https://docs.anthropic.com/en/docs/build-with-claude/tool-use
 - Wang et al., *Executable Code Actions Elicit Better LLM Agents* (CodeAct, ICML 2024) — https://arxiv.org/abs/2402.01030
 
 
