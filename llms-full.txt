@@ -1,6 +1,12 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.10.2] - 2026-11-22
+
+### Fixed
+- `terminal-mcp` 3.0.7: local commands run from a temporary script instead of `sh -c`, so `pkill -f` no longer matches and kills the wrapper shell, and `pgrep -f` no longer reports it as a live process. RTK summarisation rejects summaries below 5% of the source, retains and names the original output, and anchors its log heuristic to line starts. Two defects that both made a failed step look successful.
+- `researcher-mcp` 4.1.0: `research_brief` retries once with a reduced query when every source returns nothing and discloses it (`backoff: "…"`); scoring folds morphological variants and weights terms by how much they discriminate among the candidates; the brief returns a feedback handle plus the exact `genome search_feedback` call, and a follow-up tool on a brief URL appends it with `used=true`.
+
 ## [1.10.1] - 2026-11-22
 
 ### Fixed
@@ -485,7 +491,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.10.1**, with runtime **1.3.7**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.10.2**, with runtime **1.3.7**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -621,7 +627,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.1 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.2 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -771,6 +777,24 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.10.2 — the cells stop reporting quiet failures
+
+Two cell releases, both about a step that failed while looking like it succeeded.
+
+Nucleus 3.0.7 runs local commands from a script file rather than through `sh -c`, so a
+`pkill -f` in a compound command no longer matches and kills its own wrapper (then reports
+exit 1 with empty output), and `pgrep -f` no longer counts the wrapper as a live process.
+Its RTK summariser now refuses a summary below 5% of the source, keeps the original output
+and names it, and only treats `Error`/`warning` at line start as log mode.
+
+Enzyme 4.1.0 reshapes a query once when every source returns nothing and says so in the
+header, since Google CSE over-constrains on long natural-language questions. Scoring folds
+`tool`/`tools`-style variants and weights terms by rarity among the candidates, and each
+brief now carries the `query_class`/`source` handle needed to record feedback — with the
+exact genome call, including when a follow-up tool opens a URL the brief returned.
+
+Runtime unchanged at 1.3.7.
 
 ## v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes
 
@@ -1533,14 +1557,14 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.1**; runtime **1.3.7**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.2**; runtime **1.3.7**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.0.8**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.0.6**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.5**, GPL-3.0-or-later, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
-- **HeLa Nucleus** (`hela-nucleus`): server **3.0.6**, MIT, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
+- **HeLa Nucleus** (`hela-nucleus`): server **3.0.7**, MIT, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
 - **HeLa Ribosome** (`hela-ribosome`): server **3.1.2**, GPL-3.0-or-later, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
-- **HeLa Enzyme** (`hela-enzyme`): server **4.0.9**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
+- **HeLa Enzyme** (`hela-enzyme`): server **4.1.0**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
 - **HeLa Cytosol** (`hela-cytosol`): server **3.2.6**, MIT, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.0.5**, MIT, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.6**, MIT, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).

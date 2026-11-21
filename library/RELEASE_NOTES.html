@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HeLa MCP Ecosystem Release Notes — HeLa MCP Ecosystem</title>
-  <meta name="description" content="Two lookups produced a report that blamed the host for what was really a path miss. Doctor now says not installed instead of Not checked, and when every component is missing it…">
+  <meta name="description" content="Two cell releases, both about a step that failed while looking like it succeeded.">
   <link rel="canonical" href="https://hela.my.id/library/RELEASE_NOTES.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/RELEASE_NOTES.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/RELEASE_NOTES.html">
@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../library.css?v=1.10.1&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../library.css?v=1.10.2&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.10.1 · Runtime 1.3.7 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.10.2 · Runtime 1.3.7 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -35,7 +35,20 @@
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../library.html">Document library</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn active" data-lang="en" href="RELEASE_NOTES.html">EN</a><a class="lang-btn" data-lang="id" href="../id/library/RELEASE_NOTES.html">ID</a></div><button class="btn open-cmd-palette" type="button">Search <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
       <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><h1 id="hela-mcp-ecosystem-release-notes" class="doc-title">HeLa MCP Ecosystem Release Notes</h1>
-<header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">RELEASE_NOTES.md</p><p>Original source language. <a href="source/RELEASE_NOTES.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="v1101--doctor-diagnostics-for-uninstalled-and-non-default-prefixes">v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes</h2>
+<header class="library-document-meta" lang="en"><p class="library-kicker">Release history</p><p class="library-source">RELEASE_NOTES.md</p><p>Original source language. <a href="source/RELEASE_NOTES.md" download>Download source</a> · <a href="../library.html">All documents</a></p></header><h2 id="v1102--the-cells-stop-reporting-quiet-failures">v1.10.2 — the cells stop reporting quiet failures</h2>
+<p>Two cell releases, both about a step that failed while looking like it succeeded.</p>
+<p>Nucleus 3.0.7 runs local commands from a script file rather than through <code>sh -c</code>, so a
+<code>pkill -f</code> in a compound command no longer matches and kills its own wrapper (then reports
+exit 1 with empty output), and <code>pgrep -f</code> no longer counts the wrapper as a live process.
+Its RTK summariser now refuses a summary below 5% of the source, keeps the original output
+and names it, and only treats <code>Error</code>/<code>warning</code> at line start as log mode.</p>
+<p>Enzyme 4.1.0 reshapes a query once when every source returns nothing and says so in the
+header, since Google CSE over-constrains on long natural-language questions. Scoring folds
+<code>tool</code>/<code>tools</code>-style variants and weights terms by rarity among the candidates, and each
+brief now carries the <code>query_class</code>/<code>source</code> handle needed to record feedback — with the
+exact genome call, including when a follow-up tool opens a URL the brief returned.</p>
+<p>Runtime unchanged at 1.3.7.</p>
+<h2 id="v1101--doctor-diagnostics-for-uninstalled-and-non-default-prefixes">v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes</h2>
 <p>Two lookups produced a report that blamed the host for what was really a path miss. Doctor
 now says <code>not installed</code> instead of <code>Not checked</code>, and when every component is missing it
 prints the paths it resolved along with the install-then-diagnose commands. Separately, an
@@ -187,13 +200,13 @@ cd hela-mcp-ecosystem
 <p>Distributed under the MIT License. Developed by Azzar.</p>
 <p>The HeLa project respectfully recognizes <strong>Henrietta Lacks</strong> and the enduring scientific legacy of HeLa cells.</p>
 </article><footer class="doc-footer"><span>MIT SUITE · GPL-3.0 + MIT CELLS · HELA ECOSYSTEM</span><a href="../library.html">Document library</a></footer></main>
-      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#v1101--doctor-diagnostics-for-uninstalled-and-non-default-prefixes">v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes</a></li><li><a href="#v1100--host-layer-doctor-and-a-single-mcp-entry-point">v1.10.0 — host-layer doctor and a single MCP entry point</a></li><li><a href="#v196--pinned-modern-web-guidance">v1.9.6 — pinned modern web guidance</a></li><li><a href="#v180--dedicated-cytosol-image-analysis">v1.8.0 — dedicated Cytosol image analysis</a></li><li><a href="#v170--cytosol-mirage-visual-intelligence">v1.7.0 — Cytosol Mirage visual intelligence</a></li><li><a href="#v164--stable-snapshot-alias-correction">v1.6.4 — stable snapshot alias correction</a></li><li><a href="#v163--cross-platform-maintenance-entrypoints">v1.6.3 — cross-platform maintenance entrypoints</a></li><li><a href="#v162--plastid-and-receptor-dependency-refresh">v1.6.2 — Plastid and Receptor dependency refresh</a></li><li><a href="#v161--switch-deployment-modes-in-place">v1.6.1 — switch deployment modes in place</a></li><li><a href="#v160--consistent-enzyme-search-input">v1.6.0 — consistent Enzyme search input</a></li><li><a href="#v153--canonical-relation-ordering">v1.5.3 — canonical relation ordering</a></li><li><a href="#v152--replicated-vault-convergence">v1.5.2 — replicated vault convergence</a></li><li><a href="#v151--current-documentation-and-bilingual-website">v1.5.1 — current documentation and bilingual website</a></li><li><a href="#v150--on-demand-runtime-and-canonical-discovery">v1.5.0 — on-demand runtime and canonical discovery</a></li><li><a href="#v140--memory-safety-and-runtime-verification">v1.4.0 — memory safety and runtime verification</a></li><li><a href="#historical-v100-notes">Historical v1.0.0 notes</a></li><li><a href="#architectural-vision--metaphor">Architectural Vision &amp; Metaphor</a></li><li><a href="#key-highlights--milestones-delivered">Key Highlights &amp; Milestones Delivered</a></li><li><a href="#quick-start">Quick Start</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license--attribution">License &amp; Attribution</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="On this page"><div class="doc-toc-title">ON THIS PAGE</div><ol id="tocList"><li><a href="#v1102--the-cells-stop-reporting-quiet-failures">v1.10.2 — the cells stop reporting quiet failures</a></li><li><a href="#v1101--doctor-diagnostics-for-uninstalled-and-non-default-prefixes">v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes</a></li><li><a href="#v1100--host-layer-doctor-and-a-single-mcp-entry-point">v1.10.0 — host-layer doctor and a single MCP entry point</a></li><li><a href="#v196--pinned-modern-web-guidance">v1.9.6 — pinned modern web guidance</a></li><li><a href="#v180--dedicated-cytosol-image-analysis">v1.8.0 — dedicated Cytosol image analysis</a></li><li><a href="#v170--cytosol-mirage-visual-intelligence">v1.7.0 — Cytosol Mirage visual intelligence</a></li><li><a href="#v164--stable-snapshot-alias-correction">v1.6.4 — stable snapshot alias correction</a></li><li><a href="#v163--cross-platform-maintenance-entrypoints">v1.6.3 — cross-platform maintenance entrypoints</a></li><li><a href="#v162--plastid-and-receptor-dependency-refresh">v1.6.2 — Plastid and Receptor dependency refresh</a></li><li><a href="#v161--switch-deployment-modes-in-place">v1.6.1 — switch deployment modes in place</a></li><li><a href="#v160--consistent-enzyme-search-input">v1.6.0 — consistent Enzyme search input</a></li><li><a href="#v153--canonical-relation-ordering">v1.5.3 — canonical relation ordering</a></li><li><a href="#v152--replicated-vault-convergence">v1.5.2 — replicated vault convergence</a></li><li><a href="#v151--current-documentation-and-bilingual-website">v1.5.1 — current documentation and bilingual website</a></li><li><a href="#v150--on-demand-runtime-and-canonical-discovery">v1.5.0 — on-demand runtime and canonical discovery</a></li><li><a href="#v140--memory-safety-and-runtime-verification">v1.4.0 — memory safety and runtime verification</a></li><li><a href="#historical-v100-notes">Historical v1.0.0 notes</a></li><li><a href="#architectural-vision--metaphor">Architectural Vision &amp; Metaphor</a></li><li><a href="#key-highlights--milestones-delivered">Key Highlights &amp; Milestones Delivered</a></li><li><a href="#quick-start">Quick Start</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#license--attribution">License &amp; Attribution</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../release-data.js?v=1.10.1"></script>
-  <script src="../library-data.js?v=1.10.1&amp;rev=738aef23498f"></script>
-  <script src="../library.js?v=1.10.1&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.10.1&amp;rev=2dfe17383063"></script>
+  <script src="../release-data.js?v=1.10.2"></script>
+  <script src="../library-data.js?v=1.10.2&amp;rev=ec0c70ba1759"></script>
+  <script src="../library.js?v=1.10.2&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../app.js?v=1.10.2&amp;rev=2dfe17383063"></script>
 </body>
 </html>

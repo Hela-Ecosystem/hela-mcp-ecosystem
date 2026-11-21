@@ -1,5 +1,23 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.2 — the cells stop reporting quiet failures
+
+Two cell releases, both about a step that failed while looking like it succeeded.
+
+Nucleus 3.0.7 runs local commands from a script file rather than through `sh -c`, so a
+`pkill -f` in a compound command no longer matches and kills its own wrapper (then reports
+exit 1 with empty output), and `pgrep -f` no longer counts the wrapper as a live process.
+Its RTK summariser now refuses a summary below 5% of the source, keeps the original output
+and names it, and only treats `Error`/`warning` at line start as log mode.
+
+Enzyme 4.1.0 reshapes a query once when every source returns nothing and says so in the
+header, since Google CSE over-constrains on long natural-language questions. Scoring folds
+`tool`/`tools`-style variants and weights terms by rarity among the candidates, and each
+brief now carries the `query_class`/`source` handle needed to record feedback — with the
+exact genome call, including when a follow-up tool opens a URL the brief returned.
+
+Runtime unchanged at 1.3.7.
+
 ## v1.10.1 — doctor diagnostics for uninstalled and non-default prefixes
 
 Two lookups produced a report that blamed the host for what was really a path miss. Doctor
