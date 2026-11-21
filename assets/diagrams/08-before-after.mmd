@@ -1,0 +1,33 @@
+flowchart TB
+    subgraph BEFORE["before — six copies, six chances to drift"]
+        direction LR
+        B1["opencode<br/>~30 env vars<br/>/usr/bin/node"]
+        B2["claude<br/>30 env vars<br/>/usr/bin/node"]
+        B3["gemini<br/>27 env vars<br/>/usr/bin/node"]
+        B4["copilot<br/>29 env vars<br/>/usr/bin/node"]
+        B5["codex<br/>30 env vars<br/>/usr/bin/node"]
+        B1 --- B2 --- B3 --- B4 --- B5
+        B3 -.-> BN
+        BN["one node upgrade or purge<br/>breaks all five at once"]
+    end
+
+    subgraph AFTER["after — one command, one env file"]
+        direction LR
+        A1["opencode"]
+        A2["claude"]
+        A3["gemini"]
+        A4["copilot"]
+        A5["codex"]
+        AL["hela-runtime-mcp<br/>resolves node, gates version,<br/>sources mcp.env, logs failures"]
+        AE[("mcp.env<br/>0600")]
+        A1 --> AL
+        A2 --> AL
+        A3 --> AL
+        A4 --> AL
+        A5 --> AL
+        AE --> AL
+        AL -.-> AN
+        AN["rotate a key once<br/>repair the launcher once"]
+    end
+
+    BEFORE -.->|"same failure, five symptoms"| AFTER

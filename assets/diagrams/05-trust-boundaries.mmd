@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph SECRETS["credentials"]
+        E["mcp.env<br/>0600 · dir 0700<br/>4 credential vars"]
+        L["launcher"]
+        R["MCP server process"]
+        E --> L -->|"exec, env only<br/>never argv, not in ps"| R
+    end
+
+    subgraph CONFIGS["host configs · 0600"]
+        HF["command = launcher<br/>zero secrets"]
+        BK["*.bak*<br/>may hold stale keys"]
+    end
+
+    subgraph SANDBOX["sandbox · HELA_ALLOWED_ROOTS"]
+        AL["ALLOWED<br/>~/project · ~/Documents · ~/Downloads<br/>~/agent_persona · ~/.agents · ~/memory<br/>~/.local/state/hela · ~/.local/share/hela<br/>/tmp · /var/tmp"]
+        DE["DENIED<br/>/etc · /root · ~/.ssh · ~/.config<br/>/var/lib · ~/gdrive · /usr"]
+    end
+
+    HF --> L
+    R --> AL
+    AL -.->|realpath-checked<br/>symlink and .. escapes denied| DE

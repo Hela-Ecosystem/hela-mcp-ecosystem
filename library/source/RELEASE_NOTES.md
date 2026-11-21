@@ -1,5 +1,30 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.10.0 — host-layer doctor and a single MCP entry point
+
+The doctor now covers the layer it previously ignored: the wiring between client
+applications and the runtime. `node scripts/doctor.mjs --hosts` (also `npm run doctor:hosts`)
+checks the interpreter floor derived from cell `engines`, whether `nodejs` is still marked
+manual for apt, the gate file the launcher reads, credential-file modes and key presence,
+all six client configs, backup exposure, and a live `initialize`/`tools/list` handshake.
+Failures are actionable lines; `--repair` re-installs the pinned node package, re-asserts
+the manual mark, and fixes credential-file and backup modes. Exit codes stay 0/1/2.
+
+`scripts/host-entry.sh` is now the canonical client entry point, installed as
+`~/.local/bin/hela-runtime-mcp`. It resolves the interpreter at spawn time, refuses to
+start below the required major, sources one 0600 credentials file, and logs failures
+because MCP hosts swallow child stderr. It is PATH-independent: every external command is
+absolute, so it can report a stripped environment instead of dying inside it.
+
+[The reliability contract](docs/reliability.md) documents the resulting chain with eight
+diagrams. Sources are Mermaid (`assets/diagrams/*.mmd`) and the rendered SVG next to them;
+the library pages embed the SVG because the document renderer carries `markdown-it`
+without a Mermaid plugin and escapes raw HTML.
+
+Credential handling also changed: every secret found in client-config backups was copied
+into mema-vault before those backups were deleted, so `--hosts` reports a clean backup
+surface instead of a permanent warning.
+
 ## v1.9.6 — pinned modern web guidance
 
 HeLa Phenotype 3.0.3 now bundles Google's Modern Web Guidance agent skill. The skill, CLI package (`1.0.0`), upstream source commit, and guidance corpus (`2026_11_09-5bcc021b`) are pinned. Profiles that include Phenotype receive the skill through the normal skill-sync workflow; the command-line lookup needs Node.js 22+ and outbound network access.

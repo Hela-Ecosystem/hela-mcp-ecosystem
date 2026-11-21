@@ -1,0 +1,13 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Starting: first tool call
+    Starting --> Ready: ready within 60 s
+    Starting --> Restarting: crash or boot deadline
+    Ready --> Restarting: exits non-zero
+    Restarting --> Starting: backoff 1s → 2s → 4s
+    Restarting --> Dead: 3rd attempt fails
+    Dead --> [*]: tools gone for the session<br/>host restart re-arms
+    note right of Dead
+        three strikes per runtime lifetime:
+        the attempt counter never resets
+    end note

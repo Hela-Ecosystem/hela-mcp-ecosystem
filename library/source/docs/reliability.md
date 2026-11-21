@@ -11,12 +11,12 @@ re-measured or dropped. Where a figure is approximate, it says so.
 
 Each diagram exists twice, on purpose:
 
-- **Rendered SVG** in `docs/diagrams/*.svg`, embedded below. This is what `markm`
+- **Rendered SVG** in `assets/diagrams/*.svg`, embedded below. This is what `markm`
   displays — its renderer is `markdown-it` + `highlight.js` + `katex` with **no Mermaid
   plugin**, so a raw Mermaid block would appear as code. It also runs with `html: false`
   and escapes raw HTML, which is why this document contains no `<details>` or inline
   `<img>` tags: they would print as literal text.
-- **Mermaid source** in `docs/diagrams/*.mmd`, linked under each diagram. Edit there and
+- **Mermaid source** in `assets/diagrams/*.mmd`, linked under each diagram. Edit there and
   re-render; never hand-edit an SVG.
 
 Relative image paths are safe: markm rewrites a relative image reference into
@@ -28,7 +28,7 @@ GitHub, Obsidian and VS Code render the embedded SVG natively.
 Regenerate after editing any `.mmd`:
 
 ```bash
-cd docs/diagrams
+cd assets/diagrams
 for f in *.mmd; do
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome \
     npx -y @mermaid-js/mermaid-cli@11 -i "$f" -o "${f%.mmd}.svg" -b white -t neutral
@@ -57,9 +57,9 @@ and dark viewers alike.
 
 ## 1. Layer map
 
-![Layer map](diagrams/01-layer-map.svg)
+![Layer map](../assets/diagrams/01-layer-map.svg)
 
-*Source: [01-layer-map.mmd](diagrams/01-layer-map.mmd) — edit, then re-render (see top).*
+*Source: [01-layer-map.mmd](../assets/diagrams/01-layer-map.mmd) — edit, then re-render (see top).*
 
 - The **host** only knows one command. If it reports failure, the problem is at or below
   the launcher — never "that one client's settings" unless `hela-doctor` says `hosts` is
@@ -72,9 +72,9 @@ and dark viewers alike.
 
 ### Why the shape changed
 
-![Before and after](diagrams/08-before-after.svg)
+![Before and after](../assets/diagrams/08-before-after.svg)
 
-*Source: [08-before-after.mmd](diagrams/08-before-after.mmd) — edit, then re-render (see top).*
+*Source: [08-before-after.mmd](../assets/diagrams/08-before-after.mmd) — edit, then re-render (see top).*
 
 The left side is what the machine looked like before this work: five clients each holding
 27–31 env vars inline, two of them already disagreeing on `NEEDLE_TOOL_INDEX_PATH` and
@@ -83,9 +83,9 @@ today: identical command everywhere, one file to rotate, one place to repair.
 
 ## 2. Boot timeline
 
-![Boot timeline](diagrams/02-boot-timeline.svg)
+![Boot timeline](../assets/diagrams/02-boot-timeline.svg)
 
-*Source: [02-boot-timeline.mmd](diagrams/02-boot-timeline.mmd) — edit, then re-render (see top).*
+*Source: [02-boot-timeline.mmd](../assets/diagrams/02-boot-timeline.mmd) — edit, then re-render (see top).*
 
 Measured three times against the launcher: `initialize` is answered at ~257–269 ms
 (mean ~262 ms), and `tools/list` adds ~3 ms. So **tool registration is the cheapest step**,
@@ -109,9 +109,9 @@ best-effort — if `date` is unavailable the line still records the reason, with
 
 ## 3. Triage tree
 
-![Triage tree](diagrams/03-triage.svg)
+![Triage tree](../assets/diagrams/03-triage.svg)
 
-*Source: [03-triage.mmd](diagrams/03-triage.mmd) — edit, then re-render (see top).*
+*Source: [03-triage.mmd](../assets/diagrams/03-triage.mmd) — edit, then re-render (see top).*
 
 Start at the symptom the host actually showed. Note the asymmetry: interpreter and wiring
 failures are fatal for every host, cell deaths are contained to one tool family, and
@@ -119,9 +119,9 @@ sandbox denials are normal behavior that merely reports badly.
 
 ## 4. Cell supervision
 
-![Cell supervision](diagrams/04-supervision.svg)
+![Cell supervision](../assets/diagrams/04-supervision.svg)
 
-*Source: [04-supervision.mmd](diagrams/04-supervision.mmd) — edit, then re-render (see top).*
+*Source: [04-supervision.mmd](../assets/diagrams/04-supervision.mmd) — edit, then re-render (see top).*
 
 Restart delays are **1 s, 2 s, 4 s**. The code caps the delay at 8 s, but with the default
 three attempts that cap is unreachable — the third failure marks the cell dead before any
@@ -134,9 +134,9 @@ restart re-arms.
 
 ## 5. Trust boundaries
 
-![Trust boundaries](diagrams/05-trust-boundaries.svg)
+![Trust boundaries](../assets/diagrams/05-trust-boundaries.svg)
 
-*Source: [05-trust-boundaries.mmd](diagrams/05-trust-boundaries.mmd) — edit, then re-render (see top).*
+*Source: [05-trust-boundaries.mmd](../assets/diagrams/05-trust-boundaries.mmd) — edit, then re-render (see top).*
 
 Two separate boundaries, often confused: *who may write credentials* and *what the sandbox
 may touch*.
@@ -154,9 +154,9 @@ into that trap.
 
 ## 6. Incident anatomy
 
-![Incident timeline](diagrams/06-incident.svg)
+![Incident timeline](../assets/diagrams/06-incident.svg)
 
-*Source: [06-incident.mmd](diagrams/06-incident.mmd) — edit, then re-render (see top).*
+*Source: [06-incident.mmd](../assets/diagrams/06-incident.mmd) — edit, then re-render (see top).*
 
 The 50-minute gap between cause and symptom is the reason the launcher now logs and the
 timer checks hourly. The other lesson: **restarting the app alone does not clear this** —
@@ -164,9 +164,9 @@ the host caches the failed connect, so the binary has to exist first.
 
 ## 7. Check loop
 
-![Doctor loop](diagrams/07-doctor-loop.svg)
+![Doctor loop](../assets/diagrams/07-doctor-loop.svg)
 
-*Source: [07-doctor-loop.mmd](diagrams/07-doctor-loop.mmd) — edit, then re-render (see top).*
+*Source: [07-doctor-loop.mmd](../assets/diagrams/07-doctor-loop.mmd) — edit, then re-render (see top).*
 
 The doctor has ~22 distinct check names; which ones emit depends on state. A healthy run
 today prints 17 lines (15 ok, 2 warn) in ~0.4 s including the live handshake. The two
@@ -198,13 +198,21 @@ edits a host config.
 
 ## Commands
 
+The host layer is implemented once, in `scripts/host-layer.mjs`, reached through
+`doctor.mjs --hosts`. `~/.local/bin/hela-doctor` is a thin wrapper that resolves the
+checkout, so there is no second implementation to drift.
+
 ```bash
-hela-doctor                      # full check + live handshake (~0.4s)
-hela-doctor --json               # machine-readable
-hela-doctor --repair             # fix node, credential modes, backup exposure
-hela-doctor --no-live            # skip the handshake (offline / no network)
-hela-doctor --notify             # desktop alert on failure
+node scripts/doctor.mjs --hosts          # host layer, full check + live handshake
+node scripts/doctor.mjs --hosts --json   # machine-readable
+node scripts/doctor.mjs --hosts --repair # node, credential modes, backup exposure
+hela-doctor --no-live                    # same, via the installed wrapper
 ```
+
+The client entry point is `scripts/host-entry.sh`, installed as
+`~/.local/bin/hela-runtime-mcp`. It resolves the interpreter, gates the version,
+sources the credentials file and logs failures — that is the one command every host
+calls.
 
 Exit codes: `0` healthy (warnings allowed), `1` failures, `2` doctor itself broke
 (`--notify` fires on 2 as well). Logs: `journalctl --user -u hela-doctor.service`;
@@ -224,8 +232,9 @@ alert rather than a failed unit.
 Two facts worth knowing:
 
 - `Persistent=true` in the timer is inert — it only applies to `OnCalendar=` timers.
-- The steady state includes one permanent warning: 31 credential-bearing backups exist.
-  `0 warn` is not achievable until they are deleted.
+- The steady state is `0 warn` now that the credential-bearing backups are gone. The
+  remaining warnings, when they appear, are housekeeping (world-readable backups,
+  shadowed tools) rather than failures.
 
 ## Operating rules
 
@@ -236,7 +245,7 @@ Two facts worth knowing:
    so it is a latent trap, not a live one. Retire it when convenient.
 2. **One credentials file, and treat it as code.** `~/.config/hela/mcp.env`, 0600, dir
    0700. It is sourced, so anyone who can write it can run code as you at every session
-   start. Never paste keys into client configs.
+   start. Never paste keys into client configs; the durable copy lives in mema-vault.
 3. **Keep nodejs marked manual.** `hela-doctor` now fails with `node-mark` if the mark
    drifts back to `auto` — that mark is what let `autoremove` delete the runtime the first
    time — and `--repair` re-asserts it.
@@ -271,15 +280,31 @@ Two facts worth knowing:
   file (410 lines) while `/usr/bin/*` showed the current one. When verifying a document,
   read it with absolute binaries.
 
-## Rollback
+## Rollback and credential recovery
 
-Every config touched during the hardening carries a sibling backup:
+The credential-bearing backups were removed after every secret they held was copied into
+**mema-vault** (Fernet, master key required):
 
-- `*` + `.bak-secrets-centralized` — pre-launcher state (inline env, per-client commands)
-- `*` + `.bak-provider-key-authjson` — opencode.json before the provider key was dropped
-  (key lives in `~/.local/share/opencode/auth.json`, same value)
-- `*` + `.bak-node-path-hardening` — state right after the `/usr/bin/node` fix
+| Vault entry | Contents |
+|---|---|
+| `hela-openrouter-api-key` | current provider key used by the runtime |
+| `hela-github-token` | current `GITHUB_TOKEN` |
+| `hela-google-api-key` | current enzyme search key |
+| `hela-google-cse-id` | current search engine identifier |
+| `hela-*-old-20261118` (×4) | rotated values found in the deleted backups |
+| `chatgpt-codex-resume-token` | conversation-resume JWT from a Codex state backup |
 
-Older backups exist from earlier work (`~40` files across ~8 suffix families); 31 still
-contain credentials, all mode 600. Restoring any backup puts credentials back in that
-file; chmod 600 it and re-run `hela-doctor`.
+To rebuild `mcp.env` after a loss:
+
+```bash
+cd ~/.config/opencode/skills/mema-vault
+python3 scripts/vault.py env hela-openrouter-api-key --env OPENROUTER_API_KEY --   python3 - <<'EOF'
+# write the four values into ~/.config/hela/mcp.env, then chmod 600
+EOF
+```
+
+Then `chmod 600 ~/.config/hela/mcp.env` and run the host doctor. Non-secret settings
+(`HELA_PROFILE`, paths, cache sizes) are documented above and in the launcher itself.
+
+Config-shaped rollbacks from before the launcher migration no longer exist on disk; the
+shape they encoded is the one this document describes.

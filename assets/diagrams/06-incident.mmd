@@ -1,0 +1,13 @@
+timeline
+    title 2026-11-20 node loss, 50 minutes to detection
+    12h00 : apt upgrade --with-new-pkgs
+    12h01 : apt autoremove purges nodejs 25.9.0-1nodesource1
+          : installed as auto, no reverse dependencies
+          : /usr/bin/node gone
+    12h51 : host starts session, spawn returns ENOENT
+          : all six configs, five hosts, same message
+          : running server caches the failure
+    fix : reinstall pinned nodejs + apt-mark manual
+        : drop absolute interpreter paths
+        : launcher resolves node at spawn
+    lasting : hourly doctor repairs this class unattended

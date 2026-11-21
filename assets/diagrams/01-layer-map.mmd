@@ -1,0 +1,40 @@
+flowchart TD
+    subgraph HOSTS["MCP hosts — one command each"]
+        HC["opencode · claude · gemini · copilot · codex<br/>command = ~/.local/bin/hela-runtime-mcp<br/>no env block · no absolute interpreter"]
+    end
+
+    subgraph LAUNCHER["launcher · sh · ~6 ms"]
+        G1{"secrets<br/>readable?"}
+        G2{"entry<br/>present?"}
+        G3{"node on<br/>PATH?"}
+        G4{"major ≥<br/>floor?"}
+        EX["set -a; . mcp.env<br/>exec node dist/index.js"]
+        F78["exit 78 + log line"]
+        F127["exit 127 + log line"]
+    end
+
+    ENV[("mcp.env<br/>0600 · 31 vars<br/>4 credentials")]
+    RT["hela-runtime 1.3.7<br/>11 cells<br/>305 tools exposed · 591 declared<br/>60 s per-cell boot"]
+
+    subgraph CELLS["cells — spawned on first tool call"]
+        C1["membrane"]
+        C2["genome"]
+        C3["nucleus"]
+        C4["+ 7 more"]
+    end
+
+    HC --> G1
+    G1 -->|no| F78
+    G1 -->|yes| G2
+    G2 -->|no| F78
+    G2 -->|yes| G3
+    G3 -->|no| F127
+    G3 -->|yes| G4
+    G4 -->|no| F78
+    G4 -->|yes| EX
+    ENV -.->|sourced, exported| EX
+    EX --> RT
+    RT -->|"stdio JSON-RPC"| C1
+    RT --> C2
+    RT --> C3
+    RT --> C4
