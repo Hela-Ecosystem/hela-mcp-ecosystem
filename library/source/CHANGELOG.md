@@ -1,3 +1,8 @@
+## [1.10.10] - 2026-11-22
+
+### Fixed
+- `designer-mcp` 3.1.0: inline contrast is computed (WCAG 2.x) rather than string-matched, so white-on-white at 1.01:1 now fails and the sample page grades B/75 instead of A/96; palette variants pass achromatic inputs through unchanged; the High Contrast label names the surface it was measured against; derived `--color-focus` chroma is clamped into sRGB; and the five Stitch CLI tools are advertised only when the CLI is present (23 vs 28 tools, `HELA_PHENOTYPE_STITCH` overrides).
+
 ## [1.10.9] - 2026-11-22
 
 ### Fixed
