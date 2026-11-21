@@ -251,6 +251,7 @@ npm run skills:check
 * **[Workflows & Integration Guide](docs/workflows.md)**: Cross-MCP workflow pipelines (Workflows A–F).
 * **[Security & Reliability Audit](docs/security-audit.md)**: Threat model, sandboxing, and isolation standards.
 * **[Reliability Contract](docs/reliability.md)**: Host-to-cell failure model, triage tree, diagrammed boot/supervision paths, and the hourly doctor loop.
+* **[Code Mode Research](docs/code-mode-research.md)**: Measured cost of the current catalog, the execute-and-discover pattern, sandbox options, and an implementation plan.
 * **[Architecture Guide](docs/architecture.md)**: In-depth cellular architecture and communication topologies.
 * **[Troubleshooting Guide](docs/troubleshooting.md)**: Common issues, diagnostic codes, and recovery procedures.
 
