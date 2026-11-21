@@ -1,3 +1,8 @@
+## [1.10.4] - 2026-11-22
+
+### Added
+- The adaptive search priors can now learn. Enzyme observes when a caller follows up on a URL a brief returned and appends a used=true record (with display rank) to `~/.local/state/hela/search-feedback.jsonl`; genome drains that spool into `source_feedback` whenever `search_feedback` or `search_priors` is called. One writer keeps the table honest, the file is claimed by rename so nothing imports twice, and failed inserts are preserved for a retry. `hela-enzyme` 4.2.0, `hela-genome` 3.0.7.
+
 ## [1.10.3] - 2026-11-22
 
 ### Fixed
