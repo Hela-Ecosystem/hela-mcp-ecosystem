@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[1.11.8] - 2026-11-22 — HeLa MCP Ecosystem</title>
-  <meta name="description" content="hela-cytosol 3.3.5 returns vision boxes with explicit units: bbox normalised 0-1, bboxPx in source pixels, image dimensions and coordinateSpace. The preprocessed OCR image…">
+  <title>[1.11.9] - 2026-11-23 — HeLa MCP Ecosystem</title>
+  <meta name="description" content="hela-genome 3.2.0 requires HELA_GENOME_ALLOW_DESTRUCTIVE=true for insert_data, update_data and import_data, matching delete_data; read_graph is paged with nextCursor. Breaking…">
   <link rel="canonical" href="https://hela.my.id/id/library/CHANGELOG.html">
   <link rel="alternate" hreflang="en" href="https://hela.my.id/library/CHANGELOG.html">
   <link rel="alternate" hreflang="id" href="https://hela.my.id/id/library/CHANGELOG.html">
@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <link rel="stylesheet" href="../../library.css?v=1.11.8&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../library.css?v=1.11.9&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../">
   <a href="#main-content" class="skip-link">Langsung ke isi</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
-      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.11.8 · Runtime 1.4.1 · 10 SEL</div></div>
+      <div class="doc-brand"><a href="../index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.11.9 · Runtime 1.4.1 · 10 SEL</div></div>
       <nav aria-label="Dokumentasi"><details class="doc-mobile-nav" open><summary>Jelajahi dokumentasi</summary><ol class="doc-nav" start="0"><li><a href="../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Pustaka dokumentasi</span></a></li></ol>
 <div class="doc-nav-section">MEMULAI</div><ol class="doc-nav" start="1"><li><a href="../index.html"><span class="doc-nav-num">01</span> <span>Ikhtisar</span></a></li>
 <li><a href="../index.html#installation"><span class="doc-nav-num">02</span> <span>Instalasi</span></a></li>
@@ -34,36 +34,45 @@
     </aside>
     <div class="doc-main">
       <div class="doc-topbar"><a class="doc-topbar-title" href="../library.html">Pustaka dokumentasi</a><div class="topbar-actions"><div class="lang-switcher" aria-label="Language"><a class="lang-btn" data-lang="en" href="../../library/CHANGELOG.html">EN</a><a class="lang-btn active" data-lang="id" href="CHANGELOG.html">ID</a></div><button class="btn open-cmd-palette" type="button">Cari <kbd>Ctrl K</kbd></button><a class="btn" href="https://github.com/Hela-Ecosystem/hela-mcp-ecosystem">GitHub</a></div></div>
-      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><header class="library-document-meta" lang="id"><p class="library-kicker">Riwayat rilis</p><p class="library-source">CHANGELOG.md</p><p>Isi dalam bahasa sumber. <a href="../../library/source/CHANGELOG.md" download>Unduh sumber</a> · <a href="../library.html">Semua dokumen</a></p></header><h2 id="1118---2026-11-22">[1.11.8] - 2026-11-22</h2>
+      <main id="main-content" class="doc-content library-content"><article class="library-article" lang="en"><header class="library-document-meta" lang="id"><p class="library-kicker">Riwayat rilis</p><p class="library-source">CHANGELOG.md</p><p>Isi dalam bahasa sumber. <a href="../../library/source/CHANGELOG.md" download>Unduh sumber</a> · <a href="../library.html">Semua dokumen</a></p></header><h2 id="1119---2026-11-23">[1.11.9] - 2026-11-23</h2>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><code>hela-genome</code> 3.2.0 requires <code>HELA_GENOME_ALLOW_DESTRUCTIVE=true</code> for <code>insert_data</code>, <code>update_data</code> and <code>import_data</code>, matching <code>delete_data</code>; <code>read_graph</code> is paged with <code>nextCursor</code>. <strong>Breaking for bulk writes.</strong></li>
+</ul>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li>Genome: AKIA keys detected with named finding types, one-commit repositories report modified and untracked files, the pre-commit hook cannot delete after a failed merge, <code>bug:</code> guidance matches <code>openBugs</code>, and empty conditions are rejected explicitly.</li>
+</ul>
+<h2 id="1118---2026-11-22">[1.11.8] - 2026-11-22</h2>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li><code>hela-cytosol</code> 3.3.5 returns vision boxes with explicit units: <code>bbox</code> normalised 0-1, <code>bboxPx</code> in source pixels, <code>image</code> dimensions and <code>coordinateSpace</code>. The preprocessed OCR image moved to <code>imageBase64</code> so <code>image</code> means dimensions.</li>
 </ul>
 <h2 id="1117---2026-11-22">[1.11.7] - 2026-11-22</h2>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><code>hela-cytosol</code> 3.3.4 restores the restricted wording on <code>browser_search</code> that 3.3.3 dropped while documenting its tools scope; the canonical-boundary check asserts it.</li>
 </ul>
 <h2 id="1116---2026-11-22">[1.11.6] - 2026-11-22</h2>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li><code>hela-cytosol</code> 3.3.3: <code>browser_switch_to_new_tab</code> no longer throws, quiz batches report real counts, macro export honours format and save, generated tests run, and catalogue search finds tool names.</li>
 <li><code>hela-genome</code> 3.1.3: harness sync cannot store a fabricated year (zero and seconds timestamps are normalised or skipped with a reason, existing bogus rows repaired), <code>get_timeline</code> uses real timestamps with numeric <code>since</code> and sorts, and the dry run honours watermarks.</li>
 </ul>
 <h2 id="1115---2026-11-22">[1.11.5] - 2026-11-22</h2>
-<h3 id="fixed-3">Fixed</h3>
+<h3 id="fixed-4">Fixed</h3>
 <ul>
 <li>The Cytosol tool count in the site and <code>llms.txt</code> is derived from the generated catalog instead of a hand-written number, and the docs test compares against the catalog rather than the literal <code>75</code>. Adding <code>browser_list_dialogs</code> in cytosol 3.3.2 made the stale literal fail the gh-pages verification job.</li>
 </ul>
 <h2 id="1114---2026-11-22">[1.11.4] - 2026-11-22</h2>
-<h3 id="fixed-4">Fixed</h3>
+<h3 id="fixed-5">Fixed</h3>
 <ul>
 <li><code>hela-genome</code> 3.1.2: mission transitions are guarded (queued → claimed → in_progress → completed/failed, cancel from any state, explicit requeue), lifecycle updates must name the claimant, and claims carry a 30-minute lease.</li>
 <li><code>hela-enzyme</code> 4.3.2: citations keep every author, invert names per style, use et al. for MLA, and warn instead of dropping an unparseable name.</li>
 <li><code>hela-cytosol</code> 3.3.2: dialogs are dismissed by default instead of auto-accepted, <code>browser_dialog</code> sets the next action and prompt text, <code>browser_list_dialogs</code> records them, and popup dismissal never clicks an affirmative control.</li>
 </ul>
 <h2 id="1113---2026-11-22">[1.11.3] - 2026-11-22</h2>
-<h3 id="fixed-5">Fixed</h3>
+<h3 id="fixed-6">Fixed</h3>
 <ul>
 <li>Runtime 1.4.1 repinned at <code>14cc13e</code>: the version bump changed the npm deps derivation input, so the fixed-output <code>npmDepsHash</code> no longer matched and the Nix verify job failed. Hash refreshed (<code>sha256-VlP6gbWoi6TTkbk4FSSKey/bTw/rNT40H+99k7J4A7c=</code>); no functional change from 1.11.2.</li>
 </ul>
@@ -73,12 +82,12 @@
 <li><strong>Response contract for degraded results.</strong> <code>hela.runtime</code> 1.4.1 reports <code>status: ok | degraded | failed</code> on <code>hela.pipe</code>, per-step status, and a <code>degraded</code> array naming the step and reasons. A step that marks itself <code>degraded</code>, <code>partial</code>, <code>truncated</code>, <code>status: &quot;degraded&quot;</code> or <code>warnings</code> makes the pipe degraded while <code>ok</code> stays true. Contract documented in <code>hela-runtime/docs/response-contract.md</code>.</li>
 <li><code>hela.mitosis</code> 3.1.1 adopts it: <code>get_skill</code> marks a truncated or file-omitted answer <code>status: &quot;degraded&quot;</code> with a reason.</li>
 </ul>
-<h3 id="fixed-6">Fixed</h3>
+<h3 id="fixed-7">Fixed</h3>
 <ul>
 <li>The nine instances tracked by #8 were fixed individually; this release makes the convention enforceable rather than per-tool.</li>
 </ul>
 <h2 id="1111---2026-11-22">[1.11.1] - 2026-11-22</h2>
-<h3 id="fixed-7">Fixed</h3>
+<h3 id="fixed-8">Fixed</h3>
 <ul>
 <li><code>hela-genome</code> 3.1.1: entity deletions are reconciled across project and central sync, sync reports what it deleted or skipped, and a root switch no longer imports another project into a fresh root.</li>
 <li><code>hela-enzyme</code> 4.3.1: sentiment applies negation across a window, so &quot;never recommend&quot; and &quot;hardly a success&quot; score negative; the negations found and the lexicon caveat are reported.</li>
@@ -86,7 +95,7 @@
 <li><code>hela-phenotype</code> 3.2.1: React components use their declared props and derive classes from the requested style and palette; the snippet is typechecked and rendered in tests.</li>
 </ul>
 <h2 id="1110---2026-11-22">[1.11.0] - 2026-11-22</h2>
-<h3 id="fixed-8">Fixed</h3>
+<h3 id="fixed-9">Fixed</h3>
 <ul>
 <li><code>hela-phenotype</code> 3.2.0: theme colours and every derived token are inside sRGB (0 of 342 emitted values out of gamut); <code>stitch_sync_design_system</code> writes one accent; browser templates apply their palette; the 8-state component renders 8 distinct states; logo search matches catalogue facets; the export covers <code>index.html</code>.</li>
 <li><code>hela-enzyme</code> 4.3.0: trends report a window and never page counts as interest; CSV escapes quotes and guards formulas; research sessions persist to disk; <code>news_monitor</code> enforces <code>dateRestrict</code> and resolves redirects.</li>
@@ -96,32 +105,32 @@
 <li><code>hela-genome</code> 3.1.0: deletes are durable across central sync; the secret scan no longer opens live SQLite files, so WAL locks and post-scan writes survive.</li>
 </ul>
 <h2 id="11010---2026-11-22">[1.10.10] - 2026-11-22</h2>
-<h3 id="fixed-9">Fixed</h3>
+<h3 id="fixed-10">Fixed</h3>
 <ul>
 <li><code>designer-mcp</code> 3.1.0: inline contrast is computed (WCAG 2.x) rather than string-matched, so white-on-white at 1.01:1 now fails and the sample page grades B/75 instead of A/96; palette variants pass achromatic inputs through unchanged; the High Contrast label names the surface it was measured against; derived <code>--color-focus</code> chroma is clamped into sRGB; and the five Stitch CLI tools are advertised only when the CLI is present (23 vs 28 tools, <code>HELA_PHENOTYPE_STITCH</code> overrides).</li>
 </ul>
 <h2 id="1109---2026-11-22">[1.10.9] - 2026-11-22</h2>
-<h3 id="fixed-10">Fixed</h3>
+<h3 id="fixed-11">Fixed</h3>
 <ul>
 <li>Repin the runtime to the commit that refreshes <code>npmDepsHash</code>. The 1.4.0 version bump changed the npm-deps derivation input, so the Nix verification job failed at build time on a fixed-output hash mismatch — the installer and CI both build from the pinned revision, which still carried the stale hash. No runtime behaviour change.</li>
 </ul>
 <h2 id="1108---2026-11-22">[1.10.8] - 2026-11-22</h2>
-<h3 id="fixed-11">Fixed</h3>
+<h3 id="fixed-12">Fixed</h3>
 <ul>
 <li><code>researcher-mcp</code> 4.2.2: the IDF half of the scorer was inert in production because <code>research_brief</code> passed no candidate corpus. Terms are now weighted by how much they discriminate among the returned pages, so a common term contributes little and a rare one carries the match.</li>
 </ul>
 <h2 id="1107---2026-11-22">[1.10.7] - 2026-11-22</h2>
-<h3 id="fixed-12">Fixed</h3>
+<h3 id="fixed-13">Fixed</h3>
 <ul>
 <li><code>researcher-mcp</code> 4.2.1: the enzyme fixes from 4.1.0/4.2.0 were compiled into a module the shipped entry never loads. The real <code>research_brief</code> (root <code>research-server.ts</code>) now backs off once on an empty ranked result, discloses it, returns the feedback handle, and appends spool signals from <code>extract_content</code>. Found by post-deploy verification: the pinned 4.2.0 cell still behaved like 4.0.9.</li>
 </ul>
 <h2 id="1106---2026-11-22">[1.10.6] - 2026-11-22</h2>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li><strong><code>hela.pipe</code> fails closed.</strong> A chain whose middle step failed returned <code>ok: true</code> and piped the error text into the next step, which produced a confident result computed from <code>ENOENT</code>. <code>ok</code> now reflects every step, <code>failedStep</code> names the first failure, <code>onError</code> defaults to <code>stop</code>, and each result carries its own <code>ok</code>. This is a breaking default by intent: callers that checked <code>ok</code> were getting a wrong answer. Runtime 1.4.0.</li>
 </ul>
 <h2 id="1105---2026-11-22">[1.10.5] - 2026-11-22</h2>
-<h3 id="fixed-13">Fixed</h3>
+<h3 id="fixed-14">Fixed</h3>
 <ul>
 <li><code>filesystem-mcp</code> 3.0.6: four responses promised what the implementation did not deliver. Ranged <code>read_file</code> now snaps to character boundaries and reports <code>startByte</code>/<code>endByte</code> (chunked reads of non-ASCII files no longer lose a character per boundary); <code>extract_archive</code> reports <code>extracted</code>/<code>entries</code>/<code>skipped</code> with a reason instead of a silent partial success; <code>watch_file</code> buffers events and returns them on the next call (plus waits for chokidar's initial scan); <code>compare_files</code> reports <code>size</code> in bytes with a separate <code>characters</code> field and a correct line count.</li>
 </ul>
@@ -131,18 +140,18 @@
 <li>The adaptive search priors can now learn. Enzyme observes when a caller follows up on a URL a brief returned and appends a used=true record (with display rank) to <code>~/.local/state/hela/search-feedback.jsonl</code>; genome drains that spool into <code>source_feedback</code> whenever <code>search_feedback</code> or <code>search_priors</code> is called. One writer keeps the table honest, the file is claimed by rename so nothing imports twice, and failed inserts are preserved for a retry. <code>hela-enzyme</code> 4.2.0, <code>hela-genome</code> 3.0.7.</li>
 </ul>
 <h2 id="1103---2026-11-22">[1.10.3] - 2026-11-22</h2>
-<h3 id="fixed-14">Fixed</h3>
+<h3 id="fixed-15">Fixed</h3>
 <ul>
 <li><code>chaining-mcp</code> 3.0.9: peer discovery reads the runtime's generated tool catalog, so Mitosis sees the ten cells it orchestrates when they are multiplexed behind one endpoint. <code>validate_tool_chain</code> no longer reports every real tool as unavailable (<code>read_file</code> on <code>hela-membrane</code> included), and availability now distinguishes an absent tool (error) from an undiscovered server or missing catalog (warning) — the direction that had been discarding correct plans. Verified against the installed catalog: 10 cells, 299 tools.</li>
 </ul>
 <h2 id="1102---2026-11-22">[1.10.2] - 2026-11-22</h2>
-<h3 id="fixed-15">Fixed</h3>
+<h3 id="fixed-16">Fixed</h3>
 <ul>
 <li><code>terminal-mcp</code> 3.0.7: local commands run from a temporary script instead of <code>sh -c</code>, so <code>pkill -f</code> no longer matches and kills the wrapper shell, and <code>pgrep -f</code> no longer reports it as a live process. RTK summarisation rejects summaries below 5% of the source, retains and names the original output, and anchors its log heuristic to line starts. Two defects that both made a failed step look successful.</li>
 <li><code>researcher-mcp</code> 4.1.0: <code>research_brief</code> retries once with a reduced query when every source returns nothing and discloses it (<code>backoff: &quot;…&quot;</code>); scoring folds morphological variants and weights terms by how much they discriminate among the candidates; the brief returns a feedback handle plus the exact <code>genome search_feedback</code> call, and a follow-up tool on a brief URL appends it with <code>used=true</code>.</li>
 </ul>
 <h2 id="1101---2026-11-22">[1.10.1] - 2026-11-22</h2>
-<h3 id="fixed-16">Fixed</h3>
+<h3 id="fixed-17">Fixed</h3>
 <ul>
 <li>Running <code>doctor</code> against a bare checkout printed ten rows of <code>missing*</code> / <code>Not checked</code> without naming a path or a next step, which is indistinguishable from a broken install — and reads as a platform bug when it happens on Windows. Rows now say <code>not installed</code>, and when every component is missing the report lists the paths it resolved plus the two commands that fix it (install, then <code>doctor --prefix</code>).</li>
 <li>A profile can be installed under any mode, but doctor only looked at <code>&lt;profile&gt;-individual</code> unless <code>--prefix</code> was passed. Installing with <code>--runtime</code> therefore made a healthy host report every component missing. When the default prefix has no manifest, doctor now scans for sibling <code>&lt;profile&gt;-*</code> installations and prints each one with the <code>--mode</code> or <code>--prefix</code> that would diagnose it; JSON output carries the same list under <code>installationCandidates</code>.</li>
@@ -154,18 +163,18 @@
 <li><code>scripts/host-entry.sh</code> is the canonical client entry point, installed as <code>~/.local/bin/hela-runtime-mcp</code>. It resolves the interpreter at spawn time, refuses to start below the required major, sources one 0600 credentials file, and logs failures because MCP hosts swallow child stderr. It is PATH-independent: every external command is absolute, so it reports a stripped environment instead of failing inside it.</li>
 <li><code>docs/reliability.md</code> documents the host-to-cell failure model with eight diagrams. Sources are Mermaid under <code>assets/diagrams/</code>, renders are SVG beside them, because the document renderer carries <code>markdown-it</code> without Mermaid and escapes raw HTML.</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Credentials found in client-config backups were copied into mema-vault before those backups were deleted, so the host doctor reports a clean backup surface instead of a permanent warning. <code>docs/reliability.md</code> documents vault-based recovery.</li>
 </ul>
 <h2 id="1927---2026-11-19">[1.9.27] - 2026-11-19</h2>
-<h3 id="fixed-17">Fixed</h3>
+<h3 id="fixed-18">Fixed</h3>
 <ul>
 <li>The Docker doctor reported <code>DEGRADED</code> with an empty <code>[]</code> on a clean image because it compared the runtime catalog against bare cell tool names. The container never receives <code>HELA_NAMESPACE_TOOLS</code>, so the runtime applies its new default and advertises <code>hela_membrane_read_file</code>; 23 of 24 expected names therefore looked missing. Coverage now accepts the runtime's namespaced name or the bare one, and a real gap names the cell and tool instead of printing an empty array. Unit tests cover both surfaces and a genuinely missing tool.</li>
 <li>Enzyme <code>4.0.9</code> runs its priors suite on Node 20 instead of failing at import: <code>node:sqlite</code> only exists from 22.5, so the database cases are gated on the runtime version while the resolution and collapse-guard tests still run. The package claims Node 20, where learned priors deliberately degrade to the static table.</li>
 </ul>
 <h2 id="1926---2026-11-19">[1.9.26] - 2026-11-19</h2>
-<h3 id="fixed-18">Fixed</h3>
+<h3 id="fixed-19">Fixed</h3>
 <ul>
 <li>Learned search priors never applied on a host whose genome still uses the legacy central store. Enzyme resolved <code>~/memory/memory.db</code> only, while genome keeps writing <code>~/memory.db</code> when its migration did not run — so every brief reported <code>priors: static</code> and the recorded decisions sat in a file nobody read. Enzyme now resolves the way genome does: the migrated path when it exists, otherwise the legacy file. Verified end to end with an isolated HOME: ten decisions land in the file the brief reads and it reports <code>priors: learned (10 samples)</code>.</li>
 </ul>
@@ -176,7 +185,7 @@
 <li>The priors carry a collapse guard, because a feedback loop can starve itself: one unlucky run lowers a source's multiplier, the lower multiplier keeps its results under the relevance floor, no further samples arrive, and the mistake becomes permanent. A source with no samples in an active class, or whose newest sample is over 30 days old, is floored at 1.0 and lifted by 0.15 so it stays reachable. Three tests in each repo fail if the guard is removed.</li>
 <li><code>scripts/check-prose-facts.mjs</code> now fails <code>docs:check</code> when hand-written prose restates a fact the build knows: an unknown Hela repository name, a live version literal, a roster claim that disagrees with the inventory or profile set, a licence no cell uses, or a per-profile server count that drifted. Ten tests prove each rule fires. It found two real drifts on its first run (a page claiming runtime 1.3.6 after the runtime moved, and a setup page pinning Phenotype 3.0.3 against an inventory at 3.0.5).</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Runtime <code>1.3.7</code> namespaces cell tools by default: <code>hela_nucleus_execute_command</code> instead of <code>execute_command</code>. A bare name shadows whatever the host already exposes and the collision is settled by whichever server connected last. <code>HELA_NAMESPACE_TOOLS=0</code> restores the previous surface; this is breaking for clients that pin bare tool names, and the manifest cache key already covers the mode so a switching client rebuilds its fingerprints once.</li>
 <li>Genome creates the parent directory of a configured database path. <code>GUARDIAN_CENTRAL_DB</code> pointing into a directory that did not exist yet used to die with <code>SQLITE_CANTOPEN</code> on the first query.</li>
@@ -187,30 +196,30 @@
 <li><code>filesystem-mcp#15</code> (signed receipts) was answered: no signing keys in the server, but populated <code>artifacts[].sha256</code> digests for produced files are a change worth taking.</li>
 </ul>
 <h2 id="1924---2026-11-19">[1.9.24] - 2026-11-19</h2>
-<h3 id="fixed-19">Fixed</h3>
+<h3 id="fixed-20">Fixed</h3>
 <ul>
 <li>Cytosol <code>3.2.6</code> accepts what <code>browser_observe</code> actually reports. <code>browser_fill_form</code> keys resolve in order — a ref number from the last observe/get_state, a bare name or id, then the key as a CSS selector — so the observe → fill path no longer misses and every existing selector caller keeps working. Attribute values are quoted, so a field name containing a quote cannot break out of the selector. An unmatched key now aborts the call and names what it tried instead of reaching <code>page.fill</code> and blocking for the full 30-second locator timeout; a miss resolves in milliseconds.</li>
 </ul>
 <h2 id="1923---2026-11-19">[1.9.23] - 2026-11-19</h2>
-<h3 id="fixed-20">Fixed</h3>
+<h3 id="fixed-21">Fixed</h3>
 <ul>
 <li>Enzyme <code>4.0.6</code> scores every search result on query-term coverage with a phrase bonus, title weighted above snippet, and drops results below a named floor. Wikipedia's floor is higher (0.4) than Google's (0.16) because its OR-matched recall is cheap and its precision is not: the scatter query that returned Smalltalk and XML now returns nothing, while a precise query still returns five pages. <code>research_brief</code> and <code>multi_site_search</code> apply cheap query-class priors, every result line carries its score, and <code>academic_search</code> enforces <code>dateRange</code> on arXiv with a submittedDate window plus a published-date post-filter — a 2021 paper can no longer answer a <code>y2</code> query.</li>
 <li>Nucleus <code>3.0.6</code> passes any command containing <code>;</code>, <code>&amp;</code> or <code>|</code> to the shell instead of treating the whole string as a working directory, so <code>cd /tmp &amp;&amp; echo marker-ok</code> runs; only a standalone <code>cd</code> updates the session directory, and it takes its first path argument so a trailing option is not swallowed.</li>
 <li>Runtime <code>1.3.6</code> types the cell RPC boundary: <code>callTool</code> resolves a validated MCP tool result and raises <code>CellProtocolError</code> on a JSON-RPC error or an unexpected shape instead of forwarding <code>undefined</code>; cell directory resolution no longer consults <code>process.cwd()</code> and names the root and every path tried when a cell is missing; and a malformed JSON-RPC frame rejects its request immediately rather than costing a full timeout.</li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>One agent tool: Mitosis's cell-local <code>agent_run</code> was advertised next to the runtime-native <code>hela.agent.run</code> and carried the runtime description, so callers could not tell which one ran. Only <code>hela.agent.run</code> is exposed now.</li>
 <li>Genome <code>3.0.5</code> adds <code>npm run vault:conflicts</code>, which archives frontmatter-only sync conflicts without rewriting the note and lists body-divergent ones for a per-note decision. First pass: 641 conflicts archived, 615 left across 302 notes.</li>
 </ul>
 <h2 id="1922---2026-11-19">[1.9.22] - 2026-11-19</h2>
-<h3 id="fixed-21">Fixed</h3>
+<h3 id="fixed-22">Fixed</h3>
 <ul>
 <li>The licence wording in the legal pages, <code>llms.txt</code> and the JSON-LD licence list was hand-written, so a seventh copyleft cell would have left those statements stale — the same failure mode as the old runtime prose. They are now generated from <code>config/inventory.json</code>: counts, cell names, the always-installed set, the structured-data licence URLs and the machine-readable line all follow the inventory, and meta descriptions no longer encode a count that can drift.</li>
 <li>A test recomputes those strings from the inventory and fails on any divergence; <code>docs:check</code> also rejects a stale page, verified by flipping one cell's licence.</li>
 </ul>
 <h2 id="1921---2026-11-19">[1.9.21] - 2026-11-19</h2>
-<h3 id="fixed-22">Fixed</h3>
+<h3 id="fixed-23">Fixed</h3>
 <ul>
 <li>Runtime <code>1.3.4</code> no longer hides a cell whose catalog manifest went stale: each cell's manifest source is logged with the regeneration command, only stale cells are probed once so their tools stay advertised, and the sources are exposed on <code>/readyz</code>. On servy this had silently reduced the surface from 240 to 209 tools.</li>
 <li>Cytosol <code>3.2.5</code> reconnects once when the browser context was closed under it; a blank page is reported instead of retried, because the previous call may already have acted.</li>
@@ -228,7 +237,7 @@
 <li><code>docs/deployment-2026-11-19.md</code>: the servy rollout record for 1.9.19 / runtime 1.3.3 — eight-cell <code>dev-workspace</code> roster, Nix package, staged wrapper, drop-in switch, backups and rollback, plus the stale-digest failure that hid two cells until the catalog was regenerated on the host.</li>
 </ul>
 <h2 id="1919---2026-11-19">[1.9.19] - 2026-11-19</h2>
-<h3 id="fixed-23">Fixed</h3>
+<h3 id="fixed-24">Fixed</h3>
 <ul>
 <li>The legal pages still claimed the whole ecosystem was MIT and granted sublicensing and sale over code that is GPL-3.0-or-later. Terms (EN and ID), their meta and JSON-LD descriptions, <code>llms.txt</code> and the <code>SoftwareApplication</code> structured data now state the split: MIT repository, six GPL-3.0-or-later cells named explicitly, per-cell terms govern redistribution. A test fails if the blanket claim returns.</li>
 </ul>
@@ -237,7 +246,7 @@
 <li>Documented the runtime update tools (<code>hela.update.check</code>, <code>hela.update.apply</code>) in the README, the on-demand guide and <code>llms.txt</code>. They already shipped with runtime 1.3.x; the docs now name them so agents can find them.</li>
 </ul>
 <h2 id="1918---2026-11-19">[1.9.18] - 2026-11-19</h2>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li><code>npm audit fix</code> across nine cells and the runtime cleared a critical advisory in Mitosis and Cytosol plus twenty others: mitosis 11 to 3, cytosol 9 to 0, nucleus 8 to 0, membrane 10 to 3, genome/ribosome/enzyme/phenotype/runtime 2 to 0, receptor 1 to 0. The remaining findings need breaking majors (zod 4, glob 14) and stay with their open dependabot PRs.</li>
 <li>Runtime <code>1.3.3</code> refreshed its Nix fixed-output dependency hash, verified with a local <code>nix build</code> before release.</li>
@@ -248,17 +257,17 @@
 <ul>
 <li>Per-cell licence disclosure (PR #7): <code>config/inventory.json</code> now carries each cell's licence, the library footer and page headers derive the real blend (MIT suite + six GPL-3.0-or-later cells) instead of a blanket MIT claim, and the architecture reference states which copyleft cells every profile installs. Derived from the inventory and covered by tests.</li>
 </ul>
-<h3 id="fixed-24">Fixed</h3>
+<h3 id="fixed-25">Fixed</h3>
 <ul>
 <li><code>update --json</code> (PR #6) emits one compact document, so a caller reading the last stdout line cannot be defeated by installer output.</li>
 </ul>
 <h2 id="1916---2026-11-19">[1.9.16] - 2026-11-19</h2>
-<h3 id="fixed-25">Fixed</h3>
+<h3 id="fixed-26">Fixed</h3>
 <ul>
 <li>Runtime prose sat outside the single-sourcing pipeline: the architecture cards (EN and ID) and the on-demand guide said <code>1.2.1</code> while the inventory said <code>1.3.2</code>, and CI stayed green because the generator skipped the <code>hela-runtime</code> prose entirely. <code>generate-docs</code> now rewrites those sentences from the inventory, <code>docs:check</code> fails on drift (verified by deliberately reverting a mention), and a test covers both languages while keeping the dated Servy rollout record at the version it actually deployed.</li>
 </ul>
 <h2 id="1915---2026-11-18">[1.9.15] - 2026-11-18</h2>
-<h3 id="fixed-26">Fixed</h3>
+<h3 id="fixed-27">Fixed</h3>
 <ul>
 <li>The tmux provisioning tests inherited <code>CI</code> from <code>process.env</code>, so on GitHub Actions provisioning short-circuited to <code>skipped</code>/<code>ci</code> before any assertion: eight failures that only existed on CI. The fixtures now strip CI variables, and the CI-disable case keeps its own explicit test.</li>
 </ul>
@@ -267,14 +276,14 @@
 <ul>
 <li>Mitosis <code>3.0.6</code> bundles the registry <code>pcb</code> skill (KiCad workflow, verification scripts, JLCPCB preparation, MIT licence preserved). The staged copy contained a duplicate of itself under <code>skills/pcb/pcb</code>; 3.3 MB removed so discovery sees one definition.</li>
 </ul>
-<h3 id="fixed-27">Fixed</h3>
+<h3 id="fixed-28">Fixed</h3>
 <ul>
 <li>Cytosol <code>3.2.3</code>: <code>BROWSER_HEADLESS</code> defaults to auto — headless without <code>DISPLAY</code>, headful with one, explicit values still winning. Display-less service processes could not launch Chromium before. <code>resolveHeadless</code> is exported and tested.</li>
 <li>Browser CI pins <code>ubuntu-24.04</code>; <code>ubuntu-latest</code> moved to 26.04 where <code>playwright install --with-deps</code> exits without a Chromium build.</li>
 <li>Runtime <code>1.3.2</code> refreshes the Nix <code>npmDepsHash</code> after the version bump.</li>
 </ul>
 <h2 id="1913---2026-11-18">[1.9.13] - 2026-11-18</h2>
-<h3 id="fixed-28">Fixed</h3>
+<h3 id="fixed-29">Fixed</h3>
 <ul>
 <li>Every cell and the runtime now single-source the advertised MCP version in one module, guarded by a test against <code>package.json</code>. Six cells had shipped a stale <code>ServerInfo</code> this way (nucleus, enzyme, phenotype, receptor, cytosol, plastid), and a deliberate drift in mitosis was verified to fail its suite.</li>
 </ul>
@@ -291,11 +300,11 @@
 <li>Headless Blender reports a render path without writing a file; rendering still needs a GUI session.</li>
 </ul>
 <h2 id="1911---2026-11-18">[1.9.11] - 2026-11-18</h2>
-<h3 id="fixed-29">Fixed</h3>
+<h3 id="fixed-30">Fixed</h3>
 <ul>
 <li>Receptor <code>3.0.3</code>: the hardware integration harness spawned a non-existent entrypoint, so <code>npm run test:integration</code> could never pass; it now runs 18 checks against a real Pixel 8 (UI hierarchy, element discovery, app lifecycle, rotation, screen recording, session, screenshot, tap/swipe, clipboard).</li>
 </ul>
-<h3 id="changed-5">Changed</h3>
+<h3 id="changed-6">Changed</h3>
 <ul>
 <li>Repins Receptor and publishes the <code>v1.9.11</code> snapshot.</li>
 </ul>
@@ -304,7 +313,7 @@
 <ul>
 <li><code>npm run test:acp</code> drives the Zed Codex adapter over ACP (<code>initialize</code> → <code>session/new</code> → <code>session/prompt</code>) and passes only on a real text reply, so the authenticated ACP session is verified without the GUI.</li>
 </ul>
-<h3 id="fixed-30">Fixed</h3>
+<h3 id="fixed-31">Fixed</h3>
 <ul>
 <li>Documented why the registry Codex adapter failed with <code>model_not_found</code> for every model: the bundled adapter (<code>codex-acp</code> 0.11.1) carries a Codex core older than the account's model list. <code>@agentclientprotocol/codex-acp</code> 2.7.0 works with the same ChatGPT login; the guide shows the custom <code>agent_servers.codex-acp</code> entry and the manual troubleshooting signature.</li>
 </ul>
@@ -314,13 +323,13 @@
 <li>Mitosis <code>3.0.4</code> splits <code>terminal.execute</code> into one-shot execution (Nucleus) and <code>terminal.session</code> (Ribosome), so planning can tell &quot;run pytest&quot; from &quot;drive a tmux session&quot;.</li>
 <li>Runtime <code>1.3.1</code> adds structured per-cell logs, per-cell start/restart/failure/tool counters on <code>/healthz</code>, and separate <code>/livez</code> and <code>/readyz</code> endpoints.</li>
 </ul>
-<h3 id="changed-6">Changed</h3>
+<h3 id="changed-7">Changed</h3>
 <ul>
 <li>Ribosome <code>3.1.0</code> gains <code>npm run test:remote</code>, a live integration test for the ssh transport (spawn, tmux, reattach, kill on close, transport exit kind) verified against <code>servy</code>.</li>
 <li>Repins the coordinated <code>v1.9.9</code> snapshot; <code>latest-stable</code> moves to it.</li>
 </ul>
 <h2 id="198---2026-11-18">[1.9.8] - 2026-11-18</h2>
-<h3 id="changed-7">Changed</h3>
+<h3 id="changed-8">Changed</h3>
 <ul>
 <li>Repin every changed cell in <code>config/inventory.json</code> and publish the coordinated <code>v1.9.8</code> snapshot: Nucleus <code>3.0.3</code>, Ribosome <code>3.1.0</code>, Membrane <code>3.0.2</code>, Enzyme <code>4.0.2</code>, Receptor <code>3.0.2</code>, Plastid <code>3.0.2</code>, Phenotype <code>3.0.3</code>, and Mitosis at the mema-vault backup commit.</li>
 <li>Regenerate <code>config/tool-catalog.json</code> and the per-cell canonical tool references from the new pins; the catalog still advertises 292 base tools across ten cells.</li>
@@ -365,12 +374,12 @@
 <li>Publish Terminal/Nucleus <code>3.0.2</code> with checksum-verified user-local RTK bootstrap on Linux, macOS, Windows, and Windows ARM64.</li>
 <li>Move <code>latest-stable</code> to the coordinated <code>v1.9.2</code> snapshot while retaining <code>v1.9.1</code> unchanged.</li>
 </ul>
-<h3 id="fixed-31">Fixed</h3>
+<h3 id="fixed-32">Fixed</h3>
 <ul>
 <li>Align the mutable <code>latest-stable</code> metadata and generated Cytosol catalog with the current post-release documentation commit without rewriting the immutable <code>v1.8.0</code> snapshot.</li>
 </ul>
 <h2 id="191---2026-11-14">[1.9.1] - 2026-11-14</h2>
-<h3 id="fixed-32">Fixed</h3>
+<h3 id="fixed-33">Fixed</h3>
 <ul>
 <li>Refresh every canonical cell and runtime revision to the latest validated default-branch commit.</li>
 <li>Publish the coordinated <code>v1.9.1</code> snapshot while retaining the immutable <code>v1.9.0</code> release.</li>
@@ -398,7 +407,7 @@
 <li>Published the reproducible <code>v1.7.0</code> snapshot and moved <code>latest-stable</code> to the new Cytosol release.</li>
 </ul>
 <h2 id="164---2026-11-13">[1.6.4] - 2026-11-13</h2>
-<h3 id="fixed-33">Fixed</h3>
+<h3 id="fixed-34">Fixed</h3>
 <ul>
 <li>Updated the <code>latest-stable</code> snapshot alias to the coordinated 1.6.3 cell and runtime release pins.</li>
 </ul>
@@ -465,18 +474,18 @@
 <li>Record native x86_64/aarch64 Linux Nix builds separately from client authentication, hardware testing, and unresolved vault conflicts.</li>
 </ul>
 <h2 id="300---2026-10-31">[3.0.0] - 2026-10-31</h2>
-<h3 id="changed-8">Changed</h3>
+<h3 id="changed-9">Changed</h3>
 <ul>
 <li><strong>Version reset to 3.0.0</strong> — per-server version metadata baseline reset (Phase 7). All <code>package.json</code>, MCP <code>ServerInfo.version</code>, and HTTP metadata now report <code>3.0.0</code>. This is a metadata/interface baseline reset; for <code>hela-plastid</code> it is not an upgrade from the previous <code>4.2.0</code> advert.</li>
 </ul>
 </article><footer class="doc-footer"><span>SUITE MIT · SEL GPL-3.0 + MIT · HELA ECOSYSTEM</span><a href="../library.html">Pustaka dokumentasi</a></footer></main>
-      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#1118---2026-11-22">[1.11.8] - 2026-11-22</a></li><li><a href="#1117---2026-11-22">[1.11.7] - 2026-11-22</a></li><li><a href="#1116---2026-11-22">[1.11.6] - 2026-11-22</a></li><li><a href="#1115---2026-11-22">[1.11.5] - 2026-11-22</a></li><li><a href="#1114---2026-11-22">[1.11.4] - 2026-11-22</a></li><li><a href="#1113---2026-11-22">[1.11.3] - 2026-11-22</a></li><li><a href="#1112---2026-11-22">[1.11.2] - 2026-11-22</a></li><li><a href="#1111---2026-11-22">[1.11.1] - 2026-11-22</a></li><li><a href="#1110---2026-11-22">[1.11.0] - 2026-11-22</a></li><li><a href="#11010---2026-11-22">[1.10.10] - 2026-11-22</a></li><li><a href="#1109---2026-11-22">[1.10.9] - 2026-11-22</a></li><li><a href="#1108---2026-11-22">[1.10.8] - 2026-11-22</a></li><li><a href="#1107---2026-11-22">[1.10.7] - 2026-11-22</a></li><li><a href="#1106---2026-11-22">[1.10.6] - 2026-11-22</a></li><li><a href="#1105---2026-11-22">[1.10.5] - 2026-11-22</a></li><li><a href="#1104---2026-11-22">[1.10.4] - 2026-11-22</a></li><li><a href="#1103---2026-11-22">[1.10.3] - 2026-11-22</a></li><li><a href="#1102---2026-11-22">[1.10.2] - 2026-11-22</a></li><li><a href="#1101---2026-11-22">[1.10.1] - 2026-11-22</a></li><li><a href="#1100---2026-11-21">[1.10.0] - 2026-11-21</a></li><li><a href="#1927---2026-11-19">[1.9.27] - 2026-11-19</a></li><li><a href="#1926---2026-11-19">[1.9.26] - 2026-11-19</a></li><li><a href="#1925---2026-11-19">[1.9.25] - 2026-11-19</a></li><li><a href="#1924---2026-11-19">[1.9.24] - 2026-11-19</a></li><li><a href="#1923---2026-11-19">[1.9.23] - 2026-11-19</a></li><li><a href="#1922---2026-11-19">[1.9.22] - 2026-11-19</a></li><li><a href="#1921---2026-11-19">[1.9.21] - 2026-11-19</a></li><li><a href="#1920---2026-11-19">[1.9.20] - 2026-11-19</a></li><li><a href="#1919---2026-11-19">[1.9.19] - 2026-11-19</a></li><li><a href="#1918---2026-11-19">[1.9.18] - 2026-11-19</a></li><li><a href="#1917---2026-11-19">[1.9.17] - 2026-11-19</a></li><li><a href="#1916---2026-11-19">[1.9.16] - 2026-11-19</a></li><li><a href="#1915---2026-11-18">[1.9.15] - 2026-11-18</a></li><li><a href="#1914---2026-11-18">[1.9.14] - 2026-11-18</a></li><li><a href="#1913---2026-11-18">[1.9.13] - 2026-11-18</a></li><li><a href="#1912---2026-11-18">[1.9.12] - 2026-11-18</a></li><li><a href="#1911---2026-11-18">[1.9.11] - 2026-11-18</a></li><li><a href="#1910---2026-11-18">[1.9.10] - 2026-11-18</a></li><li><a href="#199---2026-11-18">[1.9.9] - 2026-11-18</a></li><li><a href="#198---2026-11-18">[1.9.8] - 2026-11-18</a></li><li><a href="#197---2026-11-18">[1.9.7] - 2026-11-18</a></li><li><a href="#196---2026-11-15">[1.9.6] - 2026-11-15</a></li><li><a href="#195---2026-11-15">[1.9.5] - 2026-11-15</a></li><li><a href="#194---2026-11-15">[1.9.4] - 2026-11-15</a></li><li><a href="#193---2026-11-15">[1.9.3] - 2026-11-15</a></li><li><a href="#192---2026-11-14">[1.9.2] - 2026-11-14</a></li><li><a href="#191---2026-11-14">[1.9.1] - 2026-11-14</a></li><li><a href="#190---2026-11-14">[1.9.0] - 2026-11-14</a></li><li><a href="#180---2026-11-13">[1.8.0] - 2026-11-13</a></li><li><a href="#170---2026-11-13">[1.7.0] - 2026-11-13</a></li><li><a href="#164---2026-11-13">[1.6.4] - 2026-11-13</a></li><li><a href="#163---2026-11-13">[1.6.3] - 2026-11-13</a></li><li><a href="#162---2026-11-08">[1.6.2] - 2026-11-08</a></li><li><a href="#161---2026-11-08">[1.6.1] - 2026-11-08</a></li><li><a href="#160---2026-11-08">[1.6.0] - 2026-11-08</a></li><li><a href="#153---2026-11-07">[1.5.3] - 2026-11-07</a></li><li><a href="#152---2026-11-07">[1.5.2] - 2026-11-07</a></li><li><a href="#151---2026-11-06">[1.5.1] - 2026-11-06</a></li><li><a href="#150---2026-11-06">[1.5.0] - 2026-11-06</a></li><li><a href="#140---2026-11-06">[1.4.0] - 2026-11-06</a></li><li><a href="#300---2026-10-31">[3.0.0] - 2026-10-31</a></li></ol></nav>
+      <nav class="doc-toc" aria-label="Di halaman ini"><div class="doc-toc-title">DI HALAMAN INI</div><ol id="tocList"><li><a href="#1119---2026-11-23">[1.11.9] - 2026-11-23</a></li><li><a href="#1118---2026-11-22">[1.11.8] - 2026-11-22</a></li><li><a href="#1117---2026-11-22">[1.11.7] - 2026-11-22</a></li><li><a href="#1116---2026-11-22">[1.11.6] - 2026-11-22</a></li><li><a href="#1115---2026-11-22">[1.11.5] - 2026-11-22</a></li><li><a href="#1114---2026-11-22">[1.11.4] - 2026-11-22</a></li><li><a href="#1113---2026-11-22">[1.11.3] - 2026-11-22</a></li><li><a href="#1112---2026-11-22">[1.11.2] - 2026-11-22</a></li><li><a href="#1111---2026-11-22">[1.11.1] - 2026-11-22</a></li><li><a href="#1110---2026-11-22">[1.11.0] - 2026-11-22</a></li><li><a href="#11010---2026-11-22">[1.10.10] - 2026-11-22</a></li><li><a href="#1109---2026-11-22">[1.10.9] - 2026-11-22</a></li><li><a href="#1108---2026-11-22">[1.10.8] - 2026-11-22</a></li><li><a href="#1107---2026-11-22">[1.10.7] - 2026-11-22</a></li><li><a href="#1106---2026-11-22">[1.10.6] - 2026-11-22</a></li><li><a href="#1105---2026-11-22">[1.10.5] - 2026-11-22</a></li><li><a href="#1104---2026-11-22">[1.10.4] - 2026-11-22</a></li><li><a href="#1103---2026-11-22">[1.10.3] - 2026-11-22</a></li><li><a href="#1102---2026-11-22">[1.10.2] - 2026-11-22</a></li><li><a href="#1101---2026-11-22">[1.10.1] - 2026-11-22</a></li><li><a href="#1100---2026-11-21">[1.10.0] - 2026-11-21</a></li><li><a href="#1927---2026-11-19">[1.9.27] - 2026-11-19</a></li><li><a href="#1926---2026-11-19">[1.9.26] - 2026-11-19</a></li><li><a href="#1925---2026-11-19">[1.9.25] - 2026-11-19</a></li><li><a href="#1924---2026-11-19">[1.9.24] - 2026-11-19</a></li><li><a href="#1923---2026-11-19">[1.9.23] - 2026-11-19</a></li><li><a href="#1922---2026-11-19">[1.9.22] - 2026-11-19</a></li><li><a href="#1921---2026-11-19">[1.9.21] - 2026-11-19</a></li><li><a href="#1920---2026-11-19">[1.9.20] - 2026-11-19</a></li><li><a href="#1919---2026-11-19">[1.9.19] - 2026-11-19</a></li><li><a href="#1918---2026-11-19">[1.9.18] - 2026-11-19</a></li><li><a href="#1917---2026-11-19">[1.9.17] - 2026-11-19</a></li><li><a href="#1916---2026-11-19">[1.9.16] - 2026-11-19</a></li><li><a href="#1915---2026-11-18">[1.9.15] - 2026-11-18</a></li><li><a href="#1914---2026-11-18">[1.9.14] - 2026-11-18</a></li><li><a href="#1913---2026-11-18">[1.9.13] - 2026-11-18</a></li><li><a href="#1912---2026-11-18">[1.9.12] - 2026-11-18</a></li><li><a href="#1911---2026-11-18">[1.9.11] - 2026-11-18</a></li><li><a href="#1910---2026-11-18">[1.9.10] - 2026-11-18</a></li><li><a href="#199---2026-11-18">[1.9.9] - 2026-11-18</a></li><li><a href="#198---2026-11-18">[1.9.8] - 2026-11-18</a></li><li><a href="#197---2026-11-18">[1.9.7] - 2026-11-18</a></li><li><a href="#196---2026-11-15">[1.9.6] - 2026-11-15</a></li><li><a href="#195---2026-11-15">[1.9.5] - 2026-11-15</a></li><li><a href="#194---2026-11-15">[1.9.4] - 2026-11-15</a></li><li><a href="#193---2026-11-15">[1.9.3] - 2026-11-15</a></li><li><a href="#192---2026-11-14">[1.9.2] - 2026-11-14</a></li><li><a href="#191---2026-11-14">[1.9.1] - 2026-11-14</a></li><li><a href="#190---2026-11-14">[1.9.0] - 2026-11-14</a></li><li><a href="#180---2026-11-13">[1.8.0] - 2026-11-13</a></li><li><a href="#170---2026-11-13">[1.7.0] - 2026-11-13</a></li><li><a href="#164---2026-11-13">[1.6.4] - 2026-11-13</a></li><li><a href="#163---2026-11-13">[1.6.3] - 2026-11-13</a></li><li><a href="#162---2026-11-08">[1.6.2] - 2026-11-08</a></li><li><a href="#161---2026-11-08">[1.6.1] - 2026-11-08</a></li><li><a href="#160---2026-11-08">[1.6.0] - 2026-11-08</a></li><li><a href="#153---2026-11-07">[1.5.3] - 2026-11-07</a></li><li><a href="#152---2026-11-07">[1.5.2] - 2026-11-07</a></li><li><a href="#151---2026-11-06">[1.5.1] - 2026-11-06</a></li><li><a href="#150---2026-11-06">[1.5.0] - 2026-11-06</a></li><li><a href="#140---2026-11-06">[1.4.0] - 2026-11-06</a></li><li><a href="#300---2026-10-31">[3.0.0] - 2026-10-31</a></li></ol></nav>
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Cari dokumentasi dan alat" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Cari dokumentasi dan alat</label><input class="cmd-input" id="cmdInput" placeholder="Cari dokumentasi dan alat" type="search"><button class="btn cmd-close" type="button">Tutup</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../release-data.js?v=1.11.8"></script>
-  <script src="../../library-data.js?v=1.11.8&amp;rev=8731ddddd2d9"></script>
-  <script src="../../library.js?v=1.11.8&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.11.8&amp;rev=2dfe17383063"></script>
+  <script src="../../release-data.js?v=1.11.9"></script>
+  <script src="../../library-data.js?v=1.11.9&amp;rev=225e2c8596ca"></script>
+  <script src="../../library.js?v=1.11.9&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.11.9&amp;rev=2dfe17383063"></script>
 </body>
 </html>

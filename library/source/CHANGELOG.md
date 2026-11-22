@@ -1,3 +1,11 @@
+## [1.11.9] - 2026-11-23
+
+### Changed
+- `hela-genome` 3.2.0 requires `HELA_GENOME_ALLOW_DESTRUCTIVE=true` for `insert_data`, `update_data` and `import_data`, matching `delete_data`; `read_graph` is paged with `nextCursor`. **Breaking for bulk writes.**
+
+### Fixed
+- Genome: AKIA keys detected with named finding types, one-commit repositories report modified and untracked files, the pre-commit hook cannot delete after a failed merge, `bug:` guidance matches `openBugs`, and empty conditions are rejected explicitly.
+
 ## [1.11.8] - 2026-11-22
 
 ### Fixed

@@ -3297,10 +3297,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "88a3b0be8d606f627ec52c192d6a8b847a8a86ca",
-      "version": "3.1.3",
+      "revision": "c72f5831b0c993a3768f1da1bfc9e88e59a14b01",
+      "version": "3.2.0",
       "digests": [
-        "32b7222458e0a61f5da143fe214425e1a44efe14e7f453c013ed47f52cde7397"
+        "604f9cdb21d94612be504b08dff3ad040da9dbc5929219db9d6f24ad7264f718"
       ],
       "variants": [
         {
@@ -3750,10 +3750,36 @@
             },
             {
               "name": "read_graph",
-              "description": "Read the entire project knowledge graph",
+              "description": "Read one bounded page of the project knowledge graph (default 500 entities). Follow nextCursor for more; use read_graph_stream for keyset streaming.",
               "inputSchema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "database": {
+                    "type": "string",
+                    "enum": [
+                      "project",
+                      "central"
+                    ],
+                    "description": "Omit to merge both stores"
+                  },
+                  "cursor": {
+                    "type": "string",
+                    "description": "nextCursor from the previous page; opaque and scoped to the selected database"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000,
+                    "default": 500,
+                    "description": "Max entities and relations per page"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Rows to skip for single-store reads"
+                  }
+                }
               }
             },
             {
@@ -4134,16 +4160,18 @@
             },
             {
               "name": "analyze_git_changes",
-              "description": "Analyze bounded Git changes and untracked files in the current workspace",
+              "description": "Analyze bounded Git changes and untracked files in the current workspace. since defaults to \"0\": uncommitted changes against HEAD. Use \"1\" for the last commit, \"N\" for N commits ago, or a Git date",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "commit": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Analyze one commit against its parent"
                   },
                   "since": {
                     "type": "string",
-                    "default": "1"
+                    "default": "0",
+                    "description": "How far back to diff: \"0\" = uncommitted changes (default), \"N\" = N commits ago, or a Git date. Mutually exclusive with commit"
                   },
                   "includeUntracked": {
                     "type": "boolean",

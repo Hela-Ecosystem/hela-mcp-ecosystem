@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.9 — genome writes ask first
+
+Genome 3.2.0 makes the destructive gate consistent: `insert_data`, `update_data`
+and `import_data` now need `HELA_GENOME_ALLOW_DESTRUCTIVE=true`, as `delete_data`
+already did. That is a breaking default for bulk writes and is the first line of
+the changelog. Also: AWS keys are detected by name, `read_graph` is paged, and a
+one-commit repository reports its changes.
+
 ## v1.11.8 — boxes say what they measure
 
 Cytosol 3.3.5 returns every vision box twice: normalised `bbox` and `bboxPx`
