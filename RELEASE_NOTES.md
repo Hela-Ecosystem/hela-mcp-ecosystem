@@ -1,5 +1,12 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.16 — enzyme tool repair
+
+Enzyme 4.3.3 closes the six-tool roll-up. The headline change is that
+`fact_checker` now returns per-source stances and an overall verdict, and
+`content_deduplication` returns the surviving objects with what merged into
+them instead of a bare list of titles.
+
 ## v1.11.15 — synthetic traffic is labelled
 
 Cytosol 3.3.7 tags a request served by a mock rule with the pattern, in the

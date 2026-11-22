@@ -6063,10 +6063,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "38e631957a68fa40ee536e0b6d7228c31139d362",
-      "version": "4.3.2",
+      "revision": "bee37bf067403a3643e485c07718b5c907e899b9",
+      "version": "4.3.3",
       "digests": [
-        "6af5f6c89cfb4a73f99ed7575ab45a04df90a407aad399b6de82e17cebfa6a88"
+        "58398ef592e9d6b88550a0c84dd04f3052b34ea3f1f34e70247085946a4a7e86"
       ],
       "variants": [
         {
@@ -6230,7 +6230,7 @@
             },
             {
               "name": "content_deduplication",
-              "description": "Remove duplicate content from search results and consolidate similar items",
+              "description": "Deduplicate structured {title, url, snippet} items by canonical URL and title similarity; returns surviving objects plus a mergedFrom list as JSON",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6395,7 +6395,7 @@
             },
             {
               "name": "multi_site_search",
-              "description": "Search across multiple specific websites simultaneously",
+              "description": "Search across multiple specific websites simultaneously and report a per-site result count",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6550,7 +6550,7 @@
             },
             {
               "name": "content_summarizer",
-              "description": "Summarize content from multiple URLs",
+              "description": "Summarize content from multiple URLs, preferring og:description or the first main-content paragraph over raw body text",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6579,7 +6579,7 @@
             },
             {
               "name": "fact_checker",
-              "description": "Verify claims by searching for fact-checking sources",
+              "description": "Check a claim against fact-checking sources: labels each source stance and derives an overall verdict (ClaimReview ratings when available, otherwise source wording)",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6595,7 +6595,7 @@
             },
             {
               "name": "research_assistant",
-              "description": "Comprehensive research assistant with multi-query analysis",
+              "description": "Multi-angle research assistant: runs several query variants, deduplicates identical results across them, and includes URLs",
               "inputSchema": {
                 "type": "object",
                 "properties": {
