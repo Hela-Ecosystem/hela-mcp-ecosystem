@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.7 — one wording fix
+
+Cytosol 3.3.3 rewrote `browser_search`'s description and lost the word
+"restricted", which the ecosystem boundary check asserts. The phrase is back and
+the cell repinned; behaviour is identical to 3.3.3.
+
 ## v1.11.6 — crashes and clocks
 
 Two cells: the browser's new-tab switch crashed on every call and its catalogue

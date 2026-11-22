@@ -6771,10 +6771,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "05bb139712cbb1e5bccebbe5a69ee88d97cd3f69",
-      "version": "3.3.3",
+      "revision": "8edfcae0447b9c059f6ea0a78be106e9f007b6b2",
+      "version": "3.3.4",
       "digests": [
-        "fbfc96496229c0f44c1f21b1778b74a8be56475a9a45ba9b942dab6632f15567"
+        "6f41a50725043ae0b8c2d98d8803eacef925a3065b1b2abd292b940e980a8a89"
       ],
       "variants": [
         {
@@ -6807,7 +6807,7 @@
             },
             {
               "name": "browser_search",
-              "description": "Find browser tools by name or open DuckDuckGo results for a visual browser workflow.",
+              "description": "Restricted to visual browser workflows (not general factual lookups; prefer hela-enzyme google_search). With scope \"tools\" it searches the local tool catalogue by name; otherwise it opens DuckDuckGo results.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
