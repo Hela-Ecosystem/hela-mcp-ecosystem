@@ -1,5 +1,18 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.2 — a result can now say "degraded"
+
+`hela.pipe` reports `status: ok | degraded | failed` next to `ok`, each step
+carries its own status, and a degraded step contributes a reason. A tool that
+truncates, filters or substitutes sets that marker; the pipe surfaces it instead
+of a clean success. Mitosis 3.1.1 is the first cell to adopt it (`get_skill`).
+
+The nine false-success instances in #8 were already fixed one by one. This
+release turns the pattern into a shape that can be tested, documented in the
+runtime as `docs/response-contract.md`.
+
+Carries 1.11.1; runtime 1.4.1.
+
 ## v1.11.1 — the follow-ups 1.11.0 exposed
 
 Four cells needed a second pass: a deletion that survived project sync but not

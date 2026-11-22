@@ -175,6 +175,10 @@ The optional runtime supervises child MCP processes behind one stdio or Streamab
 - **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
 - **Details:** [on-demand startup, cache invalidation and deployment evidence](on-demand-runtime.md).
 
+#### Response contract: ok, degraded, failed
+
+A tool result has three states, and the state is part of the shape. `hela.pipe` returns `status: "ok" | "degraded" | "failed"`, each step carries its own `status`, and a degraded step contributes a reason to a top-level `degraded` array. `ok` stays true for a degraded result; `isError` is reserved for failures. A cell marks degradation with `degraded`, `partial`, `truncated`, `status: "degraded"` or `warnings` on its JSON payload — the object form is preferred because the contract requires a reason. Three rules follow: an assertion needs evidence, a failed payload is never piped onward as input, and degradation must be visible in the shape rather than only in prose. The full contract is in the runtime repository, `docs/response-contract.md`.
+
 ## 5. Security & Isolation Model
 
 ```mermaid
