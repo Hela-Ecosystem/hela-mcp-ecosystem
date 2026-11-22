@@ -1,5 +1,16 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.4 — consent, claims and citations
+
+Three places where a tool acted on the caller's behalf without asking: a
+JavaScript `confirm()` was auto-accepted, a mission could be completed by an
+agent that did not hold it, and a citation dropped two of three authors. Dialogs
+now default to dismiss with an explicit override and a history, missions have
+claimant-checked transitions with a lease and an explicit requeue, and citations
+follow each style's author rules.
+
+Carries 1.11.3.
+
 ## v1.11.3 — Nix hash for the 1.4.1 runtime
 
 The 1.4.1 release changed the package version, which is part of the npm deps

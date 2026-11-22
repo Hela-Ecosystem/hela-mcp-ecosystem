@@ -11,8 +11,8 @@
     "dev-workspace": {
       "cells": 8,
       "runtimeTools": {
-        "min": 234,
-        "max": 240
+        "min": 235,
+        "max": 241
       }
     },
     "headless-server": {
@@ -25,15 +25,15 @@
     "research": {
       "cells": 5,
       "runtimeTools": {
-        "min": 171,
-        "max": 177
+        "min": 172,
+        "max": 178
       }
     },
     "web-devops": {
       "cells": 6,
       "runtimeTools": {
-        "min": 182,
-        "max": 188
+        "min": 183,
+        "max": 189
       }
     },
     "android-testing": {
@@ -53,8 +53,8 @@
     "all": {
       "cells": 10,
       "runtimeTools": {
-        "min": 295,
-        "max": 301
+        "min": 296,
+        "max": 302
       }
     }
   }

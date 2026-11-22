@@ -3297,10 +3297,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "682463b05ecc197a35ad92b43f8f34fcc8e497ed",
-      "version": "3.1.1",
+      "revision": "7829ff63853c3603323a3985352aa5ae4c0a389c",
+      "version": "3.1.2",
       "digests": [
-        "1680a31fd570d1d34d63593c8b4dcaa46582bb46c5292bd4b8c416fcb1a090ee"
+        "b69bf4b26c88445fc0427eccb7cf9381e79ac9dd275d1534aed9acbe80cf573a"
       ],
       "variants": [
         {
@@ -3961,7 +3961,7 @@
             },
             {
               "name": "update_mission",
-              "description": "Update mission status or results. Claim queued missions exclusively with claimedBy (status claimed or in_progress); existing claims cannot be reassigned.",
+              "description": "Claim a queued mission or reclaim an expired claim with status \"claimed\" and claimedBy. Claims are exclusive and expire 30 minutes after claimedAt. The current claimant can move a live claim to in_progress, then completed or failed. Cancel from any state, naming the claimant for an active claim. Operators can use action \"requeue\" to reset a mission and clear its claim and outcome.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -3969,28 +3969,33 @@
                     "type": "string",
                     "description": "Mission ID to update"
                   },
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "requeue"
+                    ],
+                    "description": "Reset any mission to queued. Omit status, claimedBy, result, and error."
+                  },
                   "status": {
                     "type": "string",
                     "enum": [
-                      "queued",
                       "claimed",
                       "in_progress",
                       "completed",
                       "failed",
                       "cancelled"
                     ],
-                    "description": "New mission status"
+                    "description": "New mission status. Defaults to claimed when only claimedBy is supplied."
                   },
                   "claimedBy": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 100,
                     "pattern": "\\S",
-                    "description": "Agent exclusively claiming a queued mission; omit for subsequent lifecycle updates"
+                    "description": "New claimant when claiming. Current claimant when starting, completing, failing, or cancelling an active claim."
                   },
                   "result": {
-                    "type": "object",
-                    "description": "Output data or result report upon completion"
+                    "description": "JSON output. Required and non-null for completed. Optional for failed."
                   },
                   "error": {
                     "type": "string",
@@ -5954,10 +5959,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "63fc1881277ed4afffc201d3ca46ec0353e2e477",
-      "version": "4.3.1",
+      "revision": "90dcb3168500e25573fec74529b26f4807ea3822",
+      "version": "4.3.2",
       "digests": [
-        "e4e471724ae9f6e9cfce4d878faa9f73ef623353274264045d720d603ffba398"
+        "6af5f6c89cfb4a73f99ed7575ab45a04df90a407aad399b6de82e17cebfa6a88"
       ],
       "variants": [
         {
@@ -6031,10 +6036,29 @@
                   },
                   "authors": {
                     "type": "array",
+                    "description": "List of author names as strings or structured given and family names",
                     "items": {
-                      "type": "string"
-                    },
-                    "description": "List of authors"
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "given": {
+                              "type": "string"
+                            },
+                            "family": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "given",
+                            "family"
+                          ]
+                        }
+                      ]
+                    }
                   },
                   "year": {
                     "type": "number",
@@ -6048,6 +6072,10 @@
                     "type": "string",
                     "format": "uri",
                     "description": "URL if applicable"
+                  },
+                  "doi": {
+                    "type": "string",
+                    "description": "DOI or DOI URL if applicable"
                   },
                   "style": {
                     "type": "string",
@@ -6740,10 +6768,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "667bc4817ed79e5b85f41f27b119048626d9d3f4",
-      "version": "3.3.1",
+      "revision": "1d5c2a6b2084d3333e8bf39f4dc15bd95db36021",
+      "version": "3.3.2",
       "digests": [
-        "3d89bd0859ccb783a4a78279176187850b3ff01a52913f7ca6d39d9433c8bb1c"
+        "01b2646c43630678860ce1233e4c7635ddb4f37bfbc8b3dc44ead8ad8ecb84fc"
       ],
       "variants": [
         {
@@ -8100,7 +8128,7 @@
             },
             {
               "name": "browser_dismiss_popups",
-              "description": "Try to dismiss common popups and banners.",
+              "description": "Click visible close or reject controls in common popups and report their labels.",
               "inputSchema": {
                 "type": "object",
                 "properties": {}
@@ -8331,7 +8359,7 @@
             },
             {
               "name": "browser_dialog",
-              "description": "Set up handler for JavaScript dialogs (alert, confirm, prompt). Call BEFORE the action that triggers the dialog.",
+              "description": "Set how the active page handles its next JavaScript dialog. Call before triggering the dialog. The default accepts alerts and dismisses confirms, prompts and beforeunload dialogs.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -8341,16 +8369,27 @@
                       "accept",
                       "dismiss"
                     ],
-                    "description": "How to handle the dialog"
+                    "description": "Action to use for the next dialog."
                   },
                   "promptText": {
                     "type": "string",
-                    "description": "Text to enter for window.prompt() dialogs"
+                    "description": "Text to enter when accepting a prompt."
                   }
                 },
                 "required": [
                   "action"
                 ]
+              }
+            },
+            {
+              "name": "browser_list_dialogs",
+              "description": "List the last 100 JavaScript dialogs on the active page with their type, message and action.",
+              "annotations": {
+                "readOnlyHint": true
+              },
+              "inputSchema": {
+                "type": "object",
+                "properties": {}
               }
             },
             {

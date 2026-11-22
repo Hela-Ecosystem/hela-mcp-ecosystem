@@ -1,3 +1,10 @@
+## [1.11.4] - 2026-11-22
+
+### Fixed
+- `hela-genome` 3.1.2: mission transitions are guarded (queued → claimed → in_progress → completed/failed, cancel from any state, explicit requeue), lifecycle updates must name the claimant, and claims carry a 30-minute lease.
+- `hela-enzyme` 4.3.2: citations keep every author, invert names per style, use et al. for MLA, and warn instead of dropping an unparseable name.
+- `hela-cytosol` 3.3.2: dialogs are dismissed by default instead of auto-accepted, `browser_dialog` sets the next action and prompt text, `browser_list_dialogs` records them, and popup dismissal never clicks an affirmative control.
+
 ## [1.11.3] - 2026-11-22
 
 ### Fixed
