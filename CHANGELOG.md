@@ -1,3 +1,8 @@
+## [1.11.8] - 2026-11-22
+
+### Fixed
+- `hela-cytosol` 3.3.5 returns vision boxes with explicit units: `bbox` normalised 0-1, `bboxPx` in source pixels, `image` dimensions and `coordinateSpace`. The preprocessed OCR image moved to `imageBase64` so `image` means dimensions.
+
 ## [1.11.7] - 2026-11-22
 
 ### Fixed

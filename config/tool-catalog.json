@@ -6771,10 +6771,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "8edfcae0447b9c059f6ea0a78be106e9f007b6b2",
-      "version": "3.3.4",
+      "revision": "054a326a5ab3ddc731e00cf02c527e8f3f456f7b",
+      "version": "3.3.5",
       "digests": [
-        "6f41a50725043ae0b8c2d98d8803eacef925a3065b1b2abd292b940e980a8a89"
+        "a495d768996a5f34c6b870d9421163652c074a80551655cac48f0af74a9333d9"
       ],
       "variants": [
         {
@@ -7695,7 +7695,7 @@
             },
             {
               "name": "browser_ocr",
-              "description": "Extract text from a screenshot or code block using OCR (Tesseract.js). Use for reading code images, CAPTCHAs, or any visual text that is not accessible via DOM.",
+              "description": "Extract text from a screenshot or code block using OCR (Tesseract.js). Use for reading code images, CAPTCHAs, or any visual text that is not accessible via DOM. When text regions are available, lines[].bbox is normalised 0–1 and lines[].bboxPx is the same box in pixels, against image.width × image.height.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -7722,14 +7722,14 @@
                   "returnImage": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Also return the preprocessed image as base64."
+                    "description": "Also return the preprocessed image as base64 under imageBase64."
                   }
                 }
               }
             },
             {
               "name": "browser_visual_analyze",
-              "description": "Analyze the current page or a selected element with HeLa Cytosol visual intelligence. Mirage downloads and caches its local model on first use, then returns scene, object, text, relation, mask, or structured extraction results.",
+              "description": "Analyze the current page or a selected element with HeLa Cytosol visual intelligence. Mirage downloads and caches its local model on first use, then returns scene, object, text, relation, mask, or structured extraction results. Every box is returned twice: bbox normalised 0–1 and bboxPx in pixels against image.width × image.height.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -7761,7 +7761,7 @@
                     "items": {
                       "type": "string"
                     },
-                    "description": "Object fields to return, such as bbox, score, mask, or description."
+                    "description": "Object fields to return, such as bbox (normalised 0–1, mirrored as bboxPx), score, mask, or description."
                   },
                   "schema": {
                     "type": "object",
@@ -7810,7 +7810,7 @@
             },
             {
               "name": "browser_image_analyze",
-              "description": "Analyze a dedicated image with HeLa Cytosol visual intelligence. Provide exactly one imagePath, imageUrl, or imageBase64. Mirage returns VLM scene understanding, OCR, object detection, segmentation, relations, or schema-based decisions without requiring an active browser page.",
+              "description": "Analyze a dedicated image with HeLa Cytosol visual intelligence. Provide exactly one imagePath, imageUrl, or imageBase64. Mirage returns VLM scene understanding, OCR, object detection, segmentation, relations, or schema-based decisions without requiring an active browser page. Every box is returned twice: bbox normalised 0–1 and bboxPx in pixels against image.width × image.height, so browser_click and crops can use bboxPx directly.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -7850,7 +7850,7 @@
                     "items": {
                       "type": "string"
                     },
-                    "description": "Object fields to return, such as bbox, score, mask, or description."
+                    "description": "Object fields to return, such as bbox (normalised 0–1, mirrored as bboxPx), score, mask, or description."
                   },
                   "schema": {
                     "type": "object",

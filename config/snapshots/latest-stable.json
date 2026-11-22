@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.7",
-  "created_at": "2026-11-22T18:11:59Z",
-  "description": "Cytosol 3.3.4 restores the restricted wording on browser_search that the 3.3.3 description dropped. Carries 1.11.6.",
+  "snapshot_version": "1.11.8",
+  "created_at": "2026-11-22T19:23:01Z",
+  "description": "Cytosol 3.3.5 states the units of every vision box: bbox normalised 0-1, bboxPx in pixels, image dimensions and coordinateSpace. Carries 1.11.7.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -54,10 +54,10 @@
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "8edfcae0447b9c059f6ea0a78be106e9f007b6b2",
+      "commit": "054a326a5ab3ddc731e00cf02c527e8f3f456f7b",
       "branch": "master",
       "entry": "src/server.js",
-      "serverVersion": "3.3.4"
+      "serverVersion": "3.3.5"
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",

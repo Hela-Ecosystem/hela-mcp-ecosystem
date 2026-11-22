@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.8 — boxes say what they measure
+
+Cytosol 3.3.5 returns every vision box twice: normalised `bbox` and `bboxPx`
+against the reported image size. A field named `bbox` no longer implies pixels,
+which is what made a 48 px element report coordinates up to 971.
+
 ## v1.11.7 — one wording fix
 
 Cytosol 3.3.3 rewrote `browser_search`'s description and lost the word
