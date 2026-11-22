@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.13",
-  "created_at": "2026-11-22T19:58:09Z",
-  "description": "Ribosome 3.2.2 (CR redraws), cytosol 3.3.6 (structured schema, full locale, state/intercept fixes), mitosis 3.1.2 (prompt tools mapped to the catalog, category enum derived, degraded fallback). Carries 1.11.12.",
+  "snapshot_version": "1.11.14",
+  "created_at": "2026-11-22T20:03:45Z",
+  "description": "Ribosome 3.2.3 fixes a trigger-echo race that flaked the #21 regression under CI. Carries 1.11.13.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -40,10 +40,10 @@
     },
     "hela-ribosome": {
       "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
-      "commit": "249bb8cf2032964045cbd0631d900b1a6f4a4bbf",
+      "commit": "18e21344b28e868077993cfe95dfc12c910ad587",
       "branch": "master",
       "entry": "build/index.js",
-      "serverVersion": "3.2.2"
+      "serverVersion": "3.2.3"
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
