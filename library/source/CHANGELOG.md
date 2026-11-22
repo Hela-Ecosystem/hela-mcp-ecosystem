@@ -1,3 +1,13 @@
+## [1.11.0] - 2026-11-22
+
+### Fixed
+- `hela-phenotype` 3.2.0: theme colours and every derived token are inside sRGB (0 of 342 emitted values out of gamut); `stitch_sync_design_system` writes one accent; browser templates apply their palette; the 8-state component renders 8 distinct states; logo search matches catalogue facets; the export covers `index.html`.
+- `hela-enzyme` 4.3.0: trends report a window and never page counts as interest; CSV escapes quotes and guards formulas; research sessions persist to disk; `news_monitor` enforces `dateRestrict` and resolves redirects.
+- `hela-mitosis` 3.1.0: `workflow_orchestrator` dispatches to named cells and marks failed steps failed; planners name a tool or say why not; analysis tools stop inventing metrics; skill frontmatter parses properly and the response is bounded.
+- `hela-ribosome` 3.2.1: opencode v2 CLI alignment; follow-ups resume the addressed session; the managed-server password is redacted from session output; hooks wait for output rather than their own echo.
+- `hela-cytosol` 3.3.0: cookies are page-scoped and redacted with explicit widening; uploads are contained to workspace roots; `browser_extract_table` honours `header` without eating a data row.
+- `hela-genome` 3.1.0: deletes are durable across central sync; the secret scan no longer opens live SQLite files, so WAL locks and post-scan writes survive.
+
 ## [1.10.10] - 2026-11-22
 
 ### Fixed

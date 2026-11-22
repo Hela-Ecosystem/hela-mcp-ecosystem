@@ -1,6 +1,16 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.0] - 2026-11-22
+
+### Fixed
+- `hela-phenotype` 3.2.0: theme colours and every derived token are inside sRGB (0 of 342 emitted values out of gamut); `stitch_sync_design_system` writes one accent; browser templates apply their palette; the 8-state component renders 8 distinct states; logo search matches catalogue facets; the export covers `index.html`.
+- `hela-enzyme` 4.3.0: trends report a window and never page counts as interest; CSV escapes quotes and guards formulas; research sessions persist to disk; `news_monitor` enforces `dateRestrict` and resolves redirects.
+- `hela-mitosis` 3.1.0: `workflow_orchestrator` dispatches to named cells and marks failed steps failed; planners name a tool or say why not; analysis tools stop inventing metrics; skill frontmatter parses properly and the response is bounded.
+- `hela-ribosome` 3.2.1: opencode v2 CLI alignment; follow-ups resume the addressed session; the managed-server password is redacted from session output; hooks wait for output rather than their own echo.
+- `hela-cytosol` 3.3.0: cookies are page-scoped and redacted with explicit widening; uploads are contained to workspace roots; `browser_extract_table` honours `header` without eating a data row.
+- `hela-genome` 3.1.0: deletes are durable across central sync; the secret scan no longer opens live SQLite files, so WAL locks and post-scan writes survive.
+
 ## [1.10.10] - 2026-11-22
 
 ### Fixed
@@ -531,7 +541,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.10.10**, with runtime **1.4.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.0**, with runtime **1.4.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -667,7 +677,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.10.10 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.0 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -817,6 +827,21 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.0 — six cells that stop guessing
+
+Every fix in this release removes a claim the tool could not support. Trends no
+longer call result-page counts "interest". Planners name the tool they will call
+or say why they cannot. Analysis tools return `null` instead of a constant.
+Cookies are the active page's, redacted. A deleted entity stays deleted. A scan
+leaves the database's WAL locks alone, so a write after a scan is not lost.
+
+The rest are failures that were invisible to callers: an orchestrator reporting
+failed steps as completed, an agent loop recording `success:false` as `ok:true`,
+a `complete` decision with no successful call, dialogs auto-accepted, payloads
+dropped because they sat in a non-standard field. Each now says what happened.
+
+Carries 1.10.10; runtime unchanged at 1.4.0.
 
 ## v1.10.10 — phenotype measures what it claims
 
@@ -1709,16 +1734,16 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.10.10**; runtime **1.4.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.0**; runtime **1.4.0**.
 
-- **HeLa Mitosis** (`hela-mitosis`): server **3.0.9**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
-- **HeLa Genome** (`hela-genome`): server **3.0.7**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
+- **HeLa Mitosis** (`hela-mitosis`): server **3.1.0**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
+- **HeLa Genome** (`hela-genome`): server **3.1.0**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.6**, GPL-3.0-or-later, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.7**, MIT, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
-- **HeLa Ribosome** (`hela-ribosome`): server **3.1.2**, GPL-3.0-or-later, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
-- **HeLa Enzyme** (`hela-enzyme`): server **4.2.2**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
-- **HeLa Cytosol** (`hela-cytosol`): server **3.2.6**, MIT, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
-- **HeLa Phenotype** (`hela-phenotype`): server **3.1.0**, MIT, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
+- **HeLa Ribosome** (`hela-ribosome`): server **3.2.1**, GPL-3.0-or-later, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
+- **HeLa Enzyme** (`hela-enzyme`): server **4.3.0**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
+- **HeLa Cytosol** (`hela-cytosol`): server **3.3.0**, MIT, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
+- **HeLa Phenotype** (`hela-phenotype`): server **3.2.0**, MIT, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.6**, MIT, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
 - **HeLa Plastid** (`hela-plastid`): server **3.0.5**, GPL-3.0-or-later, 15 canonical tools; [source](https://github.com/Hela-Ecosystem/ll3m-mcp).
 

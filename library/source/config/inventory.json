@@ -22,7 +22,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "e755432af17e1d5588c96722926d87a29340cd93",
+      "revision": "f177d61046561906cee9ad541ed8f58527d52262",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -47,7 +47,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.0.9",
+      "version": "3.1.0",
       "skills": [
         {
           "name": "skill-finder",
@@ -91,14 +91,14 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "38de1715f4f39e8fe230c5ac087161101f80b792",
+      "revision": "c5c469bb5be1a0ef15cff7dc0f23da329266f468",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.0.7",
+      "version": "3.1.0",
       "skills": [
         {
           "name": "code-reviewer",
@@ -194,10 +194,10 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "02aeb580e3719bf48b9c128f139049d66f6c166e",
+      "revision": "ec5625ea37737c77d0825b55ca3b35ea148d4564",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.1.2"
+      "version": "3.2.1"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "2bd1de68f8dd8d6d196d0f3c24eb12bea03e0e46",
+      "revision": "5eef44358d8b019d240726f51fa3ceb5ef17bc32",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -224,7 +224,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.2.2"
+      "version": "4.3.0"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -242,14 +242,14 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "8f0b39f2023cc04ff9511be678178d784d0beef5",
+      "revision": "c8dbda38b1f0edb20a793d9010e3104ddd9df5b0",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
         "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
         "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
       },
-      "version": "3.2.6",
+      "version": "3.3.0",
       "skills": [
         {
           "name": "browser-agent",
@@ -273,10 +273,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "7d9b81c4fa9d86232155f3f76d396f45862fa18d",
+      "revision": "ce790fd0924acebf3f0fb190b1f98ca2e36ccf0d",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
-      "version": "3.1.0",
+      "version": "3.2.0",
       "skills": [
         {
           "name": "logo-design",

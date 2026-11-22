@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "e755432af17e1d5588c96722926d87a29340cd93",
-      "version": "3.0.9",
+      "revision": "f177d61046561906cee9ad541ed8f58527d52262",
+      "version": "3.1.0",
       "digests": [
-        "69e659395c6b2f1b5defc19c7b56c80139457064fee9d8903319f441ce2da80d"
+        "426d5271e32378f9fe2478982400118afeac85627e3bf45cc58b19c439f1380c"
       ],
       "variants": [
         {
@@ -24,7 +24,7 @@
             },
             {
               "name": "analyze_tools",
-              "description": "Analyzes available tools from discovered MCP servers",
+              "description": "Lists discovered tools by server (category). Complexity is a catalog estimate or null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -34,7 +34,7 @@
                   },
                   "category": {
                     "type": "string",
-                    "description": "Filter by tool category"
+                    "description": "Filter by cell or server name"
                   }
                 }
               }
@@ -126,7 +126,7 @@
             },
             {
               "name": "get_tool_chain_analysis",
-              "description": "Gets comprehensive analysis of available tools and suggested routes",
+              "description": "Summarizes discovered tools and recommends catalog matches for individual operations in the input.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -351,7 +351,8 @@
                           "description": "Whether to retry this step on failure"
                         },
                         "maxRetries": {
-                          "type": "number",
+                          "type": "integer",
+                          "minimum": 0,
                           "description": "Maximum number of retries"
                         }
                       },
@@ -368,7 +369,9 @@
                     "description": "Whether to stop execution on first failure"
                   },
                   "timeout": {
-                    "type": "number",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647,
                     "description": "Maximum execution time in milliseconds"
                   },
                   "variables": {
@@ -593,7 +596,7 @@
             },
             {
               "name": "analyze_tool_chain_performance",
-              "description": "Analyze performance metrics and efficiency of tool chains. Provides execution time estimates, complexity analysis, and optimization suggestions",
+              "description": "Check tool availability and analyze dependencies. Duration and complexity are catalog estimates, returned as null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -603,6 +606,10 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Step ID, defaults to step_1, step_2, and so on"
+                        },
                         "serverName": {
                           "type": "string",
                           "description": "Name of the MCP server"
@@ -614,6 +621,20 @@
                         "parameters": {
                           "type": "object",
                           "description": "Parameters for the tool"
+                        },
+                        "dependsOn": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Prerequisite step IDs. Omit to depend on the preceding step, or pass [] to declare no explicit prerequisites."
+                        },
+                        "outputMapping": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Map parameters to previous outputs using stepId.outputKey. Each reference adds a dependency."
                         }
                       }
                     }
@@ -621,7 +642,7 @@
                   "includeExecutionMetrics": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether to include execution time estimates"
+                    "description": "Include estimated serial duration and dependency-based parallelization potential"
                   },
                   "includeComplexityAnalysis": {
                     "type": "boolean",
@@ -763,7 +784,7 @@
             },
             {
               "name": "analyze_tools",
-              "description": "Analyzes available tools from discovered MCP servers",
+              "description": "Lists discovered tools by server (category). Complexity is a catalog estimate or null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -773,7 +794,7 @@
                   },
                   "category": {
                     "type": "string",
-                    "description": "Filter by tool category"
+                    "description": "Filter by cell or server name"
                   }
                 }
               }
@@ -865,7 +886,7 @@
             },
             {
               "name": "get_tool_chain_analysis",
-              "description": "Gets comprehensive analysis of available tools and suggested routes",
+              "description": "Summarizes discovered tools and recommends catalog matches for individual operations in the input.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -1090,7 +1111,8 @@
                           "description": "Whether to retry this step on failure"
                         },
                         "maxRetries": {
-                          "type": "number",
+                          "type": "integer",
+                          "minimum": 0,
                           "description": "Maximum number of retries"
                         }
                       },
@@ -1107,7 +1129,9 @@
                     "description": "Whether to stop execution on first failure"
                   },
                   "timeout": {
-                    "type": "number",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647,
                     "description": "Maximum execution time in milliseconds"
                   },
                   "variables": {
@@ -1332,7 +1356,7 @@
             },
             {
               "name": "analyze_tool_chain_performance",
-              "description": "Analyze performance metrics and efficiency of tool chains. Provides execution time estimates, complexity analysis, and optimization suggestions",
+              "description": "Check tool availability and analyze dependencies. Duration and complexity are catalog estimates, returned as null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -1342,6 +1366,10 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Step ID, defaults to step_1, step_2, and so on"
+                        },
                         "serverName": {
                           "type": "string",
                           "description": "Name of the MCP server"
@@ -1353,6 +1381,20 @@
                         "parameters": {
                           "type": "object",
                           "description": "Parameters for the tool"
+                        },
+                        "dependsOn": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Prerequisite step IDs. Omit to depend on the preceding step, or pass [] to declare no explicit prerequisites."
+                        },
+                        "outputMapping": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Map parameters to previous outputs using stepId.outputKey. Each reference adds a dependency."
                         }
                       }
                     }
@@ -1360,7 +1402,7 @@
                   "includeExecutionMetrics": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether to include execution time estimates"
+                    "description": "Include estimated serial duration and dependency-based parallelization potential"
                   },
                   "includeComplexityAnalysis": {
                     "type": "boolean",
@@ -1539,7 +1581,7 @@
             },
             {
               "name": "analyze_tools",
-              "description": "Analyzes available tools from discovered MCP servers",
+              "description": "Lists discovered tools by server (category). Complexity is a catalog estimate or null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -1549,7 +1591,7 @@
                   },
                   "category": {
                     "type": "string",
-                    "description": "Filter by tool category"
+                    "description": "Filter by cell or server name"
                   }
                 }
               }
@@ -1641,7 +1683,7 @@
             },
             {
               "name": "get_tool_chain_analysis",
-              "description": "Gets comprehensive analysis of available tools and suggested routes",
+              "description": "Summarizes discovered tools and recommends catalog matches for individual operations in the input.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -1866,7 +1908,8 @@
                           "description": "Whether to retry this step on failure"
                         },
                         "maxRetries": {
-                          "type": "number",
+                          "type": "integer",
+                          "minimum": 0,
                           "description": "Maximum number of retries"
                         }
                       },
@@ -1883,7 +1926,9 @@
                     "description": "Whether to stop execution on first failure"
                   },
                   "timeout": {
-                    "type": "number",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647,
                     "description": "Maximum execution time in milliseconds"
                   },
                   "variables": {
@@ -2108,7 +2153,7 @@
             },
             {
               "name": "analyze_tool_chain_performance",
-              "description": "Analyze performance metrics and efficiency of tool chains. Provides execution time estimates, complexity analysis, and optimization suggestions",
+              "description": "Check tool availability and analyze dependencies. Duration and complexity are catalog estimates, returned as null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2118,6 +2163,10 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Step ID, defaults to step_1, step_2, and so on"
+                        },
                         "serverName": {
                           "type": "string",
                           "description": "Name of the MCP server"
@@ -2129,6 +2178,20 @@
                         "parameters": {
                           "type": "object",
                           "description": "Parameters for the tool"
+                        },
+                        "dependsOn": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Prerequisite step IDs. Omit to depend on the preceding step, or pass [] to declare no explicit prerequisites."
+                        },
+                        "outputMapping": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Map parameters to previous outputs using stepId.outputKey. Each reference adds a dependency."
                         }
                       }
                     }
@@ -2136,7 +2199,7 @@
                   "includeExecutionMetrics": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether to include execution time estimates"
+                    "description": "Include estimated serial duration and dependency-based parallelization potential"
                   },
                   "includeComplexityAnalysis": {
                     "type": "boolean",
@@ -2364,7 +2427,7 @@
             },
             {
               "name": "analyze_tools",
-              "description": "Analyzes available tools from discovered MCP servers",
+              "description": "Lists discovered tools by server (category). Complexity is a catalog estimate or null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2374,7 +2437,7 @@
                   },
                   "category": {
                     "type": "string",
-                    "description": "Filter by tool category"
+                    "description": "Filter by cell or server name"
                   }
                 }
               }
@@ -2466,7 +2529,7 @@
             },
             {
               "name": "get_tool_chain_analysis",
-              "description": "Gets comprehensive analysis of available tools and suggested routes",
+              "description": "Summarizes discovered tools and recommends catalog matches for individual operations in the input.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2691,7 +2754,8 @@
                           "description": "Whether to retry this step on failure"
                         },
                         "maxRetries": {
-                          "type": "number",
+                          "type": "integer",
+                          "minimum": 0,
                           "description": "Maximum number of retries"
                         }
                       },
@@ -2708,7 +2772,9 @@
                     "description": "Whether to stop execution on first failure"
                   },
                   "timeout": {
-                    "type": "number",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647,
                     "description": "Maximum execution time in milliseconds"
                   },
                   "variables": {
@@ -2933,7 +2999,7 @@
             },
             {
               "name": "analyze_tool_chain_performance",
-              "description": "Analyze performance metrics and efficiency of tool chains. Provides execution time estimates, complexity analysis, and optimization suggestions",
+              "description": "Check tool availability and analyze dependencies. Duration and complexity are catalog estimates, returned as null when unavailable.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -2943,6 +3009,10 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Step ID, defaults to step_1, step_2, and so on"
+                        },
                         "serverName": {
                           "type": "string",
                           "description": "Name of the MCP server"
@@ -2954,6 +3024,20 @@
                         "parameters": {
                           "type": "object",
                           "description": "Parameters for the tool"
+                        },
+                        "dependsOn": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Prerequisite step IDs. Omit to depend on the preceding step, or pass [] to declare no explicit prerequisites."
+                        },
+                        "outputMapping": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Map parameters to previous outputs using stepId.outputKey. Each reference adds a dependency."
                         }
                       }
                     }
@@ -2961,7 +3045,7 @@
                   "includeExecutionMetrics": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether to include execution time estimates"
+                    "description": "Include estimated serial duration and dependency-based parallelization potential"
                   },
                   "includeComplexityAnalysis": {
                     "type": "boolean",
@@ -3213,10 +3297,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "38de1715f4f39e8fe230c5ac087161101f80b792",
-      "version": "3.0.7",
+      "revision": "c5c469bb5be1a0ef15cff7dc0f23da329266f468",
+      "version": "3.1.0",
       "digests": [
-        "11dcff9d4565596e96ff8a6f0e2ff465bcf8533910dec83c5199499fcb8af70d"
+        "b6ea479556ee6689d406f3d3ff2615a201aec33f7e51ab00a12b1fb20c46d090"
       ],
       "variants": [
         {
@@ -5161,10 +5245,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "02aeb580e3719bf48b9c128f139049d66f6c166e",
-      "version": "3.1.2",
+      "revision": "ec5625ea37737c77d0825b55ca3b35ea148d4564",
+      "version": "3.2.1",
       "digests": [
-        "a5f88f9492dcd3ab53bdae262d5edb928a5bbd2290703d6a00c14f0070adba29"
+        "80fc3c86081d01cdaafe59c748afdab4feff90cff0d2e136cbcc8d19f5f71038"
       ],
       "variants": [
         {
@@ -5507,15 +5591,15 @@
                       "default",
                       "json"
                     ],
-                    "description": "opencode output format"
+                    "description": "OpenCode output format (JSON by default). Formatted output uses a unique suffix in the OpenCode title for routing."
                   },
                   "share": {
                     "type": "boolean",
-                    "description": "Share the opencode session"
+                    "description": "Legacy option. Sharing is unsupported on opencode v2."
                   },
                   "attach": {
                     "type": "string",
-                    "description": "Attach to a running opencode server URL"
+                    "description": "Connect to a running opencode server URL (--server)"
                   },
                   "name": {
                     "type": "string",
@@ -5543,19 +5627,23 @@
             },
             {
               "name": "agent_send",
-              "description": "Send a follow-up message to an agent session. Writes into the running PTY, or resumes via opencode run --session when the PTY already exited.",
+              "description": "Send a follow-up to a tracked agent. Writes into its running PTY or resumes its exact OpenCode session. Omit sessionId to resume the latest session in cwd.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "sessionId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Tracked menager session ID. Omit to resume the latest OpenCode session."
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "description": "Working directory when sessionId is omitted (defaults to the server's working directory)."
                   },
                   "message": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "sessionId",
                   "message"
                 ]
               }
@@ -5594,7 +5682,7 @@
                   },
                   "maxCount": {
                     "type": "number",
-                    "description": "Max opencode sessions to fetch (default 20, max 50)"
+                    "description": "Max merged opencode sessions across tracked directories (default 20, max 50)"
                   }
                 },
                 "required": []
@@ -5649,7 +5737,7 @@
             },
             {
               "name": "agent_create",
-              "description": "Create a new opencode agent file (opencode agent create --path --description --mode --permissions --model). Non-interactive when all of path/description/mode/permissions are given.",
+              "description": "Legacy tool. Agent creation is unsupported on opencode v2.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5685,7 +5773,7 @@
             },
             {
               "name": "opencode_models",
-              "description": "List available models (opencode models [provider] [--refresh] [--verbose]).",
+              "description": "List available models, optionally filtered by provider. Returns up to 50 complete rows and 8000 characters.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5693,10 +5781,12 @@
                     "type": "string"
                   },
                   "refresh": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Legacy option. Unsupported on opencode v2."
                   },
                   "verbose": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Legacy option. Unsupported on opencode v2."
                   }
                 },
                 "required": []
@@ -5730,7 +5820,7 @@
             },
             {
               "name": "opencode_export",
-              "description": "Export opencode session data as JSON (opencode export [sessionID]).",
+              "description": "Export opencode session data as JSON (opencode session export <sessionID>).",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5749,7 +5839,7 @@
             },
             {
               "name": "opencode_import",
-              "description": "Import opencode session data from a JSON file (opencode import <file>).",
+              "description": "Import opencode session data from a JSON file (opencode session import <file>).",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5798,7 +5888,7 @@
             },
             {
               "name": "opencode_db",
-              "description": "Restricted to OpenCode session database inspection; use hela-genome execute_sql/query_data for the HeLa memory graph. Query the opencode database (opencode db [query]). Read with no query prints the db path context.",
+              "description": "Legacy tool, restricted: direct session database inspection is unsupported on opencode v2. Use hela-genome execute_sql for the memory database.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5819,7 +5909,7 @@
             },
             {
               "name": "opencode_server_spawn",
-              "description": "Spawn a long-running opencode server (serve|web|acp) in a managed PTY so agent_spawn --attach has a warm target and avoids MCP cold boot.",
+              "description": "Spawn a long-running opencode server in a managed PTY. Use its URL as the attach input to agent_spawn.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5855,10 +5945,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "2bd1de68f8dd8d6d196d0f3c24eb12bea03e0e46",
-      "version": "4.2.2",
+      "revision": "5eef44358d8b019d240726f51fa3ceb5ef17bc32",
+      "version": "4.3.0",
       "digests": [
-        "43269b8dd15f4cd0d74fc545694973dba4a4d5a60a4bf0db9d23f843023cf8c1"
+        "9e1a36b2be9ee94aebae359b7f856aabd371f0cd36f0db392d87fdf8bd2edc2b"
       ],
       "variants": [
         {
@@ -5968,7 +6058,7 @@
             },
             {
               "name": "research_session_manager",
-              "description": "Manage research sessions, save findings, and organize notes",
+              "description": "Save, load, list, and delete research sessions stored on disk",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -5984,7 +6074,8 @@
                   },
                   "sessionName": {
                     "type": "string",
-                    "description": "Name of the research session"
+                    "pattern": "^[A-Za-z0-9._-]{1,64}$",
+                    "description": "Session name (1–64 ASCII letters, digits, dots, underscores, or hyphens)"
                   },
                   "content": {
                     "type": "string",
@@ -6050,8 +6141,15 @@
                 "type": "object",
                 "properties": {
                   "data": {
-                    "type": "object",
-                    "description": "Data to export"
+                    "anyOf": [
+                      {
+                        "type": "object"
+                      },
+                      {
+                        "type": "array"
+                      }
+                    ],
+                    "description": "Data to export. For CSV, pass an array of rows or an object with a rows array."
                   },
                   "format": {
                     "type": "string",
@@ -6118,7 +6216,7 @@
             },
             {
               "name": "search_analytics",
-              "description": "Analyze search trends and get insights from multiple search queries",
+              "description": "Find relevant web sources in a date window and show Google matching page estimates when available",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6138,12 +6236,12 @@
                       "month",
                       "year"
                     ],
-                    "description": "Time range for trend analysis",
+                    "description": "Lookback window",
                     "default": "month"
                   },
                   "maxResults": {
                     "type": "number",
-                    "description": "Maximum results per query",
+                    "description": "Maximum sources displayed per query",
                     "minimum": 1,
                     "maximum": 5,
                     "default": 3
@@ -6421,7 +6519,7 @@
             },
             {
               "name": "search_trends",
-              "description": "Track and analyze search interest trends over time",
+              "description": "Find relevant web and Hacker News evidence in a date window, with Google matching page estimates when available",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6440,9 +6538,11 @@
                       "1M",
                       "3M",
                       "6M",
-                      "1Y"
+                      "12M",
+                      "1Y",
+                      "5Y"
                     ],
-                    "description": "Time period to analyze",
+                    "description": "Lookback window",
                     "default": "6M"
                   }
                 },
@@ -6631,10 +6731,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "8f0b39f2023cc04ff9511be678178d784d0beef5",
-      "version": "3.2.6",
+      "revision": "c8dbda38b1f0edb20a793d9010e3104ddd9df5b0",
+      "version": "3.3.0",
       "digests": [
-        "d389552b71439ca0a3257212f3e49ee08070b437009c492276cf633b9f7dec2c"
+        "90190daadf782b77faefa9cc180ad74ec3b9cd6f7528f45cf162f90718549ce6"
       ],
       "variants": [
         {
@@ -7180,13 +7280,24 @@
             },
             {
               "name": "browser_get_cookies",
-              "description": "Get current browser cookies for the active page.",
+              "description": "Get cookies for the active page. Values are redacted by default; set includeValues:true to see them and allDomains:true to read the whole profile (both must be justified by the caller).",
               "annotations": {
                 "readOnlyHint": true
               },
               "inputSchema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "includeValues": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Return cookie values instead of [redacted]."
+                  },
+                  "allDomains": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Return the whole profile jar instead of the active page only."
+                  }
+                }
               }
             },
             {
@@ -8418,10 +8529,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "7d9b81c4fa9d86232155f3f76d396f45862fa18d",
-      "version": "3.1.0",
+      "revision": "ce790fd0924acebf3f0fb190b1f98ca2e36ccf0d",
+      "version": "3.2.0",
       "digests": [
-        "c74e4b42b6bad40b84205ff6cde6b643fe18bd17ef073d76c67f33cb69812dfb"
+        "04e22a4709ce648e289a3ab094a8e6b8751fb5ecb646018a4171a424aff41f37"
       ],
       "variants": [
         {
@@ -8616,7 +8727,7 @@
                   },
                   "theme_name": {
                     "type": "string",
-                    "description": "Named theme for theme action: Specimen|Atelier|Newsprint|Studio|Manifesto|Brutal|Terminal|Midnight|Bloom|Aurora|Cobalt|Coral|Hum|Garden|Sport|Carnival"
+                    "description": "Named theme for theme action: Specimen|Atelier|Newsprint|Studio|Manifesto|Brutal|Terminal|Midnight|Bloom|Aurora|Cobalt|Coral|Hum|Garden|Sport|Carnival|Obsidian Kinetic|Tokyo Neo-Brutal|Atelier Craft"
                   },
                   "genre": {
                     "type": "string",
@@ -8624,7 +8735,8 @@
                       "editorial",
                       "modern-minimal",
                       "atmospheric",
-                      "playful"
+                      "playful",
+                      "avant-garde"
                     ],
                     "description": "Genre for theme action (ignored if theme_name is set)"
                   },
@@ -8919,7 +9031,8 @@
                       "editorial",
                       "modern-minimal",
                       "atmospheric",
-                      "playful"
+                      "playful",
+                      "avant-garde"
                     ],
                     "description": "Optional genre filter"
                   }
@@ -8928,7 +9041,7 @@
             },
             {
               "name": "detect_genre",
-              "description": "Detect the most appropriate design genre from a product description or brief. Returns one of: editorial, modern-minimal, atmospheric, playful.",
+              "description": "Detect the most appropriate design genre from a product description or brief. Returns one of: editorial, modern-minimal, atmospheric, playful, avant-garde.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -9046,7 +9159,7 @@
                   },
                   "query": {
                     "type": "string",
-                    "description": "Free-text library query"
+                    "description": "Free-text words matched against file name, brand, subject, note, mood, industry, mark/symbol type, technique, geometry, type style, and other catalog fields. All terms must match."
                   },
                   "mood": {
                     "type": "string",
@@ -9103,7 +9216,7 @@
                       "paths",
                       "json"
                     ],
-                    "description": "Search output shape"
+                    "description": "Search output format (default json). JSON returns an array of hits or an object explaining zero matches."
                   },
                   "summary": {
                     "type": "boolean",

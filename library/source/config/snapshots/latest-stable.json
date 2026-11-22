@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.10.10",
-  "created_at": "2026-11-21T23:35:21Z",
-  "description": "Phenotype 3.1.0 measures inline contrast instead of string-matching it, keeps greys grey, qualifies the High Contrast claim, clamps the derived focus chroma into sRGB, and advertises the Stitch CLI tools only when the CLI exists. Carries 1.10.9.",
+  "snapshot_version": "1.11.0",
+  "created_at": "2026-11-22T09:22:48Z",
+  "description": "Every cell that reported defects today ships a fix: phenotype 3.2.0 (in-gamut colours, one Stitch accent, applied palettes, eight real states, facet search), enzyme 4.3.0 (measured trends, safe CSV, persisted sessions, enforced news window), mitosis 3.1.0 (cross-cell dispatch, planner provenance, honest metrics), ribosome 3.2.0 (opencode v2 CLI, routed follow-ups, redacted password), cytosol 3.3.0 (scoped cookies, contained uploads, working table headers), genome 3.1.0 (durable deletes, scan that leaves WAL locks alone). Carries 1.10.10.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -12,17 +12,17 @@
   "servers": {
     "hela-mitosis": {
       "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
-      "commit": "e755432af17e1d5588c96722926d87a29340cd93",
+      "commit": "f177d61046561906cee9ad541ed8f58527d52262",
       "branch": "main",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.9"
+      "serverVersion": "3.1.0"
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "38de1715f4f39e8fe230c5ac087161101f80b792",
+      "commit": "c5c469bb5be1a0ef15cff7dc0f23da329266f468",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.0.7"
+      "serverVersion": "3.1.0"
     },
     "hela-membrane": {
       "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
@@ -40,31 +40,31 @@
     },
     "hela-ribosome": {
       "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
-      "commit": "02aeb580e3719bf48b9c128f139049d66f6c166e",
+      "commit": "ec5625ea37737c77d0825b55ca3b35ea148d4564",
       "branch": "master",
       "entry": "build/index.js",
-      "serverVersion": "3.1.2"
+      "serverVersion": "3.2.1"
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "2bd1de68f8dd8d6d196d0f3c24eb12bea03e0e46",
+      "commit": "5eef44358d8b019d240726f51fa3ceb5ef17bc32",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "4.2.2"
+      "serverVersion": "4.3.0"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "8f0b39f2023cc04ff9511be678178d784d0beef5",
+      "commit": "c8dbda38b1f0edb20a793d9010e3104ddd9df5b0",
       "branch": "master",
       "entry": "src/server.js",
-      "serverVersion": "3.2.6"
+      "serverVersion": "3.3.0"
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "7d9b81c4fa9d86232155f3f76d396f45862fa18d",
+      "commit": "ce790fd0924acebf3f0fb190b1f98ca2e36ccf0d",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.1.0"
+      "serverVersion": "3.2.0"
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",

@@ -1,5 +1,20 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.0 — six cells that stop guessing
+
+Every fix in this release removes a claim the tool could not support. Trends no
+longer call result-page counts "interest". Planners name the tool they will call
+or say why they cannot. Analysis tools return `null` instead of a constant.
+Cookies are the active page's, redacted. A deleted entity stays deleted. A scan
+leaves the database's WAL locks alone, so a write after a scan is not lost.
+
+The rest are failures that were invisible to callers: an orchestrator reporting
+failed steps as completed, an agent loop recording `success:false` as `ok:true`,
+a `complete` decision with no successful call, dialogs auto-accepted, payloads
+dropped because they sat in a non-standard field. Each now says what happened.
+
+Carries 1.10.10; runtime unchanged at 1.4.0.
+
 ## v1.10.10 — phenotype measures what it claims
 
 Three of the five fixes in Phenotype 3.1.0 are about claims the tools could not back up.
