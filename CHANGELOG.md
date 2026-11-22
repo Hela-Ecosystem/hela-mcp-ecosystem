@@ -1,3 +1,8 @@
+## [1.11.7] - 2026-11-22
+
+### Fixed
+- `hela-cytosol` 3.3.4 restores the restricted wording on `browser_search` that 3.3.3 dropped while documenting its tools scope; the canonical-boundary check asserts it.
+
 ## [1.11.6] - 2026-11-22
 
 ### Fixed
