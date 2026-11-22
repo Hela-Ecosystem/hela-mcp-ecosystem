@@ -1,5 +1,14 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.1 — the follow-ups 1.11.0 exposed
+
+Four cells needed a second pass: a deletion that survived project sync but not
+central sync, sentiment that still read "never recommend" as praise, tool
+payloads sitting in a field MCP clients drop, and React components that ignored
+their props. Each fix ships with the test that failed without it.
+
+Carries 1.11.0; runtime unchanged.
+
 ## v1.11.0 — six cells that stop guessing
 
 Every fix in this release removes a claim the tool could not support. Trends no

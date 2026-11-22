@@ -3297,10 +3297,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "c5c469bb5be1a0ef15cff7dc0f23da329266f468",
-      "version": "3.1.0",
+      "revision": "682463b05ecc197a35ad92b43f8f34fcc8e497ed",
+      "version": "3.1.1",
       "digests": [
-        "b6ea479556ee6689d406f3d3ff2615a201aec33f7e51ab00a12b1fb20c46d090"
+        "1680a31fd570d1d34d63593c8b4dcaa46582bb46c5292bd4b8c416fcb1a090ee"
       ],
       "variants": [
         {
@@ -4062,7 +4062,7 @@
             },
             {
               "name": "sync_central_memory",
-              "description": "Sync the active project knowledge graph into the central memory database (~/memory/memory.db by default) so all projects share one searchable map",
+              "description": "Publish the active project graph to central memory, reconcile entity deletions in both stores, and report skipped entities and relations",
               "inputSchema": {
                 "type": "object",
                 "properties": {},
@@ -4072,7 +4072,7 @@
             },
             {
               "name": "set_project_root",
-              "description": "Switch the active project memory database to the given absolute project path. Use at session start when the server was launched outside the project directory",
+              "description": "Switch the active memory database to the given absolute project path without importing or publishing memory",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -4109,6 +4109,15 @@
                     "minimum": 1,
                     "maximum": 50,
                     "default": 10
+                  },
+                  "scope": {
+                    "type": "string",
+                    "enum": [
+                      "project",
+                      "merged"
+                    ],
+                    "default": "project",
+                    "description": "Use merged to include central memory"
                   }
                 },
                 "required": [],
@@ -5945,10 +5954,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "5eef44358d8b019d240726f51fa3ceb5ef17bc32",
-      "version": "4.3.0",
+      "revision": "63fc1881277ed4afffc201d3ca46ec0353e2e477",
+      "version": "4.3.1",
       "digests": [
-        "9e1a36b2be9ee94aebae359b7f856aabd371f0cd36f0db392d87fdf8bd2edc2b"
+        "e4e471724ae9f6e9cfce4d878faa9f73ef623353274264045d720d603ffba398"
       ],
       "variants": [
         {
@@ -6731,10 +6740,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "c8dbda38b1f0edb20a793d9010e3104ddd9df5b0",
-      "version": "3.3.0",
+      "revision": "667bc4817ed79e5b85f41f27b119048626d9d3f4",
+      "version": "3.3.1",
       "digests": [
-        "90190daadf782b77faefa9cc180ad74ec3b9cd6f7528f45cf162f90718549ce6"
+        "3d89bd0859ccb783a4a78279176187850b3ff01a52913f7ca6d39d9433c8bb1c"
       ],
       "variants": [
         {
@@ -8529,10 +8538,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "ce790fd0924acebf3f0fb190b1f98ca2e36ccf0d",
-      "version": "3.2.0",
+      "revision": "0d61109b9f56a2f0f41e1ec96293ea6b612da966",
+      "version": "3.2.1",
       "digests": [
-        "04e22a4709ce648e289a3ab094a8e6b8751fb5ecb646018a4171a424aff41f37"
+        "43795e9793ddac7fe0e646c403d73e868b90af5bd00f972c534293dae449119b"
       ],
       "variants": [
         {
@@ -8875,6 +8884,19 @@
                       "vue"
                     ],
                     "description": "Output framework (default: html). 'react' returns a TypeScript FC with typed props. 'vue' returns a Vue 3 SFC with script setup."
+                  },
+                  "palette": {
+                    "type": "string",
+                    "enum": [
+                      "pastel",
+                      "dark",
+                      "vibrant",
+                      "mono",
+                      "obsidian-noir",
+                      "copper-cyber",
+                      "acid-avant"
+                    ],
+                    "description": "Optional color palette for React buttons."
                   }
                 },
                 "required": [
