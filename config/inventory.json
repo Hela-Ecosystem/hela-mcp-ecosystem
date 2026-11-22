@@ -360,7 +360,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "57ee9e5484e351db089d2c1753faacc8cc345177",
+      "revision": "14cc13e578d88993981caf4bb8286e09bfc5ff72",
       "version": "1.4.1",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
