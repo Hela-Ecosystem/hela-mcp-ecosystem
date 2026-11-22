@@ -1,6 +1,18 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.5] - 2026-11-22
+
+### Fixed
+- The Cytosol tool count in the site and `llms.txt` is derived from the generated catalog instead of a hand-written number, and the docs test compares against the catalog rather than the literal `75`. Adding `browser_list_dialogs` in cytosol 3.3.2 made the stale literal fail the gh-pages verification job.
+
+## [1.11.4] - 2026-11-22
+
+### Fixed
+- `hela-genome` 3.1.2: mission transitions are guarded (queued → claimed → in_progress → completed/failed, cancel from any state, explicit requeue), lifecycle updates must name the claimant, and claims carry a 30-minute lease.
+- `hela-enzyme` 4.3.2: citations keep every author, invert names per style, use et al. for MLA, and warn instead of dropping an unparseable name.
+- `hela-cytosol` 3.3.2: dialogs are dismissed by default instead of auto-accepted, `browser_dialog` sets the next action and prompt text, `browser_list_dialogs` records them, and popup dismissal never clicks an affirmative control.
+
 ## [1.11.3] - 2026-11-22
 
 ### Fixed
@@ -563,7 +575,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.11.3**, with runtime **1.4.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.5**, with runtime **1.4.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -699,7 +711,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.3 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.5 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -849,6 +861,23 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.5 — derive the tool count, do not retype it
+
+Cytosol gained a tool in 3.3.2, and a hand-written "75 tools" in the site copy
+and `llms.txt` failed the docs job. Both the prose and the test now take the
+count from the generated catalog.
+
+## v1.11.4 — consent, claims and citations
+
+Three places where a tool acted on the caller's behalf without asking: a
+JavaScript `confirm()` was auto-accepted, a mission could be completed by an
+agent that did not hold it, and a citation dropped two of three authors. Dialogs
+now default to dismiss with an explicit override and a history, missions have
+claimant-checked transitions with a lease and an explicit requeue, and citations
+follow each style's author rules.
+
+Carries 1.11.3.
 
 ## v1.11.3 — Nix hash for the 1.4.1 runtime
 
@@ -1789,15 +1818,15 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.3**; runtime **1.4.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.5**; runtime **1.4.1**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.1.1**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
-- **HeLa Genome** (`hela-genome`): server **3.1.1**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
+- **HeLa Genome** (`hela-genome`): server **3.1.2**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.6**, GPL-3.0-or-later, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.7**, MIT, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).
 - **HeLa Ribosome** (`hela-ribosome`): server **3.2.1**, GPL-3.0-or-later, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/menager-mcp).
-- **HeLa Enzyme** (`hela-enzyme`): server **4.3.1**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
-- **HeLa Cytosol** (`hela-cytosol`): server **3.3.1**, MIT, 75 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
+- **HeLa Enzyme** (`hela-enzyme`): server **4.3.2**, GPL-3.0-or-later, 24 canonical tools; [source](https://github.com/Hela-Ecosystem/researcher-mcp).
+- **HeLa Cytosol** (`hela-cytosol`): server **3.3.2**, MIT, 76 canonical tools; [source](https://github.com/Hela-Ecosystem/browser-mcp).
 - **HeLa Phenotype** (`hela-phenotype`): server **3.2.1**, MIT, 28 canonical tools; [source](https://github.com/Hela-Ecosystem/designer-mcp).
 - **HeLa Receptor** (`hela-receptor`): server **3.0.6**, MIT, 46 canonical tools; [source](https://github.com/Hela-Ecosystem/scrcpy-mcp).
 - **HeLa Plastid** (`hela-plastid`): server **3.0.5**, GPL-3.0-or-later, 15 canonical tools; [source](https://github.com/Hela-Ecosystem/ll3m-mcp).
@@ -1999,13 +2028,13 @@ URL: https://hela.my.id/library/docs/generated-profile-counts.html
 Regenerate with `npm run catalog:generate`; includes `hela.pipe` and the agent alias where enabled.
 
 - `minimal`: 3 cells, 80–86 runtime tools.
-- `dev-workspace`: 8 cells, 234–240 runtime tools.
+- `dev-workspace`: 8 cells, 235–241 runtime tools.
 - `headless-server`: 7 cells, 159–165 runtime tools.
-- `research`: 5 cells, 171–177 runtime tools.
-- `web-devops`: 6 cells, 182–188 runtime tools.
+- `research`: 5 cells, 172–178 runtime tools.
+- `web-devops`: 6 cells, 183–189 runtime tools.
 - `android-testing`: 5 cells, 133–139 runtime tools.
 - `3d-modeling`: 5 cells, 94–100 runtime tools.
-- `all`: 10 cells, 295–301 runtime tools.
+- `all`: 10 cells, 296–302 runtime tools.
 
 
 ---

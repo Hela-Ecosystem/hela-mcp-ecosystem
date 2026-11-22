@@ -1,5 +1,22 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.5 — derive the tool count, do not retype it
+
+Cytosol gained a tool in 3.3.2, and a hand-written "75 tools" in the site copy
+and `llms.txt` failed the docs job. Both the prose and the test now take the
+count from the generated catalog.
+
+## v1.11.4 — consent, claims and citations
+
+Three places where a tool acted on the caller's behalf without asking: a
+JavaScript `confirm()` was auto-accepted, a mission could be completed by an
+agent that did not hold it, and a citation dropped two of three authors. Dialogs
+now default to dismiss with an explicit override and a history, missions have
+claimant-checked transitions with a lease and an explicit requeue, and citations
+follow each style's author rules.
+
+Carries 1.11.3.
+
 ## v1.11.3 — Nix hash for the 1.4.1 runtime
 
 The 1.4.1 release changed the package version, which is part of the npm deps
