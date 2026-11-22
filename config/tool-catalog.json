@@ -3297,10 +3297,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "7829ff63853c3603323a3985352aa5ae4c0a389c",
-      "version": "3.1.2",
+      "revision": "88a3b0be8d606f627ec52c192d6a8b847a8a86ca",
+      "version": "3.1.3",
       "digests": [
-        "b69bf4b26c88445fc0427eccb7cf9381e79ac9dd275d1534aed9acbe80cf573a"
+        "32b7222458e0a61f5da143fe214425e1a44efe14e7f453c013ed47f52cde7397"
       ],
       "variants": [
         {
@@ -3832,13 +3832,16 @@
             },
             {
               "name": "get_timeline",
-              "description": "Get a chronological feed of recent observations and project activity",
+              "description": "Get recent observations and project activity, newest first",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "since": {
-                    "type": "string",
-                    "description": "ISO date string or timestamp filter"
+                    "type": [
+                      "string",
+                      "number"
+                    ],
+                    "description": "Inclusive cutoff as an ISO date, Unix epoch number, or numeric string. Absolute numeric values below 100000000000 are seconds, otherwise milliseconds."
                   },
                   "entityType": {
                     "type": "string",
@@ -6768,10 +6771,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "1d5c2a6b2084d3333e8bf39f4dc15bd95db36021",
-      "version": "3.3.2",
+      "revision": "05bb139712cbb1e5bccebbe5a69ee88d97cd3f69",
+      "version": "3.3.3",
       "digests": [
-        "01b2646c43630678860ce1233e4c7635ddb4f37bfbc8b3dc44ead8ad8ecb84fc"
+        "fbfc96496229c0f44c1f21b1778b74a8be56475a9a45ba9b942dab6632f15567"
       ],
       "variants": [
         {
@@ -6804,13 +6807,23 @@
             },
             {
               "name": "browser_search",
-              "description": "Restricted to visual browser workflows (not general factual lookups); prefer hela-enzyme google_search. Search the web using DuckDuckGo (no CAPTCHA). Returns search results.",
+              "description": "Find browser tools by name or open DuckDuckGo results for a visual browser workflow.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "query": {
                     "type": "string",
-                    "description": "Search query"
+                    "minLength": 1,
+                    "description": "Web query or exact or partial browser tool name."
+                  },
+                  "scope": {
+                    "type": "string",
+                    "enum": [
+                      "web",
+                      "tools"
+                    ],
+                    "default": "web",
+                    "description": "Search the tool catalogue or navigate to DuckDuckGo."
                   }
                 },
                 "required": [
@@ -7646,7 +7659,7 @@
             },
             {
               "name": "browser_switch_to_new_tab",
-              "description": "Detect and switch to a newly opened tab/popup. Returns the new tab URL and switches focus to it.",
+              "description": "Switch to a newly opened tab or wait for one. Returns its URL, title, and tab index.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -7912,12 +7925,12 @@
                       "actions"
                     ],
                     "default": "playwright",
-                    "description": "Export format."
+                    "description": "Format for stop or export. Both json and actions produce a replayable JSON action array."
                   },
                   "save": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Save to user_data/macros/ directory."
+                    "description": "On stop or export, save under user_data/macros/ and return the path."
                   }
                 },
                 "required": [
@@ -8228,7 +8241,7 @@
             },
             {
               "name": "browser_generate_playwright_test",
-              "description": "Generate a replayable Playwright test script from the recorded actions in this session. Returns a .spec.js file content. Call browser_clear_recording first to start a fresh recording.",
+              "description": "Generate a standalone Node.js Playwright script from the recorded actions. Call browser_clear_recording first to capture the starting URL. Run the generated file with node and have Playwright and Chromium installed.",
               "inputSchema": {
                 "type": "object",
                 "properties": {

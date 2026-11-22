@@ -1,3 +1,9 @@
+## [1.11.6] - 2026-11-22
+
+### Fixed
+- `hela-cytosol` 3.3.3: `browser_switch_to_new_tab` no longer throws, quiz batches report real counts, macro export honours format and save, generated tests run, and catalogue search finds tool names.
+- `hela-genome` 3.1.3: harness sync cannot store a fabricated year (zero and seconds timestamps are normalised or skipped with a reason, existing bogus rows repaired), `get_timeline` uses real timestamps with numeric `since` and sorts, and the dry run honours watermarks.
+
 ## [1.11.5] - 2026-11-22
 
 ### Fixed
