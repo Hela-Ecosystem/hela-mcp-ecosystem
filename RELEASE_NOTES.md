@@ -1,5 +1,12 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.10 — phenotype states only what it can count
+
+Phenotype 3.2.2 replaces hand-written counts with values read from the live
+catalogues, deletes two rules the code contradicted, and adds a test that
+spawns the server and fails when a published number drifts. Claims that cannot
+be derived were removed rather than guessed.
+
 ## v1.11.9 — genome writes ask first
 
 Genome 3.2.0 makes the destructive gate consistent: `insert_data`, `update_data`

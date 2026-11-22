@@ -273,10 +273,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "0d61109b9f56a2f0f41e1ec96293ea6b612da966",
+      "revision": "009d8df94c13171bfe0a26c31c37d9512b8fb86e",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
-      "version": "3.2.1",
+      "version": "3.2.2",
       "skills": [
         {
           "name": "logo-design",

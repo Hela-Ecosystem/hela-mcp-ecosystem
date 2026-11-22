@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.9",
-  "created_at": "2026-11-22T19:26:40Z",
-  "description": "Genome 3.2.0 detects AKIA keys with named findings, pages read_graph, makes the destructive gate consistent (breaking default), fixes one-commit git diffs and the pre-commit merge. Carries 1.11.8.",
+  "snapshot_version": "1.11.10",
+  "created_at": "2026-11-22T19:33:00Z",
+  "description": "Phenotype 3.2.2 derives every published count, enum and list from live data, drops two rules that contradicted the code, and guards them with a consistency test. Carries 1.11.9.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -61,10 +61,10 @@
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "0d61109b9f56a2f0f41e1ec96293ea6b612da966",
+      "commit": "009d8df94c13171bfe0a26c31c37d9512b8fb86e",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.2.1"
+      "serverVersion": "3.2.2"
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
