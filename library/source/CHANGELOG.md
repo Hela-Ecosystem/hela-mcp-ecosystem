@@ -1,3 +1,8 @@
+## [1.11.10] - 2026-11-23
+
+### Fixed
+- `hela-phenotype` 3.2.2 publishes only derived numbers: 37 slop gates, 68 brands in 9 categories, 14 motion categories, 19 themes, 18 systems, and the tool count from `tools/list`. Two rules that contradicted the code are removed, `get_reference` no longer leaks its absolute path, and a consistency test fails when a claim drifts.
+
 ## [1.11.9] - 2026-11-23
 
 ### Changed
