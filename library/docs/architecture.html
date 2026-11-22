@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <link rel="stylesheet" href="../../library.css?v=1.11.1&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../../library.css?v=1.11.2&amp;rev=f4fb3976fbca">
 </head>
 <body class="library-page" data-page-prefix="../../">
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Documentation sections">
-      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.11.1 · Runtime 1.4.0 · 10 CELLS</div></div>
+      <div class="doc-brand"><a href="../../index.html" class="doc-brand-title">HeLa MCP Ecosystem</a><div class="doc-brand-meta">v1.11.2 · Runtime 1.4.1 · 10 CELLS</div></div>
       <nav aria-label="Documentation"><details class="doc-mobile-nav" open><summary>Browse documentation</summary><ol class="doc-nav" start="0"><li><a href="../../library.html" aria-current="page"><span class="doc-nav-num">00</span> <span>Document library</span></a></li></ol>
 <div class="doc-nav-section">GETTING STARTED</div><ol class="doc-nav" start="1"><li><a href="../../index.html"><span class="doc-nav-num">01</span> <span>Overview</span></a></li>
 <li><a href="../../index.html#installation"><span class="doc-nav-num">02</span> <span>Installation</span></a></li>
@@ -224,6 +224,8 @@
 <li><strong>Without it:</strong> users keep the individual servers selected by their profile and can use <code>hela-mitosis:workflow_orchestrator</code> for cross-cell chaining.</li>
 <li><strong>Details:</strong> <a href="on-demand-runtime.html">on-demand startup, cache invalidation and deployment evidence</a>.</li>
 </ul>
+<h4 id="response-contract-ok-degraded-failed">Response contract: ok, degraded, failed</h4>
+<p>A tool result has three states, and the state is part of the shape. <code>hela.pipe</code> returns <code>status: &quot;ok&quot; | &quot;degraded&quot; | &quot;failed&quot;</code>, each step carries its own <code>status</code>, and a degraded step contributes a reason to a top-level <code>degraded</code> array. <code>ok</code> stays true for a degraded result; <code>isError</code> is reserved for failures. A cell marks degradation with <code>degraded</code>, <code>partial</code>, <code>truncated</code>, <code>status: &quot;degraded&quot;</code> or <code>warnings</code> on its JSON payload — the object form is preferred because the contract requires a reason. Three rules follow: an assertion needs evidence, a failed payload is never piped onward as input, and degradation must be visible in the shape rather than only in prose. The full contract is in the runtime repository, <code>docs/response-contract.md</code>.</p>
 <h2 id="5-security--isolation-model">5. Security &amp; Isolation Model</h2>
 <div class="code-dossier library-code"><button class="copy-btn library-copy" type="button">Copy code</button><pre><code class="language-mermaid">flowchart TB
     Host[&quot;Host Operating System / Terminal Environment&quot;]
@@ -256,9 +258,9 @@
     </div>
   </div>
   <div class="cmd-backdrop" id="cmdPalette" role="dialog" aria-label="Search documentation and tools" aria-modal="true"><div class="cmd-modal"><div class="cmd-input-row"><label class="visually-hidden" for="cmdInput">Search documentation and tools</label><input class="cmd-input" id="cmdInput" placeholder="Search documentation and tools" type="search"><button class="btn cmd-close" type="button">Close</button></div><div class="cmd-results" id="cmdResults"></div></div></div>
-  <script src="../../release-data.js?v=1.11.1"></script>
-  <script src="../../library-data.js?v=1.11.1&amp;rev=fbb4019a91c5"></script>
-  <script src="../../library.js?v=1.11.1&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../../app.js?v=1.11.1&amp;rev=2dfe17383063"></script>
+  <script src="../../release-data.js?v=1.11.2"></script>
+  <script src="../../library-data.js?v=1.11.2&amp;rev=3d4b5dffcf22"></script>
+  <script src="../../library.js?v=1.11.2&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../../app.js?v=1.11.2&amp;rev=2dfe17383063"></script>
 </body>
 </html>

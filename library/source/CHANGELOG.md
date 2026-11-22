@@ -1,3 +1,12 @@
+## [1.11.2] - 2026-11-22
+
+### Added
+- **Response contract for degraded results.** `hela.runtime` 1.4.1 reports `status: ok | degraded | failed` on `hela.pipe`, per-step status, and a `degraded` array naming the step and reasons. A step that marks itself `degraded`, `partial`, `truncated`, `status: "degraded"` or `warnings` makes the pipe degraded while `ok` stays true. Contract documented in `hela-runtime/docs/response-contract.md`.
+- `hela.mitosis` 3.1.1 adopts it: `get_skill` marks a truncated or file-omitted answer `status: "degraded"` with a reason.
+
+### Fixed
+- The nine instances tracked by #8 were fixed individually; this release makes the convention enforceable rather than per-tool.
+
 ## [1.11.1] - 2026-11-22
 
 ### Fixed

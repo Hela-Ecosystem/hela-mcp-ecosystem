@@ -1,6 +1,15 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.2] - 2026-11-22
+
+### Added
+- **Response contract for degraded results.** `hela.runtime` 1.4.1 reports `status: ok | degraded | failed` on `hela.pipe`, per-step status, and a `degraded` array naming the step and reasons. A step that marks itself `degraded`, `partial`, `truncated`, `status: "degraded"` or `warnings` makes the pipe degraded while `ok` stays true. Contract documented in `hela-runtime/docs/response-contract.md`.
+- `hela.mitosis` 3.1.1 adopts it: `get_skill` marks a truncated or file-omitted answer `status: "degraded"` with a reason.
+
+### Fixed
+- The nine instances tracked by #8 were fixed individually; this release makes the convention enforceable rather than per-tool.
+
 ## [1.11.1] - 2026-11-22
 
 ### Fixed
@@ -549,7 +558,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.11.1**, with runtime **1.4.0**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.2**, with runtime **1.4.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -685,7 +694,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.1 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.2 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -835,6 +844,19 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.2 — a result can now say "degraded"
+
+`hela.pipe` reports `status: ok | degraded | failed` next to `ok`, each step
+carries its own status, and a degraded step contributes a reason. A tool that
+truncates, filters or substitutes sets that marker; the pipe surfaces it instead
+of a clean success. Mitosis 3.1.1 is the first cell to adopt it (`get_skill`).
+
+The nine false-success instances in #8 were already fixed one by one. This
+release turns the pattern into a shape that can be tested, documented in the
+runtime as `docs/response-contract.md`.
+
+Carries 1.11.1; runtime 1.4.1.
 
 ## v1.11.1 — the follow-ups 1.11.0 exposed
 
@@ -1388,6 +1410,10 @@ The optional runtime supervises child MCP processes behind one stdio or Streamab
 - **Without it:** users keep the individual servers selected by their profile and can use `hela-mitosis:workflow_orchestrator` for cross-cell chaining.
 - **Details:** [on-demand startup, cache invalidation and deployment evidence](on-demand-runtime.md).
 
+#### Response contract: ok, degraded, failed
+
+A tool result has three states, and the state is part of the shape. `hela.pipe` returns `status: "ok" | "degraded" | "failed"`, each step carries its own `status`, and a degraded step contributes a reason to a top-level `degraded` array. `ok` stays true for a degraded result; `isError` is reserved for failures. A cell marks degradation with `degraded`, `partial`, `truncated`, `status: "degraded"` or `warnings` on its JSON payload — the object form is preferred because the contract requires a reason. Three rules follow: an assertion needs evidence, a failed payload is never piped onward as input, and degradation must be visible in the shape rather than only in prose. The full contract is in the runtime repository, `docs/response-contract.md`.
+
 ## 5. Security & Isolation Model
 
 ```mermaid
@@ -1751,9 +1777,9 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.1**; runtime **1.4.0**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.2**; runtime **1.4.1**.
 
-- **HeLa Mitosis** (`hela-mitosis`): server **3.1.0**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
+- **HeLa Mitosis** (`hela-mitosis`): server **3.1.1**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.1.1**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
 - **HeLa Membrane** (`hela-membrane`): server **3.0.6**, GPL-3.0-or-later, 16 canonical tools; [source](https://github.com/Hela-Ecosystem/filesystem-mcp).
 - **HeLa Nucleus** (`hela-nucleus`): server **3.0.7**, MIT, 7 canonical tools; [source](https://github.com/Hela-Ecosystem/terminal-mcp).

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.1",
-  "created_at": "2026-11-22T14:54:42Z",
-  "description": "Follow-up fixes on top of 1.11.0: genome 3.1.1 makes deletions survive project/central sync, enzyme 4.3.1 scores negation across a window, cytosol 3.3.1 exposes tool payloads as structuredContent, phenotype 3.2.1 renders React components from their props. Carries 1.11.0.",
+  "snapshot_version": "1.11.2",
+  "created_at": "2026-11-22T15:03:37Z",
+  "description": "Adopts the response contract: hela.pipe reports ok/degraded/failed with per-step status and reasons, and mitosis 3.1.1 marks a truncated skill answer degraded. Runtime 1.4.1. Carries 1.11.1.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -12,10 +12,10 @@
   "servers": {
     "hela-mitosis": {
       "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
-      "commit": "f177d61046561906cee9ad541ed8f58527d52262",
+      "commit": "c453afe8119b4eea35217d15233f584855dfdc93",
       "branch": "main",
       "entry": "dist/index.js",
-      "serverVersion": "3.1.0"
+      "serverVersion": "3.1.1"
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
@@ -82,10 +82,10 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "988df73777eea91a07aa7da87bd6e43b8cedfb4f",
+      "commit": "57ee9e5484e351db089d2c1753faacc8cc345177",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.4.0"
+      "serverVersion": "1.4.1"
     }
   },
   "verified_profiles": [
