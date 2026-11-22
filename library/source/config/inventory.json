@@ -194,10 +194,10 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "249bb8cf2032964045cbd0631d900b1a6f4a4bbf",
+      "revision": "18e21344b28e868077993cfe95dfc12c910ad587",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.2.2"
+      "version": "3.2.3"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",

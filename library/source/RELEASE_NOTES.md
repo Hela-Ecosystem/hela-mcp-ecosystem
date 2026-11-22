@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.14 — one race
+
+Ribosome 3.2.3 stops a bare newline (the Enter key's own echo) from consuming
+the pending trigger echo, which flaked the #21 regression under CI. No
+behaviour change to the public API.
+
 ## v1.11.13 — three roll-ups closed
 
 The remaining Cytosol, Mitosis and Ribosome roll-ups land together. Cytosol

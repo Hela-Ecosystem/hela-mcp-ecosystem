@@ -1,3 +1,8 @@
+## [1.11.14] - 2026-11-23
+
+### Fixed
+- `hela-ribosome` 3.2.3: the trigger-echo strip no longer lets a bare newline consume the pending echo, removing a race that flaked the hook regression under CI.
+
 ## [1.11.13] - 2026-11-23
 
 ### Fixed

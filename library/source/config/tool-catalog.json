@@ -5362,10 +5362,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "249bb8cf2032964045cbd0631d900b1a6f4a4bbf",
-      "version": "3.2.2",
+      "revision": "18e21344b28e868077993cfe95dfc12c910ad587",
+      "version": "3.2.3",
       "digests": [
-        "200771f3d34d4ac50efa228efaa73a890e2123fca93f2eedaca041aef1ca65cd"
+        "c2d7edca28151f73d00f1b519a3c5ca04a818f205d94958725adb415367d5c8e"
       ],
       "variants": [
         {
