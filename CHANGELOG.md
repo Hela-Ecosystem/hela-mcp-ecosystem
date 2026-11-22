@@ -1,3 +1,10 @@
+## [1.11.13] - 2026-11-23
+
+### Fixed
+- `hela-ribosome` 3.2.2: `session_read` lines mode replays carriage-return redraws, removing interleaved prompt echoes.
+- `hela-cytosol` 3.3.6: `extract_schema` reads JSON-LD/microdata/tables, `emulate` sets language and Accept-Language, `get_state` exposes checked/name/textBlocks, captcha verify is honest, and intercept/switch_tab/cache are diagnosed.
+- `hela-mitosis` 3.1.2: prompt `expectedTools` map to real HeLa tools with a catalog test, the category enum is derived from data, the local instruction fallback is marked degraded, and `execute:false` records a proposed call.
+
 ## [1.11.12] - 2026-11-23
 
 ### Fixed

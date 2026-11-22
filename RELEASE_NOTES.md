@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.13 — three roll-ups closed
+
+The remaining Cytosol, Mitosis and Ribosome roll-ups land together. Cytosol
+reads structured data instead of guessing, Mitosis prompts point at tools that
+exist, and Ribosome stops echoing its own prompt into the session text.
+
 ## v1.11.12 — one generator, not two
 
 Phenotype 3.2.2 added its own `docs/TOOLS.md` generator alongside the

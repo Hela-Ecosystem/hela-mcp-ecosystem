@@ -22,7 +22,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "f852fd3f379ecea31187ce066879786904df818c",
+      "revision": "3918974de9da0db36b7813f9d0044776ad8aa103",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -47,7 +47,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.1.1",
+      "version": "3.1.2",
       "skills": [
         {
           "name": "skill-finder",
@@ -194,10 +194,10 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "e87650cac0f4c686c4e319cad1f849633987e676",
+      "revision": "249bb8cf2032964045cbd0631d900b1a6f4a4bbf",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.2.1"
+      "version": "3.2.2"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -242,14 +242,14 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "14211f9e8471f9066fd28ce097082aba94caad41",
+      "revision": "277d4640c960df0880213a21b31b44231cc756c4",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
         "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
         "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
       },
-      "version": "3.3.5",
+      "version": "3.3.6",
       "skills": [
         {
           "name": "browser-agent",
