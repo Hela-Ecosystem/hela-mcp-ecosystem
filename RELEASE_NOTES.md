@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.15 — synthetic traffic is labelled
+
+Cytosol 3.3.7 tags a request served by a mock rule with the pattern, in the
+readable line and structurally, and exposes the active mock count so a session
+that forgot to clear them is visible. Closes the last reporting-honesty gap.
+
 ## v1.11.14 — one race
 
 Ribosome 3.2.3 stops a bare newline (the Enter key's own echo) from consuming

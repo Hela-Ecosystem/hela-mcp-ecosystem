@@ -1,3 +1,8 @@
+## [1.11.15] - 2026-11-23
+
+### Fixed
+- `hela-cytosol` 3.3.7 marks mock-served requests so synthetic traffic is distinguishable from real traffic, with filters and an exposed mock count.
+
 ## [1.11.14] - 2026-11-23
 
 ### Fixed
