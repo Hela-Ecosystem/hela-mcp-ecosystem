@@ -1,5 +1,12 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.6 — crashes and clocks
+
+Two cells: the browser's new-tab switch crashed on every call and its catalogue
+search returned nothing, while genome wrote a fabricated year into harness
+timestamps and read `[TAG]` as a date. Both fixed with tests that reproduce the
+reported inputs.
+
 ## v1.11.5 — derive the tool count, do not retype it
 
 Cytosol gained a tool in 3.3.2, and a hand-written "75 tools" in the site copy
