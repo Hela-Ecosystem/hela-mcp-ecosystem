@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.12 — one generator, not two
+
+Phenotype 3.2.2 added its own `docs/TOOLS.md` generator alongside the
+ecosystem's, so the two formats overwrote each other and CI failed once the
+ecosystem regenerated the file. The local generator is removed; the ecosystem
+generator owns the file, and phenotype's consistency test keeps checking README
+counts against a live `tools/list`.
+
 ## v1.11.11 — tool references caught up
 
 Six cells shipped with a stale `docs/TOOLS.md`: new tools were missing and

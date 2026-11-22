@@ -1,3 +1,8 @@
+## [1.11.12] - 2026-11-23
+
+### Fixed
+- `hela-phenotype` 3.2.3 removes the local `docs/TOOLS.md` generator that 3.2.2 added; the file stays owned by `npm run docs:generate -- --servers`. The consistency test keeps its live `tools/list` count checks.
+
 ## [1.11.11] - 2026-11-23
 
 ### Fixed
