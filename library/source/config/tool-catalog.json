@@ -6872,10 +6872,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "277d4640c960df0880213a21b31b44231cc756c4",
-      "version": "3.3.6",
+      "revision": "1880d2f7c6233594c47b452614aa8a06057e06be",
+      "version": "3.3.7",
       "digests": [
-        "311524743b4ef9d7727745936a2d368e33f685f92f32917c07cdf2cfe7bb0de0"
+        "d2ed902a939e07360e401b5023c218dcd15c0281e3df62c5dc651cd8e975e831"
       ],
       "variants": [
         {
@@ -7326,7 +7326,7 @@
             },
             {
               "name": "browser_get_state",
-              "description": "Capture the current page state: URL, title, headings, text blocks (text plus a textBlocks array), interactive elements (with ref numbers, including checked state and name for checkboxes/radios), AX tree, popups, and CAPTCHA status. Auto-saves snapshot for browser_state_diff. Pass screenshot=true to also include a visual screenshot — only do this when elements may be hidden from the AX tree (canvas, shadow DOM, iframes, visual-only widgets) or when layout context is needed.",
+              "description": "Capture the current page state: URL, title, headings, text blocks (text plus a textBlocks array), interactive elements (with ref numbers, including checked state and name for checkboxes/radios), AX tree, popups, CAPTCHA status, and any active mock/intercept rules. Auto-saves snapshot for browser_state_diff. Pass screenshot=true to also include a visual screenshot — only do this when elements may be hidden from the AX tree (canvas, shadow DOM, iframes, visual-only widgets) or when layout context is needed.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -8170,7 +8170,7 @@
             },
             {
               "name": "browser_health",
-              "description": "Check browser health: context alive, page responsive, page count, active URL, and evaluate latency. Read-only. Use to diagnose crashes, zombie contexts, or unresponsive pages.",
+              "description": "Check browser health: context alive, page responsive, page count, active URL, evaluate latency, and the number of active mock/intercept rules (mockRouteCount). Read-only. Use to diagnose crashes, zombie contexts, unresponsive pages, or mocks a session forgot to clear.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -8293,7 +8293,7 @@
             },
             {
               "name": "browser_network_requests",
-              "description": "Return captured network requests and their response status/timing (last 100). Useful for verifying API calls, detecting failed fetches, or inspecting what URLs are being hit. Read-only.",
+              "description": "Return captured network requests and their response status/timing (last 100). Useful for verifying API calls, detecting failed fetches, or inspecting what URLs are being hit. Requests answered by a mock/intercept rule are marked [MOCKED pattern] and carry mocked:true plus matchingPattern, so synthetic traffic is never mistaken for a real backend response. Read-only.",
               "annotations": {
                 "readOnlyHint": true
               },
@@ -8307,6 +8307,14 @@
                   "statusMin": {
                     "type": "number",
                     "description": "Only return requests with status >= this value (e.g. 400 for errors)."
+                  },
+                  "mockedOnly": {
+                    "type": "boolean",
+                    "description": "Only return requests answered by a mock/intercept rule."
+                  },
+                  "realOnly": {
+                    "type": "boolean",
+                    "description": "Only return requests that reached the network (excludes mocked ones)."
                   },
                   "clear": {
                     "type": "boolean",
