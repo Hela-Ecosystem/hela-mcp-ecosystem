@@ -1,3 +1,11 @@
+## [1.11.1] - 2026-11-22
+
+### Fixed
+- `hela-genome` 3.1.1: entity deletions are reconciled across project and central sync, sync reports what it deleted or skipped, and a root switch no longer imports another project into a fresh root.
+- `hela-enzyme` 4.3.1: sentiment applies negation across a window, so "never recommend" and "hardly a success" score negative; the negations found and the lexicon caveat are reported.
+- `hela-cytosol` 3.3.1: seventeen handlers expose their payload through `structuredContent` with a bounded text summary, and failures set `isError`.
+- `hela-phenotype` 3.2.1: React components use their declared props and derive classes from the requested style and palette; the snippet is typechecked and rendered in tests.
+
 ## [1.11.0] - 2026-11-22
 
 ### Fixed

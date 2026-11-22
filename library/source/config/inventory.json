@@ -91,14 +91,14 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c5c469bb5be1a0ef15cff7dc0f23da329266f468",
+      "revision": "682463b05ecc197a35ad92b43f8f34fcc8e497ed",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.1.0",
+      "version": "3.1.1",
       "skills": [
         {
           "name": "code-reviewer",
@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "5eef44358d8b019d240726f51fa3ceb5ef17bc32",
+      "revision": "63fc1881277ed4afffc201d3ca46ec0353e2e477",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -224,7 +224,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.3.0"
+      "version": "4.3.1"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -242,14 +242,14 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c8dbda38b1f0edb20a793d9010e3104ddd9df5b0",
+      "revision": "667bc4817ed79e5b85f41f27b119048626d9d3f4",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
         "en": "Playwright-based browser automation with accessibility and DOM perception, screenshot verification, OCR, and dedicated image analysis through the local Mirage VLM. It can navigate and interact with pages or analyze a standalone image without launching a browser page.",
         "id": "Otomasi browser berbasis Playwright dengan persepsi aksesibilitas dan DOM, verifikasi tangkapan layar, OCR, serta analisis gambar khusus melalui Mirage VLM lokal. Cytosol dapat menavigasi dan berinteraksi dengan halaman, atau menganalisis gambar mandiri tanpa membuka halaman browser."
       },
-      "version": "3.3.0",
+      "version": "3.3.1",
       "skills": [
         {
           "name": "browser-agent",
@@ -273,10 +273,10 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "ce790fd0924acebf3f0fb190b1f98ca2e36ccf0d",
+      "revision": "0d61109b9f56a2f0f41e1ec96293ea6b612da966",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
-      "version": "3.2.0",
+      "version": "3.2.1",
       "skills": [
         {
           "name": "logo-design",
