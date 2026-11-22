@@ -8618,10 +8618,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "85488e5cc2d1326f29d2a6004669edf7119847e9",
-      "version": "3.2.2",
+      "revision": "6fc4844930f9883b351f97890495d7e5450e971f",
+      "version": "3.2.3",
       "digests": [
-        "04698debdabfb6d4e344d690fb85ae0fcd0f45f5427da636381433f92b9df71b"
+        "a88333b9c3c872a886f274f6b875116b45e5837b842da04404f965384a3c75da"
       ],
       "variants": [
         {

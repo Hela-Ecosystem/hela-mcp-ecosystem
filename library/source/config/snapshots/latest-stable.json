@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.11",
-  "created_at": "2026-11-22T19:34:45Z",
-  "description": "Tool references in six cells are regenerated from the catalog, so the documented surface matches the advertised one. No cell version change; carries 1.11.10.",
+  "snapshot_version": "1.11.12",
+  "created_at": "2026-11-22T19:37:31Z",
+  "description": "Phenotype 3.2.3 removes the local tool-docs generator added in 3.2.2; docs/TOOLS.md stays owned by the ecosystem generator. Carries 1.11.11.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -61,10 +61,10 @@
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "85488e5cc2d1326f29d2a6004669edf7119847e9",
+      "commit": "6fc4844930f9883b351f97890495d7e5450e971f",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.2.2"
+      "serverVersion": "3.2.3"
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
