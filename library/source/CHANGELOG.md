@@ -1,3 +1,8 @@
+## [1.11.16] - 2026-11-23
+
+### Fixed
+- `hela-enzyme` 4.3.3: summarizer drops page chrome, dedup returns survivors with URL canonicalisation, fact_checker reports stances and a verdict, research_assistant dedups across queries, wikipedia loses the empty parentheses, and multi_site_search reports per-site counts.
+
 ## [1.11.15] - 2026-11-23
 
 ### Fixed
