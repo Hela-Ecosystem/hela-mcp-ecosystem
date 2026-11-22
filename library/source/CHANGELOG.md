@@ -1,3 +1,8 @@
+## [1.11.3] - 2026-11-22
+
+### Fixed
+- Runtime 1.4.1 repinned at `14cc13e`: the version bump changed the npm deps derivation input, so the fixed-output `npmDepsHash` no longer matched and the Nix verify job failed. Hash refreshed (`sha256-VlP6gbWoi6TTkbk4FSSKey/bTw/rNT40H+99k7J4A7c=`); no functional change from 1.11.2.
+
 ## [1.11.2] - 2026-11-22
 
 ### Added

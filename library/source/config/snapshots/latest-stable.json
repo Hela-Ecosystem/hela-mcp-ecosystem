@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.2",
-  "created_at": "2026-11-22T15:03:37Z",
-  "description": "Adopts the response contract: hela.pipe reports ok/degraded/failed with per-step status and reasons, and mitosis 3.1.1 marks a truncated skill answer degraded. Runtime 1.4.1. Carries 1.11.1.",
+  "snapshot_version": "1.11.3",
+  "created_at": "2026-11-22T15:06:18Z",
+  "description": "Runtime 1.4.1 repinned at 14cc13e after refreshing npmDepsHash (the version bump invalidated the fixed-output hash). Carries 1.11.2.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -82,7 +82,7 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "57ee9e5484e351db089d2c1753faacc8cc345177",
+      "commit": "14cc13e578d88993981caf4bb8286e09bfc5ff72",
       "branch": "master",
       "entry": "dist/index.js",
       "serverVersion": "1.4.1"

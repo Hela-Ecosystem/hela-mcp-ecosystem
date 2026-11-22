@@ -1,5 +1,12 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.3 — Nix hash for the 1.4.1 runtime
+
+The 1.4.1 release changed the package version, which is part of the npm deps
+derivation input, so the fixed-output hash stopped matching and the Nix verify
+job failed on 1.11.2. The hash is refreshed and the runtime repinned at
+`14cc13e`; behaviour is identical to 1.11.2.
+
 ## v1.11.2 — a result can now say "degraded"
 
 `hela.pipe` reports `status: ok | degraded | failed` next to `ok`, each step
