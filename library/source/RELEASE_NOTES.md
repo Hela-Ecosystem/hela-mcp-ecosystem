@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.11 — tool references caught up
+
+Six cells shipped with a stale `docs/TOOLS.md`: new tools were missing and
+descriptions were older than the catalog. The files are regenerated from the
+schema catalog and the cells repinned at the docs commits. No behaviour change.
+
 ## v1.11.10 — phenotype states only what it can count
 
 Phenotype 3.2.2 replaces hand-written counts with values read from the live

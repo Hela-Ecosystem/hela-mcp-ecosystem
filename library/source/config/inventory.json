@@ -22,7 +22,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c453afe8119b4eea35217d15233f584855dfdc93",
+      "revision": "f852fd3f379ecea31187ce066879786904df818c",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -91,7 +91,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "c72f5831b0c993a3768f1da1bfc9e88e59a14b01",
+      "revision": "4a371658296c12ac4c5cbf7d170293dcfee8d893",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
@@ -194,7 +194,7 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "ec5625ea37737c77d0825b55ca3b35ea148d4564",
+      "revision": "e87650cac0f4c686c4e319cad1f849633987e676",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
       "version": "3.2.1"
@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "90dcb3168500e25573fec74529b26f4807ea3822",
+      "revision": "38e631957a68fa40ee536e0b6d7228c31139d362",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -242,7 +242,7 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "054a326a5ab3ddc731e00cf02c527e8f3f456f7b",
+      "revision": "14211f9e8471f9066fd28ce097082aba94caad41",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
@@ -273,7 +273,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "009d8df94c13171bfe0a26c31c37d9512b8fb86e",
+      "revision": "85488e5cc2d1326f29d2a6004669edf7119847e9",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
       "version": "3.2.2",
