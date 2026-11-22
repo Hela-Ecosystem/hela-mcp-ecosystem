@@ -102,14 +102,19 @@ test('all EN/ID pages display current versions and load generated data before th
 });
 
 test('current Cytosol site copy describes browser and image perception', () => {
+  const catalog = JSON.parse(fs.readFileSync(path.join(root, 'config', 'tool-catalog.json'), 'utf8'));
+  const cytosolTools = Math.max(...catalog.cells['hela-cytosol'].variants.map(variant => variant.tools.length));
   for (const file of [path.join(site, 'architecture.html'), path.join(site, 'id', 'architecture.html')]) {
     const text = fs.readFileSync(file, 'utf8');
     assert.match(text, /browser_image_analyze/);
     assert.match(text, /Mirage/);
-    assert.match(text, /75 (?:tools|alat)/);
+    assert.match(text, new RegExp(`${cytosolTools} (?:tools|alat)`));
   }
   const machineGuide = fs.readFileSync(path.join(site, 'llms.txt'), 'utf8');
-  assert.match(machineGuide, /HeLa Cytosol \(browser automation, DOM\/accessibility perception, OCR, visual analysis, detection, segmentation, standalone-image analysis, 75 tools\)/);
+  // The count is derived from the catalog, not a literal: adding a tool must not
+  // fail the build on a stale sentence.
+  assert.match(machineGuide, /HeLa Cytosol \(browser automation, DOM\/accessibility perception, OCR, visual analysis, detection, segmentation, standalone-image analysis, \d+ tools\)/);
+  assert.match(machineGuide, new RegExp(`standalone-image analysis, ${cytosolTools} tools\\)`));
 });
 
 test('workflow pages keep the canonical E/F capability order in both languages', () => {

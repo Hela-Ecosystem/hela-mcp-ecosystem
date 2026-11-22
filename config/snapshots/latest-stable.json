@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.4",
-  "created_at": "2026-11-22T15:27:15Z",
-  "description": "Genome 3.1.2 guards mission transitions and claims, enzyme 4.3.2 formats citation authors by style, cytosol 3.3.2 dismisses dialogs by default and lists them. Carries 1.11.3.",
+  "snapshot_version": "1.11.5",
+  "created_at": "2026-11-22T15:30:05Z",
+  "description": "Cytosol tool count in prose is derived from the catalog (76 tools) instead of a hand-written 75. No cell change; carries 1.11.4.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",

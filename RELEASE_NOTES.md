@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.5 — derive the tool count, do not retype it
+
+Cytosol gained a tool in 3.3.2, and a hand-written "75 tools" in the site copy
+and `llms.txt` failed the docs job. Both the prose and the test now take the
+count from the generated catalog.
+
 ## v1.11.4 — consent, claims and citations
 
 Three places where a tool acted on the caller's behalf without asking: a

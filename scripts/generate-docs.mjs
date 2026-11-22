@@ -193,7 +193,15 @@ const llmsFile = path.join(site, 'llms.txt');
 if (fs.existsSync(llmsFile)) {
   const llms = fs.readFileSync(llmsFile, 'utf8');
   const line = `- License: this repository (installer, runtime, configuration, docs) is MIT. The ${Object.keys(inventory).length} cell servers are separate projects: ${gplCells.length} ${gplCells[0]?.license ?? 'non-MIT'} (${cellNames(gplCells).join(', ')}), ${mitCells.length} MIT (${cellNames(mitCells).join(', ')}). ${alwaysInstalled.length ? `Every profile installs at least ${alwaysInstalled.length} of those ${gplCells[0]?.license ?? 'non-MIT'} cells; ` : ''}Read each cell LICENSE before redistributing.`;
-  outputs.set(llmsFile, llms.replace(/^- License: .*$/m, line));
+  let nextLlms = llms.replace(/^- License: .*$/m, line);
+  // Tool counts in prose are derived, not retyped (economy: a cell that gains a
+  // tool used to break the docs test on a hand-written number).
+  for (const [id, entry] of Object.entries(inventory)) {
+    const display = id.replace(/^hela-/, '').replace(/^./, (c) => c.toUpperCase());
+    const pattern = new RegExp(`(HeLa ${display} \\([^)\\n]*?, )\\d+ tools\\)`, 'g');
+    nextLlms = nextLlms.replace(pattern, (match, head) => `${head}${entry.toolsCount} tools)`);
+  }
+  outputs.set(llmsFile, nextLlms);
 }
 for (const name of ['on-demand-runtime.md']) {
   const file = path.join(root, 'docs', name);

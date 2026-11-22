@@ -1,3 +1,8 @@
+## [1.11.5] - 2026-11-22
+
+### Fixed
+- The Cytosol tool count in the site and `llms.txt` is derived from the generated catalog instead of a hand-written number, and the docs test compares against the catalog rather than the literal `75`. Adding `browser_list_dialogs` in cytosol 3.3.2 made the stale literal fail the gh-pages verification job.
+
 ## [1.11.4] - 2026-11-22
 
 ### Fixed
