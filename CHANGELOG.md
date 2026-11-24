@@ -1,3 +1,8 @@
+## [1.11.20] - 2026-11-24
+
+### Fixed
+- `doctor.mjs --hosts` no longer counts the runtime's aggregate tool entry on top of the cells. A `HELA_NAMESPACE_TOOLS=0` host showed "287 declared tools shadowed by bare-name collisions" and recommended enabling namespacing, when the real gap was zero: 593 declared was 295 cell tools plus the runtime's 298 already-aggregated names. The check now compares live tools against the cells only and reports 9 ok, 0 warn on lappy.
+
 ## [1.11.19] - 2026-11-24
 
 ### Fixed

@@ -458,7 +458,12 @@ export async function runHostDoctor(argv = []) {
     checkHostBinaries();
     checkBackups(env);
   }
-  const declared = (manifest?.servers ?? []).reduce((sum, cell) => sum + (Number(cell.tools) || 0), 0);
+  // The manifest also carries the runtime entry, whose count is the aggregate
+  // of the tools it exposes. Adding it double-counts every cell and makes the
+  // shadowing check claim hundreds of collisions that do not exist.
+  const declared = (manifest?.servers ?? [])
+    .filter((cell) => cell.id !== 'hela-runtime')
+    .reduce((sum, cell) => sum + (Number(cell.tools) || 0), 0);
   let live = null;
   if (!noLive) live = await checkLive(timeout, declared, env.HELA_NAMESPACE_TOOLS !== '0');
 
