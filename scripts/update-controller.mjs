@@ -337,7 +337,7 @@ async function applyUpdate(options) {
     atomicJson(pending, { managedBy: 'hela-update-controller', format: 1, status: 'applying', startedAt: new Date().toISOString(), backup });
     run(process.execPath, args, { stdio: 'inherit', timeout: 3600000 });
     if (fs.existsSync(pending)) fs.unlinkSync(pending);
-    return { ok: true, status: 'updated', prefix, backup, ...compareRelease(readInstallation(prefix), latest), restartRequired: true };
+    return { ok: true, status: 'updated', prefix, backup, ...compareRelease(readInstallation(prefix), latest, profileServerIds(manifest.profile)), restartRequired: true };
   } catch (error) {
     try {
       restoreSources(prefix, manifest);

@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.19 — the summary matches the check
+
+1.11.18 fixed the permanent "update available" flag but not the summary
+printed after an apply, which still listed out-of-profile cells. One-line
+follow-up; the install itself was already correct.
+
 ## v1.11.18 — the update that stops offering itself
 
 A profile installation was comparing its own cells against the full snapshot,
