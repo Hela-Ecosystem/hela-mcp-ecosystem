@@ -1,5 +1,12 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.18 — the update that stops offering itself
+
+A profile installation was comparing its own cells against the full snapshot,
+so a `dev-workspace` host saw `hela-receptor` and `hela-plastid` as newly added
+and stayed "update available" forever. The comparison now respects the
+installed profile. This release carries 1.11.17 and phenotype 3.3.0.
+
 ## v1.11.17 — the whole Ellis design, not a quarter of it
 
 Phenotype 3.3.0 fixes the Ellis UI tools. `get_ellis_ui_template` used to

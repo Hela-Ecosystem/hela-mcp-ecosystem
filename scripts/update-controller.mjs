@@ -109,10 +109,13 @@ function validateSnapshot(snapshot) {
   return snapshot;
 }
 
-export function compareRelease(manifest, latest) {
+export function compareRelease(manifest, latest, profileServers = null) {
   const installed = new Map((manifest.servers || []).map((server) => [server.id, server]));
   const changes = [];
   for (const [id, remote] of Object.entries(latest.snapshot.servers)) {
+    // A profile install only carries its own cells; snapshot-wide additions
+    // outside the profile are not changes to this installation.
+    if (profileServers && !profileServers.has(id)) continue;
     const local = installed.get(id);
     if (!local) changes.push({ id, kind: 'added', from: null, to: remote.serverVersion, revision: remote.commit });
     else if (local.revision !== remote.commit || local.version !== remote.serverVersion) {
@@ -130,6 +133,16 @@ export function compareRelease(manifest, latest) {
     latestEcosystemVersion: latest.package.version,
     changes,
   };
+}
+
+function profileServerIds(profile) {
+  try {
+    const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'profiles.json'), 'utf8'));
+    const entry = (data.profiles || []).find((candidate) => candidate.id === profile);
+    return entry && Array.isArray(entry.servers) ? new Set(entry.servers) : null;
+  } catch {
+    return null;
+  }
 }
 
 async function fetchJson(url, timeoutMs = CHECK_TIMEOUT_MS) {
@@ -164,7 +177,7 @@ export async function checkInstallationForUpdate(options) {
     const cached = fs.existsSync(cachePath(prefix)) ? JSON.parse(fs.readFileSync(cachePath(prefix), 'utf8')) : null;
     return { ok: false, status: 'unknown', prefix, error: error instanceof Error ? error.message : String(error), cached };
   }
-  const comparison = compareRelease(manifest, latest);
+  const comparison = compareRelease(manifest, latest, profileServerIds(manifest.profile));
   const result = { ok: true, status: comparison.available ? 'update-available' : 'current', prefix, ...comparison, source: latest.source };
   writeCheckCache(prefix, result);
   return result;
@@ -302,7 +315,7 @@ async function applyUpdate(options) {
   const manifest = readInstallation(prefix);
   if (options.profile && options.profile !== manifest.profile) fail(`Installed profile is ${manifest.profile}, not ${options.profile}`);
   const latest = await fetchLatest(options.sourceUrl);
-  const comparison = compareRelease(manifest, latest);
+  const comparison = compareRelease(manifest, latest, profileServerIds(manifest.profile));
   if (!comparison.available) return { ok: true, status: 'current', prefix, ...comparison };
   const backup = backupPath(prefix);
   const manifestFile = path.join(prefix, '.hela-install.json');

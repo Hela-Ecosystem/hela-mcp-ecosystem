@@ -52,3 +52,22 @@ test('release comparison reports added and removed cells', () => {
     { id: 'hela-obsolete', kind: 'removed', from: '1.0.0', to: null },
   ]);
 });
+
+test('release comparison ignores snapshot cells outside the installed profile', () => {
+  const result = compareRelease(
+    manifest({
+      snapshot: '1.9.0',
+      profile: 'dev-workspace',
+      servers: [{ id: 'hela-mitosis', version: '3.0.3', revision: 'a'.repeat(40) }],
+    }),
+    latest({
+      snapshot: { snapshot_version: '1.9.0', servers: {
+        'hela-mitosis': { serverVersion: '3.0.3', commit: 'a'.repeat(40) },
+        'hela-receptor': { serverVersion: '3.0.6', commit: 'd'.repeat(40) },
+      } },
+    }),
+    new Set(['hela-mitosis']),
+  );
+  assert.equal(result.available, false);
+  assert.deepEqual(result.changes, []);
+});
