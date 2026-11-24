@@ -1,3 +1,8 @@
+## [1.11.18] - 2026-11-24
+
+### Fixed
+- The update controller no longer reports a permanent update for profile installations. `compareRelease` compared every snapshot cell against the installed profile subset, so a `dev-workspace` install treated `hela-receptor` and `hela-plastid` as "added" on every check and kept `update-available` true even at the latest snapshot. It now filters snapshot additions to the profile's own cells; removals are still reported. (`scripts/update-controller.mjs`, one regression test)
+
 ## [1.11.17] - 2026-11-24
 
 ### Fixed
