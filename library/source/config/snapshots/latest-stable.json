@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.19",
-  "created_at": "2026-11-24T06:10:00Z",
-  "description": "Phenotype 3.3.0 repairs the Ellis UI tools. The update controller compares profile installations against their own cell set in both check and apply, so out-of-profile snapshot cells no longer report a permanent update or appear in the apply summary.",
+  "snapshot_version": "1.11.20",
+  "created_at": "2026-11-24T06:20:00Z",
+  "description": "Phenotype 3.3.0 repairs the Ellis UI tools. The update controller compares profile installations against their own cells. Doctor no longer adds the runtime aggregate to the declared tool count, so it no longer reports hundreds of phantom shadowed tools on a bare-name install.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",

@@ -1,5 +1,13 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.20 — the doctor counted twice
+
+The host doctor added the runtime's aggregate tool count to the ten cell
+counts, then compared that inflated number with the live tool list. On a
+bare-name install it warned about hundreds of shadowed tools that did not
+exist. It now compares against the cells alone; the only remaining warnings
+are real ones. Carries 1.11.17–1.11.19.
+
 ## v1.11.19 — the summary matches the check
 
 1.11.18 fixed the permanent "update available" flag but not the summary
