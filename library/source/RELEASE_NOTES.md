@@ -1,5 +1,15 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.17 — the whole Ellis design, not a quarter of it
+
+Phenotype 3.3.0 fixes the Ellis UI tools. `get_ellis_ui_template` used to
+return `design.md` and `index.html` while that index linked three pages no
+tool could fetch; it now returns all four pages, or one when `page` is set.
+`list_ellis_ui_designs` drops the 24 repeated design documents for a compact
+index, and both tools emit real newlines. The "Zero Dependencies" line in every
+template became an accurate description of the Tailwind Play CDN, Google Fonts
+and hotlinked icons, with the production caveat.
+
 ## v1.11.16 — enzyme tool repair
 
 Enzyme 4.3.3 closes the six-tool roll-up. The headline change is that
