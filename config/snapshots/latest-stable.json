@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.16",
-  "created_at": "2026-11-22T21:38:05Z",
-  "description": "Enzyme 4.3.3 fixes the six-tool roll-up: summarizer, dedup survivors with URL canonicalisation, fact_checker stances and verdict, research_assistant dedup, wikipedia empty parentheses, multi_site per-site counts. Carries 1.11.15.",
+  "snapshot_version": "1.11.17",
+  "created_at": "2026-11-24T02:00:00Z",
+  "description": "Phenotype 3.3.0 returns all four Ellis UI pages with a page selector, emits real newlines, compacts the list response, and replaces the false Zero Dependencies claim with the real runtime dependencies.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -61,10 +61,10 @@
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
-      "commit": "6fc4844930f9883b351f97890495d7e5450e971f",
+      "commit": "78d8e0f7024d1fab9ab2003e7a040ad4103c9ab7",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.2.3"
+      "serverVersion": "3.3.0"
     },
     "hela-receptor": {
       "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",

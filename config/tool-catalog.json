@@ -8699,10 +8699,10 @@
       ]
     },
     "hela-phenotype": {
-      "revision": "6fc4844930f9883b351f97890495d7e5450e971f",
-      "version": "3.2.3",
+      "revision": "78d8e0f7024d1fab9ab2003e7a040ad4103c9ab7",
+      "version": "3.3.0",
       "digests": [
-        "a88333b9c3c872a886f274f6b875116b45e5837b842da04404f965384a3c75da"
+        "3d779a7548ada50dfd892ad05748ed2b14ed6899f78d6f69fdcc4f22567503fb"
       ],
       "variants": [
         {
@@ -9270,7 +9270,7 @@
             },
             {
               "name": "list_ellis_ui_designs",
-              "description": "List all 24 bespoke Ellis UI component design templates with their specific aesthetic focus.",
+              "description": "List all 24 bespoke Ellis UI design templates as a compact index: name, title, concept, typography, palette, and available HTML pages. Use get_ellis_ui_template for the guidelines and page source.",
               "inputSchema": {
                 "type": "object",
                 "properties": {}
@@ -9278,13 +9278,17 @@
             },
             {
               "name": "get_ellis_ui_template",
-              "description": "Fetch the HTML structure and CSS logic of a specific Ellis UI design system (e.g., 'backup_dossier' or 'backup_gameboy'). Returns both the design.md guidelines and the root index.html template.",
+              "description": "Fetch a complete Ellis UI design system (e.g. 'backup_dossier' or 'backup_gameboy'): design.md plus every HTML page (index, letter, note, slideshow). Pass page to fetch a single page instead.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
                   "design_name": {
                     "type": "string",
                     "description": "The folder name of the design (e.g. backup_nutrition, backup_gameboy, backup_swiss_archival)"
+                  },
+                  "page": {
+                    "type": "string",
+                    "description": "Optional HTML page filename to return alone (e.g. letter.html). Omit to return all pages."
                   }
                 },
                 "required": [

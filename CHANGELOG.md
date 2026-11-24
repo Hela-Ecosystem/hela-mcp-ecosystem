@@ -1,3 +1,8 @@
+## [1.11.17] - 2026-11-24
+
+### Fixed
+- `hela-phenotype` 3.3.0 returns every Ellis UI page (index, letter, note, slideshow) and accepts a `page` selector, so the links inside the returned templates resolve. The list tool is a compact JSON index instead of 24 full design documents, both tools emit real newlines instead of literal `\n`, and the false "Zero Dependencies" claim now states the actual Tailwind CDN, Google Fonts and icon dependencies. (`designer-mcp#41`)
+
 ## [1.11.16] - 2026-11-23
 
 ### Fixed
