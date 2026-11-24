@@ -1,3 +1,8 @@
+## [1.11.19] - 2026-11-24
+
+### Fixed
+- The apply result now uses the same profile-aware comparison as the check. 1.11.18 filtered snapshot additions in the check and the pre-apply decision but left the post-apply summary comparing the whole snapshot, so a `dev-workspace` update still printed `hela-receptor` and `hela-plastid` as added. All four `compareRelease` call sites now pass the profile's cell set.
+
 ## [1.11.18] - 2026-11-24
 
 ### Fixed
