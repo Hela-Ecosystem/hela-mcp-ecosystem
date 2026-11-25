@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "snapshot_version": "1.11.23",
+  "created_at": "2026-11-25T16:30:00Z",
+  "description": "Runtime 1.4.3 hands the Mitosis cell a loopback capability endpoint so cross-cell workflow steps work out of the box. Mitosis 3.1.3 fixes planner budgets and get_skill errors, Ribosome 3.2.4 lets attached agents reach a spawned opencode server, Genome 3.3.0 adds dated tombstones, central deletes and a byte-bounded read_graph, Enzyme 4.3.4 marks homepage news links and judges fact_checker stance against the claim.",
+  "environment": {
+    "node_minimum": ">=22.0.0",
+    "recommended_node": "22 LTS (validated 22.23.4)",
+    "git_minimum": ">=2.30.0",
+    "sqlite_minimum": ">=3.35.0"
+  },
+  "servers": {
+    "hela-mitosis": {
+      "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
+      "commit": "013ed55e3babcb5ff2cdf21747db340e82a1b4d5",
+      "branch": "main",
+      "entry": "dist/index.js",
+      "serverVersion": "3.1.3"
+    },
+    "hela-genome": {
+      "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
+      "commit": "790cda6a8c702288906dd28cd5fde67b7619b934",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.3.0"
+    },
+    "hela-membrane": {
+      "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
+      "commit": "ddf6d5155f9da2a8ad13c9a8dd2037b66fa44f3a",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.6"
+    },
+    "hela-nucleus": {
+      "repo": "https://github.com/Hela-Ecosystem/terminal-mcp.git",
+      "commit": "3ad8592fa166b16d3844080d8425321e52085442",
+      "branch": "main",
+      "entry": "build/index.js",
+      "serverVersion": "3.0.7"
+    },
+    "hela-ribosome": {
+      "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
+      "commit": "bf563a183a67ee3fd334ea9019aa1dd2460f2ed7",
+      "branch": "master",
+      "entry": "build/index.js",
+      "serverVersion": "3.2.4"
+    },
+    "hela-enzyme": {
+      "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
+      "commit": "a75b48623627a7dccbcb716342b029bfaec5bf4c",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "4.3.4"
+    },
+    "hela-cytosol": {
+      "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
+      "commit": "93681e751cb77381c6772b7954519e60b163572d",
+      "branch": "master",
+      "entry": "src/server.js",
+      "serverVersion": "3.3.8"
+    },
+    "hela-phenotype": {
+      "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
+      "commit": "78d8e0f7024d1fab9ab2003e7a040ad4103c9ab7",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.3.0"
+    },
+    "hela-receptor": {
+      "repo": "https://github.com/Hela-Ecosystem/scrcpy-mcp.git",
+      "commit": "47e6895d9a163d36f4e901d5046b2d8eb4be8b5b",
+      "branch": "master",
+      "entry": "dist/server.js",
+      "serverVersion": "3.0.6"
+    },
+    "hela-plastid": {
+      "repo": "https://github.com/Hela-Ecosystem/ll3m-mcp.git",
+      "commit": "4722a1407455077bf272823603b002d4df9d0e0c",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "3.0.5"
+    },
+    "hela-runtime": {
+      "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
+      "commit": "390305d384ae6bd1afaeaa7b05aaf04fc29fb45c",
+      "branch": "master",
+      "entry": "dist/index.js",
+      "serverVersion": "1.4.3"
+    }
+  },
+  "verified_profiles": [
+    "dev-workspace"
+  ],
+  "verified_clients": [],
+  "verification": {
+    "plastid_regressions": 12,
+    "receptor_tests": 129,
+    "installation_tests": 65,
+    "documentation_regressions": 95,
+    "client_configuration_combinations": 80,
+    "inventory_tests": 8,
+    "skill_sync_tests": 1,
+    "scope": "npm audit --omit=dev reports zero vulnerabilities in all ten cells and the runtime. Runtime 1.3.4 recovers mismatched manifests and reports their source; schema versioning refuses newer databases. Hardware and live-service evidence from 1.9.12 carries forward.",
+    "receptor_hardware_checks": 18
+  }
+}

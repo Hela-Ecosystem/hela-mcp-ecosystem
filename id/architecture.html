@@ -23,13 +23,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../library.css?v=1.11.22&amp;rev=f4fb3976fbca">
+  <link rel="stylesheet" href="../library.css?v=1.11.23&amp;rev=f4fb3976fbca">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
   <div class="doc-shell">
     <aside class="doc-sidebar" aria-label="Bagian dokumentasi">
-      <div class="doc-brand"><a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.11.22 · Runtime 1.4.2 · 10 SEL</div></div>
+      <div class="doc-brand"><a href="index.html" class="doc-brand-title">Ekosistem HeLa MCP</a><div class="doc-brand-meta">v1.11.23 · Runtime 1.4.3 · 10 SEL</div></div>
       <nav aria-label="Dokumentasi"><details class="doc-mobile-nav" open><summary>Jelajahi dokumentasi</summary><ol class="doc-nav" start="0"><li><a href="library.html"><span class="doc-nav-num">00</span> <span>Pustaka dokumentasi</span></a></li></ol>
 <div class="doc-nav-section">MEMULAI</div><ol class="doc-nav" start="1"><li><a href="index.html"><span class="doc-nav-num">01</span> <span>Ikhtisar</span></a></li>
 <li><a href="index.html#installation"><span class="doc-nav-num">02</span> <span>Instalasi</span></a></li>
@@ -124,7 +124,7 @@
         <p class="admonition" id="licensing"><strong>Lisensi.</strong> Suite ini MIT, tetapi setiap sel memakai lisensinya sendiri: 6 sel berlisensi GPL-3.0-or-later (Mitosis, Genome, Membrane, Ribosome, Enzyme, Plastid), sisanya MIT. Mitosis dan Genome termasuk dalam setiap profil, jadi setiap pemasangan menyertakan kode GPL-3.0-or-later. Lisensi tiap sel tercantum pada kartunya di bawah.</p>
 
         <section class="server-card" aria-labelledby="srv-mitosis">
-          <div class="server-card-header"><h3 id="srv-mitosis">HeLa Mitosis</h3><span class="server-card-id">hela-mitosis · chaining-mcp · <span class="badge badge-core">CORE</span> · v3.1.2 · 24–29 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-mitosis">HeLa Mitosis</h3><span class="server-card-id">hela-mitosis · chaining-mcp · <span class="badge badge-core">CORE</span> · v3.1.3 · 24–29 alat</span></div>
           <div class="server-card-body">
             <p>Perencanaan dan orkestrasi melalui Needle 3 terbundel, discovery peer, penalaran sekuensial, dekomposisi tugas, prompt, dan skills. Eksekusi lokal bergantung pada engine/model; operasi generatif atau eskalasi memerlukan provider jika tidak tersedia lokal. Tanpa kunci bukan jaminan seluruh operasi offline.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/chaining-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/chaining-mcp</code></a> · env <code>OPENROUTER_API_KEY, CHAINING_LLM_MODEL, CHAINING_LLM_ENABLED, GITHUB_TOKEN…</code> · lisensi <code>GPL-3.0-or-later</code></p>
@@ -133,7 +133,7 @@
         </section>
 
         <section class="server-card" aria-labelledby="srv-genome">
-          <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · v3.2.0 · 31 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-genome">HeLa Genome</h3><span class="server-card-id">hela-genome · project-mcp · <span class="badge badge-core">CORE</span> · v3.3.0 · 31 alat</span></div>
           <div class="server-card-body">
             <p>Grafik pengetahuan SQLite hidup (<code>memory.db</code>) dengan pencarian teks penuh FTS5, pelacakan relasi entitas, pemulihan konteks lintas-sesi, dan pemindaian rahasia/kredensial.</p>
             <p>SQLite tetap menjadi mesin utama; Obsidian hanya cermin opsional. Pembaruan keamanan data Genome menambahkan sinkronisasi vault dengan penanganan konflik, cadangan tervalidasi yang mencakup WAL, dan klaim misi eksklusif pada satu ledger SQLite bersama. Database lokal terpisah bukan kunci terdistribusi; bangun ulang dan verifikasi sel terbaru sebelum deployment.</p>
@@ -161,7 +161,7 @@
         </section>
 
         <section class="server-card" aria-labelledby="srv-ribosome">
-          <div class="server-card-header"><h3 id="srv-ribosome">HeLa Ribosome</h3><span class="server-card-id">hela-ribosome · menager-mcp · <span class="badge badge-core">CORE</span> · v3.2.3 · 28 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-ribosome">HeLa Ribosome</h3><span class="server-card-id">hela-ribosome · menager-mcp · <span class="badge badge-core">CORE</span> · v3.2.4 · 28 alat</span></div>
           <div class="server-card-body">
             <p>Multiplexing proses PTY polyglot ditambah kontrol plane opencode bawaan: spawn/send/fork sesi agen terarah, penemuan model, statistik penggunaan, dan instance <code>serve</code> cepat.</p>
             <p class="server-card-id">entry <code>build/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/menager-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/menager-mcp</code></a> · lisensi <code>GPL-3.0-or-later</code></p>
@@ -170,7 +170,7 @@
         </section>
 
         <section class="server-card" aria-labelledby="srv-enzyme">
-          <div class="server-card-header"><h3 id="srv-enzyme">HeLa Enzyme</h3><span class="server-card-id">hela-enzyme · researcher-mcp · <span class="badge badge-core">CORE</span> · v4.3.3 · 24 alat</span></div>
+          <div class="server-card-header"><h3 id="srv-enzyme">HeLa Enzyme</h3><span class="server-card-id">hela-enzyme · researcher-mcp · <span class="badge badge-core">CORE</span> · v4.3.4 · 24 alat</span></div>
           <div class="server-card-body">
             <p>Pencarian web zero-key dual-tier + arXiv + Google News RSS + riset Wikipedia dengan sistem cache, pemeriksa fakta, dan fan-out satu panggilan <code>research_brief</code> (sumber paralel, dedup lintas sumber, stempel kesegaran).</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/researcher-mcp" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/researcher-mcp</code></a> · env <code>GOOGLE_API_KEY, GOOGLE_CSE_ID, WIKIPEDIA_*</code> · lisensi <code>GPL-3.0-or-later</code></p>
@@ -217,7 +217,7 @@
         <section class="server-card" aria-labelledby="srv-runtime">
           <div class="server-card-header"><h3 id="srv-runtime">HeLa Runtime</h3><span class="server-card-id">hela-runtime · <span class="badge badge-core">OPSIONAL</span> · alat sesuai profil</span></div>
           <div class="server-card-body">
-            <p>Runtime opsional 1.4.2 menyediakan skema hasil generasi yang divalidasi menurut revisi/build/konfigurasi tanpa menjalankan sel. Pemanggilan alat pertama hanya menjalankan sel tujuannya; panggilan bersamaan berbagi satu startup. Jika profil tidak dipilih, runtime memakai <code>minimal</code>; profil yang lebih luas tetap dipilih secara eksplisit. Saat timeout, proses lama dihentikan sebelum restart; namespacing tetap opt-in. Paket Nix Node 22 dibangun pada x86_64-linux dan aarch64-linux.</p>
+            <p>Runtime opsional 1.4.3 menyediakan skema hasil generasi yang divalidasi menurut revisi/build/konfigurasi tanpa menjalankan sel. Pemanggilan alat pertama hanya menjalankan sel tujuannya; panggilan bersamaan berbagi satu startup. Jika profil tidak dipilih, runtime memakai <code>minimal</code>; profil yang lebih luas tetap dipilih secara eksplisit. Saat timeout, proses lama dihentikan sebelum restart; namespacing tetap opt-in. Paket Nix Node 22 dibangun pada x86_64-linux dan aarch64-linux.</p>
             <p class="server-card-id">entry <code>dist/index.js</code> · repo <a href="https://github.com/Hela-Ecosystem/hela-runtime" target="_blank" rel="noopener noreferrer"><code>Hela-Ecosystem/hela-runtime</code></a></p>
             <p class="tool-list">hela.pipe, hela.agent.run opsional jika Mitosis menyediakan agent_run, serta alat dari sel yang dipilih</p>
             <p>Verifikasi historis servy (2026-11-06): delapan sel tersedia dan 236 alat aktif, termasuk ketiga alat misi Genome. Discovery lokal/publik tidak menjalankan sel; panggilan Nucleus yang aman hanya menjalankan Nucleus. Probe tanpa fitur model menyediakan 230 alat. ACP terautentikasi, reload klien, dan tinjauan konflik vault tetap terpisah.</p>
@@ -240,9 +240,9 @@
       <div class="cmd-results" id="cmdResults"></div>
     </div>
   </div>
-  <script src="../release-data.js?v=1.11.22"></script>
-  <script src="../library-data.js?v=1.11.22&amp;rev=9ca590bbed2a"></script>
-  <script src="../library.js?v=1.11.22&amp;rev=e4e7b2f0ebad"></script>
-  <script src="../app.js?v=1.11.22&amp;rev=2dfe17383063"></script>
+  <script src="../release-data.js?v=1.11.23"></script>
+  <script src="../library-data.js?v=1.11.23&amp;rev=2076de601abf"></script>
+  <script src="../library.js?v=1.11.23&amp;rev=e4e7b2f0ebad"></script>
+  <script src="../app.js?v=1.11.23&amp;rev=2dfe17383063"></script>
 </body>
 </html>

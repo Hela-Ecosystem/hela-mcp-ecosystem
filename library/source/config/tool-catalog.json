@@ -2,10 +2,10 @@
   "format": 1,
   "cells": {
     "hela-mitosis": {
-      "revision": "3918974de9da0db36b7813f9d0044776ad8aa103",
-      "version": "3.1.2",
+      "revision": "013ed55e3babcb5ff2cdf21747db340e82a1b4d5",
+      "version": "3.1.3",
       "digests": [
-        "16949c3c570fdc0f0039cac2c4fbe1e894c7501a7636ea7970bfd65e77e9e4ce"
+        "26576e68fe8750cd64eec2ad6bebdd792e8c668e1d9b6de3d64f848c527c6586"
       ],
       "variants": [
         {
@@ -3369,10 +3369,10 @@
       ]
     },
     "hela-genome": {
-      "revision": "4a371658296c12ac4c5cbf7d170293dcfee8d893",
-      "version": "3.2.0",
+      "revision": "790cda6a8c702288906dd28cd5fde67b7619b934",
+      "version": "3.3.0",
       "digests": [
-        "604f9cdb21d94612be504b08dff3ad040da9dbc5929219db9d6f24ad7264f718"
+        "6146a7d969b9e29e55d0203a241e3cd15b83fd02a1a3ebd769c7d2089505928d"
       ],
       "variants": [
         {
@@ -3728,6 +3728,10 @@
                     },
                     "minItems": 1,
                     "description": "Required for create_entities"
+                  },
+                  "restore": {
+                    "type": "boolean",
+                    "description": "create_entities only: clear a deletion tombstone so a deleted name can be created again"
                   },
                   "relations": {
                     "type": "array",
@@ -4473,7 +4477,7 @@
             },
             {
               "name": "harness_sessions",
-              "description": "List local agent-harness session stores or sync their session metadata into the knowledge graph. Select action: list (read-only paths/presence/format notes) or sync (redacted titles, summaries, timestamps; supports dryRun).",
+              "description": "List local agent-harness session stores or sync their session metadata into the knowledge graph. Select action: list (read-only paths/presence/format notes) sync (redacted titles, summaries, timestamps; supports dryRun), or repair_timestamps (opt-in cleanup of legacy year +032971 markers; reports only unless apply is true).",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -4481,7 +4485,8 @@
                     "type": "string",
                     "enum": [
                       "list",
-                      "sync"
+                      "sync",
+                      "repair_timestamps"
                     ],
                     "description": "Operation to perform"
                   },
@@ -4517,6 +4522,10 @@
                   "dryRun": {
                     "type": "boolean",
                     "description": "Report what would sync without writing"
+                  },
+                  "apply": {
+                    "type": "boolean",
+                    "description": "repair_timestamps only: write the repair (default false = dry run)"
                   },
                   "includeArchived": {
                     "type": "boolean",
@@ -5362,10 +5371,10 @@
       ]
     },
     "hela-ribosome": {
-      "revision": "18e21344b28e868077993cfe95dfc12c910ad587",
-      "version": "3.2.3",
+      "revision": "bf563a183a67ee3fd334ea9019aa1dd2460f2ed7",
+      "version": "3.2.4",
       "digests": [
-        "c2d7edca28151f73d00f1b519a3c5ca04a818f205d94958725adb415367d5c8e"
+        "8d66338e56ed3496336818a6f1995d76a8edc6bf8ee4ff1912fc7e0fb5e59d5f"
       ],
       "variants": [
         {
@@ -5964,6 +5973,10 @@
                   "file": {
                     "type": "string",
                     "description": "Absolute path to a session JSON file"
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "description": "Directory to run the import from. OpenCode re-homes the session to this project (defaults to the server's working directory)."
                   }
                 },
                 "required": [
@@ -6027,7 +6040,7 @@
             },
             {
               "name": "opencode_server_spawn",
-              "description": "Spawn a long-running opencode server in a managed PTY. Use its URL as the attach input to agent_spawn.",
+              "description": "Spawn a long-running opencode server in a managed PTY. Use its URL as the attach input to agent_spawn. Waits a fixed startup window: status running means alive after that window, not ready.",
               "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -6063,10 +6076,10 @@
       ]
     },
     "hela-enzyme": {
-      "revision": "bee37bf067403a3643e485c07718b5c907e899b9",
-      "version": "4.3.3",
+      "revision": "a75b48623627a7dccbcb716342b029bfaec5bf4c",
+      "version": "4.3.4",
       "digests": [
-        "58398ef592e9d6b88550a0c84dd04f3052b34ea3f1f34e70247085946a4a7e86"
+        "7c6c8d7d2034f72e1694ccfa16da281df4165fa8d9d442736d0809ee55dffe83"
       ],
       "variants": [
         {
