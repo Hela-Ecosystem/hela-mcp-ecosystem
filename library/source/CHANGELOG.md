@@ -1,3 +1,11 @@
+## [1.11.21] - 2026-11-25
+
+### Fixed
+- `hela-runtime` 1.4.2 stops reporting a clean success when the tool it called failed. Failed payloads and thrown errors are recorded as failed, an identical failing call is skipped instead of retried verbatim, and the result carries `ok`, `status`, `failedCalls`, `degraded` and `decision.action: "failed"` (hela-runtime#4).
+- A task that forbids modification is enforced on the final tool selection: "Read notes.txt. Do not edit any files." executes `read_file` instead of writing, and a run with no permitted tool stops with `no permitted tools` (hela-runtime#5, RT-01).
+- `classifyToolResult` honours `isError` on results that carry `structuredContent` but no `content` array and reads failure/degradation from `structuredContent` first, so `hela.pipe` is fail-closed again for that shape. The classifier is shared by the pipe and the native agent (hela-runtime#5, RT-02; hela-mcp-ecosystem#8).
+- Runtime pin and `latest-stable` snapshot now point at the 1.4.2 merge commit; the runtime suite is 74/74.
+
 ## [1.11.20] - 2026-11-24
 
 ### Fixed

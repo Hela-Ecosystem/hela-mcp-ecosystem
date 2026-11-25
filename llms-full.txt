@@ -1,6 +1,14 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.21] - 2026-11-25
+
+### Fixed
+- `hela-runtime` 1.4.2 stops reporting a clean success when the tool it called failed. Failed payloads and thrown errors are recorded as failed, an identical failing call is skipped instead of retried verbatim, and the result carries `ok`, `status`, `failedCalls`, `degraded` and `decision.action: "failed"` (hela-runtime#4).
+- A task that forbids modification is enforced on the final tool selection: "Read notes.txt. Do not edit any files." executes `read_file` instead of writing, and a run with no permitted tool stops with `no permitted tools` (hela-runtime#5, RT-01).
+- `classifyToolResult` honours `isError` on results that carry `structuredContent` but no `content` array and reads failure/degradation from `structuredContent` first, so `hela.pipe` is fail-closed again for that shape. The classifier is shared by the pipe and the native agent (hela-runtime#5, RT-02; hela-mcp-ecosystem#8).
+- Runtime pin and `latest-stable` snapshot now point at the 1.4.2 merge commit; the runtime suite is 74/74.
+
 ## [1.11.20] - 2026-11-24
 
 ### Fixed
@@ -656,7 +664,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.11.20**, with runtime **1.4.1**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.21**, with runtime **1.4.2**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -792,7 +800,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.20 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.21 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -942,6 +950,18 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.21 — the agent stops calling a failure a success
+
+Runtime 1.4.2 closes the agent-side half of the response contract. A tool that
+returns `success: false`, `ok: false` or `isError: true` is now a failed call:
+the run records it, does not retry the identical call forever, and reports
+`status: "failed"` instead of "single action complete". The same commit blocks
+a write when the task says not to modify anything, and makes the shared
+classifier read `structuredContent` — including `isError` without a `content`
+array — so `hela.pipe` cannot fail open on that shape again. Five regressions,
+74/74 tests. The runtime is pinned at the merge commit; the rest of the
+snapshot is unchanged from 1.11.20.
 
 ## v1.11.20 — the doctor counted twice
 
@@ -2003,7 +2023,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.20**; runtime **1.4.1**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.21**; runtime **1.4.2**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.1.2**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.2.0**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
