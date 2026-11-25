@@ -1,5 +1,16 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.22 — a saved browser session loads back as itself
+
+Cytosol 3.3.8 fixes the regression the cookie-scoping change introduced: a
+default `browser_save_session` stored `[redacted]` and `browser_load_session`
+wrote that text over the live cookie, quietly logging the user out. The session
+file is owner-only and scoped to the active page, so it now keeps real values;
+redaction applies to what tools return. The same release makes `browser_upload`
+refuse credential and system paths even under a broad allowed root, and writes
+exports and sessions at mode 0600 atomically. The cytosol pin is the merge
+commit of browser-mcp#27; the rest of the snapshot is unchanged from 1.11.21.
+
 ## v1.11.21 — the agent stops calling a failure a success
 
 Runtime 1.4.2 closes the agent-side half of the response contract. A tool that

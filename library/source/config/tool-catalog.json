@@ -6872,10 +6872,10 @@
       ]
     },
     "hela-cytosol": {
-      "revision": "1880d2f7c6233594c47b452614aa8a06057e06be",
-      "version": "3.3.7",
+      "revision": "93681e751cb77381c6772b7954519e60b163572d",
+      "version": "3.3.8",
       "digests": [
-        "d2ed902a939e07360e401b5023c218dcd15c0281e3df62c5dc651cd8e975e831"
+        "028131766afc8897e9df57c84a3bc5d30bf72ccf815bb2e647a9092e5d385c0d"
       ],
       "variants": [
         {

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.21",
-  "created_at": "2026-11-25T12:45:00Z",
-  "description": "Runtime 1.4.2 treats failed tool payloads as failures in hela.agent.run, blocks writes when the task forbids modification, and restores fail-closed classification for structuredContent-only results. The shared classifier keeps hela.pipe and the native agent in agreement.",
+  "snapshot_version": "1.11.22",
+  "created_at": "2026-11-25T14:30:00Z",
+  "description": "Cytosol 3.3.8 fixes the save_session/load_session cookie round trip (a masked value no longer overwrites a live cookie), makes browser_upload refuse credential and system paths even under a broad root, and writes exports and sessions owner-only atomically.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -54,10 +54,10 @@
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
-      "commit": "1880d2f7c6233594c47b452614aa8a06057e06be",
+      "commit": "93681e751cb77381c6772b7954519e60b163572d",
       "branch": "master",
       "entry": "src/server.js",
-      "serverVersion": "3.3.7"
+      "serverVersion": "3.3.8"
     },
     "hela-phenotype": {
       "repo": "https://github.com/Hela-Ecosystem/designer-mcp.git",
