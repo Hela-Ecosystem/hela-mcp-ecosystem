@@ -1,3 +1,11 @@
+## [1.11.22] - 2026-11-25
+
+### Fixed
+- `hela-cytosol` 3.3.8 repairs the cookie handling reopened in browser-mcp#22. `browser_save_session` keeps real cookie values in its owner-only, page-scoped file, so `browser_load_session` no longer overwrites a live cookie with the text `[redacted]`; masked cookies from older saves are skipped and counted.
+- `browser_upload` refuses credential and system paths (`.ssh`, `.aws`, `.gnupg`, `.config`, every `.env*`, `/etc`, …) by real path even when `HELA_ALLOWED_ROOTS` is `/` or `$HOME`; `HELA_BROWSER_UPLOAD_ANY=true` still overrides.
+- `browser_export_state` and `browser_save_session` write 0600 atomically (temp file + rename), replacing an existing world-readable file instead of chmod'ing it by path.
+- Cytosol pin moved to the merge commit `93681e7`; `latest-stable` and the `v1.11.22` snapshot pair carry it.
+
 ## [1.11.21] - 2026-11-25
 
 ### Fixed
