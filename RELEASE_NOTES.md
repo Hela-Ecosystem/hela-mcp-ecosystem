@@ -1,5 +1,14 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.24 — the agent checks that its answer answers
+
+Runtime 1.4.4 finishes the agent-side contract started in 1.4.2. A run that calls one
+tool and gets a non-failing reply is no longer declared complete when that tool has
+nothing to do with the task: the loop keeps looking, and says `degraded` if nothing
+answers. Smaller fixes keep a permitted copy when the ban only protects the original,
+retry a timed-out read once, and make truncated plans and early exits report their
+real status. Only the runtime pin changes from 1.11.23.
+
 ## v1.11.23 — workflows can reach the other cells
 
 The Mitosis workflow tool existed to chain tools across cells, but out of the box
