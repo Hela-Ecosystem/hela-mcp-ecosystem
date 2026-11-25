@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.20",
-  "created_at": "2026-11-24T06:20:00Z",
-  "description": "Phenotype 3.3.0 repairs the Ellis UI tools. The update controller compares profile installations against their own cells. Doctor no longer adds the runtime aggregate to the declared tool count, so it no longer reports hundreds of phantom shadowed tools on a bare-name install.",
+  "snapshot_version": "1.11.21",
+  "created_at": "2026-11-25T12:45:00Z",
+  "description": "Runtime 1.4.2 treats failed tool payloads as failures in hela.agent.run, blocks writes when the task forbids modification, and restores fail-closed classification for structuredContent-only results. The shared classifier keeps hela.pipe and the native agent in agreement.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -82,10 +82,10 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "14cc13e578d88993981caf4bb8286e09bfc5ff72",
+      "commit": "7f078d62919a188694bc4b9ac429963666b5efab",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.4.1"
+      "serverVersion": "1.4.2"
     }
   },
   "verified_profiles": [

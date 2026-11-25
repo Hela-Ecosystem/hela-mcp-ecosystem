@@ -1,5 +1,17 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.21 — the agent stops calling a failure a success
+
+Runtime 1.4.2 closes the agent-side half of the response contract. A tool that
+returns `success: false`, `ok: false` or `isError: true` is now a failed call:
+the run records it, does not retry the identical call forever, and reports
+`status: "failed"` instead of "single action complete". The same commit blocks
+a write when the task says not to modify anything, and makes the shared
+classifier read `structuredContent` — including `isError` without a `content`
+array — so `hela.pipe` cannot fail open on that shape again. Five regressions,
+74/74 tests. The runtime is pinned at the merge commit; the rest of the
+snapshot is unchanged from 1.11.20.
+
 ## v1.11.20 — the doctor counted twice
 
 The host doctor added the runtime's aggregate tool count to the ten cell
