@@ -1,3 +1,8 @@
+## [1.11.24] - 2026-11-25
+
+### Fixed
+- `hela-runtime` 1.4.4: `hela.agent.run` no longer ends "single action complete" after one non-failing call to a tool that does not address the task; unanswered runs end `degraded` (hela-runtime#4, RT-07). A write ban scoped to the task's own input keeps a permitted copy (RT-03), a timed-out read is retried once (RT-04), a plan cut short by `maxToolCalls` is `degraded` with `pendingSteps` (RT-05) and early exits return `status: "failed"` (RT-06). A ban naming a concrete file or path stays a full write ban.
+
 ## [1.11.23] - 2026-11-25
 
 ### Fixed

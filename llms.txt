@@ -61,7 +61,7 @@ configuration checks remain separate from authenticated GUI and hardware checks.
 - [Document library](https://hela.my.id/library.html)
 - [Full documentation text](https://hela.my.id/llms-full.txt)
 
-- [[1.11.23] - 2026-11-25](https://hela.my.id/library/CHANGELOG.html): CHANGELOG.md
+- [[1.11.24] - 2026-11-25](https://hela.my.id/library/CHANGELOG.html): CHANGELOG.md
 - [Contributing to the HeLa MCP Ecosystem](https://hela.my.id/library/CONTRIBUTING.html): CONTRIBUTING.md
 - [MIT License](https://hela.my.id/library/LICENSE.html): LICENSE
 - [HeLa MCP Ecosystem](https://hela.my.id/library/README.html): README.md

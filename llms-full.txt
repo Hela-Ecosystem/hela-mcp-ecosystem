@@ -1,6 +1,11 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.24] - 2026-11-25
+
+### Fixed
+- `hela-runtime` 1.4.4: `hela.agent.run` no longer ends "single action complete" after one non-failing call to a tool that does not address the task; unanswered runs end `degraded` (hela-runtime#4, RT-07). A write ban scoped to the task's own input keeps a permitted copy (RT-03), a timed-out read is retried once (RT-04), a plan cut short by `maxToolCalls` is `degraded` with `pendingSteps` (RT-05) and early exits return `status: "failed"` (RT-06). A ban naming a concrete file or path stays a full write ban.
+
 ## [1.11.23] - 2026-11-25
 
 ### Fixed
@@ -681,7 +686,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.11.23**, with runtime **1.4.3**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.24**, with runtime **1.4.4**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -817,7 +822,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.23 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.24 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -967,6 +972,15 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.24 — the agent checks that its answer answers
+
+Runtime 1.4.4 finishes the agent-side contract started in 1.4.2. A run that calls one
+tool and gets a non-failing reply is no longer declared complete when that tool has
+nothing to do with the task: the loop keeps looking, and says `degraded` if nothing
+answers. Smaller fixes keep a permitted copy when the ban only protects the original,
+retry a timed-out read once, and make truncated plans and early exits report their
+real status. Only the runtime pin changes from 1.11.23.
 
 ## v1.11.23 — workflows can reach the other cells
 
@@ -2064,7 +2078,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.23**; runtime **1.4.3**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.24**; runtime **1.4.4**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.1.3**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.3.0**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).
