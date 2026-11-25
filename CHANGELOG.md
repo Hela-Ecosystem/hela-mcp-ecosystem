@@ -1,3 +1,12 @@
+## [1.11.23] - 2026-11-25
+
+### Fixed
+- `hela-runtime` 1.4.3 gives the Mitosis cell `HELA_RUNTIME_URL`: a loopback-only endpoint on an ephemeral port behind a random capability path, so cross-cell workflow steps no longer fail with `No runtime transport bound`. An operator-set value still wins (chaining-mcp#28, ISS-61).
+- `hela-mitosis` 3.1.3: the three LLM planners share the model-backed time budget instead of the 10 s cap, `get_skill` distinguishes unknown skill, file not in skill and path not allowed, `maxChars` counts the body, `search_prompts` reports an empty category match, and prompt `expectedTools` use real tool names (ISS-62, ISS-63).
+- `hela-ribosome` 3.2.4: a server from `opencode_server_spawn` keeps its generated password inside the cell and passes it to attached agents, a startup failure is reported, `opencode_import` is `ok:false` when nothing imported and takes `cwd`, and follow-up runs get unique names (menager-mcp#23, ISS-64…66).
+- `hela-genome` 3.3.0: tombstones carry `deleted_at` and report their age, `restore:true` re-creates a deleted name, a stale edited copy cannot resurrect a deleted entity, `delete_entities` reaches central-only entities, `read_graph` pages stop at about 100 KB with `truncated` and `nextCursor`, and the year-32971 repair is an explicit `repair_timestamps` action (project-mcp#41, ISS-67, 68, 70, 71).
+- `hela-enzyme` 4.3.4: `news_monitor` and the `google_search` news fallback mark publisher-home links, `fact_checker` judges each source against the claim (supports, refutes or unclear), and CSV export keeps plain numbers unquoted and includes columns that only later rows have (researcher-mcp#44, ISS-72…74; the alphabetical column order did not reproduce in the cell).
+
 ## [1.11.22] - 2026-11-25
 
 ### Fixed

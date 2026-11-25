@@ -1,5 +1,18 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.23 — workflows can reach the other cells
+
+The Mitosis workflow tool existed to chain tools across cells, but out of the box
+every step outside Mitosis failed because nothing told the cell where the runtime
+was. Runtime 1.4.3 now hands it a private loopback address that only the cell
+knows. The same release carries the second pass on the issue author's re-test:
+Mitosis planners that finish inside their budget and say precisely what went wrong
+with a skill file, an opencode server that agents can actually attach to, memory
+tombstones that expire on purpose and cannot be revived by a stale copy, a
+`read_graph` page small enough to read, and fact checks and news links that say
+what they are. Five cells and the runtime are pinned at their merge commits; the
+rest of the snapshot is unchanged from 1.11.22.
+
 ## v1.11.22 — a saved browser session loads back as itself
 
 Cytosol 3.3.8 fixes the regression the cookie-scoping change introduced: a

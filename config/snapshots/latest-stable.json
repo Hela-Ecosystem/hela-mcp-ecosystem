@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.22",
-  "created_at": "2026-11-25T14:30:00Z",
-  "description": "Cytosol 3.3.8 fixes the save_session/load_session cookie round trip (a masked value no longer overwrites a live cookie), makes browser_upload refuse credential and system paths even under a broad root, and writes exports and sessions owner-only atomically.",
+  "snapshot_version": "1.11.23",
+  "created_at": "2026-11-25T16:30:00Z",
+  "description": "Runtime 1.4.3 hands the Mitosis cell a loopback capability endpoint so cross-cell workflow steps work out of the box. Mitosis 3.1.3 fixes planner budgets and get_skill errors, Ribosome 3.2.4 lets attached agents reach a spawned opencode server, Genome 3.3.0 adds dated tombstones, central deletes and a byte-bounded read_graph, Enzyme 4.3.4 marks homepage news links and judges fact_checker stance against the claim.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -12,17 +12,17 @@
   "servers": {
     "hela-mitosis": {
       "repo": "https://github.com/Hela-Ecosystem/chaining-mcp.git",
-      "commit": "3918974de9da0db36b7813f9d0044776ad8aa103",
+      "commit": "013ed55e3babcb5ff2cdf21747db340e82a1b4d5",
       "branch": "main",
       "entry": "dist/index.js",
-      "serverVersion": "3.1.2"
+      "serverVersion": "3.1.3"
     },
     "hela-genome": {
       "repo": "https://github.com/Hela-Ecosystem/project-mcp.git",
-      "commit": "4a371658296c12ac4c5cbf7d170293dcfee8d893",
+      "commit": "790cda6a8c702288906dd28cd5fde67b7619b934",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "3.2.0"
+      "serverVersion": "3.3.0"
     },
     "hela-membrane": {
       "repo": "https://github.com/Hela-Ecosystem/filesystem-mcp.git",
@@ -40,17 +40,17 @@
     },
     "hela-ribosome": {
       "repo": "https://github.com/Hela-Ecosystem/menager-mcp.git",
-      "commit": "18e21344b28e868077993cfe95dfc12c910ad587",
+      "commit": "bf563a183a67ee3fd334ea9019aa1dd2460f2ed7",
       "branch": "master",
       "entry": "build/index.js",
-      "serverVersion": "3.2.3"
+      "serverVersion": "3.2.4"
     },
     "hela-enzyme": {
       "repo": "https://github.com/Hela-Ecosystem/researcher-mcp.git",
-      "commit": "bee37bf067403a3643e485c07718b5c907e899b9",
+      "commit": "a75b48623627a7dccbcb716342b029bfaec5bf4c",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "4.3.3"
+      "serverVersion": "4.3.4"
     },
     "hela-cytosol": {
       "repo": "https://github.com/Hela-Ecosystem/browser-mcp.git",
@@ -82,10 +82,10 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "7f078d62919a188694bc4b9ac429963666b5efab",
+      "commit": "390305d384ae6bd1afaeaa7b05aaf04fc29fb45c",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.4.2"
+      "serverVersion": "1.4.3"
     }
   },
   "verified_profiles": [

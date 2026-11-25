@@ -22,7 +22,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "3918974de9da0db36b7813f9d0044776ad8aa103",
+      "revision": "013ed55e3babcb5ff2cdf21747db340e82a1b4d5",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -47,7 +47,7 @@
         "HELA_PROFILE"
       ],
       "description": "Orchestrates MCP capabilities with bundled Needle 3, tool discovery, planning, prompts, skills, and multi-step workflows. Local execution depends on its engine/model; provider-backed generation and escalation require their configured services.",
-      "version": "3.1.2",
+      "version": "3.1.3",
       "skills": [
         {
           "name": "skill-finder",
@@ -91,14 +91,14 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "4a371658296c12ac4c5cbf7d170293dcfee8d893",
+      "revision": "790cda6a8c702288906dd28cd5fde67b7619b934",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
         "HELA_GENOME_OBSIDIAN_PULL_CMD"
       ],
       "description": "Preserves persistent project knowledge, state, living SQLite knowledge graph, task tracking, and session continuity.",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "skills": [
         {
           "name": "code-reviewer",
@@ -194,10 +194,10 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "18e21344b28e868077993cfe95dfc12c910ad587",
+      "revision": "bf563a183a67ee3fd334ea9019aa1dd2460f2ed7",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
-      "version": "3.2.3"
+      "version": "3.2.4"
     },
     "hela-enzyme": {
       "id": "hela-enzyme",
@@ -215,7 +215,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "bee37bf067403a3643e485c07718b5c907e899b9",
+      "revision": "a75b48623627a7dccbcb716342b029bfaec5bf4c",
       "env": [
         "GOOGLE_API_KEY",
         "GOOGLE_CSE_ID",
@@ -224,7 +224,7 @@
         "WIKIPEDIA_DEFAULT_LANGUAGE"
       ],
       "description": "Unified research platform: zero-key dual-tier web search + arXiv + Google News RSS + Wikipedia with content analysis and persistent sessions.",
-      "version": "4.3.3"
+      "version": "4.3.4"
     },
     "hela-cytosol": {
       "id": "hela-cytosol",
@@ -360,8 +360,8 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "7f078d62919a188694bc4b9ac429963666b5efab",
-      "version": "1.4.2",
+      "revision": "390305d384ae6bd1afaeaa7b05aaf04fc29fb45c",
+      "version": "1.4.3",
       "env": [
         "HELA_ECOSYSTEM_ROOT",
         "HELA_PROFILE",
