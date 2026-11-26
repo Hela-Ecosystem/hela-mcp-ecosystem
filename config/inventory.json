@@ -22,7 +22,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "013ed55e3babcb5ff2cdf21747db340e82a1b4d5",
+      "revision": "ccdffec08aad900339a175254c510b7e6393341e",
       "toolFeatures": {
         "CHAINING_LLM_ENABLED": {
           "default": true
@@ -91,7 +91,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "790cda6a8c702288906dd28cd5fde67b7619b934",
+      "revision": "c0e3e107546ad2e6a989fbccc9956b6906ae883c",
       "env": [
         "HELA_GENOME_OBSIDIAN_VAULT",
         "HELA_GENOME_OBSIDIAN_SYNC_CMD",
@@ -146,7 +146,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "ddf6d5155f9da2a8ad13c9a8dd2037b66fa44f3a",
+      "revision": "64afffccda2b2ff01ec68e5af6e8d10975318174",
       "env": [],
       "description": "Controlled interaction with the project workspace: file search, regex patching, watching, and safe archive operations.",
       "version": "3.0.6"
@@ -170,7 +170,7 @@
       "systemDeps": {
         "tmux": "required"
       },
-      "revision": "3ad8592fa166b16d3844080d8425321e52085442",
+      "revision": "0ce4cf157338c68b17887ae063c5a63d73f83807",
       "env": [],
       "description": "Command execution and direct system interaction with local/remote SSH support, timeouts, and deep RTK integration.",
       "version": "3.0.7"
@@ -194,7 +194,7 @@
       "systemDeps": {
         "tmux": "optional"
       },
-      "revision": "bf563a183a67ee3fd334ea9019aa1dd2460f2ed7",
+      "revision": "d63dfe2549f3c57e006ad1379460dbe85b3ed3eb",
       "env": [],
       "description": "Process orchestration server for pseudo-terminal (PTY) session management, multiplexing, and non-blocking regex event hooks.",
       "version": "3.2.4"
@@ -242,7 +242,7 @@
       "build": null,
       "needsGui": false,
       "needsDevice": false,
-      "revision": "93681e751cb77381c6772b7954519e60b163572d",
+      "revision": "9a468c64e571ee76964e2096db034c250730a784",
       "env": [],
       "description": "Playwright-based browser automation and dedicated image-perception environment for navigation, DOM interaction, scraping, screenshot verification, OCR, and local Mirage VLM analysis.",
       "siteDescription": {
@@ -273,7 +273,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "78d8e0f7024d1fab9ab2003e7a040ad4103c9ab7",
+      "revision": "64d4abb38968809f52d0700bc678f1d42224cbb6",
       "env": [],
       "description": "UI/UX design system selector, Awwwards-tier kinetic motion, OKLCH tokens, brand cloning, component preview, and native Stitch Canvas bridge.",
       "version": "3.3.0",
@@ -316,7 +316,7 @@
       "build": "build",
       "needsGui": true,
       "needsDevice": true,
-      "revision": "47e6895d9a163d36f4e901d5046b2d8eb4be8b5b",
+      "revision": "85f422dd00b32dcc42490c111b8f3df59321db9b",
       "env": [],
       "description": "Android mobile device automation via ADB and scrcpy: element inspection, touch gestures, and app lifecycle control.",
       "version": "3.0.6",
@@ -360,7 +360,7 @@
       "build": "build",
       "needsGui": false,
       "needsDevice": false,
-      "revision": "cecb96ae10d14bd92919c97fbdd151c64bbbcd29",
+      "revision": "deb9ef45b9ec0155d3d884ed829861fb8f62d669",
       "version": "1.4.5",
       "env": [
         "HELA_ECOSYSTEM_ROOT",

@@ -1,5 +1,11 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.26 — version records match the code
+
+A housekeeping release. Pins move so that every cell's released commit carries correct
+lockfile versions, changelogs and tool documentation. No cell changes its version or
+its tools.
+
 ## v1.11.25 — the agent asks permission before it acts
 
 Runtime 1.4.5 closes a gap in `hela.agent.run`: a task that said not to modify anything
