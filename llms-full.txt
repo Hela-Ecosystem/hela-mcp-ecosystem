@@ -1,6 +1,14 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.25] - 2026-11-26
+
+### Security
+- `hela-runtime` 1.4.5: one permission gate covers retrieval, planning and dispatch in `hela.agent.run`; write-banned and lookup-only tasks get read-only tools, banned page actions are refused, and paths or filenames no longer pull destructive tools into the shortlist (hela-runtime#9). Ban detection understands English only; other limits are listed in the runtime changelog.
+
+### Fixed
+- Namespaced catalogs plan and execute, and the model's tool picks no longer depend on the naming mode (hela-runtime#8). A time question opens with the clock tool (hela-runtime#4). Catalog search matches cell names.
+
 ## [1.11.24] - 2026-11-25
 
 ### Fixed
@@ -686,7 +694,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.11.24**, with runtime **1.4.4**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.25**, with runtime **1.4.5**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -822,7 +830,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.24 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.25 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -972,6 +980,17 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.25 — the agent asks permission before it acts
+
+Runtime 1.4.5 closes a gap in `hela.agent.run`: a task that said not to modify anything
+could still run a model-written shell command, and "do not click Delete" could still
+click it. One gate now covers retrieval, planning and dispatch. The same release makes
+the default namespaced tool names work and picks the clock for a time question.
+
+Behaviour changes: a ban on any change a shell could make now closes the shell, and
+"check that npm test passes" no longer runs the tests. The gate understands English
+only. Only the runtime pin changes from 1.11.24.
 
 ## v1.11.24 — the agent checks that its answer answers
 
@@ -2078,7 +2097,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.24**; runtime **1.4.4**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.25**; runtime **1.4.5**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.1.3**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.3.0**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).

@@ -1,5 +1,16 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.25 — the agent asks permission before it acts
+
+Runtime 1.4.5 closes a gap in `hela.agent.run`: a task that said not to modify anything
+could still run a model-written shell command, and "do not click Delete" could still
+click it. One gate now covers retrieval, planning and dispatch. The same release makes
+the default namespaced tool names work and picks the clock for a time question.
+
+Behaviour changes: a ban on any change a shell could make now closes the shell, and
+"check that npm test passes" no longer runs the tests. The gate understands English
+only. Only the runtime pin changes from 1.11.24.
+
 ## v1.11.24 — the agent checks that its answer answers
 
 Runtime 1.4.4 finishes the agent-side contract started in 1.4.2. A run that calls one
