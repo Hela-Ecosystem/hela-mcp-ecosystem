@@ -1,3 +1,11 @@
+## [1.11.25] - 2026-11-26
+
+### Security
+- `hela-runtime` 1.4.5: one permission gate covers retrieval, planning and dispatch in `hela.agent.run`; write-banned and lookup-only tasks get read-only tools, banned page actions are refused, and paths or filenames no longer pull destructive tools into the shortlist (hela-runtime#9). Ban detection understands English only; other limits are listed in the runtime changelog.
+
+### Fixed
+- Namespaced catalogs plan and execute, and the model's tool picks no longer depend on the naming mode (hela-runtime#8). A time question opens with the clock tool (hela-runtime#4). Catalog search matches cell names.
+
 ## [1.11.24] - 2026-11-25
 
 ### Fixed

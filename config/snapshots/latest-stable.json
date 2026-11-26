@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "snapshot_version": "1.11.24",
-  "created_at": "2026-11-25T18:00:00Z",
-  "description": "Runtime 1.4.4 stops hela.agent.run from ending a run after one irrelevant call, keeps a permitted copy when a ban only protects the original, retries a timed-out read once, and reports degraded or failed status for truncated plans and early exits.",
+  "snapshot_version": "1.11.25",
+  "created_at": "2026-11-26T16:00:00Z",
+  "description": "Runtime 1.4.5 puts one permission gate over retrieval, planning and dispatch in hela.agent.run, treats paths and filenames as data, makes namespaced catalogs plan and execute, and picks the clock tool for a time question.",
   "environment": {
     "node_minimum": ">=22.0.0",
     "recommended_node": "22 LTS (validated 22.23.4)",
@@ -82,10 +82,10 @@
     },
     "hela-runtime": {
       "repo": "https://github.com/Hela-Ecosystem/hela-runtime.git",
-      "commit": "08c27264e62aedcbb13c9bb399210d2b66804e9c",
+      "commit": "cecb96ae10d14bd92919c97fbdd151c64bbbcd29",
       "branch": "master",
       "entry": "dist/index.js",
-      "serverVersion": "1.4.4"
+      "serverVersion": "1.4.5"
     }
   },
   "verified_profiles": [
