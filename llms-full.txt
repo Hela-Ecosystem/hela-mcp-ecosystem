@@ -1,6 +1,11 @@
 # Source: CHANGELOG.md
 URL: https://hela.my.id/library/CHANGELOG.html
 
+## [1.11.26] - 2026-11-27
+
+### Changed
+- Version housekeeping, no cell version changes. Nucleus and Receptor lockfiles state their package versions; Cytosol, Mitosis, Ribosome and Genome changelogs drop `[Unreleased]` blocks that had already shipped; Membrane, Nucleus and Receptor changelogs are ordered by version; the Membrane, Genome and Ribosome tool documents match the catalog; the runtime README names 1.4.5. Phenotype pins the zod advisory fix in its Remotion test fixture.
+
 ## [1.11.25] - 2026-11-26
 
 ### Security
@@ -694,7 +699,7 @@ A modular, immortal cellular AI tooling ecosystem built on the Model Context Pro
 
 **Read all documentation on the website:** [Document library](https://hela.my.id/library.html) · [Navigasi Bahasa Indonesia](https://hela.my.id/id/library.html). Guides, release history, contribution rules, and verification reports are published in full, with search and source downloads. Documents retain their source language.
 
-Current source snapshot: **v1.11.25**, with runtime **1.4.5**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
+Current source snapshot: **v1.11.26**, with runtime **1.4.5**. True first-call startup, fingerprinted discovery caches, canonical inventory tooling, profile-aware local capabilities, and managed snapshot updates are implemented; see [on-demand runtime](docs/on-demand-runtime.md) and [installation updates](docs/installation.md#updates-and-automatic-checks). Authenticated Zed/Codex ACP sessions, hardware integrations, and live vault conflict resolution remain separate; see [release notes](RELEASE_NOTES.md).
 
 ![Blotcat plugging MCP server cables into the central AI Hub](assets/blotcat-hero.jpg)
 
@@ -830,7 +835,7 @@ node setup.mjs --profile headless-server --client claude --non-interactive
 
 **Pinned Immutable Release Snapshot:**
 ```bash
-node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.25 --non-interactive
+node setup.mjs --profile dev-workspace --client cursor --snapshot v1.11.26 --non-interactive
 ```
 
 **Single-endpoint Runtime (one MCP connection for the selected profile):**
@@ -980,6 +985,12 @@ The HeLa project respectfully recognizes **Henrietta Lacks** and the enduring sc
 URL: https://hela.my.id/library/RELEASE_NOTES.html
 
 # HeLa MCP Ecosystem Release Notes
+
+## v1.11.26 — version records match the code
+
+A housekeeping release. Pins move so that every cell's released commit carries correct
+lockfile versions, changelogs and tool documentation. No cell changes its version or
+its tools.
 
 ## v1.11.25 — the agent asks permission before it acts
 
@@ -2097,7 +2108,7 @@ URL: https://hela.my.id/library/docs/current-versions.html
 
 # Current versions and tool surfaces
 
-Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.25**; runtime **1.4.5**.
+Generated from package metadata, inventory, and the schema catalog. Ecosystem **1.11.26**; runtime **1.4.5**.
 
 - **HeLa Mitosis** (`hela-mitosis`): server **3.1.3**, GPL-3.0-or-later, 24–29 canonical tools; [source](https://github.com/Hela-Ecosystem/chaining-mcp).
 - **HeLa Genome** (`hela-genome`): server **3.3.0**, GPL-3.0-or-later, 31 canonical tools; [source](https://github.com/Hela-Ecosystem/project-mcp).

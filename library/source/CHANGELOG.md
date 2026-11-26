@@ -1,3 +1,8 @@
+## [1.11.26] - 2026-11-27
+
+### Changed
+- Version housekeeping, no cell version changes. Nucleus and Receptor lockfiles state their package versions; Cytosol, Mitosis, Ribosome and Genome changelogs drop `[Unreleased]` blocks that had already shipped; Membrane, Nucleus and Receptor changelogs are ordered by version; the Membrane, Genome and Ribosome tool documents match the catalog; the runtime README names 1.4.5. Phenotype pins the zod advisory fix in its Remotion test fixture.
+
 ## [1.11.25] - 2026-11-26
 
 ### Security
