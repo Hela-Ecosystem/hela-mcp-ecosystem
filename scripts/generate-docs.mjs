@@ -233,7 +233,8 @@ if (servers) {
     outputs.set(file, text);
     const tools = new Map(catalog.cells[id].variants.flatMap(variant => variant.tools).map(tool => [tool.name, tool]));
     const lines = [`# ${item.alias}: canonical tools`, '', `Server version **${item.version}**. Generated from the ecosystem schema catalog; regenerate with \`npm run docs:generate -- --servers\` in the ecosystem checkout.`, '',
-      'Only names advertised by `tools/list` are listed here. Older aliases in migration examples are not additional tools. Runtime namespace prefixes are optional and do not change these server-local names.', ''];
+      (id === 'hela-mitosis' ? 'With `MITOSIS_EXTERNAL_ORCHESTRATOR` set, only the [passive subset](../README.md#passive-mode-external-orchestrators) is advertised. ' : '')
+        + 'Only names advertised by `tools/list` are listed here. Older aliases in migration examples are not additional tools. Runtime namespace prefixes are optional and do not change these server-local names.', ''];
     for (const tool of [...tools.values()].sort((a, b) => a.name.localeCompare(b.name))) {
       const conditional = catalog.cells[id].variants.some(variant => !variant.tools.some(candidate => candidate.name === tool.name));
       lines.push(`## \`${tool.name}\`${conditional ? ' (conditional)' : ''}`, '', (tool.description ?? '').replace(/\s+/g, ' ').trim(), '');

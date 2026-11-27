@@ -1,5 +1,14 @@
 # HeLa MCP Ecosystem Release Notes
 
+## v1.11.27 — step aside for an outside coordinator
+
+Set `MITOSIS_EXTERNAL_ORCHESTRATOR` when another system schedules the work. Mitosis 3.2.0
+and runtime 1.5.0 then offer only discovery, reference, time, validation and skill tools:
+the agent, workflows, planners and `hela.pipe` are hidden and refused, and nothing is
+written into the coordinator's folders. Because passive mode launches no configured
+server, tool-chain validation can report some tools as unverified. Without the variable
+the tool surface is the same as in 1.11.26.
+
 ## v1.11.26 — version records match the code
 
 A housekeeping release. Pins move so that every cell's released commit carries correct

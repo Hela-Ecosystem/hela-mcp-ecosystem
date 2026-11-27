@@ -1,3 +1,11 @@
+## [1.11.27] - 2026-11-27
+
+### Added
+- Passive mode for external DAG coordinators (chaining-mcp#30), in Mitosis 3.2.0 and runtime 1.5.0. `MITOSIS_EXTERNAL_ORCHESTRATOR` hides and refuses the orchestration tools, including `hela.agent.run` and `hela.pipe`; no agent or Needle process starts, no configured MCP server is launched, run state stays in memory and writes into coordinator-owned directories are refused. Unset, the tool surface is unchanged.
+
+### Fixed
+- Mitosis waits for a locked run database instead of failing.
+
 ## [1.11.26] - 2026-11-27
 
 ### Changed
